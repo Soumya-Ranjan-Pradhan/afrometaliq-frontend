@@ -44,7 +44,7 @@ const HomeBanner = () => {
         <Slider {...settings}>
           {staticImages.map((image, index) => (
             <div key={index}>
-              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px]">
+              <div className="relative w-full h-[80vh]">
                 <Image
                   src={image.url}
                   alt={image.alt}
