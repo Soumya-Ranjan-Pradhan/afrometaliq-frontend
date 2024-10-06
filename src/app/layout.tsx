@@ -22,7 +22,7 @@ export default function RootLayout({
         <HomeBanner />
         <div className="sm:flex flex-none">
           <div>
-            <Sidebar />
+            {/* <Sidebar /> */}
           </div>
           <div className="sm:flex-1">
             {children}
