@@ -13,7 +13,8 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
   return (
-    <header className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex justify-between items-center p-4 sm:gap-5 gap-2 border-b-2 border-gray-500 sticky top-0 z-50">
+    <header className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex justify-between 
+    items-center p-4 sm:gap-5 gap-2  sticky top-0 z-50">
       {/* Logo Section */}
       <div className="flex items-center gap-3 cursor-pointer">
         <Image

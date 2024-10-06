@@ -9,18 +9,18 @@ const HomeBanner = () => {
   // Static image data with text
   const staticImages = [
     {
-      url: "https://soumyaranjanpradhan.s3.amazonaws.com/WhatsApp+Image+2024-08-28+at+12.07.34+AM+1+(1).png",
+      url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1728207790/jrhw74p8ps7kaylycdek.jpg",
       alt: "Banner 1",
       text: "Welcome to Our Store",
     },
     {
-      url: "https://soumyaranjanpradhan.s3.amazonaws.com/WhatsApp+Image+2024-08-28+at+12.07.34+AM+1+(1).png",
+      url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1728206574/v0kc4hdlkv8kg64clt2i.jpg",
       alt: "Banner 2",
       text: "Exclusive Offers",
       subText: "Don't miss out!",
     },
     {
-      url: "https://soumyaranjanpradhan.s3.amazonaws.com/WhatsApp+Image+2024-08-28+at+12.07.34+AM+1+(1).png",
+      url: "https://res.cloudinary.com/datf6laqn/image/upload/v1728109843/deimh6vqhatwyjehc9nh.jpg",
       alt: "Banner 3",
       text: "Shop the Latest Trends",
     },
@@ -39,12 +39,12 @@ const HomeBanner = () => {
   };
 
   return (
-    <div className="container mx-auto mt-3">
+    <div className=" mx-auto ">
       <div className="homeBannerSection">
         <Slider {...settings}>
           {staticImages.map((image, index) => (
             <div key={index}>
-              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]">
+              <div className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[700px]">
                 <Image
                   src={image.url}
                   alt={image.alt}
@@ -52,17 +52,6 @@ const HomeBanner = () => {
                   objectFit="cover"
                   priority={index === 0}
                 />
-                {/* Text overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center">
-                  <p className="text-white text-lg sm:text-2xl md:text-3xl lg:text-4xl font-bold bg-black bg-opacity-50 px-4 py-2 rounded-md mb-2">
-                    {image.text}
-                  </p>
-                  {image.subText && (
-                    <p className="text-white text-sm sm:text-lg md:text-xl bg-black bg-opacity-50 px-3 py-1 rounded-md">
-                      {image.subText}
-                    </p>
-                  )}
-                </div>
               </div>
             </div>
           ))}
