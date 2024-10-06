@@ -39,7 +39,7 @@ const Header = () => {
         </button>
       </div>
 
-      {/* Navigation Links for large screens */}
+      {/*! Navigation Links for large screens */}
       <nav className="hidden lg:flex items-center gap-8 text-white">
         <a href="#" className="relative group hover:text-gray-300">
           Home
@@ -118,9 +118,10 @@ const Header = () => {
 
       {/* Sidebar for small and medium screens */}
       <div
-        className={`fixed top-0 right-0 h-screen w-[80%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] z-50 transform ${
-          toggleMenu ? "translate-x-0" : "translate-x-full"
-        } transition-transform duration-500 ease-in-out`}
+        className={`fixed top-0 right-0 h-screen w-[80%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] 
+          z-50 transform ${
+            toggleMenu ? "translate-x-0" : "translate-x-full"
+          } transition-transform duration-500 ease-in-out`}
       >
         <div className="flex items-center justify-between h-[62px] px-3 border-b text-white">
           <Image
@@ -133,11 +134,6 @@ const Header = () => {
             size={35}
             onClick={() => setToggleMenu((prev) => !prev)}
           />
-        </div>
-
-        {/* Navbar items for mobile and tablet devices */}
-        <div className="flex flex-col justify-between h-full py-5 px-3">
-          {/* Add your navigation or other content for mobile here */}
         </div>
       </div>
     </header>

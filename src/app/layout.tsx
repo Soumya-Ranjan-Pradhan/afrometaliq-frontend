@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
-
-import "./globals.css";
 import Header from "@/Components/Header";
+import "./globals.css";
+// Your Navbar component
+import type { Metadata } from "next";
+import Sidebar from "@/Components/Header/Sidebar";
 import HomeBanner from "@/Components/HomeBanner";
 
 export const metadata: Metadata = {
@@ -11,15 +12,22 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
       <body>
         <Header />
         <HomeBanner />
-        {children}
+        <div className="sm:flex flex-none">
+          <div>
+            <Sidebar />
+          </div>
+          <div className="sm:flex-1">
+            {children}
+          </div>
+        </div>
       </body>
     </html>
   );
