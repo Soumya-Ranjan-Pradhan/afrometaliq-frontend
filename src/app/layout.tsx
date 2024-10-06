@@ -2,7 +2,7 @@ import Header from "@/Components/Header";
 import "./globals.css";
 // Your Navbar component
 import type { Metadata } from "next";
-import Sidebar from "@/Components/Header/Sidebar";
+// import Sidebar from "@/Components/Header/Sidebar";
 import HomeBanner from "@/Components/HomeBanner";
 
 export const metadata: Metadata = {
