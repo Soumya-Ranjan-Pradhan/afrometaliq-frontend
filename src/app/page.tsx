@@ -1,8 +1,10 @@
+// import HomeBanner from "@/Components/HomeBanner";
 
 export default function Home() {
   return (
     <div>
-      <h1>Welcome to My Next.js App</h1>
+      {/* <HomeBanner /> */}
+      <h1>sdfd</h1>
     </div>
   );
 }

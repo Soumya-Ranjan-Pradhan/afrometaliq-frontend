@@ -62,6 +62,11 @@ const Header = () => {
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
 
+        {/* Profile Icon */}
+        <div className="">
+          
+        </div>
+
         {/* Wishlist Icon */}
         <div className="relative hidden lg:block">
           <FaHeart size={20} className="text-white" />

@@ -48,9 +48,10 @@ const HomeBanner = () => {
                 <Image
                   src={image.url}
                   alt={image.alt}
-                  fill
-                
-                  style={{ objectFit: "cover" }}
+                  width="0"
+                  height="0"
+                  sizes="100vw"
+                  style={{ width: 'auto', height: 'auto' }}
                   priority={index === 0}
                 />
               </div>

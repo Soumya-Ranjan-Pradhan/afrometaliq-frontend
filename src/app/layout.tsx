@@ -2,8 +2,9 @@ import Header from "@/Components/Header";
 import "./globals.css";
 // Your Navbar component
 import type { Metadata } from "next";
-// import Sidebar from "@/Components/Header/Sidebar";
-import HomeBanner from "@/Components/HomeBanner";
+import Sidebar from "@/Components/Header/Sidebar";
+import Footer from "@/Components/Footer";
+// import HomeBanner from "@/Components/HomeBanner";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,15 +20,14 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Header />
-        <HomeBanner />
+        {/* <HomeBanner /> */}
         <div className="sm:flex flex-none">
           <div>
-            {/* <Sidebar /> */}
+            <Sidebar />
           </div>
-          <div className="sm:flex-1">
-            {children}
-          </div>
+          <div className="sm:flex-1">{children}</div>
         </div>
+        <Footer />
       </body>
     </html>
   );
