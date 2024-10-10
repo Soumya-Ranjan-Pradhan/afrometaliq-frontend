@@ -1,21 +1,25 @@
 "use client";
 
+"use client";
+
 import Image from "next/image";
 import React, { useState } from "react";
-import { FaSearch, FaShoppingCart, FaHeart } from "react-icons/fa";
+import { FaSearch, FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import ProfileTooltip from "./ProfileTooltip/index"; // Import the tooltip component
 
 const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+  const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false); // Tooltip state
 
   return (
     <header
       className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex justify-between 
-    items-center p-4 sm:gap-5 gap-2  sticky top-0 z-50"
+      items-center p-4 sm:gap-5 gap-2 sticky top-0 z-50"
     >
       {/* Logo Section */}
       <div className="flex items-center gap-3 cursor-pointer">
@@ -39,7 +43,7 @@ const Header = () => {
         </button>
       </div>
 
-      {/*! Navigation Links for large screens */}
+      {/* Navigation Links for large screens */}
       <nav className="hidden lg:flex items-center gap-8 text-white">
         <a href="#" className="relative group hover:text-gray-300">
           Home
@@ -63,8 +67,13 @@ const Header = () => {
         </a>
 
         {/* Profile Icon */}
-        <div className="">
-          
+        <div
+          className="relative hidden lg:block"
+          onMouseEnter={() => setShowProfileTooltip(true)}
+          onMouseLeave={() => setShowProfileTooltip(false)}
+        >
+          <FaUser size={20} className="text-white" />
+          {showProfileTooltip && <ProfileTooltip />} {/* Show Tooltip */}
         </div>
 
         {/* Wishlist Icon */}
