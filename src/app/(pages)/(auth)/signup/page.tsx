@@ -18,9 +18,10 @@ const SignUp = () => {
           </h1>
           <p className="mt-4 text-base lg:text-lg text-center lg:text-left">
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s.
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy
+            text ever since the 1500s.
           </p>
+
           <Image
             src="https://res.cloudinary.com/datf6laqn/image/upload/v1728416890/iswplufn9enslgj7uctn.png" // Replace with the actual path to your image
             alt="Rocket Illustration"
