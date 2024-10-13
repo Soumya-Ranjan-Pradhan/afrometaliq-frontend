@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div>
       {/* <HomeBanner /> */}
-      <h1>sdfd</h1>
+      <h1></h1>
     </div>
   );
 }

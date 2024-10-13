@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const SignUp = () => {
   return (
@@ -8,7 +9,7 @@ const SignUp = () => {
         {/* Left Side - Logo, Text, and Illustration */}
         <div className="flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
           <Image
-            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png" // Replace with the actual path to your logo
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png" 
             alt="Afro Metaliq Logo"
             width={150}
             height={150}
@@ -23,7 +24,7 @@ const SignUp = () => {
           </p>
 
           <Image
-            src="https://res.cloudinary.com/datf6laqn/image/upload/v1728416890/iswplufn9enslgj7uctn.png" // Replace with the actual path to your image
+            src="https://res.cloudinary.com/datf6laqn/image/upload/v1728416890/iswplufn9enslgj7uctn.png" 
             alt="Rocket Illustration"
             width={250}
             height={250}
@@ -54,14 +55,14 @@ const SignUp = () => {
 
               {/* Username Field */}
               <div className="w-full lg:w-1/2">
-                <label className="block text-gray-600">Username</label>
+                <label className="block text-gray-600">Mobile number</label>
                 <input
-                  type="text"
-                  placeholder="Username"
+                  type="number"
+                  placeholder="Enter mobile number"
                   className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
                 <p className="text-red-500 text-sm mt-1">
-                  Username already used
+                Mobile already used
                 </p>
               </div>
             </div>
@@ -110,9 +111,9 @@ const SignUp = () => {
           {/* Sign In Link */}
           <div className="mt-4 text-center text-gray-600">
             Have an account?{" "}
-            <a href="#" className="text-blue-500 hover:underline">
+            <Link href="/signin" className="text-blue-500 hover:underline">
               Sign in
-            </a>
+            </Link>
           </div>
         </div>
       </div>

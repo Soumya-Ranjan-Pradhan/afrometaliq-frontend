@@ -1,6 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
+import Link from "next/link";
 
 const SignIn = () => {
   return (
@@ -83,9 +84,9 @@ const SignIn = () => {
           {/* Sign Up Link */}
           <div className="mt-4 text-center text-gray-600">
             No Account?{" "}
-            <a href="#" className="text-blue-500 hover:underline">
+            <Link href="/signup" className="text-blue-500 hover:underline">
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
       </div>

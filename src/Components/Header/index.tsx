@@ -1,7 +1,5 @@
 "use client";
 
-"use client";
-
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaSearch, FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
@@ -9,12 +7,12 @@ import { CiSearch } from "react-icons/ci";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import ProfileTooltip from "./ProfileTooltip/index"; // Import the tooltip component
+import ProfileTooltip from "./ProfileTooltip/index"; 
 
 const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
-  const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false); // Tooltip state
+  const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false); 
 
   return (
     <header
@@ -110,6 +108,15 @@ const Header = () => {
 
       {/* Hamburger for small and medium screens - Hidden on lg screens */}
       <div className="lg:hidden flex items-center gap-7">
+         {/* Profile Icon */}
+         <div
+          className="relative hidden  sm:block"
+          onMouseEnter={() => setShowProfileTooltip(true)}
+          onMouseLeave={() => setShowProfileTooltip(false)}
+        >
+          <FaUser size={20} className="text-white" />
+          {showProfileTooltip && <ProfileTooltip />} {/* Show Tooltip */}
+        </div>
         {/* Wishlist Icon */}
         <div className="relative hidden sm:block">
           <FaHeart size={20} className="text-white" />

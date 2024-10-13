@@ -9,7 +9,7 @@ const HomeBanner = () => {
   // Static image data with text
   const staticImages = [
     {
-      url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1728207790/jrhw74p8ps7kaylycdek.jpg",
+      url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1728206574/v0kc4hdlkv8kg64clt2i.jpg",
       alt: "Banner 1",
       text: "Welcome to Our Store",
     },
