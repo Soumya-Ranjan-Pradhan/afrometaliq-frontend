@@ -22,9 +22,11 @@ const AboutUs = () => {
       {/* Right Content Section */}
       <div className="w-full lg:w-1/2 lg:pl-8">
         <h2 className="text-red-600 text-xl font-semibold mb-2">ABOUT US</h2>
+        {/* eslint-disable-next-line react/no-unescaped-entities */}
         <h1 className="text-4xl font-bold mb-4">
-          We&apos;re providing the best customer service
+          We're providing the best customer service
         </h1>
+
         <div className="bg-[#F9F9F9] mb-4 p-6 rounded-lg ">
           <p className="text-gray-700 ">
             Lorem Ipsum is simply dummy text of the printing and typesetting
