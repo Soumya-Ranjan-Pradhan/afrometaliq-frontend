@@ -1,6 +1,7 @@
-import React from 'react';
-import Modal from 'react-modal';
-import { FaTimes, FaHeart, FaExchangeAlt } from 'react-icons/fa';
+import React from "react";
+import Modal from "react-modal";
+import { FaTimes, FaHeart, FaExchangeAlt } from "react-icons/fa";
+import Image from "next/image";
 
 interface ProductModalProps {
   isOpen: boolean;
@@ -17,7 +18,11 @@ interface ProductModalProps {
   };
 }
 
-const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onRequestClose, product }) => {
+const ProductModal: React.FC<ProductModalProps> = ({
+  isOpen,
+  onRequestClose,
+  product,
+}) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -33,22 +38,26 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onRequestClose, pro
       >
         <FaTimes size={24} />
       </button>
-      
+
       {/* Product Image Section */}
       <div className="flex-shrink-0 w-full md:w-1/2">
-        <img
+        <Image
           src={product.imageUrl}
           alt={product.name}
+          width={500} 
+          height={500}
           className="w-full h-auto object-cover rounded-md"
         />
         {/* Additional Images (Optional) */}
         <div className="flex justify-center mt-4 space-x-2">
-          <img
+          <Image
             src={product.imageUrl}
             alt="Thumbnail"
+            width={64}
+            height={64}
             className="w-16 h-16 object-cover border border-gray-200 rounded-md"
           />
-          {/* Add more thumbnails if needed */}
+        
         </div>
       </div>
 
@@ -56,14 +65,20 @@ const ProductModal: React.FC<ProductModalProps> = ({ isOpen, onRequestClose, pro
       <div className="w-full md:w-1/2 md:pl-6 mt-6 md:mt-0 flex flex-col justify-between">
         {/* Product Title */}
         <h2 className="text-2xl font-semibold text-gray-800">{product.name}</h2>
-        <p className="text-gray-600 text-sm mt-2">Brand: <span className="font-bold">Puma</span></p>
+        <p className="text-gray-600 text-sm mt-2">
+          Brand: <span className="font-bold">Puma</span>
+        </p>
         <div className="flex items-center my-4">
-          <span className="text-red-500 text-xl font-bold">Rs. {product.price.toLocaleString()}</span>
-          <span className="text-sm text-gray-400 line-through ml-4">Rs. {product.originalPrice.toLocaleString()}</span>
+          <span className="text-red-500 text-xl font-bold">
+            Rs. {product.price.toLocaleString()}
+          </span>
+          <span className="text-sm text-gray-400 line-through ml-4">
+            Rs. {product.originalPrice.toLocaleString()}
+          </span>
         </div>
         <p className="text-green-600 font-medium mb-4">{product.stock}</p>
         <p className="text-sm text-gray-600 mb-6">{product.description}</p>
-        
+
         {/* Buttons */}
         <div className="flex items-center space-x-4">
           <button className="flex items-center px-6 py-3 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 transition">

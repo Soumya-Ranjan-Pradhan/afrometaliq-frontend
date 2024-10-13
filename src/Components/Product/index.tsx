@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "./ModalProduct";
+import Image from "next/image";
 
 type Product = {
   id: number;
@@ -102,32 +103,32 @@ const Product = () => {
     },
 
     {
-        id: 7,
-        name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
-        stock: "In Stock",
-        price: 1179,
-        originalPrice: 1749,
-        salesCount: 258,
-        rating: 3.5,
-        imageUrl:
-          "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-        description:
-          "Durable rectangular tube for structural purposes, made from mild steel.", 
-      },
+      id: 7,
+      name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
+      stock: "In Stock",
+      price: 1179,
+      originalPrice: 1749,
+      salesCount: 258,
+      rating: 3.5,
+      imageUrl:
+        "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+      description:
+        "Durable rectangular tube for structural purposes, made from mild steel.",
+    },
 
-      {
-        id: 8,
-        name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
-        stock: "In Stock",
-        price: 1179,
-        originalPrice: 1749,
-        salesCount: 258,
-        rating: 3.5,
-        imageUrl:
-          "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-        description:
-          "Durable rectangular tube for structural purposes, made from mild steel.", 
-      },
+    {
+      id: 8,
+      name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
+      stock: "In Stock",
+      price: 1179,
+      originalPrice: 1749,
+      salesCount: 258,
+      rating: 3.5,
+      imageUrl:
+        "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+      description:
+        "Durable rectangular tube for structural purposes, made from mild steel.",
+    },
   ];
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -170,11 +171,14 @@ const Product = () => {
           >
             {/* Product Image */}
             <div className="relative">
-              <img
+              <Image
                 src={product.imageUrl}
                 alt={product.name}
+                width={300}
+                height={200}
                 className="w-full h-48 object-cover rounded-md"
               />
+
               {/* Icons to show on hover */}
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <button
