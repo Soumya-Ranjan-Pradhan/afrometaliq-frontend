@@ -22,10 +22,10 @@ const Header = () => {
       {/* Logo Section */}
       <div className="flex items-center gap-3 cursor-pointer">
         <Image
-          src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png"
+          src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1729019417/jh1hondltohvzscoynrf.png"
           alt="logo"
-          width={100}
-          height={100}
+          width={150}
+          height={150}
         />
       </div>
 
