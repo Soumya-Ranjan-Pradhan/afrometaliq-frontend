@@ -7,12 +7,24 @@ import { CiSearch } from "react-icons/ci";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import ProfileTooltip from "./ProfileTooltip/index"; 
+import ProfileTooltip from "./ProfileTooltip/index";
+
+type TooltipData = Record<string, string[]>;
+
+const tooltipData: TooltipData = {
+  "ANGLES": ["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"],
+  "CHANNEL IRON": ["Item 6", "Item 7", "Item 8", "Item 9", "Item 10"],
+  "FLAT BAR": ["Item 11", "Item 12", "Item 13", "Item 14", "Item 15"],
+  // Add data for other products
+};
 
 const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
-  const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false); 
+  const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+
+  console.log({ hoveredItem })
 
   return (
     <header
@@ -52,15 +64,15 @@ const Header = () => {
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
         <a href="#" className="relative group hover:text-gray-300">
-          Product
+          Fencing
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
         <a href="#" className="relative group hover:text-gray-300">
           Processing
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
-        <a href="#" className="relative group hover:text-gray-300">
-          Fencing
+        <a href="#" className="relative group hover:text-gray-300" onMouseEnter={() => setToggleMenu((prev) => !prev)}>
+          Product
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
 
@@ -108,8 +120,8 @@ const Header = () => {
 
       {/* Hamburger for small and medium screens - Hidden on lg screens */}
       <div className="lg:hidden flex items-center gap-7">
-         {/* Profile Icon */}
-         <div
+        {/* Profile Icon */}
+        <div
           className="relative hidden  sm:block"
           onMouseEnter={() => setShowProfileTooltip(true)}
           onMouseLeave={() => setShowProfileTooltip(false)}
@@ -139,9 +151,8 @@ const Header = () => {
 
       {/* Sidebar for small and medium screens */}
       <div
-        className={`fixed top-0 right-0 h-screen w-[80%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] 
-          z-50 transform ${
-            toggleMenu ? "translate-x-0" : "translate-x-full"
+        className={`fixed top-0 right-0 h-screen w-[80%] lg:w-[30%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] 
+          z-50 transform ${toggleMenu ? "translate-x-0" : "translate-x-full"
           } transition-transform duration-500 ease-in-out`}
       >
         <div className="flex items-center justify-between h-[62px] px-3 border-b text-white">
@@ -155,6 +166,45 @@ const Header = () => {
             size={35}
             onClick={() => setToggleMenu((prev) => !prev)}
           />
+        </div>
+        {/* Product sections */}
+        <div className="px-4 py-4 overflow-y-scroll text-white h-[calc(100vh-62px)]">
+          {/* Section 1: HOT-ROLLED STEEL SECTIONS */}
+          <h2 className="font-bold text-lg">HOT-ROLLED STEEL SECTIONS</h2>
+          <ul className="list-disc ml-5">
+            {["ANGLES", "CHANNEL IRON", "FLAT BAR"].map((item) => (
+              <li
+                key={item}
+                className="relative cursor-pointer"
+                onMouseEnter={() => setHoveredItem(item)}
+                onMouseLeave={() => setHoveredItem(null)}
+              >
+                {item}
+                {/* Tooltip */}
+                {hoveredItem === item && (
+                  <div className={`absolute top-0 
+                    -translate-x-[-70%] w-48 
+                    lg:-translate-x-[-50%] lg:w-40
+                    p-2 bg-gradient-to-r from-[#353590] to-[#6A5EC8] 
+                    text-white rounded-lg shadow-md transition-all 
+                    duration-300 transform z-10`}>
+                    <ul className="space-y-1">
+                      {tooltipData[hoveredItem]
+                        .map((tooltipItem: string, index: number) => {
+                          console.log({ tooltipItem })
+                          return (
+                            <li key={index}>{tooltipItem}</li>
+                          )
+                        })}
+                    </ul>
+                    <button className="mt-2 text-blue-500 underline">
+                      See More
+                    </button>
+                  </div>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </header>
