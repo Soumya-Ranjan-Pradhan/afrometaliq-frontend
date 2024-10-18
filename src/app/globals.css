@@ -13,4 +13,19 @@
 }
 
 
+@layer utilities {
+  .zoom-in {
+    animation: zoomIn 1s ease-in-out;
+  }
 
+  @keyframes zoomIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}

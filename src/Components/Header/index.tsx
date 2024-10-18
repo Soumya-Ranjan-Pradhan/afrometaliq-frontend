@@ -44,22 +44,22 @@ const Header = () => {
 
       {/* Navigation Links for large screens */}
       <nav className="hidden lg:flex items-center gap-8 text-white">
-        <a href="#" className="relative group hover:text-gray-300">
+        <Link href="/" className="relative group hover:text-gray-300">
           Home
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
-        </a>
-        <a href="#" className="relative group hover:text-gray-300">
+        </Link>
+        <Link href="/about" className="relative group hover:text-gray-300">
           About
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
-        </a>
+        </Link>
         <Link href="/gallery" className="relative group hover:text-gray-300">
           Gallery
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </Link>
-        <a href="#" className="relative group hover:text-gray-300">
-          Processing
+        <Link href="#" className="relative group hover:text-gray-300">
+          Fabrication
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
-        </a>
+        </Link>
         <a href="#" className="relative group hover:text-gray-300">
         Product
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>

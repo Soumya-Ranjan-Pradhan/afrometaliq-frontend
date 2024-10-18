@@ -7,11 +7,11 @@ import WhyChooseUs from "@/Components/WhyChooseUs";
 export default function Home() {
   return (
     <div>
-      {/* <HomeBanner />
+      <HomeBanner />
       <AboutUs />
       <WhyChooseUs />
       <Product />
-      <TestimonialSlider /> */}
+      <TestimonialSlider />
     </div>
   );
 }
