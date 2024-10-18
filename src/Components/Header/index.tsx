@@ -8,6 +8,7 @@ import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import ProfileTooltip from "./ProfileTooltip/index"; 
+import Link from "next/link";
 
 const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
@@ -51,16 +52,16 @@ const Header = () => {
           About
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
-        <a href="#" className="relative group hover:text-gray-300">
-          Product
+        <Link href="/gallery" className="relative group hover:text-gray-300">
+          Gallery
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
-        </a>
+        </Link>
         <a href="#" className="relative group hover:text-gray-300">
           Processing
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
         <a href="#" className="relative group hover:text-gray-300">
-          Fencing
+        Product
           <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
         </a>
 

@@ -24,6 +24,11 @@ const HomeBanner = () => {
       alt: "Banner 3",
       text: "Shop the Latest Trends",
     },
+    // {
+    //   url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1729104137/mdivgjlmh9vieysarsvx.jpg",
+    //   alt: "Banner 4",
+    //   text: "Shop the Latest Trends",
+    // },
   ];
 
   // Settings for react-slick
