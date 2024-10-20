@@ -56,7 +56,7 @@ const HomeBanner = () => {
                   width="0"
                   height="0"
                   sizes="100vw"
-                  style={{ width: 'auto', height: 'auto' }}
+                  style={{ width: "auto", height: "auto" }}
                   priority={index === 0}
                 />
               </div>
