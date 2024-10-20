@@ -12,7 +12,6 @@
   opacity: 1;
 }
 
-
 @layer utilities {
   .zoom-in {
     animation: zoomIn 1s ease-in-out;
@@ -28,4 +27,15 @@
       opacity: 1;
     }
   }
+}
+
+/* Hides scrollbar for WebKit-based browsers (Chrome, Safari) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hides scrollbar for Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
