@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FaSearch, FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
+import {  FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
@@ -48,14 +48,14 @@ const Header = () => {
 
         {/* Right side - Register and Login large screen */}
         <div className="hidden lg:flex items-center space-x-4 text-blue-600 mr-3">
-          <a href="/register" className="flex items-center space-x-1">
+          <Link href="/register" className="flex items-center space-x-1">
             <RiBallPenLine className="text-2xl" />
             <span className="text-sm">Register</span>
-          </a>
-          <a href="/login" className="flex items-center space-x-1">
+          </Link>
+          <Link href="/login" className="flex items-center space-x-1">
             <MdLockOutline className="text-2xl" />
             <span className="text-sm">Log in</span>
-          </a>
+          </Link>
         </div>
       </header>
 
@@ -88,10 +88,10 @@ const Header = () => {
             Fabrication
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
-          <a href="#" className="relative group hover:text-gray-300">
+          <Link href="/" className="relative group hover:text-gray-300">
             Product
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
-          </a>
+          </Link>
 
           {/* Profile Icon */}
           <div
