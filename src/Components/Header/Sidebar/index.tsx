@@ -22,25 +22,46 @@ const Sidebar = () => {
       justify-around fixed bottom-0 bg-gradient-to-r from-[#24246C] to-[#5A43AF]"
       >
         {/* Home Icon */}
-        <Link href="/" className="flex flex-col items-center gap-1 cursor-pointer p-1">
-          <div className={`relative ${pathname === "/" ? "text-purple-500" : ""}`}>
+        <Link
+          href="/"
+          className="flex flex-col items-center gap-1 cursor-pointer p-1"
+        >
+          <div
+            className={`relative ${pathname === "/" ? "text-purple-500" : ""}`}
+          >
             <RiHome6Line size={25} />
           </div>
           <span className="text-sm">Home</span>
         </Link>
 
         {/* Gallery Icon */}
-        <Link href="/gallery" className="flex flex-col items-center gap-1 cursor-pointer p-1">
-          <div className={`relative ${pathname === "/gallery" ? "text-purple-500" : ""}`}>
+        <Link
+          href="/gallery"
+          className="flex flex-col items-center gap-1 cursor-pointer p-1"
+        >
+          <div
+            className={`relative ${
+              pathname === "/gallery" ? "text-purple-500" : ""
+            }`}
+          >
             <TfiGallery size={25} />
           </div>
           <span className="text-sm">Gallery</span>
         </Link>
 
         {/* Cart Icon with Quantity */}
-        <Link href="/cart" className="flex flex-col items-center gap-1 cursor-pointer p-1">
-          <div className={`relative ${pathname === "/cart" ? "text-purple-500" : ""}`}>
-            <FaShoppingCart size={25} />
+        <Link
+          href="/cart"
+          className="flex flex-col items-center gap-1 cursor-pointer p-1"
+        >
+          <div
+            className={`relative ${
+              pathname === "/cart" ? "text-purple-500" : ""
+            }`}
+          >
+            <Link href="/cart">
+              <FaShoppingCart size={25} />
+            </Link>
             {cartQuantity > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 {cartQuantity}
@@ -51,8 +72,15 @@ const Sidebar = () => {
         </Link>
 
         {/* Account Icon */}
-        <Link href="/account" className="flex flex-col items-center gap-1 cursor-pointer p-1">
-          <div className={`relative ${pathname === "/account" ? "text-purple-500" : ""}`}>
+        <Link
+          href="/account"
+          className="flex flex-col items-center gap-1 cursor-pointer p-1"
+        >
+          <div
+            className={`relative ${
+              pathname === "/account" ? "text-purple-500" : ""
+            }`}
+          >
             <FaUser size={25} />
           </div>
           <span className="text-sm">Account</span>

@@ -1,4 +1,3 @@
-
 import React from "react";
 import Image from "next/image";
 
@@ -28,11 +27,16 @@ const AboutUs = () => {
         <div className="bg-[#F9F9F9] mb-4 p-6 rounded-lg ">
           <p className="text-gray-700 ">
             Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book.
+            industry. Lorem Ipsum has been the industry&apos;s standard dummy
+            text ever since the 1500s, when an unknown printer took a galley of
+            type and scrambled it to make a type specimen book.
           </p>
-          <p className="font-bold mt-6">Sudhir, CEO</p>
+          <p className="font-bold mt-6">
+            <span className="bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
+              Soumya Ranjan Pradhan,
+            </span>{" "}
+            CEO
+          </p>
         </div>
       </div>
     </section>
