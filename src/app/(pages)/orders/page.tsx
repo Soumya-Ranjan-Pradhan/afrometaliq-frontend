@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 import { FaRegCheckCircle } from "react-icons/fa";
 
@@ -32,7 +33,9 @@ const Orders = () => {
           {/* Order Item Section */}
           <div className="bg-white p-6 rounded-lg shadow-md">
             <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-              <img
+              <Image
+                width={100}
+                height={100}
                 src="https://via.placeholder.com/100"
                 alt="Product"
                 className="w-24 h-24 object-cover rounded-lg"

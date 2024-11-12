@@ -11,6 +11,7 @@ import {
   BsChevronLeft,
   BsChevronRight,
 } from "react-icons/bs";
+import Image from "next/image";
 
 type Product = {
   id: number;
@@ -123,9 +124,11 @@ const NewArrivingProductCarousel: React.FC = () => {
                 <span className="absolute top-2 left-2 bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
                   {product.discount}%
                 </span>
-                <img
+                <Image
                   src={product.image}
                   alt={product.name}
+                  width={500}
+                  height={500}
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />
                 <h3 className="text-lg font-semibold truncate">
