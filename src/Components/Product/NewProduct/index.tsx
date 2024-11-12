@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
@@ -12,6 +12,7 @@ import {
   BsChevronRight,
 } from "react-icons/bs";
 import Image from "next/image";
+import { Swiper } from "swiper/types";
 
 type Product = {
   id: number;
@@ -95,20 +96,20 @@ const products: Product[] = [
 ];
 
 const NewArrivingProductCarousel: React.FC = () => {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<Swiper | null>(null);
 
   return (
-    <div className=" mx-auto px-4">
+    <div className="mx-auto px-4">
       <h2 className="text-2xl font-bold mt-8">Promotional Products</h2>
       <p className="text-gray-500 mb-4">
         Do not miss the current offers until the end of March.
       </p>
 
       <div className="relative">
-        <Swiper
+        <SwiperClass
           spaceBetween={16}
           slidesPerView={1}
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          onSwiper={(swiperInstance) => (swiperRef.current = swiperInstance)}
           pagination={{ clickable: true }}
           modules={[Pagination]}
           breakpoints={{
@@ -159,7 +160,7 @@ const NewArrivingProductCarousel: React.FC = () => {
               </div>
             </SwiperSlide>
           ))}
-        </Swiper>
+        </SwiperClass>
 
         {/* Custom Rounded Navigation Buttons */}
         <button
