@@ -1,12 +1,18 @@
 "use client";
 
 import React, { useRef } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
+import { Swiper as SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
-import { BsStarFill, BsStar, BsChevronLeft, BsChevronRight } from "react-icons/bs";
+import {
+  BsStarFill,
+  BsStar,
+  BsChevronLeft,
+  BsChevronRight,
+} from "react-icons/bs";
 import Image from "next/image";
+import { Swiper } from "swiper/types";
 
 type Product = {
   id: number;
@@ -84,7 +90,7 @@ const products: Product[] = [
 ];
 
 const PopularProductCarousel: React.FC = () => {
-  const swiperRef = useRef<any>(null);
+  const swiperRef = useRef<Swiper | null>(null);
 
   return (
     <div className=" mx-auto px-4">
@@ -92,10 +98,10 @@ const PopularProductCarousel: React.FC = () => {
       <p className="text-gray-500 mb-4">Do not miss the current offers until the end of March.</p>
 
       <div className="relative">
-        <Swiper
+        <SwiperClass
           spaceBetween={16}
           slidesPerView={1}
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
+          onSwiper={(swiperInstance) => (swiperRef.current = swiperInstance)}
           pagination={{ clickable: true }}
           modules={[Pagination]}
           breakpoints={{
@@ -112,14 +118,20 @@ const PopularProductCarousel: React.FC = () => {
                   {product.discount}%
                 </span>
                 <Image
-                  width={500}
-                  height={500}
                   src={product.image}
                   alt={product.name}
+                  width={500}
+                  height={500}
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />
-                <h3 className="text-lg font-semibold truncate">{product.name}</h3>
-                <p className={`text-green-600 font-semibold ${product.inStock ? "" : "text-red-600"}`}>
+                <h3 className="text-lg font-semibold truncate">
+                  {product.name}
+                </h3>
+                <p
+                  className={`text-green-600 font-semibold ${
+                    product.inStock ? "" : "text-red-600"
+                  }`}
+                >
                   {product.inStock ? "In Stock" : "Out of Stock"}
                 </p>
                 <div className="flex items-center mt-2 mb-4">
@@ -130,13 +142,17 @@ const PopularProductCarousel: React.FC = () => {
                   ))}
                 </div>
                 <div className="flex items-center">
-                  <span className="line-through text-gray-500 mr-2">Rs {product.price}</span>
-                  <span className="text-red-600 font-bold">Rs {product.discountedPrice}</span>
+                  <span className="line-through text-gray-500 mr-2">
+                    Rs {product.price}
+                  </span>
+                  <span className="text-red-600 font-bold">
+                    Rs {product.discountedPrice}
+                  </span>
                 </div>
               </div>
             </SwiperSlide>
           ))}
-        </Swiper>
+        </SwiperClass>
 
         {/* Custom Rounded Navigation Buttons */}
         <button
