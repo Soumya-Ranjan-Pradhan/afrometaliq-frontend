@@ -50,11 +50,11 @@ const Header = () => {
 
         {/* Right side - Register and Login large screen */}
         <div className=" flex items-center space-x-4 text-blue-600 mr-3">
-          <Link href="/register" className="flex items-center space-x-1">
+          <Link href="/signup" className="flex items-center space-x-1">
             <RiBallPenLine className="text-2xl" />
             <span className="text-sm">Register</span>
           </Link>
-          <Link href="/login" className="flex items-center space-x-1">
+          <Link href="/signin" className="flex items-center space-x-1">
             <MdLockOutline className="text-2xl" />
             <span className="text-sm">Log in</span>
           </Link>
