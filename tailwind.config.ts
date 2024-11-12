@@ -39,6 +39,9 @@ module.exports = {
       animation: {
         "move-left": "moveLeft 1s infinite",
       },
+      fontFamily: {
+        xeroda: ['Xeroda', 'sans-serif'], 
+      },
     },
   },
   plugins: [],

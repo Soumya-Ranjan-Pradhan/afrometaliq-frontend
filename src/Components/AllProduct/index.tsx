@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
-import ProductModal from "./ModalProduct";
+import ProductModal from "../Product/ModalProduct";
 import Image from "next/image";
 
 type Product = {
@@ -17,7 +17,7 @@ type Product = {
   description: string;
 };
 
-const Product = () => {
+const AllProduct = () => {
   const products: Product[] = [
     {
       id: 1,
@@ -101,34 +101,6 @@ const Product = () => {
       description:
         "Durable rectangular tube for structural purposes, made from mild steel.",
     },
-
-    {
-      id: 7,
-      name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
-      stock: "In Stock",
-      price: 1179,
-      originalPrice: 1749,
-      salesCount: 258,
-      rating: 3.5,
-      imageUrl:
-        "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-      description:
-        "Durable rectangular tube for structural purposes, made from mild steel.",
-    },
-
-    {
-      id: 8,
-      name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
-      stock: "In Stock",
-      price: 1179,
-      originalPrice: 1749,
-      salesCount: 258,
-      rating: 3.5,
-      imageUrl:
-        "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-      description:
-        "Durable rectangular tube for structural purposes, made from mild steel.",
-    },
   ];
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -163,7 +135,7 @@ const Product = () => {
       <h1 className="text-center text-3xl font-semibold mb-8">
         Browse Products
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {products.map((product) => (
           <div
             key={product.id}
@@ -231,4 +203,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default AllProduct;

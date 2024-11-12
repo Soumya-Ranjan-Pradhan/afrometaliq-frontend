@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useState } from "react";
-import {  FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
+import { FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
@@ -13,6 +13,7 @@ import { IoMenu } from "react-icons/io5";
 import { RiBallPenLine } from "react-icons/ri";
 import { MdLockOutline } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
+import Categories from "../Categories";
 
 const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
@@ -21,7 +22,8 @@ const Header = () => {
 
   return (
     <>
-      <header className="w-full hidden lg:flex items-center justify-between p-1 bg-white shadow-md">
+      {/* For the Large Screen */}
+      <header className="w-full flex items-center justify-between p-1 bg-white shadow-md">
         {/* Left side - Logo */}
         <div className="flex items-center space-x-4">
           <Link href="/" className="flex items-center">
@@ -47,7 +49,7 @@ const Header = () => {
         </div>
 
         {/* Right side - Register and Login large screen */}
-        <div className="hidden lg:flex items-center space-x-4 text-blue-600 mr-3">
+        <div className=" flex items-center space-x-4 text-blue-600 mr-3">
           <Link href="/register" className="flex items-center space-x-1">
             <RiBallPenLine className="text-2xl" />
             <span className="text-sm">Register</span>
@@ -59,6 +61,7 @@ const Header = () => {
         </div>
       </header>
 
+      {/* For The Large Screen */}
       <nav
         className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] lg:h-[4rem] md:h-[4rem] sm:h-[3rem] h-[64px] flex justify-between 
     items-center  sm:gap-5 gap-2 sticky top-0 z-50"
@@ -88,7 +91,7 @@ const Header = () => {
             Fabrication
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
-          <Link href="/" className="relative group hover:text-gray-300">
+          <Link href="/product" className="relative group hover:text-gray-300">
             Product
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
@@ -113,9 +116,9 @@ const Header = () => {
 
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
-           <Link href="/cart">
-           <FaShoppingCart size={20} className="text-white" />
-           </Link>
+            <Link href="/cart">
+              <FaShoppingCart size={20} className="text-white" />
+            </Link>
             <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
               3
             </span>
@@ -123,26 +126,17 @@ const Header = () => {
         </nav>
 
         {/* Search for small and medium screens - Hidden on lg screens */}
-        <div className="text-white w-full flex items-center justify-between  lg:hidden pr-1">
-          <Image
-            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png"
-            alt="logo"
-            width={100}
-            height={100}
-            className="ml-3"
-          />
+        <div className="text-white w-full flex items-center justify-between  lg:hidden ml-6">
           {openSearch && (
             <SearchForSmallScreen
               open={openSearch}
               setOpenSearch={setOpenSearch}
             />
           )}
-          <CiSearch
-            size={30}
-            fontWeight={"bold"}
-            onClick={() => setOpenSearch((prev) => !prev)}
-            className=""
-          />
+
+          <div className="text-white  mr-3">
+            <SlMenu size={24} onClick={() => setToggleMenu((prev) => !prev)} />
+          </div>
         </div>
 
         {/* Hamburger for small and medium screens - Hidden on lg screens */}
@@ -171,16 +165,20 @@ const Header = () => {
               3
             </span>
           </div>
-          <div className="text-white  mr-3">
-            <SlMenu size={24} onClick={() => setToggleMenu((prev) => !prev)} />
-          </div>
+
+          <CiSearch
+            size={30}
+            fontWeight={"bold"}
+            onClick={() => setOpenSearch((prev) => !prev)}
+            className="text-white mr-7"
+          />
         </div>
 
         {/* Sidebar for small and medium screens */}
         <div
-          className={`fixed top-0 right-0 h-screen w-[80%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] 
+          className={`fixed top-0 right-0 h-screen w-[100%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] 
         z-50 transform ${
-          toggleMenu ? "translate-x-0" : "translate-x-full"
+          toggleMenu ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-500 ease-in-out`}
         >
           <div className="flex items-center justify-between h-[62px] px-3 border-b text-white">
@@ -194,6 +192,9 @@ const Header = () => {
               size={35}
               onClick={() => setToggleMenu((prev) => !prev)}
             />
+          </div>
+          <div className="text-white p-3">
+            <Categories />
           </div>
         </div>
       </nav>
