@@ -6,8 +6,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
 import {
-  BsStarFill,
-  BsStar,
   BsChevronLeft,
   BsChevronRight,
 } from "react-icons/bs";

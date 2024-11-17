@@ -4,6 +4,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FaHeart, FaExchangeAlt } from "react-icons/fa";
 const page = ({ params }: { params: { id: string } }) => {
+  console.log(params.id);
+  
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
 
