@@ -3,7 +3,7 @@ import ProductTabs from "@/Components/Product/ProductTabs";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaHeart, FaExchangeAlt } from "react-icons/fa";
-const page = ({ params }: { params: { id: string } }) => {
+const Page = ({ params }: { params: { id: string } }) => {
   console.log(params.id);
   
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -143,4 +143,4 @@ const page = ({ params }: { params: { id: string } }) => {
   );
 };
 
-export default page;
+export default Page;
