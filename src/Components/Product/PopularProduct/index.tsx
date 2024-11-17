@@ -32,7 +32,8 @@ const products: Product[] = [
     price: 2000,
     discountedPrice: 1500,
     discount: 9,
-    image: "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+    image:
+      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
     inStock: true,
     rating: 5,
   },
@@ -42,7 +43,8 @@ const products: Product[] = [
     price: 1800,
     discountedPrice: 1500,
     discount: 12,
-    image: "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+    image:
+      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
     inStock: true,
     rating: 5,
   },
@@ -52,7 +54,8 @@ const products: Product[] = [
     price: 1800,
     discountedPrice: 1500,
     discount: 12,
-    image: "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+    image:
+      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
     inStock: true,
     rating: 5,
   },
@@ -62,7 +65,8 @@ const products: Product[] = [
     price: 1800,
     discountedPrice: 1500,
     discount: 12,
-    image: "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+    image:
+      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
     inStock: true,
     rating: 5,
   },
@@ -72,7 +76,8 @@ const products: Product[] = [
     price: 1800,
     discountedPrice: 1500,
     discount: 12,
-    image: "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+    image:
+      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
     inStock: true,
     rating: 5,
   },
@@ -82,7 +87,8 @@ const products: Product[] = [
     price: 1800,
     discountedPrice: 1500,
     discount: 12,
-    image: "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
+    image:
+      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
     inStock: true,
     rating: 5,
   },
@@ -95,7 +101,9 @@ const PopularProductCarousel: React.FC = () => {
   return (
     <div className=" mx-auto px-4">
       <h2 className="text-2xl font-bold mt-8">Popular Products</h2>
-      <p className="text-gray-500 mb-4">Do not miss the current offers until the end of March.</p>
+      <p className="text-gray-500 mb-4">
+        Do not miss the current offers until the end of March.
+      </p>
 
       <div className="relative">
         <SwiperClass
@@ -134,13 +142,6 @@ const PopularProductCarousel: React.FC = () => {
                 >
                   {product.inStock ? "In Stock" : "Out of Stock"}
                 </p>
-                <div className="flex items-center mt-2 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">
-                      {i < product.rating ? <BsStarFill /> : <BsStar />}
-                    </span>
-                  ))}
-                </div>
                 <div className="flex items-center">
                   <span className="line-through text-gray-500 mr-2">
                     Rs {product.price}
@@ -148,6 +149,16 @@ const PopularProductCarousel: React.FC = () => {
                   <span className="text-red-600 font-bold">
                     Rs {product.discountedPrice}
                   </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                    BUY NOW
+                  </button>
+
+                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                    Add To Cart
+                  </button>
                 </div>
               </div>
             </SwiperSlide>

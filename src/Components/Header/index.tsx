@@ -3,6 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
+import { RiContactsBook3Line } from "react-icons/ri";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -28,10 +29,10 @@ const Header = () => {
         <div className="flex items-center space-x-4">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://res.cloudinary.com/dndq25au1/image/upload/v1729361117/d6zwh0crdjjhmrtzfzkj.jpg"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1731828504/buy7yhxsku1csd4raszy.png"
               alt="Arfo Metaliq Logo"
-              width={190}
-              height={190}
+              width={180}
+              height={180}
             />
           </Link>
         </div>
@@ -49,14 +50,19 @@ const Header = () => {
         </div>
 
         {/* Right side - Register and Login large screen */}
-        <div className=" flex items-center space-x-4 text-blue-600 mr-3">
+        <div className=" flex items-center gap-4 text-blue-600 mr-3">
           <Link href="/signup" className="flex items-center space-x-1">
             <RiBallPenLine className="text-2xl" />
-            <span className="text-sm">Register</span>
+            <span className="text-sm">SignUp</span>
           </Link>
           <Link href="/signin" className="flex items-center space-x-1">
             <MdLockOutline className="text-2xl" />
             <span className="text-sm">Log in</span>
+          </Link>
+
+          <Link href="/contact" className="hidden lg:flex items-center space-x-1">
+            <RiContactsBook3Line className="text-2xl" />
+            <span className="text-sm">Contact Us</span>
           </Link>
         </div>
       </header>
@@ -108,10 +114,12 @@ const Header = () => {
 
           {/* Wishlist Icon */}
           <div className="relative hidden lg:block">
-            <FaHeart size={20} className="text-white" />
-            <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-              3
-            </span>
+            <Link href="/wishlist">
+              <FaHeart size={20} className="text-white" />
+              <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
+                3
+              </span>
+            </Link>
           </div>
 
           {/* Cart Icon */}
@@ -181,12 +189,12 @@ const Header = () => {
           toggleMenu ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-500 ease-in-out`}
         >
-          <div className="flex items-center justify-between h-[62px] px-3 border-b text-white">
+          <div className="flex items-center justify-between h-[62px] px-3 border-b text-black bg-white">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1731828504/buy7yhxsku1csd4raszy.png"
               alt="logo"
-              width={100}
-              height={100}
+              width={140}
+              height={140}
             />
             <IoCloseCircleOutline
               size={35}

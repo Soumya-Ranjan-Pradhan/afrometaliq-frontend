@@ -1,55 +1,23 @@
-import Image from "next/image";
+"use client";
 import React from "react";
+import Image from "next/image";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Address from "@/Components/CartBilling";
 import { AiOutlineClose } from "react-icons/ai";
 
-const CartPage = () => {
+const page = () => {
   const products = [
     {
       name: "HIGH LANDER Men's Slim Fit Opaque Casual Shirt",
       seller: "Flashstar Commerce",
-      price: 671.0,
+      price: 670.0,
       originalPrice: 2099,
       discount: 68,
       image:
         "https://res.cloudinary.com/dppfr1gjx/image/upload/v1729104137/mdivgjlmh9vieysarsvx.jpg",
       sizes: ["40", "42", "44"],
       deliveryDate: "29 Oct 2024",
-    },
-    {
-      name: "Thomas Scott Men's Easy Wash Sustainable Chinos",
-      seller: "BANG OVERSEAS LIMITED",
-      price: 999.0,
-      originalPrice: 4199,
-      discount: 32,
-      image:
-        "https://res.cloudinary.com/dppfr1gjx/image/upload/v1729104137/mdivgjlmh9vieysarsvx.jpg",
-      sizes: ["30", "32", "34"],
-      deliveryDate: "30 Oct 2024",
-    },
-    {
-      name: "Thomas Scott Men's Easy Wash Sustainable Chinos",
-      seller: "BANG OVERSEAS LIMITED",
-      price: 999.0,
-      originalPrice: 4199,
-      discount: 32,
-      image:
-        "https://res.cloudinary.com/dppfr1gjx/image/upload/v1729104137/mdivgjlmh9vieysarsvx.jpg",
-      sizes: ["30", "32", "34"],
-      deliveryDate: "30 Oct 2024",
-    },
-    {
-      name: "Thomas Scott Men's Easy Wash Sustainable Chinos",
-      seller: "BANG OVERSEAS LIMITED",
-      price: 999.0,
-      originalPrice: 4199,
-      discount: 32,
-      image:
-        "https://res.cloudinary.com/dppfr1gjx/image/upload/v1729104137/mdivgjlmh9vieysarsvx.jpg",
-      sizes: ["30", "32", "34"],
-      deliveryDate: "30 Oct 2024",
     },
   ];
   return (
@@ -65,7 +33,7 @@ const CartPage = () => {
 
           <div className="flex items-center gap-5">
             <p className="text-blue-700 text-[1.2em] font-bold underline font-ui-sans-serif">
-              BAG
+              CheckNow
             </p>
             <p className="text-gray-700 text-[1.2em] font-bold  font-ui-sans-serif">
               Address
@@ -123,16 +91,11 @@ const CartPage = () => {
                   /> */}
                 </div>
                 <div className="flex-1 ml-4">
-                  <div className="flex justify-between items-center space-x-2">
-                    <h3 className="font-semibold">{product.name}</h3>
-                    <div className="w-6 h-6 flex items-center justify-center rounded-full bg-green-[#17CCA6]">
-                      <AiOutlineClose size={20} />
-                    </div>
-                  </div>
+                  <h3 className="font-semibold">{product.name}</h3>
                   <p className="text-gray-500 text-sm">{product.seller}</p>
-                  <div className="lg:float-right md:float-right">
-                    <p className="text-red-500 font-semibold text-[1.2rem]">
-                      ₹{product.price.toFixed(2)}
+                  <div className="float-right">
+                    <p className="text-red-500 font-semibold text-[1.5rem]">
+                    ₹{product.price.toFixed(2)}
                     </p>
                     <div className="">
                       <span className="line-through text-gray-400">
@@ -141,7 +104,7 @@ const CartPage = () => {
                       {product.discount}% OFF
                     </div>
                   </div>
-                  <div className="flex items-center lg:mt-5 md:mt-5 space-x-4">
+                  <div className="flex items-center space-x-4 mt-4">
                     <p className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center">
                       <FaPlus size={12} />
                     </p>
@@ -150,9 +113,6 @@ const CartPage = () => {
                       <FaMinus size={12} />
                     </p>
                   </div>
-                  {/* <p className="text-sm text-green-600">
-                    Delivery by {product.deliveryDate}
-                  </p> */}
                 </div>
               </div>
             ))}
@@ -196,4 +156,4 @@ const CartPage = () => {
   );
 };
 
-export default CartPage;
+export default page;

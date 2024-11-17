@@ -27,7 +27,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
       isOpen={isOpen}
       onRequestClose={onRequestClose}
       className="relative bg-white w-full max-w-[40rem] mx-auto rounded-lg shadow-lg p-6 flex flex-col md:flex-row"
-      overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center"
+      overlayClassName="fixed inset-0 z-50 bg-black bg-opacity-50 flex justify-center items-center"
       ariaHideApp={false}
     >
       <button

@@ -73,12 +73,12 @@ const Sidebar = () => {
 
         {/* Account Icon */}
         <Link
-          href="/account"
+          href="/profile"
           className="flex flex-col items-center gap-1 cursor-pointer p-1"
         >
           <div
             className={`relative ${
-              pathname === "/account" ? "text-purple-500" : ""
+              pathname === "/profile" ? "text-purple-500" : ""
             }`}
           >
             <FaUser size={25} />

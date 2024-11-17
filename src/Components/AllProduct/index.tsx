@@ -185,9 +185,11 @@ const AllProduct = () => {
                 {product.salesCount} Sale
               </div>
             </div>
-            <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+           <div className="flex">
+           <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
               BUY NOW
             </button>
+           </div>
           </div>
         ))}
       </div>

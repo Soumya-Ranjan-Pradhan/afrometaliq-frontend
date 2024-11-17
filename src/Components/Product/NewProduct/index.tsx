@@ -142,13 +142,6 @@ const NewArrivingProductCarousel: React.FC = () => {
                 >
                   {product.inStock ? "In Stock" : "Out of Stock"}
                 </p>
-                <div className="flex items-center mt-2 mb-4">
-                  {[...Array(5)].map((_, i) => (
-                    <span key={i} className="text-yellow-400">
-                      {i < product.rating ? <BsStarFill /> : <BsStar />}
-                    </span>
-                  ))}
-                </div>
                 <div className="flex items-center">
                   <span className="line-through text-gray-500 mr-2">
                     Rs {product.price}
@@ -156,6 +149,16 @@ const NewArrivingProductCarousel: React.FC = () => {
                   <span className="text-red-600 font-bold">
                     Rs {product.discountedPrice}
                   </span>
+                </div>
+
+                <div className="flex items-center justify-between gap-2">
+                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                    BUY NOW
+                  </button>
+
+                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                    Add To Cart
+                  </button>
                 </div>
               </div>
             </SwiperSlide>

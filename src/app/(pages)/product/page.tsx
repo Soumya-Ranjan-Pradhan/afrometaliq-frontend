@@ -1,5 +1,4 @@
 "use client";
-
 import AllProduct from "@/Components/AllProduct";
 import React, { useState } from "react";
 import { FaStar } from "react-icons/fa";

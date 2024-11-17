@@ -68,7 +68,7 @@ const AddAddressModal = ({ isOpen, onRequestClose }) => {
 
       <button
         onClick={() => alert('Address added!')}
-        className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold text-lg"
+        className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-3 rounded-lg font-semibold text-lg"
       >
         ADD ADDRESS
       </button>
