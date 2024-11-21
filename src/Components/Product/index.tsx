@@ -34,6 +34,7 @@ const Product = () => {
       description:
         "This is a high-quality mild steel rectangular tube, ideal for construction projects.",
     },
+    
     {
       id: 2,
       name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
@@ -75,7 +76,6 @@ const Product = () => {
       description:
         "Durable rectangular tube for structural purposes, made from mild steel.",
     },
-
     {
       id: 5,
       name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
@@ -89,7 +89,6 @@ const Product = () => {
       description:
         "Durable rectangular tube for structural purposes, made from mild steel.",
     },
-
     {
       id: 6,
       name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",
@@ -103,7 +102,6 @@ const Product = () => {
       description:
         "Durable rectangular tube for structural purposes, made from mild steel.",
     },
-
     {
       id: 7,
       name: "Rectangular Tube - 76mm x 38mm - 1.6mm - Mild Steel",

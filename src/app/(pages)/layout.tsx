@@ -37,8 +37,8 @@ import Header from "@/Components/Header";
 import Sidebar from "@/Components/Header/Sidebar";
 import Footer from "@/Components/Footer";
 import type { Metadata } from "next";
-import "./globals.css";
-import { FaWhatsapp } from "react-icons/fa"; // Import WhatsApp icon
+import "../globals.css";
+import { FaWhatsapp } from "react-icons/fa"; 
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -75,7 +75,6 @@ export default function RootLayout({
         </div>
         <Footer />
 
-        {/* WhatsApp Icon with Jump Animation */}
         <a
           href="https://wa.me/your-number"
           target="_blank"

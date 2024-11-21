@@ -20,19 +20,31 @@ const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
+  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127109/rgubxvwv5ujtm26ay3hv.png
+
+  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127208/rcwozn42rynklc0hamkf.png
+
+
+  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127267/fuvzipwny8e7vnbxt6ir.png
+
+
+  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127340/kqsqhotiwveunthslfn0.png
+
+
+  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127377/ljmdplhc9jbprou5l5wb.png
 
   return (
     <>
       {/* For the Large Screen */}
-      <header className="w-full flex items-center justify-between p-1 bg-white shadow-md">
+      <header className="w-full flex items-center justify-between h-[5rem] px-4 bg-white shadow-md">
         {/* Left side - Logo */}
-        <div className="flex items-center space-x-4">
+        <div className="flex  items-center space-x-4">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1731828504/buy7yhxsku1csd4raszy.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127377/ljmdplhc9jbprou5l5wb.png"
               alt="Arfo Metaliq Logo"
-              width={180}
-              height={180}
+              width={160}
+              height={120}
             />
           </Link>
         </div>
@@ -191,7 +203,7 @@ const Header = () => {
         >
           <div className="flex items-center justify-between h-[62px] px-3 border-b text-black bg-white">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1731828504/buy7yhxsku1csd4raszy.png"
+              src="https://res.cloudinary.com/dndq25au1/image/upload/v1729361117/d6zwh0crdjjhmrtzfzkj.jpg"
               alt="logo"
               width={140}
               height={140}

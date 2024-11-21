@@ -66,7 +66,9 @@ const LogInPage = () => {
 
         {/* Sign In Button */}
         <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
+          <Link href="/dashboard">
           Sign In
+          </Link>
         </button>
 
         {/* Forgot Password */}
@@ -90,7 +92,7 @@ const LogInPage = () => {
         {/* Register Link */}
         <p className="text-center text-sm text-gray-600 mt-4">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-blue-600 font-medium">
+          <Link href="/dashboard" className="text-blue-600 font-medium">
             Register
           </Link>
         </p>
