@@ -6,43 +6,49 @@ import {
   FiHome,
   FiShoppingBag,
   FiTag,
-  FiUser,
-  FiRefreshCcw,
-  FiPlus,
-  FiFileText,
-  FiCreditCard,
-  FiBook,
-  FiTrendingUp,
-  FiUsers,
-  FiMessageCircle,
-  FiSettings,
-  FiLogOut,
   FiLifeBuoy,
   FiChevronUp,
   FiChevronDown,
   FiMenu,
 } from "react-icons/fi";
 import Image from "next/image";
+import { BiCategoryAlt } from "react-icons/bi";
+import { MdOutlineProductionQuantityLimits } from "react-icons/md";
+import { MdAcUnit } from "react-icons/md";
+import { RiCodeSSlashFill } from "react-icons/ri";
+import { MdOutlineCategory } from "react-icons/md";
+import { TbCategoryPlus } from "react-icons/tb";
+import { FaFirstOrder } from "react-icons/fa";
+import { LuListOrdered } from "react-icons/lu";
+import { FaUserCheck } from "react-icons/fa6";
+import { FaUserCog } from "react-icons/fa";
+import { RiContactsBook3Line } from "react-icons/ri";
+import { TfiGallery } from "react-icons/tfi";
+import { IoCloudUploadOutline } from "react-icons/io5";
+import { FiAlertOctagon } from "react-icons/fi";
 
 const AdminSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [isShopOpen, setIsShopOpen] = useState<boolean>(false);
   const [isContentOpen, setIsContentOpen] = useState<boolean>(false);
+  const [ordersOpen, setOrdersOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<boolean>(false);
+  const [galleryOpen, setGalleryOpen] = useState<boolean>(false);
 
   return (
     <>
       {/* Navbar for mobile view */}
-      <nav className="lg:hidden  text-white bg-red-500 w-full h-20 fixed top-0 left-0 right-0 z-50 flex items-center">
+      <nav className="lg:hidden  text-white bg-white w-full h-20 fixed  z-50 flex items-center">
         <button className="border-0" onClick={() => setIsOpen(!isOpen)}>
           <FiMenu size={30} color="black" className="ml-4" />
         </button>
 
         <Image
           alt="Arfo Metaliq Logo"
-          width={200}
+          width={250}
           height={120}
           src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
-          className="object-contain rounded-full mx-auto absolute"
+          className="object-contain rounded-full mx-auto pr-4"
         />
       </nav>
 
@@ -86,33 +92,43 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/product"
+                  href="/addproduct"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <FiTag className="mr-3" /> Products
                 </Link>
+
                 <Link
-                  href="/orders"
+                  href="/units"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
-                  <FiFileText className="mr-3" /> Orders
+                  <MdAcUnit className="mr-3" /> Add Units
                 </Link>
-                <Link
-                  href="/coupons"
+
+                {/* <Link
+                  href="/productcodes"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
-                  <FiTag className="mr-3" /> Coupons
+                  <RiCodeSSlashFill className="mr-3" /> Product Codes
+                </Link> */}
+
+                <Link
+                  href="/allproducts"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <MdOutlineProductionQuantityLimits className="mr-3" /> All
+                  Products
                 </Link>
               </div>
             </div>
 
-            {/* Content Menu */}
+            {/* Category Menu */}
             <button
               onClick={() => setIsContentOpen(!isContentOpen)}
               className="w-full flex items-center justify-between p-2 text-black hover:bg-green-300 rounded"
             >
               <span className="flex items-center">
-                <FiFileText className="mr-3" /> Content
+                <MdOutlineCategory className="mr-3" /> Categories
               </span>
               <span>{isContentOpen ? <FiChevronUp /> : <FiChevronDown />}</span>
             </button>
@@ -123,19 +139,120 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/media"
+                  href="/categories"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
-                  <FiFileText className="mr-3" /> Media
+                  <BiCategoryAlt className="mr-3" /> Add Categories
                 </Link>
                 <Link
-                  href="/article"
+                  href="/subcategory"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
-                  <FiFileText className="mr-3" /> Article
+                  <TbCategoryPlus className="mr-3" />
+                  Add SubCategory
                 </Link>
               </div>
             </div>
+
+            {/* Orders Menu */}
+            <button
+              onClick={() => setOrdersOpen(!ordersOpen)}
+              className="w-full flex items-center justify-between p-2 text-black hover:bg-green-300 rounded"
+            >
+              <span className="flex items-center">
+                <FaFirstOrder className="mr-3" /> Orders
+              </span>
+              <span>{ordersOpen ? <FiChevronUp /> : <FiChevronDown />}</span>
+            </button>
+            <div
+              className={`transition-all overflow-hidden ${
+                ordersOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              } duration-300`}
+            >
+              <div className="ml-4">
+                <Link
+                  href="/orderlists"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <LuListOrdered className="mr-3" /> Order List
+                </Link>
+              </div>
+            </div>
+
+            {/* Users Menu */}
+            <button
+              onClick={() => setUser(!user)}
+              className="w-full flex items-center justify-between p-2 text-black hover:bg-green-300 rounded"
+            >
+              <span className="flex items-center">
+                <FaUserCheck className="mr-3" /> All Users
+              </span>
+              <span>{user ? <FiChevronUp /> : <FiChevronDown />}</span>
+            </button>
+            <div
+              className={`transition-all overflow-hidden ${
+                user ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              } duration-300`}
+            >
+              <div className="ml-4">
+                <Link
+                  href="/users"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <FaUserCog className="mr-3" /> Users
+                </Link>
+              </div>
+
+
+              <div className="ml-4">
+                <Link
+                  href="/aboutus"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <FiAlertOctagon className="mr-3" /> About Us
+                </Link>
+              </div>
+
+              <div className="ml-4">
+                <Link
+                  href="/userscontact"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <RiContactsBook3Line className="mr-3" /> Contact No
+                </Link>
+              </div>
+            </div>
+
+            {/* Gallery Section */}
+            <button
+              onClick={() => setGalleryOpen(!galleryOpen)}
+              className="w-full flex items-center justify-between p-2 text-black hover:bg-green-300 rounded"
+            >
+              <span className="flex items-center">
+                <TfiGallery className="mr-3" /> Add Gallery
+              </span>
+              <span>{galleryOpen ? <FiChevronUp /> : <FiChevronDown />}</span>
+            </button>
+
+
+
+            <div
+              className={`transition-all overflow-hidden ${
+                galleryOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+              } duration-300`}
+            >
+              <div className="ml-4">
+                <Link
+                  href="/uploadgallery"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <IoCloudUploadOutline className="mr-3" /> Gallery
+                </Link>
+              </div>
+            </div>
+
+
+
 
             <Link
               href="/support"

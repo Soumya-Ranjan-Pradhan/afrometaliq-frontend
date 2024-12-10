@@ -41,9 +41,9 @@ const Header = () => {
         <div className="flex  items-center space-x-4">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127377/ljmdplhc9jbprou5l5wb.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
               alt="Arfo Metaliq Logo"
-              width={160}
+              width={250}
               height={120}
             />
           </Link>
@@ -203,9 +203,9 @@ const Header = () => {
         >
           <div className="flex items-center justify-between h-[62px] px-3 border-b text-black bg-white">
             <Image
-              src="https://res.cloudinary.com/dndq25au1/image/upload/v1729361117/d6zwh0crdjjhmrtzfzkj.jpg"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
               alt="logo"
-              width={140}
+              width={200}
               height={140}
             />
             <IoCloseCircleOutline
