@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { FaTrashAlt, FaUpload } from "react-icons/fa";
+import MultiLevelDropdown from "./CategoryInput";
 
 const AddProduct = () => {
   const [images, setImages] = useState<File[]>([]);
@@ -52,6 +53,7 @@ const AddProduct = () => {
                 <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
               </div>
             </div>
+            <MultiLevelDropdown />
 
             <div className="mt-4">
               <div className="grid grid-cols-2 gap-4">
@@ -216,7 +218,6 @@ const AddProduct = () => {
                   placeholder="NA"
                   className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
                 />
-         
               </div>
             </div>
 
