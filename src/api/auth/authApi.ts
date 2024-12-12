@@ -2,46 +2,51 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:3001/api/v1";
 
-export interface Users {
-    _id: string;
-    name: string;
-    email: string;
-    phoneNumber: number;
-    isEmailVerified: boolean;
-    role: string;
-    createdAt: string;
-    updatedAt: string;
-    
-  }
-  
-  export interface SignupResponse {
-    user: Users;
-    accessToken: string;
-    refreshToken: string;
-  }
-  
-  export interface ApiResponse<T> {
-    success: boolean;
-    message: string;
-    data: T;
-  }
-  
+export interface User {
+  _id: string;
+  username: string;
+  email: string;
+  phoneNumber: number;
+  isEmailVerified: boolean;
+  role: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SignupResponse {
+  user: User;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface LoginResponse {
+  user: User;
+  accessToken: string;
+  refreshToken: string;
+}
+
+export interface UsersResponse {
+  users: User[];
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
 
 // Get all users
-export const fetchUsers = async (): Promise<
-  ApiResponse<{ users: Users[] }>
-> => {
-  const response = await axios.get<ApiResponse<{ users: Users[] }>>(
+export const fetchUsers = async (): Promise<ApiResponse<UsersResponse>> => {
+  const response = await axios.get<ApiResponse<UsersResponse>>(
     `${BASE_URL}/users`
   );
   return response.data;
 };
 
-// Create a new user
 export const createUser = async (
-  data: any
-): Promise<ApiResponse<{ user: Users }>> => {
-  const response = await axios.post<ApiResponse<{ user: Users }>>(
+  data: Partial<User>
+): Promise<ApiResponse<{ user: User }>> => {
+  const response = await axios.post<ApiResponse<{ user: User }>>(
     `${BASE_URL}/users/register`,
     data
   );
@@ -49,32 +54,12 @@ export const createUser = async (
 };
 
 // send verify otp
-export const sendOtp = async (
-  data: any
-): Promise<ApiResponse<{ user: Users }>> => {
-  const response = await axios.post<ApiResponse<{ user: Users }>>(
-    `${BASE_URL}/users/send-verify-otp`,
-    data
-  );
-  return response.data;
-};
 
-// verify otp
-export const verifyOtp = async (
-  data: any
-): Promise<ApiResponse<{ user: Users }>> => {
-  const response = await axios.post<ApiResponse<{ user: Users }>>(
-    `${BASE_URL}/users/verify-otp`,
-    data
-  );
-  return response.data;
-};
-
-// login user
-export const loginUser = async (
-  data: any
-): Promise<ApiResponse<{ user: Users; accessToken: string }>> => {
-  const response = await axios.post<ApiResponse<{ user: Users; accessToken: string }>>(
+export const loginUser = async (data: {
+  email: string;
+  password: string;
+}): Promise<ApiResponse<LoginResponse>> => {
+  const response = await axios.post<ApiResponse<LoginResponse>>(
     `${BASE_URL}/users/login`,
     data
   );

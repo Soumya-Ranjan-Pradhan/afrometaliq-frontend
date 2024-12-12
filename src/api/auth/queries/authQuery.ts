@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ApiResponse, createUser, fetchUsers, loginUser, sendOtp, Users, verifyOtp } from "../authApi";
+import { ApiResponse, createUser, fetchUsers, loginUser, } from "../authApi";
 
 
 // get all users
@@ -26,27 +26,6 @@ export const useCreateUser = () => {
     });
   };
 
-// send verify otp
-export const useSendOtp = () => {
-  const queryClient = useQueryClient();
-  return useMutation<ApiResponse<{ user: Users }>, Error, any>({
-    mutationFn: sendOtp,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
-  });
-};
-
-// verify otp
-export const useVerifyOtp = () => {
-  const queryClient = useQueryClient();
-  return useMutation<ApiResponse<{ user: Users }>, Error, any>({
-    mutationFn: verifyOtp,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["users"] });
-    },
-  });
-}
 
 // login user
 export const useLoginUser = () => {
