@@ -3,9 +3,71 @@
 import React, { useState } from "react";
 import { FaTrashAlt, FaUpload } from "react-icons/fa";
 import MultiLevelDropdown from "./CategoryInput";
+import { useCreateProduct } from "@/api/product/queries/useProductQuery";
+import { toast } from "react-toastify";
+import { useSearchUnits } from "@/api/units/queries/useUnitsQuery";
+
+const initialState = {
+  product_name: "",
+  product_code: "",
+  product_unit: "",
+  product_price: "",
+  product_discount: "",
+  product_images: "",
+  product_selling_price: "",
+  product_description: "",
+  product_size: "",
+  product_theme_size: "",
+  product_grade: "",
+  product_thickness: "",
+  product_uom: "",
+  product_length: "",
+  product_width: "",
+};
 
 const AddProduct = () => {
   const [images, setImages] = useState<File[]>([]);
+  const [product, setProduct] = useState(initialState);
+  const [unitSearch, setUnitSearch] = useState("");
+  const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
+
+  const { data: unitData } = useSearchUnits(unitSearch);
+  const { mutate: createProduct } = useCreateProduct();
+
+  // create product
+  const handleCreate = () => {
+    const formData = new FormData();
+    formData.append("product_name", product.product_name);
+    formData.append("product_code", product.product_code);
+    formData.append("product_unit", selectedUnit || "");
+    formData.append("product_price", product.product_price);
+    formData.append("product_discount", product.product_discount);
+    formData.append("product_selling_price", product.product_selling_price);
+    formData.append("product_description", product.product_description);
+    formData.append("product_size", product.product_size);
+    formData.append("product_theme_size", product.product_theme_size);
+    formData.append("product_grade", product.product_grade);
+    formData.append("product_thickness", product.product_thickness);
+    formData.append("product_uom", product.product_uom);
+    formData.append("product_length", product.product_length);
+    formData.append("product_width", product.product_width);
+
+    for (let i = 0; i < images.length; i++) {
+      formData.append("product_images", images[i]);
+    }
+
+    createProduct(formData, {
+      onSuccess: () => {
+        setProduct(initialState);
+        setImages([]);
+        setSelectedUnit(null);
+        toast.success("Product created successfully!");
+      },
+      onError: () => {
+        toast.error("Failed to create product");
+      },
+    });
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -15,6 +77,10 @@ const AddProduct = () => {
 
   const handleRemoveImage = (index: number) => {
     setImages(images.filter((_, i) => i !== index));
+  };
+
+  const handleUnitSelect = (unitId: string) => {
+    setSelectedUnit(unitId);
   };
 
   return (
@@ -32,6 +98,10 @@ const AddProduct = () => {
               <input
                 type="text"
                 placeholder="Enter product name"
+                value={product.product_name}
+                onChange={(e) =>
+                  setProduct({ ...product, product_name: e.target.value })
+                }
                 className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <p className="text-sm text-gray-500 mt-1">
@@ -44,13 +114,38 @@ const AddProduct = () => {
                 <label className="block text-sm font-medium text-gray-700">
                   Product Code <span className="text-red-500">*</span>
                 </label>
-                <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <input
+                  value={product.product_code}
+                  onChange={(e) =>
+                    setProduct({ ...product, product_code: e.target.value })
+                  }
+                  className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700">
                   Search Unit <span className="text-red-500">*</span>
                 </label>
-                <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                <input
+                  value={unitSearch}
+                  onChange={(e) => setUnitSearch(e.target.value)}
+                  className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+                {unitData?.data?.units && unitData.data.units.length > 0 && (
+                  <ul className="bg-white border rounded-md mt-2">
+                    {unitData.data.units.map((unit) => (
+                      <li
+                        key={unit._id}
+                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
+                          selectedUnit === unit._id ? "bg-blue-200" : ""
+                        }`}
+                        onClick={() => handleUnitSelect(unit._id)}
+                      >
+                        {unit.unit_name}
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </div>
             <MultiLevelDropdown />
@@ -78,13 +173,28 @@ const AddProduct = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Product Price <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_price}
+                    onChange={(e) =>
+                      setProduct({ ...product, product_price: e.target.value })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Discount % <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_discount}
+                    onChange={(e) =>
+                      setProduct({
+                        ...product,
+                        product_discount: e.target.value,
+                      })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
               </div>
             </div>
@@ -96,13 +206,16 @@ const AddProduct = () => {
                     Product Selling Price{" "}
                     <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Product ID <span className="text-red-500">*</span>
-                  </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_selling_price}
+                    onChange={(e) =>
+                      setProduct({
+                        ...product,
+                        product_selling_price: e.target.value,
+                      })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
               </div>
             </div>
@@ -113,6 +226,13 @@ const AddProduct = () => {
               </label>
               <textarea
                 placeholder="Description"
+                value={product.product_description}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    product_description: e.target.value,
+                  })
+                }
                 className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 rows={4}
               ></textarea>
@@ -122,7 +242,7 @@ const AddProduct = () => {
             </div>
 
             <div className="mt-6 flex gap-4">
-              <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+              <button onClick={handleCreate} className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
                 Add product
               </button>
               <button className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition">
@@ -191,6 +311,10 @@ const AddProduct = () => {
                   type="text"
                   name=""
                   id=""
+                  value={product.product_size}
+                  onChange={(e) =>
+                    setProduct({ ...product, product_size: e.target.value })
+                  }
                   placeholder="6m"
                   className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
                 />
@@ -199,6 +323,10 @@ const AddProduct = () => {
                   type="text"
                   name=""
                   id=""
+                  value={product.product_size}
+                  onChange={(e) =>
+                    setProduct({ ...product, product_size: e.target.value })
+                  }
                   placeholder="9m"
                   className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
                 />
@@ -207,6 +335,10 @@ const AddProduct = () => {
                   type="text"
                   name=""
                   id=""
+                  value={product.product_size}
+                  onChange={(e) =>
+                    setProduct({ ...product, product_size: e.target.value })
+                  }
                   placeholder="13m"
                   className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
                 />
@@ -215,6 +347,10 @@ const AddProduct = () => {
                   type="text"
                   name=""
                   id=""
+                  value={product.product_size}
+                  onChange={(e) =>
+                    setProduct({ ...product, product_size: e.target.value })
+                  }
                   placeholder="NA"
                   className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
                 />
@@ -227,13 +363,28 @@ const AddProduct = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Product Size <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_theme_size}
+                    onChange={(e) =>
+                      setProduct({
+                        ...product,
+                        product_theme_size: e.target.value,
+                      })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Product Grade <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_grade}
+                    onChange={(e) =>
+                      setProduct({ ...product, product_grade: e.target.value })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
               </div>
             </div>
@@ -244,13 +395,28 @@ const AddProduct = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Product Thickness <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_thickness}
+                    onChange={(e) =>
+                      setProduct({
+                        ...product,
+                        product_thickness: e.target.value,
+                      })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Product UOM <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_uom}
+                    onChange={(e) =>
+                      setProduct({ ...product, product_uom: e.target.value })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
               </div>
             </div>
@@ -261,13 +427,25 @@ const AddProduct = () => {
                   <label className="block text-sm font-medium text-gray-700">
                     Product Length <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_length}
+                    onChange={(e) =>
+                      setProduct({ ...product, product_length: e.target.value })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
                     Product Width <span className="text-red-500">*</span>
                   </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+                  <input
+                    value={product.product_width}
+                    onChange={(e) =>
+                      setProduct({ ...product, product_width: e.target.value })
+                    }
+                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
                 </div>
               </div>
             </div>

@@ -88,7 +88,7 @@ const Header = () => {
         <div className="hidden lg:flex items-center gap-3 cursor-pointer bg-[#141334] pl-3 pr-3 pt-1 pb-1 ml-4  ">
           <IoMenu className="text-white text-4xl" />
 
-          <p className="text-white font-semibold text-md">Shope by Category</p>
+          <p className="text-white font-semibold text-md">Shop by Category</p>
         </div>
 
         {/* Navigation Links for large screens */}

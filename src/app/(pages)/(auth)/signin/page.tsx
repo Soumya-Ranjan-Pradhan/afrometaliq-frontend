@@ -51,17 +51,17 @@ const SignIn = () => {
 
           {/* Username or Email Field */}
           <label className="block text-gray-600">
-            Enter your username or email address
+            Enter your username or email or mobile number <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            placeholder="Username or email address"
+            placeholder="Username or email or Mobile number +258 xxx xxx xxx" 
             className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           {/* Password Field */}
           <label className="block mt-4 text-gray-600">
-            Enter your Password
+            Enter your Password <span><span className="text-red-500">*</span></span>
           </label>
           <input
             type="password"
@@ -77,7 +77,7 @@ const SignIn = () => {
           </div>
 
           {/* Sign In Button */}
-          <button className="w-full mt-6 bg-gradient-to-r from-[#141e30] to-[#243b55] text-white py-2 rounded-lg text-lg font-semibold">
+          <button className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold">
             Sign in
           </button>
 

@@ -32,7 +32,7 @@ export const getAllProducts = async (): Promise<
   ApiResponse<{ products: Product[] }>
 > => {
   const response = await axios.get<ApiResponse<{ products: Product[] }>>(
-    `${BASE_URL}/products`
+    `${BASE_URL}/product`
   );
   return response.data;
 };
@@ -42,7 +42,7 @@ export const getProductById = async (
   id: string
 ): Promise<ApiResponse<{ product: Product }>> => {
   const response = await axios.get<ApiResponse<{ product: Product }>>(
-    `${BASE_URL}/products/${id}`
+    `${BASE_URL}/product/${id}`
   );
   return response.data;
 };
@@ -52,7 +52,7 @@ export const createProduct = async (
   data: FormData
 ): Promise<ApiResponse<{}>> => {
   const response = await axios.post<ApiResponse<{}>>(
-    `${BASE_URL}/products`,
+    `${BASE_URL}/product`,
     data,
     {
       headers: {
