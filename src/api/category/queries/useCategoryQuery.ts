@@ -1,4 +1,10 @@
-import { useMutation, useQuery, useQueryClient,UseQueryOptions } from "@tanstack/react-query";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import {
   ApiResponse,
   Category,
@@ -10,20 +16,26 @@ import {
   updateCategory,
 } from "../categoryApi";
 
-
 // Fetch all categories
-export const useCategories = ({parent}: {parent: string | null}) => {
+export const useCategories = (
+  { parent }: { parent: string | null },
+  options?: Partial<UseQueryOptions<any>>
+) => {
   return useQuery<ApiResponse<{ categories: Category[] }>, Error>({
     queryKey: ["categories", parent],
     queryFn: () => fetchCategories(parent),
+    ...options,
   });
 };
 // get category by id
-export const useCategoryById = ({id}: {id: string }, options?: Partial<UseQueryOptions<any>>) => {
+export const useCategoryById = (
+  { id }: { id: string },
+  options?: Partial<UseQueryOptions<any>>
+) => {
   return useQuery<ApiResponse<{ category: Category }>, Error>({
     queryKey: ["categories", "id", id],
     queryFn: () => getCategoryById(id),
-    ...options
+    ...options,
   });
 };
 
@@ -33,7 +45,7 @@ export const useCreateCategory = () => {
   return useMutation<
     ApiResponse<{ categories: Category[] }>,
     Error,
-    { category_name: string, parent: string | null } //! Variables type passed to the mutation
+    { category_name: string; parent: string | null } //! Variables type passed to the mutation
   >({
     mutationFn: createCategory,
     onSuccess: () => {

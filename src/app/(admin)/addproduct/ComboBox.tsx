@@ -18,10 +18,12 @@ export default function ComboBox({
   options,
   value,
   onChange,
+  disabled,
 }: {
   options: Option[];
   value: Option | null;
   onChange: (option: Option | null) => void;
+  disabled?: boolean;
 }) {
   const [query, setQuery] = useState("");
   //   const [selected, setSelected] = useState<Option | null>(null);
@@ -48,14 +50,18 @@ export default function ComboBox({
       <div className="relative">
         <ComboboxInput
           className={clsx(
-            "w-full rounded-lg border-none  py-1.5 pr-8 pl-3 text-sm/6 ",
+            "w-full rounded-md border  py-2 pr-8 pl-3 text-sm/6 ",
             "focus:outline-none data-[focus]:outline-2 data-[focus]:-outline-offset-2 data-[focus]:outline-white/25"
           )}
           displayValue={(option: Option) => option?.label}
           onChange={handleQueryChange}
           placeholder="Select an option"
+          disabled={disabled}
         />
-        <ComboboxButton className="group absolute inset-y-0 right-0 px-2.5">
+        <ComboboxButton
+          className="group absolute inset-y-0 right-0 px-2.5"
+          disabled={disabled}
+        >
           <BiChevronDown className="size-4  " />
         </ComboboxButton>
       </div>
@@ -64,7 +70,7 @@ export default function ComboBox({
         anchor="bottom"
         transition
         className={clsx(
-          "w-[var(--input-width)] rounded-xl border  p-1 [--anchor-gap:var(--spacing-1)] empty:invisible",
+          "w-[var(--input-width)] rounded-xl bg-white border  p-1 [--anchor-gap:var(--spacing-1)] empty:invisible",
           "transition duration-100 ease-in data-[leave]:data-[closed]:opacity-0"
         )}
       >

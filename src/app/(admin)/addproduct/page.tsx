@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { FaTrashAlt, FaUpload } from "react-icons/fa";
-import MultiLevelDropdown from "./CategoryInput";
+import CategoriesInput, { Option } from "./CategoryInput";
 import { useCreateProduct } from "@/api/product/queries/useProductQuery";
 import { toast } from "react-toastify";
 import { useSearchUnits } from "@/api/units/queries/useUnitsQuery";
@@ -30,6 +30,15 @@ const AddProduct = () => {
   const [product, setProduct] = useState(initialState);
   const [unitSearch, setUnitSearch] = useState("");
   const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
+  const [categories, setCategories] = useState<{
+    selectedCategory: Option | null;
+    selectedSubcategory: Option | null;
+    selectedSubcategory2: Option | null;
+  }>({
+    selectedCategory: null,
+    selectedSubcategory: null,
+    selectedSubcategory2: null,
+  });
 
   const { data: unitData } = useSearchUnits(unitSearch);
   const { mutate: createProduct } = useCreateProduct();
@@ -51,6 +60,26 @@ const AddProduct = () => {
     formData.append("product_uom", product.product_uom);
     formData.append("product_length", product.product_length);
     formData.append("product_width", product.product_width);
+
+    // check if all category is selected
+    if (
+      !categories.selectedCategory ||
+      !categories.selectedSubcategory ||
+      !categories.selectedSubcategory2
+    ) {
+      toast.error("Please select all categories");
+      return;
+    }
+
+    // append categories array
+    formData.append(
+      "product_categories",
+      JSON.stringify([
+        categories.selectedCategory.value,
+        categories.selectedSubcategory.value,
+        categories.selectedSubcategory2.value,
+      ])
+    );
 
     for (let i = 0; i < images.length; i++) {
       formData.append("product_images", images[i]);
@@ -148,24 +177,10 @@ const AddProduct = () => {
                 )}
               </div>
             </div>
-            <MultiLevelDropdown />
-
-            <div className="mt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Search Category <span className="text-red-500">*</span>
-                  </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Search Subcategory <span className="text-red-500">*</span>
-                  </label>
-                  <input className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
-                </div>
-              </div>
-            </div>
+            <CategoriesInput
+              categories={categories}
+              setCategories={setCategories}
+            />
 
             <div className="mt-4">
               <div className="grid grid-cols-2 gap-4">
@@ -242,7 +257,10 @@ const AddProduct = () => {
             </div>
 
             <div className="mt-6 flex gap-4">
-              <button onClick={handleCreate} className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+              <button
+                onClick={handleCreate}
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+              >
                 Add product
               </button>
               <button className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition">
