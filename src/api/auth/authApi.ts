@@ -6,8 +6,9 @@ export interface User {
   _id: string;
   username: string;
   email: string;
-  phoneNumber: number;
+  phoneNumber: string;
   isEmailVerified: boolean;
+  password: string;
   role: string;
   createdAt: string;
   updatedAt: string;
@@ -45,13 +46,14 @@ export const fetchUsers = async (): Promise<ApiResponse<UsersResponse>> => {
 
 export const createUser = async (
   data: Partial<User>
-): Promise<ApiResponse<{ user: User }>> => {
-  const response = await axios.post<ApiResponse<{ user: User }>>(
+): Promise<ApiResponse<{ user: User; accessToken: string; refreshToken: string }>> => {
+  const response = await axios.post<ApiResponse<{ user: User; accessToken: string; refreshToken: string }>>(
     `${BASE_URL}/users/register`,
     data
   );
   return response.data;
 };
+
 
 // send verify otp
 

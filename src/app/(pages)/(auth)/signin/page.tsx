@@ -1,9 +1,41 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
+import { useLoginUser } from "@/api/auth/queries/authQuery";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+
+const initialState = {
+  email: "",
+  password: "",
+};
 
 const SignIn = () => {
+  const [formData, setFormData] = useState(initialState);
+  const { mutate: loginUser } = useLoginUser();
+  const router = useRouter();
+
+  const handleSignIn = () => {
+    loginUser(
+      {
+        email: formData.email,
+        password: formData.password,
+      },
+      {
+        onSuccess: (data) => {
+          router.push("/");
+          toast.success("User logged in successfully!");
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to login user");
+        },
+      }
+    );
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8 bg-gradient-to-r from-[#131132] to-[#605AC5] rounded-lg lg:rounded-[15px]">
       <div className="flex flex-col lg:grid lg:grid-cols-2 ">
@@ -51,20 +83,28 @@ const SignIn = () => {
 
           {/* Username or Email Field */}
           <label className="block text-gray-600">
-            Enter your username or email or mobile number <span className="text-red-500">*</span>
+            Enter your username or email or mobile number{" "}
+            <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
-            placeholder="Username or email or Mobile number +258 xxx xxx xxx" 
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            value={formData.email}
+            placeholder="Username or email or Mobile number +258 xxx xxx xxx"
             className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
 
           {/* Password Field */}
           <label className="block mt-4 text-gray-600">
-            Enter your Password <span><span className="text-red-500">*</span></span>
+            Enter your Password{" "}
+            <span>
+              <span className="text-red-500">*</span>
+            </span>
           </label>
           <input
             type="password"
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            value={formData.password}
             placeholder="Password"
             className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
@@ -77,7 +117,7 @@ const SignIn = () => {
           </div>
 
           {/* Sign In Button */}
-          <button className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold">
+          <button onClick={handleSignIn} className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold">
             Sign in
           </button>
 

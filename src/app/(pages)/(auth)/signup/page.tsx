@@ -3,103 +3,50 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  useCreateUser,
-  useLoginUser,
-  useSendOtp,
-  useVerifyOtp,
-} from "@/api/auth/queries/authQuery";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useCreateUser, useLoginUser } from "@/api/auth/queries/authQuery";
 
 const initialState = {
-  name: "",
+  username: "",
   email: "",
+  phoneNumber: "",
   password: "",
   confirmPassword: "",
-  phoneNumber: "",
-  otp: "",
-  isEmailVerified: false,
 };
 
 const SignUp = () => {
   const [formData, setFormData] = useState(initialState);
   const [isEmailModalOpen, setEmailModalOpen] = useState(false);
-  const [otp, setOtp] = useState("");
-  const router = useRouter();
-
-  const { mutate: sendOtpEmail } = useSendOtp();
-  const { mutate: verifyOtp } = useVerifyOtp();
   const { mutate: createUser } = useCreateUser();
   const { mutate: loginUser } = useLoginUser();
+  const router = useRouter();
 
-  // Send OTP
-  const handleSendOtp = () => {
-    if (!formData.email) {
-      toast.error("Please enter a valid email address.");
+  const handleSignUp = () => {
+    if (!formData.username || !formData.email || !formData.phoneNumber) {
+      toast.error("All fields are required");
       return;
     }
 
-    sendOtpEmail(
-      { email: formData.email },
-      {
-        onSuccess: () => {
-          toast.success("OTP sent successfully!");
-          setEmailModalOpen(true); // Open modal
-        },
-        onError: (error: any) => {
-          toast.error(error.response?.data?.message || "Failed to send OTP.");
-        },
-      }
-    );
-  };
-
-  // Verify OTP
-  const handleVerifyOtp = () => {
-    if (!otp) {
-      toast.error("Please enter the OTP.");
-      return;
-    }
-
-    verifyOtp(
-      { email: formData.email, otp },
-      {
-        onSuccess: () => {
-          toast.success("OTP verified successfully!");
-          setEmailModalOpen(false); // Close modal
-        },
-        onError: (error: any) => {
-          toast.error(error.response?.data?.message || "Invalid OTP.");
-        },
-      }
-    );
-  };
-
-  const handleRegister = () => {
-    // e.preventDefault();
-    if (!formData.isEmailVerified) {
-      toast.error("Please verify your email address first.");
-      return;
-    }
-    if (formData.password !== formData.confirmPassword) {
-      toast.error("Passwords do not match.");
+    if (!formData.password || formData.password !== formData.confirmPassword) {
+      toast.error("Passwords do not match");
       return;
     }
 
     createUser(
       {
-        name: formData.name,
+        username: formData.username,
         email: formData.email,
-        password: formData.password,
         phoneNumber: formData.phoneNumber,
+        password: formData.password,
       },
       {
-        onSuccess: (response) => {
-          toast.success("Registration successful!");
-          // handleLogin();
+        onSuccess: (data) => {
+         router.push("/login");
+          toast.success("User registered and logged in successfully!");
         },
-        onError: (error: any) => {
-          toast.error(error.response?.data?.message || "Registration failed.");
+        onError: (error) => {
+          toast.error(error.message || "Failed to register user");
         },
       }
     );
@@ -144,23 +91,35 @@ const SignUp = () => {
               Sign up
             </h3>
 
-            <form className="mt-6 space-y-4" onSubmit={handleRegister}>
+            <form className="mt-6 space-y-4">
               <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
                 {/* Name Field */}
                 <div className="w-full lg:w-1/2">
-                  <label className="block text-gray-600">User Name <span className="text-red-500">*</span></label>
+                  <label className="block text-gray-600">
+                    User Name <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
-                    placeholder="Name"
+                    placeholder="Enter user name"
+                    value={formData.username}
+                    onChange={(e) =>
+                      setFormData({ ...formData, username: e.target.value })
+                    }
                     className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
-                {/* Username Field */}
+                {/* Phone Number Field */}
                 <div className="w-full lg:w-1/2">
-                  <label className="block text-gray-600">Mobile number <span className="text-red-500">*</span></label>
+                  <label className="block text-gray-600">
+                    Mobile number <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="text"
+                    value={formData.phoneNumber}
+                    onChange={(e) =>
+                      setFormData({ ...formData, phoneNumber: e.target.value })
+                    }
                     placeholder="Enter mobile number +258 xxx xxx xxx"
                     className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
@@ -170,7 +129,8 @@ const SignUp = () => {
               {/* Email Field */}
               <div>
                 <label className="block text-gray-600">
-                  Enter your email address <span className="text-red-500">*</span>
+                  Enter your email address{" "}
+                  <span className="text-red-500">*</span>
                 </label>
                 <input
                   type="email"
@@ -185,8 +145,8 @@ const SignUp = () => {
 
               {/* Sign Up Button */}
               <div
-                onClick={handleSendOtp}
-                className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex items-center justify-center text-white py-2 rounded-lg text-lg font-semibold"
+                onClick={() => setEmailModalOpen(true)}
+                className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex items-center justify-center text-white py-2 rounded-lg text-lg font-semibold cursor-pointer"
               >
                 Send OTP and Password
               </div>
@@ -203,44 +163,40 @@ const SignUp = () => {
         </div>
       </div>
 
-      {/* OTP Modal */}
       {isEmailModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg w-[90%] max-w-md">
-            <h2 className="text-xl font-bold text-gray-800">Verify OTP</h2>
-            <input
-              type="text"
-              placeholder="Check Mobile Number For OTP"
-              className="w-full mt-4 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-            />
-
-            {/* Password Field */}
+            <h2 className="text-xl font-bold text-gray-800">Register</h2>
             <div>
               <label className="block mt-4 text-gray-600">Password</label>
               <input
                 type="password"
+                value={formData.password}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
                 placeholder="Password"
                 className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-
-            {/* Confirm Password Field */}
             <div>
               <label className="block text-gray-600">Confirm Password</label>
               <input
                 type="password"
+                value={formData.confirmPassword}
+                onChange={(e) =>
+                  setFormData({ ...formData, confirmPassword: e.target.value })
+                }
                 placeholder="Confirm password"
                 className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
 
             <button
-              onClick={handleVerifyOtp}
-              className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4  text-white py-2 rounded-lg"
+              onClick={handleSignUp}
+              className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4 text-white py-2 rounded-lg"
             >
-              Verify OTP and Sign Up
+              Register
             </button>
           </div>
         </div>

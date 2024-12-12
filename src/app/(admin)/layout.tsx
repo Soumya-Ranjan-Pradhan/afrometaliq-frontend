@@ -2,6 +2,7 @@ import ReactQueryProvider from "@/context/ReactQueryProvider";
 import AdminHeader from "@/Components/AdminComponents/AdminHeader";
 import "../globals.css";
 import AdminSidebar from "@/Components/AdminComponents/SideBar";
+import { ToastContainer } from "react-toastify";
 
 export const metadata = {
   title: "Admin Panel",
@@ -16,6 +17,7 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body className="bg-gray-100 h-screen">
+        <ToastContainer />
         <ReactQueryProvider>
           <div className="flex h-screen bg-gray-50">
             {/* Sidebar */}
