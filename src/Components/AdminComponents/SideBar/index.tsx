@@ -15,7 +15,6 @@ import Image from "next/image";
 import { BiCategoryAlt } from "react-icons/bi";
 import { MdOutlineProductionQuantityLimits } from "react-icons/md";
 import { MdAcUnit } from "react-icons/md";
-import { RiCodeSSlashFill } from "react-icons/ri";
 import { MdOutlineCategory } from "react-icons/md";
 import { TbCategoryPlus } from "react-icons/tb";
 import { FaFirstOrder } from "react-icons/fa";
@@ -92,7 +91,7 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/addproduct"
+                  href="/products/add"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <FiTag className="mr-3" /> Products
@@ -113,7 +112,7 @@ const AdminSidebar: React.FC = () => {
                 </Link> */}
 
                 <Link
-                  href="/allproducts"
+                  href="/products"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <MdOutlineProductionQuantityLimits className="mr-3" /> All
@@ -203,7 +202,6 @@ const AdminSidebar: React.FC = () => {
                 </Link>
               </div>
 
-
               <div className="ml-4">
                 <Link
                   href="/aboutus"
@@ -234,8 +232,6 @@ const AdminSidebar: React.FC = () => {
               <span>{galleryOpen ? <FiChevronUp /> : <FiChevronDown />}</span>
             </button>
 
-
-
             <div
               className={`transition-all overflow-hidden ${
                 galleryOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
@@ -250,9 +246,6 @@ const AdminSidebar: React.FC = () => {
                 </Link>
               </div>
             </div>
-
-
-
 
             <Link
               href="/support"

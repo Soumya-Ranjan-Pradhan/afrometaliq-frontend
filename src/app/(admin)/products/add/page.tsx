@@ -5,19 +5,17 @@ import { FaTrashAlt, FaUpload } from "react-icons/fa";
 import CategoriesInput, { Option } from "./CategoryInput";
 import { useCreateProduct } from "@/api/product/queries/useProductQuery";
 import { toast } from "react-toastify";
-import { useSearchUnits } from "@/api/units/queries/useUnitsQuery";
+import UnitInput from "./UnitInput";
 
 const initialState = {
   product_name: "",
   product_code: "",
   product_unit: "",
   product_price: "",
-  product_discount: "",
+  product_discount: "0",
   product_images: "",
-  product_selling_price: "",
   product_description: "",
   product_size: "",
-  product_theme_size: "",
   product_grade: "",
   product_thickness: "",
   product_uom: "",
@@ -28,8 +26,8 @@ const initialState = {
 const AddProduct = () => {
   const [images, setImages] = useState<File[]>([]);
   const [product, setProduct] = useState(initialState);
-  const [unitSearch, setUnitSearch] = useState("");
-  const [selectedUnit, setSelectedUnit] = useState<string | null>(null);
+  const [selectedUnit, setSelectedUnit] = useState<Option | null>(null);
+  const [sizes, setSizes] = useState<string[]>([""]);
   const [categories, setCategories] = useState<{
     selectedCategory: Option | null;
     selectedSubcategory: Option | null;
@@ -40,7 +38,6 @@ const AddProduct = () => {
     selectedSubcategory2: null,
   });
 
-  const { data: unitData } = useSearchUnits(unitSearch);
   const { mutate: createProduct } = useCreateProduct();
 
   // create product
@@ -48,18 +45,17 @@ const AddProduct = () => {
     const formData = new FormData();
     formData.append("product_name", product.product_name);
     formData.append("product_code", product.product_code);
-    formData.append("product_unit", selectedUnit || "");
+    formData.append("product_unit", selectedUnit?.value || "");
     formData.append("product_price", product.product_price);
     formData.append("product_discount", product.product_discount);
-    formData.append("product_selling_price", product.product_selling_price);
     formData.append("product_description", product.product_description);
     formData.append("product_size", product.product_size);
-    formData.append("product_theme_size", product.product_theme_size);
     formData.append("product_grade", product.product_grade);
     formData.append("product_thickness", product.product_thickness);
     formData.append("product_uom", product.product_uom);
     formData.append("product_length", product.product_length);
     formData.append("product_width", product.product_width);
+    formData.append("product_theme_size", JSON.stringify(sizes));
 
     // check if all category is selected
     if (
@@ -108,8 +104,24 @@ const AddProduct = () => {
     setImages(images.filter((_, i) => i !== index));
   };
 
-  const handleUnitSelect = (unitId: string) => {
-    setSelectedUnit(unitId);
+  const handleSizesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // get value, and index from id
+    const { value, id } = e.target;
+
+    // update state
+    setSizes((prevSizes) => {
+      const updatedSizes = [...prevSizes];
+      updatedSizes[parseInt(id)] = value;
+      return updatedSizes;
+    });
+  };
+
+  const handleAddSize = () => {
+    setSizes((prev) => [...prev, ""]);
+  };
+
+  const handleRemoveSize = (index: number) => {
+    setSizes((prev) => prev.filter((_, i) => i !== index));
   };
 
   return (
@@ -151,31 +163,7 @@ const AddProduct = () => {
                   className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Search Unit <span className="text-red-500">*</span>
-                </label>
-                <input
-                  value={unitSearch}
-                  onChange={(e) => setUnitSearch(e.target.value)}
-                  className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
-                {unitData?.data?.units && unitData.data.units.length > 0 && (
-                  <ul className="bg-white border rounded-md mt-2">
-                    {unitData.data.units.map((unit) => (
-                      <li
-                        key={unit._id}
-                        className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${
-                          selectedUnit === unit._id ? "bg-blue-200" : ""
-                        }`}
-                        onClick={() => handleUnitSelect(unit._id)}
-                      >
-                        {unit.unit_name}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
+              <UnitInput value={selectedUnit} onChange={setSelectedUnit} />
             </div>
             <CategoriesInput
               categories={categories}
@@ -190,6 +178,7 @@ const AddProduct = () => {
                   </label>
                   <input
                     value={product.product_price}
+                    type="number"
                     onChange={(e) =>
                       setProduct({ ...product, product_price: e.target.value })
                     }
@@ -202,31 +191,11 @@ const AddProduct = () => {
                   </label>
                   <input
                     value={product.product_discount}
+                    type="number"
                     onChange={(e) =>
                       setProduct({
                         ...product,
                         product_discount: e.target.value,
-                      })
-                    }
-                    className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700">
-                    Product Selling Price{" "}
-                    <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    value={product.product_selling_price}
-                    onChange={(e) =>
-                      setProduct({
-                        ...product,
-                        product_selling_price: e.target.value,
                       })
                     }
                     className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -262,12 +231,6 @@ const AddProduct = () => {
                 className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
               >
                 Add product
-              </button>
-              <button className="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 transition">
-                Save product
-              </button>
-              <button className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition">
-                Schedule
               </button>
             </div>
           </div>
@@ -325,53 +288,30 @@ const AddProduct = () => {
                 Add size
               </label>
               <div className="grid grid-cols-3 gap-2 mt-2">
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  value={product.product_size}
-                  onChange={(e) =>
-                    setProduct({ ...product, product_size: e.target.value })
-                  }
-                  placeholder="6m"
-                  className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
-                />
-
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  value={product.product_size}
-                  onChange={(e) =>
-                    setProduct({ ...product, product_size: e.target.value })
-                  }
-                  placeholder="9m"
-                  className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
-                />
-
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  value={product.product_size}
-                  onChange={(e) =>
-                    setProduct({ ...product, product_size: e.target.value })
-                  }
-                  placeholder="13m"
-                  className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
-                />
-
-                <input
-                  type="text"
-                  name=""
-                  id=""
-                  value={product.product_size}
-                  onChange={(e) =>
-                    setProduct({ ...product, product_size: e.target.value })
-                  }
-                  placeholder="NA"
-                  className="border rounded-md px-2 py-1 text-sm hover:bg-blue-100"
-                />
+                {sizes.map((size, index) => (
+                  <div className="relative group " key={index}>
+                    <input
+                      type="text"
+                      value={size}
+                      id={`${index}`}
+                      onChange={handleSizesChange}
+                      placeholder="6m"
+                      className="border rounded-md px-2 py-1 text-sm "
+                    />
+                    <button
+                      className="absolute hidden group-hover:block top-1 right-1 text-red-400 hover:text-red-600  p-1 rounded-full hover:bg-white "
+                      onClick={() => handleRemoveSize(index)}
+                    >
+                      <FaTrashAlt />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  onClick={handleAddSize}
+                  className="bg-blue-600 text-white px-4 rounded-md hover:bg-blue-700 transition"
+                >
+                  Add size
+                </button>
               </div>
             </div>
 
@@ -382,11 +322,11 @@ const AddProduct = () => {
                     Product Size <span className="text-red-500">*</span>
                   </label>
                   <input
-                    value={product.product_theme_size}
+                    value={product.product_size}
                     onChange={(e) =>
                       setProduct({
                         ...product,
-                        product_theme_size: e.target.value,
+                        product_size: e.target.value,
                       })
                     }
                     className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
