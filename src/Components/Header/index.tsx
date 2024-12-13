@@ -10,11 +10,12 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import ProfileTooltip from "./ProfileTooltip/index";
 import Link from "next/link";
 
-import { IoMenu } from "react-icons/io5";
+// import { IoMenu } from "react-icons/io5";
 import { RiBallPenLine } from "react-icons/ri";
 import { MdLockOutline } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
 import Categories from "../Categories";
+import CategoryMenu from "./CategoryMenu";
 
 const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
@@ -24,12 +25,9 @@ const Header = () => {
 
   // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127208/rcwozn42rynklc0hamkf.png
 
-
   // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127267/fuvzipwny8e7vnbxt6ir.png
 
-
   // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127340/kqsqhotiwveunthslfn0.png
-
 
   // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127377/ljmdplhc9jbprou5l5wb.png
 
@@ -72,7 +70,10 @@ const Header = () => {
             <span className="text-sm">Log in</span>
           </Link>
 
-          <Link href="/contact" className="hidden lg:flex items-center space-x-1">
+          <Link
+            href="/contact"
+            className="hidden lg:flex items-center space-x-1"
+          >
             <RiContactsBook3Line className="text-2xl" />
             <span className="text-sm">Contact Us</span>
           </Link>
@@ -85,10 +86,13 @@ const Header = () => {
     items-center  sm:gap-5 gap-2 sticky top-0 z-50"
       >
         {/* Category Section */}
-        <div className="hidden lg:flex items-center gap-3 cursor-pointer bg-[#141334] pl-3 pr-3 pt-1 pb-1 ml-4  ">
+        {/* <div className="hidden lg:flex items-center gap-3 cursor-pointer bg-[#141334] pl-3 pr-3 pt-1 pb-1 ml-4  ">
           <IoMenu className="text-white text-4xl" />
 
           <p className="text-white font-semibold text-md">Shop by Category</p>
+        </div> */}
+        <div>
+          <CategoryMenu />
         </div>
 
         {/* Navigation Links for large screens */}

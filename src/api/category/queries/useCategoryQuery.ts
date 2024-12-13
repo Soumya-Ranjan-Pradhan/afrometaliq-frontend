@@ -8,9 +8,11 @@ import {
 import {
   ApiResponse,
   Category,
+  CategoryMenu,
   createCategory,
   deleteCategory,
   fetchCategories,
+  fetchCategoryMenu,
   getCategoryById,
   searchCategory,
   updateCategory,
@@ -89,5 +91,13 @@ export const useSearchCategory = (query: string) => {
     queryKey: ["categories", query], //! Unique query key with the search query
     queryFn: () => searchCategory(query),
     enabled: !!query, //! Only run the query if `query` is not empty
+  });
+};
+
+export const useCategoryMenu = () => {
+  return useQuery<ApiResponse<{ menu: CategoryMenu[] }>, Error>({
+    queryKey: ["categories", "menu"],
+    queryFn: () => fetchCategoryMenu(),
+    staleTime: 1000 * 60 * 60, // 1 hour
   });
 };

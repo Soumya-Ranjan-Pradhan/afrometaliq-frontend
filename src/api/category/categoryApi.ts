@@ -20,20 +20,21 @@ export interface ApiResponse<T> {
 }
 
 // Fetch all categories
-export const fetchCategories = async (parent: string | null): Promise<
-  ApiResponse<{ categories: Category[] }>
-> => {
+export const fetchCategories = async (
+  parent: string | null
+): Promise<ApiResponse<{ categories: Category[] }>> => {
   const response = await axios.get<ApiResponse<{ categories: Category[] }>>(
-    `${BASE_URL}/category`, {
-      params: { parent}
+    `${BASE_URL}/category`,
+    {
+      params: { parent },
     }
   );
   return response.data;
 };
 
-export const getCategoryById = async (id: string ): Promise<
-  ApiResponse<{ category: Category }>
-> => {
+export const getCategoryById = async (
+  id: string
+): Promise<ApiResponse<{ category: Category }>> => {
   const response = await axios.get<ApiResponse<{ category: Category }>>(
     `${BASE_URL}/category/${id}`
   );
@@ -79,6 +80,23 @@ export const searchCategory = async (
 ): Promise<ApiResponse<{ categories: Category[] }>> => {
   const response = await axios.get<ApiResponse<{ categories: Category[] }>>(
     `${BASE_URL}/category/search?search=${query}`
+  );
+  return response.data;
+};
+
+export type CategoryMenu = {
+  _id: string;
+  category_name: string;
+  parent: string | null;
+  children: CategoryMenu[];
+};
+
+// fetch all categories with child
+export const fetchCategoryMenu = async (): Promise<
+  ApiResponse<{ menu: CategoryMenu[] }>
+> => {
+  const response = await axios.get<ApiResponse<{ menu: CategoryMenu[] }>>(
+    `${BASE_URL}/category/menu`
   );
   return response.data;
 };
