@@ -17,8 +17,8 @@ export default function AdminLayout({
   return (
     <html lang="en">
       <body className="bg-gray-100 h-screen">
-        <ToastContainer />
         <ReactQueryProvider>
+          <ToastContainer position="top-right" autoClose={3000} />
           <div className="flex h-screen bg-gray-50">
             {/* Sidebar */}
             <AdminSidebar />

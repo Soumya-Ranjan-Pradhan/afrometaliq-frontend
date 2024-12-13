@@ -5,6 +5,7 @@ import Footer from "@/Components/Footer";
 import type { Metadata } from "next";
 import "../globals.css";
 import { FaWhatsapp } from "react-icons/fa";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -34,6 +35,7 @@ export default function RootLayout({
       </head>
       <body className="relative">
         <ReactQueryProvider>
+        <ToastContainer position="top-right" autoClose={3000} />
           <Header />
 
           <div>

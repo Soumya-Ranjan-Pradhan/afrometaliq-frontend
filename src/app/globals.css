@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "react-toastify/dist/ReactToastify.css";
+
+
 .swiper-pagination-bullet {
   background-color: rgba(255, 255, 255, 0.8);
   opacity: 1;

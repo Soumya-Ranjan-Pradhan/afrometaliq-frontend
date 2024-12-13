@@ -10,8 +10,7 @@ import {
   useUpdateCategory,
 } from "@/api/category/queries/useCategoryQuery";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast} from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -119,8 +118,6 @@ const AddCategory = () => {
   return (
     <>
       {/* Toast Container */}
-      <ToastContainer />
-
       <div>
         {/* show parent Category name */}
         {parentDetails?.data.category.category_name && (
