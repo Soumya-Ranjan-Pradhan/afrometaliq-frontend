@@ -1,7 +1,10 @@
+"use client";
 import React from "react";
 import Image from "next/image";
+import { useTranslation } from "react-i18next";
 
 const AboutUs = () => {
+  const { t } = useTranslation();
   return (
     <section className="flex flex-col lg:flex-row items-center justify-center my-10 mx-auto max-w-6xl px-6">
       {/* Left Image Section */}
@@ -19,7 +22,7 @@ const AboutUs = () => {
 
       {/* Right Content Section */}
       <div className="w-full lg:w-1/2 lg:pl-8">
-        <h2 className="text-red-600 text-xl font-semibold mb-2">ABOUT US</h2>
+        <h2 className="text-red-600 text-xl font-semibold mb-2">About Us</h2>
         <h1 className="text-4xl font-bold mb-4">
           We are providing the best customer service
         </h1>
