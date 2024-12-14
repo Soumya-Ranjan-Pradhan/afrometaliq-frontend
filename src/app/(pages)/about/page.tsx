@@ -1,25 +1,10 @@
 "use client";
+import { useGetAbout } from "@/api/about/query/useAboutQuery";
 import React, { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 
-interface FaqItemProps {
-  question: string;
-  answer: string;
-}
-
 const FaqPage: React.FC = () => {
-  const faqData: FaqItemProps[] = [
-    {
-      question: "What are AFROMETALIQ business hours?",
-      answer:
-        "Our operational hours are Monday to Friday, from 08h00 to 16h30. Note that we are not open on Saturdays for collections.",
-    },
-    {
-      question: "Where is AFROMETALIQ located?",
-      answer:
-        "AFROMETALIQ has branches within South Africa, in all provinces, as well as internationally in Angola, Malawi, Mozambique, Ghana, Zambia and Swaziland. To search for a branch, you can do so here: https://macsteel.co.za/branch-locator or you can see a list of Macsteel branches and their respective contact details by clicking here.",
-    },
-  ];
+  const { data, isLoading, error, refetch } = useGetAbout();
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -31,15 +16,24 @@ const FaqPage: React.FC = () => {
         </span>
       </h2>
       <div className="space-y-4">
-        {faqData.map((faq, index) => (
-          <FaqItem key={index} question={faq.question} answer={faq.answer} />
+        {isLoading && <p>Loading...</p>}
+
+        {data?.data.about.map((faq, index) => (
+          <FaqItem
+            key={index}
+            question={faq.about_title}
+            answer={faq.about_description}
+          />
         ))}
       </div>
     </div>
   );
 };
 
-const FaqItem: React.FC<FaqItemProps> = ({ question, answer }) => {
+const FaqItem: React.FC<{ question: string; answer: string }> = ({
+  question,
+  answer,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggle = () => setIsOpen(!isOpen);
@@ -65,9 +59,6 @@ const FaqItem: React.FC<FaqItemProps> = ({ question, answer }) => {
 };
 
 export default FaqPage;
-
-
-
 
 // "use client";
 // import React, { useState } from "react";

@@ -10,7 +10,7 @@ import {
   useUpdateCategory,
 } from "@/api/category/queries/useCategoryQuery";
 import { FaEdit, FaTrash } from "react-icons/fa";
-import { toast} from "react-toastify";
+import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 
@@ -113,7 +113,7 @@ const AddCategory = () => {
 
   const categories = searchQuery
     ? searchData?.data.categories
-    : data?.data.categories
+    : data?.data.categories;
 
   return (
     <>
@@ -124,10 +124,10 @@ const AddCategory = () => {
           <div className="bg-gray-50 flex items-center justify-center px-4 md:px-10">
             <div className="bg-white w-full max-w-4xl rounded-lg shadow-lg p-8">
               <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                <p>Category - {parentDetails?.data.category.ancestors}</p>
                 <p>
-                  Parent Category: {parentDetails?.data.category.category_name}
+                  Sub Category: {parentDetails?.data.category.category_name}
                 </p>
-                <p>breadcrumb - {parentDetails?.data.category.ancestors}</p>
               </h1>
             </div>
           </div>

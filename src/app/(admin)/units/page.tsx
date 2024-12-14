@@ -27,7 +27,7 @@ const Units = () => {
   // Handle create category
   const handleCreate = () => {
     if (!units.trim()) {
-      toast.error("Category name is required");
+      toast.error("Units name is required");
       return;
     }
     createUnits(
@@ -36,10 +36,10 @@ const Units = () => {
         onSuccess: () => {
           setUnits("");
           refetch();
-          toast.success("Category created successfully!");
+          toast.success("Units created successfully!");
         },
         onError: () => {
-          toast.error("Failed to create category");
+          toast.error("Failed to create Units");
         },
       }
     );
@@ -48,7 +48,7 @@ const Units = () => {
   // Handle save update
   const handleSaveUpdate = () => {
     if (!editingId || !updatedName.trim()) {
-      toast.error("Category name is required");
+      toast.error("Units name is required");
       return;
     }
     updateUnits(
@@ -58,10 +58,10 @@ const Units = () => {
           setEditingId(null);
           setUpdatedName("");
           refetch();
-          toast.success("Category updated successfully!");
+          toast.success("Units updated successfully!");
         },
         onError: () => {
-          toast.error("Failed to update category");
+          toast.error("Failed to update Units");
         },
       }
     );
@@ -74,10 +74,10 @@ const Units = () => {
       onSuccess: () => {
         setDeleteId(null);
         refetch();
-        toast.success("Category deleted successfully!");
+        toast.success("Units deleted successfully!");
       },
       onError: () => {
-        toast.error("Failed to delete category");
+        toast.error("Failed to delete units");
       },
     });
   };
@@ -163,7 +163,7 @@ const Units = () => {
                 <thead>
                   <tr className="bg-gray-100">
                     <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                      Category Name
+                      Units Name
                     </th>
 
                     <th className="border px-4 py-2 text-center text-sm font-medium text-gray-700">
@@ -221,7 +221,7 @@ const Units = () => {
           {deleteId && (
             <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
               <div className="bg-white p-4 rounded shadow-lg">
-                <p>Are you sure you want to delete this category?</p>
+                <p>Are you sure you want to delete this units?</p>
                 <div className="flex justify-end space-x-4 mt-4">
                   <button
                     onClick={confirmDelete}

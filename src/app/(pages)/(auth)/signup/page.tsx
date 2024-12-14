@@ -42,7 +42,7 @@ const SignUp = () => {
       },
       {
         onSuccess: (data) => {
-         router.push("/login");
+         router.push("/");
           toast.success("User registered and logged in successfully!");
         },
         onError: (error) => {
