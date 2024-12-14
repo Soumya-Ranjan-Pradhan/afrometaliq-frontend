@@ -9,7 +9,7 @@ import {
   useSearchCategory,
   useUpdateCategory,
 } from "@/api/category/queries/useCategoryQuery";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaTrash, FaUpload } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
@@ -21,6 +21,7 @@ const AddCategory = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [updatedName, setUpdatedName] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
   // get parent from serach url query
   const searchParams = useSearchParams();
@@ -140,28 +141,57 @@ const AddCategory = () => {
           <h1 className="text-2xl font-semibold text-gray-800 mb-6">
             Add Category
           </h1>
-          <div className="mb-4">
-            <label
-              htmlFor="category-name"
-              className="block text-sm font-medium text-gray-700 mb-2"
-            >
-              Category Name <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="text"
-              id="category-name"
-              value={categoryName}
-              onChange={(e) => setCategoryName(e.target.value)}
-              placeholder="Enter Category name"
-              className="w-full border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
+
+          <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
+            {/* Upload Image */}
+            <div className="flex flex-col">
+              {uploadedImage ? (
+                <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-200">
+                  <img alt="Uploaded" className="w-full h-full object-cover" />
+                  <button className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full shadow hover:bg-red-600 transition">
+                    <FaTrash size={14} />
+                  </button>
+                </div>
+              ) : (
+                <label
+                  htmlFor="image-upload"
+                  className="w-32 h-32 flex items-center justify-center rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition"
+                >
+                  <FaUpload className="text-gray-500" size={24} />
+                  <input
+                    id="image-upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                  />
+                </label>
+              )}
+            </div>
+
+            {/* Title Input */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Category Name
+              </label>
+              <input
+                type="text"
+                id="category-name"
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+                placeholder="Enter Category name"
+                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
+              />
+
+              <div className="flex justify-end mt-2">
+                <button
+                  onClick={handleCreate}
+                  className="min-w-[10rem] mx-auto bg-blue-500  text-white text-lg font-medium py-1 rounded-lg hover:bg-blue-600 transition"
+                >
+                  Save
+                </button>
+              </div>
+            </div>
           </div>
-          <button
-            onClick={handleCreate}
-            className="w-full bg-blue-500 text-white text-lg font-medium py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Save
-          </button>
         </div>
       </div>
 

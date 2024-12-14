@@ -9,7 +9,7 @@ const Home: React.FC = () => {
       <div className="text-center p-6 md:p-10 bg-white shadow-lg rounded-lg max-w-2xl w-full">
         <div className="mb-6">
           <img
-            src="/logo.png" // Add your logo file in the public folder
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734198307/cqhxu8qnouji9e74o7nm.jpg" 
             alt="Atlantica Steel Logo"
             className="mx-auto w-32 md:w-40 lg:w-48"
           />

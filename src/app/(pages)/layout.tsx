@@ -7,6 +7,7 @@ import "../globals.css";
 import { FaWhatsapp } from "react-icons/fa";
 import { ToastContainer } from "react-toastify";
 import "@/i18n";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -45,7 +46,7 @@ export default function RootLayout({
           </div>
           <Footer />
 
-          <a
+          <Link
             href="https://wa.me/your-number"
             target="_blank"
             rel="noopener noreferrer"
@@ -55,7 +56,7 @@ export default function RootLayout({
             }}
           >
             <FaWhatsapp size={24} />
-          </a>
+          </Link>
         </ReactQueryProvider>
       </body>
     </html>
