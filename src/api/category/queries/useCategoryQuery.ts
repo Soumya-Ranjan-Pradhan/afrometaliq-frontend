@@ -47,7 +47,7 @@ export const useCreateCategory = () => {
   return useMutation<
     ApiResponse<{ categories: Category[] }>,
     Error,
-    { category_name: string; parent: string | null } //! Variables type passed to the mutation
+    FormData //! Variables type passed to the mutation
   >({
     mutationFn: createCategory,
     onSuccess: () => {
@@ -62,7 +62,7 @@ export const useUpdateCategory = () => {
   return useMutation<
     ApiResponse<{ category: Category }>, //! Return type
     Error, // Error type
-    { id: string; data: { category_name: string } } //! Variables type
+    { id: string; data: FormData } //! Variables type
   >({
     mutationFn: ({ id, data }) => updateCategory(id, data),
     onSuccess: () => {

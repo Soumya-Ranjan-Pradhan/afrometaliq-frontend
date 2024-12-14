@@ -42,10 +42,9 @@ export const getCategoryById = async (
 };
 
 // Create a new category
-export const createCategory = async (data: {
-  category_name: string;
-  parent?: string | null;
-}): Promise<ApiResponse<{ categories: Category[] }>> => {
+export const createCategory = async (
+  data: FormData
+): Promise<ApiResponse<{ categories: Category[] }>> => {
   const response = await axios.post<ApiResponse<{ categories: Category[] }>>(
     `${BASE_URL}/category`,
     data
@@ -56,7 +55,7 @@ export const createCategory = async (data: {
 // Update a category
 export const updateCategory = async (
   id: string,
-  data: { category_name: string }
+  data: FormData
 ): Promise<ApiResponse<{ category: Category }>> => {
   const response = await axios.put<ApiResponse<{ category: Category }>>(
     `${BASE_URL}/category/${id}`,
