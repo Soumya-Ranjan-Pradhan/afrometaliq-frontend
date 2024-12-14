@@ -1,6 +1,52 @@
-import React from "react";
+"use client";
+import { createContacts } from "@/api/contact/query/useContactQuery";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
+
+const initialState = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  mobile_number: "",
+  message: "",
+};
 
 const Contact = () => {
+  const [contact, setContact] = useState(initialState);
+
+  const { mutate: createContact } = createContacts();
+
+  const handleCreate = () => {
+    if (
+      
+      !contact.first_name.trim() ||
+      !contact.last_name.trim() ||
+      !contact.email.trim() ||
+      !contact.mobile_number.trim() ||
+      !contact.message.trim()
+    ) {
+      toast.error("All fields are required");
+      return;
+    }
+    createContact(
+      {
+        first_name: contact.first_name,
+        last_name: contact.last_name,
+        email: contact.email,
+        mobile_number: contact.mobile_number,
+        message: contact.message,
+      },
+      {
+        onSuccess: () => {
+          setContact(initialState);
+          toast.success("Contact Send successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to create about");
+        },
+      }
+    );
+  };
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-fixed"
@@ -55,7 +101,7 @@ const Contact = () => {
               <h2 className="text-2xl font-semibold text-gray-700">
                 Send Us a Message
               </h2>
-              <form className="mt-5 space-y-4">
+              <form className="mt-5 space-y-4" onSubmit={(e) => e.preventDefault()} >
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -67,6 +113,10 @@ const Contact = () => {
                     <input
                       id="firstName"
                       type="text"
+                      value={contact.first_name}
+                      onChange={(e) =>
+                        setContact({ ...contact, first_name: e.target.value })
+                      }
                       placeholder="Enter your first name"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2 text-sm"
                     />
@@ -80,6 +130,10 @@ const Contact = () => {
                     </label>
                     <input
                       id="lastName"
+                      value={contact.last_name}
+                      onChange={(e) =>
+                        setContact({ ...contact, last_name: e.target.value })
+                      }
                       type="text"
                       placeholder="Enter your last name"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2 text-sm"
@@ -95,6 +149,10 @@ const Contact = () => {
                   </label>
                   <input
                     id="email"
+                    value={contact.email}
+                    onChange={(e) =>
+                      setContact({ ...contact, email: e.target.value })
+                    }
                     type="email"
                     placeholder="Enter your email"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2 text-sm"
@@ -109,6 +167,10 @@ const Contact = () => {
                   </label>
                   <input
                     id="phone"
+                    value={contact.mobile_number}
+                    onChange={(e) =>
+                      setContact({ ...contact, mobile_number: e.target.value })
+                    }
                     type="tel"
                     placeholder="Enter your mobile number"
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2 text-sm"
@@ -123,12 +185,17 @@ const Contact = () => {
                   </label>
                   <textarea
                     id="message"
+                    value={contact.message}
+                    onChange={(e) =>
+                      setContact({ ...contact, message: e.target.value })
+                    }
                     placeholder="Type your message here"
                     rows={4}
                     className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2 text-sm"
                   ></textarea>
                 </div>
                 <button
+                 onClick={handleCreate}
                   type="submit"
                   className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-md hover:bg-blue-700"
                 >

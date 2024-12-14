@@ -3,7 +3,6 @@ import axios from "axios";
 const BASE_URL = "http://localhost:3001/api/v1";
 
 export interface Product {
-  _id: string;
   product_name: string;
   product_code: string;
   product_unit: string;

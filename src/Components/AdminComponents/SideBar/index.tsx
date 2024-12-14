@@ -25,6 +25,7 @@ import { RiContactsBook3Line } from "react-icons/ri";
 import { TfiGallery } from "react-icons/tfi";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FiAlertOctagon } from "react-icons/fi";
+import { TbListDetails } from "react-icons/tb";
 
 const AdminSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -112,7 +113,7 @@ const AdminSidebar: React.FC = () => {
                 </Link> */}
 
                 <Link
-                  href="/products"
+                  href="/allproducts"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <MdOutlineProductionQuantityLimits className="mr-3" /> All
@@ -217,6 +218,15 @@ const AdminSidebar: React.FC = () => {
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <RiContactsBook3Line className="mr-3" /> Contact No
+                </Link>
+              </div>
+
+              <div className="ml-4">
+                <Link
+                  href="/customer"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <TbListDetails className="mr-3" /> Costumer Details
                 </Link>
               </div>
             </div>
