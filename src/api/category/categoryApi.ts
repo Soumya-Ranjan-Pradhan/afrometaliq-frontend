@@ -10,6 +10,10 @@ export interface Category {
   ancestors: string | null;
   createdAt: string;
   updatedAt: string;
+  thumbnail?: {
+    url: string;
+    public_id: string;
+  };
 }
 
 // Define API Response Type
@@ -28,6 +32,16 @@ export const fetchCategories = async (
     {
       params: { parent },
     }
+  );
+  return response.data;
+};
+
+// Fetch all categories by level
+export const fetchCategoriesByLevel = async (
+  level: number
+): Promise<ApiResponse<{ categories: Category[] }>> => {
+  const response = await axios.get<ApiResponse<{ categories: Category[] }>>(
+    `${BASE_URL}/category/level/${level}`
   );
   return response.data;
 };

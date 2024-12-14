@@ -12,6 +12,7 @@ import {
   createCategory,
   deleteCategory,
   fetchCategories,
+  fetchCategoriesByLevel,
   fetchCategoryMenu,
   getCategoryById,
   searchCategory,
@@ -26,6 +27,18 @@ export const useCategories = (
   return useQuery<ApiResponse<{ categories: Category[] }>, Error>({
     queryKey: ["categories", parent],
     queryFn: () => fetchCategories(parent),
+    ...options,
+  });
+};
+
+// Fetch all categories by level
+export const useCategoriesByLevel = (
+  { level }: { level: number },
+  options?: Partial<UseQueryOptions<any>>
+) => {
+  return useQuery<ApiResponse<{ categories: Category[] }>, Error>({
+    queryKey: ["categories", "level", level],
+    queryFn: () => fetchCategoriesByLevel(level),
     ...options,
   });
 };

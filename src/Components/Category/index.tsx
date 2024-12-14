@@ -1,5 +1,5 @@
 "use client";
-import { useCategories } from "@/api/category/queries/useCategoryQuery";
+import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
@@ -86,7 +86,7 @@ interface CategoryItem {
 // ];
 
 const Category: React.FC = () => {
-  const { data } = useCategories({ parent: null });
+  const { data } = useCategoriesByLevel({ level: 1 });
 
   return (
     <div className="py-8">
@@ -116,12 +116,14 @@ const Category: React.FC = () => {
               <div className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[#5A43AF] flex items-center justify-center mx-auto  transition-colors duration-300">
                 <Image
                   src={
-                    "https://res.cloudinary.com/dndq25au1/image/upload/v1729446209/lsuk3ft68aqyq5se4wvc.png"
+                    category?.thumbnail
+                      ? category.thumbnail.url
+                      : "https://res.cloudinary.com/dndq25au1/image/upload/v1729446209/lsuk3ft68aqyq5se4wvc.png"
                   }
                   alt={category.category_name}
                   width={100}
                   height={100}
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover w-full h-full"
                 />
               </div>
 
