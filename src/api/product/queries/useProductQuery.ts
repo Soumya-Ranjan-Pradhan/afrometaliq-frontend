@@ -17,12 +17,10 @@ export const useProducts = () => {
   });
 };
 
-
-
 // Create product
 export const useCreateProduct = () => {
   const queryClient = useQueryClient();
-  return useMutation<ApiResponse<{}>, Error, FormData>({
+  return useMutation<ApiResponse<unknown>, Error, FormData>({
     mutationFn: createProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
@@ -36,7 +34,7 @@ export const useUpdateProduct = () => {
   return useMutation<
     ApiResponse<{ product: Product }>,
     Error,
-    { id: string; data: any }
+    { id: string; data: unknown }
   >({
     mutationFn: ({ id, data }) => updateProduct(id, data),
     onSuccess: () => {
@@ -48,7 +46,7 @@ export const useUpdateProduct = () => {
 // Delete product
 export const useDeleteProduct = () => {
   const queryClient = useQueryClient();
-  return useMutation<ApiResponse<{}>, Error, string>({
+  return useMutation<ApiResponse<unknown>, Error, string>({
     mutationFn: deleteProduct,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });

@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import { FaEye, FaEdit, FaTrashAlt } from "react-icons/fa";
