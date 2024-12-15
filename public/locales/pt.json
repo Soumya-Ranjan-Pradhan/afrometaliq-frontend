@@ -1,0 +1,19 @@
+{
+  "about_us": "Quem somos",
+  "menu": {
+    "home": "Iníci",
+    "about": "Sobre",
+    "gallery": "Galeria",
+    "fabrication": "Fabricação",
+    "products": "Produtos",
+    "shop_by_category": "Compre por categoria",
+    "sign_up": "Inscrição",
+    "login": "Entrar",
+    "contact_us": "Contate-nos",
+    "search_palceholder": "Pesquise produtos, categorias, marcas e muito mais..."
+  },
+  "buy_now": "Comprar Agora",
+  "add_to_cart": "Adicionar ao Carrinho",
+  "why_choose_us": "Por Que Escolher-nos",
+  "what_our_customers_say": "O Que Nossos Clientes Dizem"
+}

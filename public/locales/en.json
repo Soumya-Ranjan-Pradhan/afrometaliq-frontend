@@ -1,5 +1,19 @@
 {
-  "welcome": "Welcome to our app!",
-  "description": "This is an internationalized React application.",
-  "about_us": "About us"
+  "about_us": "About Us",
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "gallery": "Gallery",
+    "fabrication": "Fabrication",
+    "products": "Products",
+    "shop_by_category": "Shop by Category",
+    "sign_up": "Sign Up",
+    "login": "Log in",
+    "contact_us": "Contact Us",
+    "search_palceholder": "Search products, categories, brands and many more..."
+  },
+  "buy_now": "Buy Now",
+  "add_to_cart": "Add to Cart",
+  "why_choose_us": "Why Choose Us",
+  "what_our_customers_say": "What Our Customers Say"
 }

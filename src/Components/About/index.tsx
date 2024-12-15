@@ -22,7 +22,9 @@ const AboutUs = () => {
 
       {/* Right Content Section */}
       <div className="w-full lg:w-1/2 lg:pl-8">
-        <h2 className="text-red-600 text-xl font-semibold mb-2">About Us</h2>
+        <h2 className="text-red-600 text-xl font-semibold mb-2">
+          {t("about_us")}
+        </h2>
         <h1 className="text-4xl font-bold mb-4">
           We are providing the best customer service
         </h1>

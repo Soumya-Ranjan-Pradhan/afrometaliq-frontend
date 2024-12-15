@@ -3,7 +3,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
-import { RiContactsBook3Line } from "react-icons/ri";
+import { RiContactsBook3Line, RiEnglishInput } from "react-icons/ri";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
@@ -16,8 +16,12 @@ import { MdLockOutline } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
 import Categories from "../Categories";
 import CategoryMenu from "./CategoryMenu";
+import { useTranslation } from "react-i18next";
+import { LanguagesIcon } from "lucide-react";
 
 const Header = () => {
+  const { t, i18n } = useTranslation();
+
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
@@ -30,6 +34,14 @@ const Header = () => {
   // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127340/kqsqhotiwveunthslfn0.png
 
   // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127377/ljmdplhc9jbprou5l5wb.png
+
+  const changeLanguage = () => {
+    if (i18n.language === "en") {
+      i18n.changeLanguage("pt");
+    } else {
+      i18n.changeLanguage("en");
+    }
+  };
 
   return (
     <>
@@ -51,7 +63,7 @@ const Header = () => {
         <div className="hidden lg:flex items-center w-full max-w-lg mx-auto">
           <input
             type="text"
-            placeholder="Search Products, Categories, Brands and More"
+            placeholder={t("menu.search_palceholder")}
             className="w-full px-4 py-2 border border-gray-300 rounded-l-full focus:outline-none"
           />
           <button className="px-4 py-2 bg-[#605AC5] text-white rounded-r-full">
@@ -61,13 +73,23 @@ const Header = () => {
 
         {/* Right side - Register and Login large screen */}
         <div className=" flex items-center gap-4 text-blue-600 mr-3">
+          {/* dropdown to change language */}
+          <div className="flex items-center space-x-1">
+            <button onClick={changeLanguage} className="flex items-center">
+              <span>
+                <LanguagesIcon />
+              </span>
+              {i18n.language === "en" ? <RiEnglishInput /> : "Pt"}
+            </button>
+          </div>
+
           <Link href="/signup" className="flex items-center space-x-1">
             <RiBallPenLine className="text-2xl" />
-            <span className="text-sm">SignUp</span>
+            <span className="text-sm">{t("menu.sign_up")}</span>
           </Link>
           <Link href="/signin" className="flex items-center space-x-1">
             <MdLockOutline className="text-2xl" />
-            <span className="text-sm">Log in</span>
+            <span className="text-sm">{t("menu.login")}</span>
           </Link>
 
           <Link
@@ -75,7 +97,7 @@ const Header = () => {
             className="hidden lg:flex items-center space-x-1"
           >
             <RiContactsBook3Line className="text-2xl" />
-            <span className="text-sm">Contact Us</span>
+            <span className="text-sm">{t("menu.contact_us")}</span>
           </Link>
         </div>
       </header>
@@ -98,23 +120,23 @@ const Header = () => {
         {/* Navigation Links for large screens */}
         <nav className="hidden lg:flex items-center gap-8 text-white p-4">
           <Link href="/" className="relative group hover:text-gray-300">
-            Home
+            {t("menu.home")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
           <Link href="/about" className="relative group hover:text-gray-300">
-            About
+            {t("menu.about")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
           <Link href="/gallery" className="relative group hover:text-gray-300">
-            Gallery
+            {t("menu.gallery")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
           <Link href="#" className="relative group hover:text-gray-300">
-            Fabrication
+            {t("menu.fabrication")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
           <Link href="/product" className="relative group hover:text-gray-300">
-            Product
+            {t("menu.products")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 
