@@ -5,7 +5,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { useCreateUser, useLoginUser } from "@/api/auth/queries/authQuery";
+import {
+  useCreateUser,
+  useSendOtp,
+  useVerifyOtp,
+} from "@/api/auth/queries/authQuery";
+import { AiFillCheckCircle } from "react-icons/ai";
 
 const initialState = {
   username: "",
@@ -13,14 +18,40 @@ const initialState = {
   phoneNumber: "",
   password: "",
   confirmPassword: "",
+  otp: "",
 };
 
 const SignUp = () => {
   const [formData, setFormData] = useState(initialState);
   const [isEmailModalOpen, setEmailModalOpen] = useState(false);
+  const [isOtpVerified, setOtpVerified] = useState(false);
   const { mutate: createUser } = useCreateUser();
-  const { mutate: loginUser } = useLoginUser();
+  const { mutate: sendOtpEmail } = useSendOtp();
+  const { mutate: verifyOtp } = useVerifyOtp();
   const router = useRouter();
+
+  // Handle sending OTP
+ 
+  const handleVerifyOtp = () => {
+    if (!formData.email || !formData.otp) {
+      toast.error("Email and OTP are required");
+      return;
+    }
+
+    verifyOtp(
+      { email: formData.email, otp: formData.otp },
+      {
+        onSuccess: () => {
+          toast.success("OTP verified successfully");
+          setOtpVerified(true);
+        },
+        onError: (error: any) => {
+          toast.error(error.message || "Invalid OTP");
+          setOtpVerified(false);
+        },
+      }
+    );
+  };
 
   const handleSignUp = () => {
     if (!formData.username || !formData.email || !formData.phoneNumber) {
@@ -42,7 +73,7 @@ const SignUp = () => {
       },
       {
         onSuccess: (data) => {
-         router.push("/");
+          router.push("/");
           toast.success("User registered and logged in successfully!");
         },
         onError: (error) => {
@@ -143,9 +174,37 @@ const SignUp = () => {
                 />
               </div>
 
+              <div>
+                <label className="block mt-4 text-gray-600">Password</label>
+                <input
+                  type="password"
+                  value={formData.password}
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  placeholder="Password"
+                  className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600">Confirm Password</label>
+                <input
+                  type="password"
+                  value={formData.confirmPassword}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      confirmPassword: e.target.value,
+                    })
+                  }
+                  placeholder="Confirm password"
+                  className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
               {/* Sign Up Button */}
               <div
-                onClick={() => setEmailModalOpen(true)}
+                onClick={handleSignUp}
                 className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex items-center justify-center text-white py-2 rounded-lg text-lg font-semibold cursor-pointer"
               >
                 Send OTP and Password
@@ -167,36 +226,38 @@ const SignUp = () => {
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
           <div className="bg-white p-6 rounded-lg w-[90%] max-w-md">
             <h2 className="text-xl font-bold text-gray-800">Register</h2>
-            <div>
-              <label className="block mt-4 text-gray-600">Password</label>
+
+            <label className="block mt-4 text-gray-600">Verify OTP</label>
+            <div className="flex items-center relative">
               <input
-                type="password"
-                value={formData.password}
+                type="text"
+                placeholder="Enter 6 digit OTP"
+                value={formData.otp}
                 onChange={(e) =>
-                  setFormData({ ...formData, password: e.target.value })
+                  setFormData({ ...formData, otp: e.target.value })
                 }
-                placeholder="Password"
                 className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              {isOtpVerified && (
+                <AiFillCheckCircle
+                  size={25}
+                  className="ml-2 text-green-500 absolute right-0"
+                />
+              )}
             </div>
-            <div>
-              <label className="block text-gray-600">Confirm Password</label>
-              <input
-                type="password"
-                value={formData.confirmPassword}
-                onChange={(e) =>
-                  setFormData({ ...formData, confirmPassword: e.target.value })
-                }
-                placeholder="Confirm password"
-                className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+
+            <button
+              onClick={handleVerifyOtp}
+              className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4 text-white py-2 rounded-lg"
+            >
+              Verify OTP
+            </button>
 
             <button
               onClick={handleSignUp}
               className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4 text-white py-2 rounded-lg"
             >
-              Register
+              Register With Verify Email
             </button>
           </div>
         </div>

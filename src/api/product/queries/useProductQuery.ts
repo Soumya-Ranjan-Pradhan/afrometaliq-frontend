@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllProducts,
   createProduct,
@@ -9,12 +9,15 @@ import {
 } from "../productApi";
 
 // Fetch all products
+
 export const useProducts = () => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products"],
-    queryFn: getAllProducts,
+    queryFn: () => getAllProducts(),
   });
 };
+
+
 
 // Create product
 export const useCreateProduct = () => {

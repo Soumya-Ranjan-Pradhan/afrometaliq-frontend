@@ -2,14 +2,34 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useEffect } from "react";
 import { RiHome6Line } from "react-icons/ri";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { TfiGallery } from "react-icons/tfi";
+import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
+import { useRouter } from "next/navigation";
 
 const Sidebar = () => {
   //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
   const pathname = usePathname();
+
+  const token = localStorage.getItem('accessToken')
+
+  const { data: userData } = useGetLoggedUserDetails({
+    enabled: !!token
+  });
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if(userData){
+      if (userData?.data.user.isEmailVerified) {
+        router.push("/");
+      } else {
+        router.replace('/email/verify')
+      }
+    }
+  }, [userData]);
 
   // Cart quantity for the FaShoppingCart icon (example: 3 items in the cart)
   const cartQuantity = 3;

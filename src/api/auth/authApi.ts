@@ -44,18 +44,35 @@ export const fetchUsers = async (): Promise<ApiResponse<UsersResponse>> => {
   return response.data;
 };
 
-export const createUser = async (
-  data: Partial<User>
-): Promise<ApiResponse<{ user: User; accessToken: string; refreshToken: string }>> => {
-  const response = await axios.post<ApiResponse<{ user: User; accessToken: string; refreshToken: string }>>(
-    `${BASE_URL}/users/register`,
-    data
+// gett logged in user
+export const getLoggedInUser = async (): Promise<
+  ApiResponse<{
+    user: User;
+  }>
+> => {
+  const token = localStorage.getItem("accessToken");
+
+  const response = await axios.get<ApiResponse<{ user: User }>>(
+    `${BASE_URL}/users/me`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
   return response.data;
 };
 
-
-// send verify otp
+export const createUser = async (
+  data: Partial<User>
+): Promise<
+  ApiResponse<{ user: User; accessToken: string; refreshToken: string }>
+> => {
+  const response = await axios.post<
+    ApiResponse<{ user: User; accessToken: string; refreshToken: string }>
+  >(`${BASE_URL}/users/register`, data);
+  return response.data;
+};
 
 export const loginUser = async (data: {
   email: string;
@@ -63,6 +80,29 @@ export const loginUser = async (data: {
 }): Promise<ApiResponse<LoginResponse>> => {
   const response = await axios.post<ApiResponse<LoginResponse>>(
     `${BASE_URL}/users/login`,
+    data
+  );
+  return response.data;
+};
+
+// send otp in the mail
+export const sendOtp = async (data: {
+  email: string;
+}): Promise<ApiResponse<{ message: string }>> => {
+  const response = await axios.post<ApiResponse<{ message: string }>>(
+    `${BASE_URL}/users/send-verify-otp`,
+    data
+  );
+  return response.data;
+};
+
+// verify otp
+export const verifyOtp = async (data: {
+  email: string;
+  otp: string;
+}): Promise<ApiResponse<{ message: string }>> => {
+  const response = await axios.post<ApiResponse<{ message: string }>>(
+    `${BASE_URL}/users/verify-otp`,
     data
   );
   return response.data;

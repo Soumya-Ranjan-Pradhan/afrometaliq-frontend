@@ -26,7 +26,7 @@ const SignIn = () => {
       },
       {
         onSuccess: (data) => {
-          router.push("/");
+          router.push("/email/verify");
           toast.success("User logged in successfully!");
         },
         onError: (error) => {

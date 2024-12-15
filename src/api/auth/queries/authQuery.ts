@@ -1,10 +1,13 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 import {
   ApiResponse,
   createUser,
   fetchUsers,
+  getLoggedInUser,
   loginUser,
+  sendOtp,
   User,
+  verifyOtp,
 } from "../authApi";
 
 // get all users
@@ -38,6 +41,14 @@ export const useCreateUser = () => {
   });
 };
 
+export const useGetLoggedUserDetails = (options?: Partial<UseQueryOptions<any>>) => {
+  return useQuery<ApiResponse<{ user: User }>, Error>({
+    queryKey: ["user", "me"],
+    queryFn: () => getLoggedInUser(),
+    ...options
+  });
+}
+
 // login user
 export const useLoginUser = () => {
   const queryClient = useQueryClient();
@@ -53,5 +64,27 @@ export const useLoginUser = () => {
       localStorage.setItem("refreshToken", refreshToken);
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
+  });
+};
+
+// send otp in the mail
+export const useSendOtp = () => {
+  return useMutation<
+    ApiResponse<{ message: string }>,
+    Error,
+    { email: string }
+  >({
+    mutationFn: sendOtp,
+  });
+};
+
+// verify otp
+export const useVerifyOtp = () => {
+  return useMutation<
+    ApiResponse<{ message: string }>,
+    Error,
+    { email: string; otp: string }
+  >({
+    mutationFn: verifyOtp,
   });
 };
