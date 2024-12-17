@@ -6,14 +6,15 @@ import {
   deleteProduct,
   ApiResponse,
   Product,
+  ProductQuery,
 } from "../productApi";
 
 // Fetch all products
 
-export const useProducts = () => {
+export const useProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products"],
-    queryFn: getAllProducts,
+    queryFn: () => getAllProducts(query),
   });
 };
 

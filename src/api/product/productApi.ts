@@ -58,12 +58,17 @@ export interface ApiResponse<T> {
   message: string;
 }
 
+export type ProductQuery = {
+  discount?: number;
+};
+
 // Get all products
-export const getAllProducts = async (): Promise<
-  ApiResponse<{ products: Product[] }>
-> => {
+export const getAllProducts = async (
+  query?: ProductQuery
+): Promise<ApiResponse<{ products: Product[] }>> => {
   const response = await axios.get<ApiResponse<{ products: Product[] }>>(
-    `${BASE_URL}/product`
+    `${BASE_URL}/product`,
+    { params: query }
   );
   return response.data;
 };
@@ -81,8 +86,8 @@ export const getProductById = async (
 // Create a product
 export const createProduct = async (
   data: FormData
-): Promise<ApiResponse<{}>> => {
-  const response = await axios.post<ApiResponse<{}>>(
+): Promise<ApiResponse<unknown>> => {
+  const response = await axios.post<ApiResponse<unknown>>(
     `${BASE_URL}/product`,
     data,
     {
@@ -97,7 +102,7 @@ export const createProduct = async (
 // Update a product
 export const updateProduct = async (
   id: string,
-  data: any
+  data: unknown
 ): Promise<ApiResponse<{ product: Product }>> => {
   const response = await axios.put<ApiResponse<{ product: Product }>>(
     `${BASE_URL}/products/${id}`,
@@ -107,9 +112,11 @@ export const updateProduct = async (
 };
 
 // Delete a product
-export const deleteProduct = async (id: string): Promise<ApiResponse<{}>> => {
-  const response = await axios.delete<ApiResponse<{}>>(
-    `${BASE_URL}/product/${id}`
+export const deleteProduct = async (
+  id: string
+): Promise<ApiResponse<unknown>> => {
+  const response = await axios.delete<ApiResponse<unknown>>(
+    `${BASE_URL}/products/${id}`
   );
   return response.data;
 };
