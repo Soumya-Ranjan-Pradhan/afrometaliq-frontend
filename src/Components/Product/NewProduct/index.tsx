@@ -12,12 +12,10 @@ import { useProducts } from "@/api/product/queries/useProductQuery";
 
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
-  const { data, isLoading, error } = useProducts();
+  const { data, isLoading, error } = useProducts({ discount: 1 });
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching products</div>;
-
-  
 
   return (
     <div className="mx-auto px-4">
