@@ -39,7 +39,7 @@ const Contact = () => {
       {
         onSuccess: () => {
           setContact(initialState);
-          toast.success("Contact Send successfully!");
+          toast.success("Message Send successfully!");
         },
         onError: () => {
           toast.error("Failed to create about");

@@ -25,15 +25,6 @@ const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
-  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127109/rgubxvwv5ujtm26ay3hv.png
-
-  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127208/rcwozn42rynklc0hamkf.png
-
-  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127267/fuvzipwny8e7vnbxt6ir.png
-
-  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127340/kqsqhotiwveunthslfn0.png
-
-  // https://res.cloudinary.com/dppfr1gjx/image/upload/v1732127377/ljmdplhc9jbprou5l5wb.png
 
   const changeLanguage = () => {
     if (i18n.language === "en") {
@@ -46,15 +37,18 @@ const Header = () => {
   return (
     <>
       {/* For the Large Screen */}
-      <header className="w-full flex items-center justify-between h-[5rem] px-4 bg-white shadow-md">
+      <header className="w-full flex items-center justify-between h-[5rem]  bg-white shadow-md">
         {/* Left side - Logo */}
-        <div className="flex  items-center space-x-4">
+        <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
               alt="Arfo Metaliq Logo"
-              width={250}
-              height={120}
+              width={250} // Set responsive width
+              height={120} // Default height
+              sizes="(max-width: 640px) 100px, (max-width: 1024px) 150px, 200px"
+              className="w-[170px] sm:w-[250px] md:w-[150px] lg:w-[200px] h-auto"
+              priority
             />
           </Link>
         </div>
@@ -72,9 +66,9 @@ const Header = () => {
         </div>
 
         {/* Right side - Register and Login large screen */}
-        <div className=" flex items-center gap-4 text-blue-600 mr-3">
+        <div className=" flex items-center  lg:p-6  md:p-6 md:gap-4 lg:gap-4 gap-2 p-4 text-blue-600 ">
           {/* dropdown to change language */}
-          <div className="flex items-center space-x-1">
+          <div className="hidden lg:flex items-center space-x-1">
             <button onClick={changeLanguage} className="flex items-center">
               <span>
                 <LanguagesIcon />
@@ -131,7 +125,10 @@ const Header = () => {
             {t("menu.gallery")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
-          <Link href="#" className="relative group hover:text-gray-300">
+          <Link
+            href="/fabrication"
+            className="relative group hover:text-gray-300"
+          >
             {t("menu.fabrication")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
@@ -179,9 +176,19 @@ const Header = () => {
               setOpenSearch={setOpenSearch}
             />
           )}
+          {/* <p>asfs</p> */}
 
           <div className="text-white  mr-3">
             <SlMenu size={24} onClick={() => setToggleMenu((prev) => !prev)} />
+          </div>
+
+          <div className="flex items-center space-x-3">
+            <button onClick={changeLanguage} className="flex items-center">
+              <span>
+                <LanguagesIcon />
+              </span>
+              {i18n.language === "en" ? <RiEnglishInput /> : "Pt"}
+            </button>
           </div>
         </div>
 

@@ -15,7 +15,7 @@ export default function Home() {
       <Category />
       <NewArrivingProductCarousel />
       <Product />
-      <PopularProductCarousel />
+      {/* <PopularProductCarousel /> */}
       <WhyChooseUs />
       <TestimonialSlider />
     </div>

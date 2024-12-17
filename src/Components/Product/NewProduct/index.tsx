@@ -5,96 +5,19 @@ import { Swiper as SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import { Pagination } from "swiper/modules";
-import {
-  BsChevronLeft,
-  BsChevronRight,
-} from "react-icons/bs";
+import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Image from "next/image";
 import { Swiper } from "swiper/types";
-
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  discountedPrice: number;
-  discount: number;
-  image: string;
-  inStock: boolean;
-  rating: number;
-};
-
-const products: Product[] = [
-  {
-    id: 1,
-    name: "GESPO Peach Solid Ma...",
-    price: 2000,
-    discountedPrice: 1500,
-    discount: 9,
-    image:
-      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-    inStock: true,
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Deel Band Women Rayo...",
-    price: 1800,
-    discountedPrice: 1500,
-    discount: 12,
-    image:
-      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-    inStock: true,
-    rating: 5,
-  },
-  {
-    id: 3,
-    name: "Deel Band Women Rayo...",
-    price: 1800,
-    discountedPrice: 1500,
-    discount: 12,
-    image:
-      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-    inStock: true,
-    rating: 5,
-  },
-  {
-    id: 4,
-    name: "Deel Band Women Rayo...",
-    price: 1800,
-    discountedPrice: 1500,
-    discount: 12,
-    image:
-      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-    inStock: true,
-    rating: 5,
-  },
-  {
-    id: 5,
-    name: "Deel Band Women Rayo...",
-    price: 1800,
-    discountedPrice: 1500,
-    discount: 12,
-    image:
-      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-    inStock: true,
-    rating: 5,
-  },
-  {
-    id: 6,
-    name: "Deel Band Women Rayo...",
-    price: 1800,
-    discountedPrice: 1500,
-    discount: 12,
-    image:
-      "https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg",
-    inStock: true,
-    rating: 5,
-  },
-  // Add other products as needed
-];
+import { useProducts } from "@/api/product/queries/useProductQuery";
 
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
+  const { data, isLoading, error } = useProducts();
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching products</div>;
+
+  
 
   return (
     <div className="mx-auto px-4">
@@ -117,35 +40,26 @@ const NewArrivingProductCarousel: React.FC = () => {
           }}
           className="my-8"
         >
-          {products.map((product) => (
-            <SwiperSlide key={product.id}>
+          {data?.data.products.map((product) => (
+            <SwiperSlide key={product._id} id={product._id}>
               <div className="bg-white rounded-lg shadow-lg p-4 relative">
                 <span className="absolute top-2 left-2 bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
-                  {product.discount}%
+                  {product.product_discount}%
                 </span>
                 <Image
-                  src={product.image}
-                  alt={product.name}
+                  src={product.product_images[0]?.url}
+                  alt={product.product_name}
                   width={500}
                   height={500}
                   className="w-full h-48 object-cover rounded-md mb-4"
                 />
                 <h3 className="text-lg font-semibold truncate">
-                  {product.name}
+                  {product.product_name}
                 </h3>
-                <p
-                  className={`text-green-600 font-semibold ${
-                    product.inStock ? "" : "text-red-600"
-                  }`}
-                >
-                  {product.inStock ? "In Stock" : "Out of Stock"}
-                </p>
+
                 <div className="flex items-center">
                   <span className="line-through text-gray-500 mr-2">
-                    Rs {product.price}
-                  </span>
-                  <span className="text-red-600 font-bold">
-                    Rs {product.discountedPrice}
+                    Rs {product.product_selling_price} Sale
                   </span>
                 </div>
 

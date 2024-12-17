@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import React from "react";
 import { FaGlobe } from "react-icons/fa";
 
@@ -8,7 +9,9 @@ const Home: React.FC = () => {
       {/* Top Section */}
       <div className="text-center p-6 md:p-10 bg-white shadow-lg rounded-lg max-w-2xl w-full">
         <div className="mb-6">
-          <img
+          <Image
+            width={200}
+            height={200}
             src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734198307/cqhxu8qnouji9e74o7nm.jpg" 
             alt="Atlantica Steel Logo"
             className="mx-auto w-32 md:w-40 lg:w-48"

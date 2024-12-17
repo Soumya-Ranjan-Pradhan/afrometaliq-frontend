@@ -26,6 +26,7 @@ import { TfiGallery } from "react-icons/tfi";
 import { IoCloudUploadOutline } from "react-icons/io5";
 import { FiAlertOctagon } from "react-icons/fi";
 import { TbListDetails } from "react-icons/tb";
+import { MdOutlineCloudUpload } from "react-icons/md";
 
 const AdminSidebar: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -253,6 +254,15 @@ const AdminSidebar: React.FC = () => {
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <IoCloudUploadOutline className="mr-3" /> Gallery
+                </Link>
+              </div>
+
+              <div className="ml-4">
+                <Link
+                  href="/banner"
+                  className="flex items-center p-2 text-black hover:bg-green-300 rounded"
+                >
+                  <MdOutlineCloudUpload className="mr-3" /> Upload Banner
                 </Link>
               </div>
             </div>

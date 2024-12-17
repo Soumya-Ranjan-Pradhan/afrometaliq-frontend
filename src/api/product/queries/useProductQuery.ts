@@ -13,7 +13,7 @@ import {
 export const useProducts = () => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products"],
-    queryFn: () => getAllProducts(),
+    queryFn: getAllProducts,
   });
 };
 
