@@ -1,13 +1,22 @@
 "use client";
+
+import { useProductById } from "@/api/product/queries/useProductQuery";
 import ProductTabs from "@/Components/Product/ProductTabs";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaHeart, FaExchangeAlt } from "react-icons/fa";
+
 const Page = ({ params }: { params: { id: string } }) => {
-  console.log(params.id);
-  
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  // Fetch product by ID
+  const { data: product, isLoading, error } = useProductById(params.id);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error fetching product details</div>;
+
+  const productDetails = product?.data.product;
 
   const handleSizeSelection = (size: string) => {
     setSelectedSize(size);
@@ -23,63 +32,36 @@ const Page = ({ params }: { params: { id: string } }) => {
           <div className="w-full md:w-1/2">
             <div className="border rounded-lg overflow-hidden">
               <Image
-                src="https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg"
-                alt="Product"
+                src={
+                  productDetails?.product_images[0]?.url || "/placeholder.jpg"
+                }
+                alt={productDetails?.product_name || "Product Image"}
                 width={500}
                 height={500}
                 className="w-full h-auto object-cover"
               />
             </div>
-            <div className="flex mt-4 gap-2">
-              {[...Array(2)].map((_, index) => (
-                <Image
-                  key={index}
-                  src="https://res.cloudinary.com/datf6laqn/image/upload/v1728758763/b3lihb93bhzoe9mmrzf7.jpg"
-                  alt={`Thumbnail ${index}`}
-                  width={80}
-                  height={80}
-                  className="w-16 h-16 object-cover border rounded-md cursor-pointer hover:opacity-75"
-                />
-              ))}
-            </div>
           </div>
 
           <div className="w-full md:w-1/2">
             <h1 className="text-2xl font-semibold text-gray-800">
-              Men Checkered Long Sleeve Casual Shirt
+              {productDetails?.product_name}
             </h1>
-            <p className="text-sm text-gray-500 mt-2">
-              Brands: <span className="font-bold text-gray-700">BUSHIRT</span>{" "}
-             
-            </p>
-
             <div className="flex items-center gap-4 mt-4">
-              <span className="text-red-500 text-2xl font-bold">Rs. 850</span>
-              <span className="text-gray-400 line-through text-lg">
-                Rs. 1200
+              <span className="text-red-500 text-2xl font-bold">
+                ₹{productDetails?.product_selling_price}
               </span>
             </div>
-
-            <p className="mt-2">
-              <span className="bg-green-100 text-green-600 px-2 py-1 rounded-md text-sm font-semibold">
-                IN STOCK
-              </span>
-            </p>
-
             <p className="mt-6 text-gray-600 text-sm leading-6">
-              Rs: Be a head-turner by wearing this casual shirt from BUSHIRT and
-              grab it in brown color. Showcase this top in wonderful prints and
-              wear it for different occasions. Buy this outstanding collection
-              in a 47 size & get it in fabric made of cotton material. Bored of
-              the conventional shirt look? Well, these casual shirts in graceful
-              neck designs and long sleeves will give you a whole new dimension!
+              {productDetails?.product_description}
             </p>
 
-            {/* Sizes */}
             <div className="mt-6">
-              <h3 className="font-semibold text-gray-800 mb-2">Length</h3>
+              <h3 className="font-semibold text-gray-800 mb-2">
+                Available Sizes
+              </h3>
               <div className="flex gap-4">
-                {["6m", "9m", "13m", "NA"].map((size) => (
+                {productDetails?.product_theme_size.map((size: string) => (
                   <button
                     key={size}
                     onClick={() => handleSizeSelection(size)}
@@ -95,7 +77,6 @@ const Page = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
-            {/* Quantity and Add to Cart */}
             <div className="mt-6 flex items-center gap-4">
               <div className="flex items-center border rounded-md">
                 <button
@@ -117,13 +98,11 @@ const Page = ({ params }: { params: { id: string } }) => {
                   +
                 </button>
               </div>
-
               <button className="flex-1 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition">
                 <span className="mr-2 ">🛒</span>Add To Cart
               </button>
             </div>
 
-            {/* Wishlist and Compare */}
             <div className="mt-6 flex items-center gap-4">
               <button className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition">
                 <FaHeart className="text-red-500" />
@@ -138,7 +117,7 @@ const Page = ({ params }: { params: { id: string } }) => {
         </div>
       </div>
 
-      <ProductTabs />
+      <ProductTabs product={productDetails} />
     </>
   );
 };

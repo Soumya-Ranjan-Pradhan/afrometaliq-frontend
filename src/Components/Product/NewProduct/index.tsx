@@ -9,6 +9,19 @@ import { BsChevronLeft, BsChevronRight } from "react-icons/bs";
 import Image from "next/image";
 import { Swiper } from "swiper/types";
 import { useProducts } from "@/api/product/queries/useProductQuery";
+import Link from "next/link";
+
+type Product = {
+  id: number;
+  name: string;
+  price: number;
+  originalPrice: number;
+  salesCount: number;
+  imageUrl: string;
+  stock: string;
+  rating: number;
+  description: string;
+};
 
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
@@ -44,21 +57,28 @@ const NewArrivingProductCarousel: React.FC = () => {
                 <span className="absolute top-2 left-2 bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
                   {product.product_discount}%
                 </span>
-                <Image
-                  src={product.product_images[0]?.url}
-                  alt={product.product_name}
-                  width={500}
-                  height={500}
-                  className="w-full h-48 object-cover rounded-md mb-4"
-                />
+                <Link href={`/product/${product._id}`}>
+                  <Image
+                    src={product.product_images[0]?.url}
+                    alt={product.product_name}
+                    width={500}
+                    height={500}
+                    className="w-full h-48 object-cover rounded-md mb-4"
+                  />
+                </Link>
+
                 <h3 className="text-lg font-semibold truncate">
                   {product.product_name}
                 </h3>
 
                 <div className="flex items-center">
-                  <span className="line-through text-gray-500 mr-2">
-                    Rs {product.product_selling_price} Sale
+                  <span className="text-lg font-bold text-purple-600">
+                    ₹{product.product_price.toLocaleString()}
                   </span>
+                </div>
+
+                <div className="text-sm text-gray-500 mt-1">
+                  {product.product_selling_price} Sale
                 </div>
 
                 <div className="flex items-center justify-between gap-2">

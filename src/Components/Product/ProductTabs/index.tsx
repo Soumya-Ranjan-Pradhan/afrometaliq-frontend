@@ -2,31 +2,20 @@
 
 import React from "react";
 
-const SpecificationsTab = () => {
+const SpecificationsTab = ({ product }: { product: any }) => {
   const specifications = [
-    {
-      label: "Stand Up",
-      value: "35''L x 24''W x 37-45''H (front to back wheel)",
-    },
-    { label: "Folded (w/o wheels)", value: "32.5''L x 18.5''W x 16.5''H" },
-    { label: "Folded (w/ wheels)", value: "32.5''L x 24''W x 18.5''H" },
-    { label: "Door Pass Through", value: "24" },
-    { label: "Frame", value: "Aluminum" },
-    { label: "Weight (w/o wheels)", value: "20 LBS" },
-    { label: "Weight Capacity", value: "60 LBS" },
-    { label: "Width", value: "24''" },
-    { label: "Handle height (ground to handle)", value: "37-45''" },
-    { label: "Wheels", value: "12'' air / wide track slick tread" },
-    { label: "Seat back height", value: "21.5''" },
-    { label: "Head room (inside canopy)", value: "25''" },
-    { label: "Color", value: "Black, Blue, Red, White" },
-    { label: "Size", value: "M, S" },
+    { label: "Size", value: product?.product_size || "N/A" },
+    { label: "Grade", value: product?.product_grade || "N/A" },
+    { label: "Thickness", value: product?.product_thickness || "N/A" },
+    { label: "Unit of Measurement (UOM)", value: product?.product_uom || "N/A" },
+    { label: "Length", value: product?.product_length || "N/A" },
+    { label: "Width", value: product?.product_width || "N/A" },
   ];
 
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="bg-purple-50 p-4 rounded-lg shadow-md overflow-x-auto">
-        <h2 className="text-xl font-bold text-gray-800 mb-4">Specifications:-</h2>
+        <h2 className="text-xl font-bold text-gray-800 mb-4">Specifications</h2>
         <table className="table-auto w-full border-collapse">
           <thead>
             <tr className="bg-purple-100 text-left text-gray-600">

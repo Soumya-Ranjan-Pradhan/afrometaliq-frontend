@@ -1,10 +1,24 @@
 "use client";
 
+import { useState } from "react";
 import { useGalleries } from "@/api/gallery/queries/useGalleryQuery";
 import Image from "next/image";
+import GalleryModal from "@/Components/GalleryModal/GalleryModal";
 
 const Gallery = () => {
-  const { data, isLoading, error, refetch } = useGalleries();
+  const { data, isLoading, error } = useGalleries();
+  const [selectedGallery, setSelectedGallery] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = (gallery: any) => {
+    setSelectedGallery(gallery);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedGallery(null);
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="py-8 px-4">
@@ -12,9 +26,15 @@ const Gallery = () => {
       <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
         {isLoading ? (
           <p>Loading...</p>
+        ) : error ? (
+          <p>Error loading gallery</p>
         ) : (
           data?.data.gallery.map((gallery, index) => (
-            <div key={index} className="text-center zoom-in">
+            <div
+              key={index}
+              className="text-center cursor-pointer"
+              onClick={() => openModal(gallery)}
+            >
               <div className="rounded-lg overflow-hidden mb-4">
                 <Image
                   src={gallery.image}
@@ -30,6 +50,10 @@ const Gallery = () => {
           ))
         )}
       </div>
+
+      {isModalOpen && selectedGallery && (
+        <GalleryModal gallery={selectedGallery} onClose={closeModal} />
+      )}
     </div>
   );
 };

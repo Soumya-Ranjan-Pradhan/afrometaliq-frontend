@@ -7,6 +7,7 @@ import {
   ApiResponse,
   Product,
   ProductQuery,
+  getProductById,
 } from "../productApi";
 
 // Fetch all products
@@ -15,6 +16,15 @@ export const useProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products"],
     queryFn: () => getAllProducts(query),
+  });
+};
+
+
+// Get product by id
+export const useProductById = (id: string) => {
+  return useQuery<ApiResponse<{ product: Product }>, Error>({
+    queryKey: ["product", id],
+    queryFn: () => getProductById(id),
   });
 };
 

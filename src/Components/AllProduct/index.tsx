@@ -1,10 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "../Product/ModalProduct";
 import Image from "next/image";
 import { useProducts } from "@/api/product/queries/useProductQuery";
+import Link from "next/link";
 
 type Product = {
   id: number;
@@ -42,21 +43,23 @@ const AllProduct = () => {
       <h1 className="text-center text-3xl font-semibold mb-8">
         Browse Products
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {data?.map((product: any) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {data?.data.products.map((product: any) => (
           <div
             key={product.id}
             className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500"
           >
             {/* Product Image */}
             <div className="relative">
-              <Image
-                 src={product.product_images[0]?.url}
-                 alt={product.product_name}
-                width={300}
-                height={200}
-                className="w-full h-48 object-cover rounded-md"
-              />
+              <Link href={`/product/${product._id}`}>
+                <Image
+                  src={product.product_images[0]?.url}
+                  alt={product.product_name}
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-md"
+                />
+              </Link>
 
               {/* Icons to show on hover */}
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -74,7 +77,7 @@ const AllProduct = () => {
             {/* Product Info */}
             <div className="mt-4">
               <h3 className="text-lg font-semibold text-gray-800">
-              {product.product_name}
+                {product.product_name}
               </h3>
               <p className="mt-2 text-green-400">{product.stock}</p>
               <div className="flex items-center mt-2">
@@ -89,9 +92,13 @@ const AllProduct = () => {
                 {product.product_selling_price} Sale
               </div>
             </div>
-            <div className="flex">
+            <div className="flex items-center justify-between gap-2">
               <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
                 BUY NOW
+              </button>
+
+              <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                Add To Cart
               </button>
             </div>
           </div>
