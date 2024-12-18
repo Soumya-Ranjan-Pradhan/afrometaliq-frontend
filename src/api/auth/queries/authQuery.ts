@@ -1,13 +1,20 @@
-import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import {
   ApiResponse,
   createUser,
   fetchUsers,
   getLoggedInUser,
   loginUser,
+  sendForgotPasswordOTPEmail,
   sendOtp,
   User,
   verifyOtp,
+  verifyOtpAndResetPassword,
 } from "../authApi";
 
 // get all users
@@ -41,13 +48,15 @@ export const useCreateUser = () => {
   });
 };
 
-export const useGetLoggedUserDetails = (options?: Partial<UseQueryOptions<any>>) => {
+export const useGetLoggedUserDetails = (
+  options?: Partial<UseQueryOptions<any>>
+) => {
   return useQuery<ApiResponse<{ user: User }>, Error>({
     queryKey: ["user", "me"],
     queryFn: () => getLoggedInUser(),
-    ...options
+    ...options,
   });
-}
+};
 
 // login user
 export const useLoginUser = () => {
@@ -86,5 +95,32 @@ export const useVerifyOtp = () => {
     { email: string; otp: string }
   >({
     mutationFn: verifyOtp,
+  });
+};
+
+// Send Forgot Password OTP Email
+export const useSendForgotPasswordOTPEmail = () => {
+  return useMutation<
+    ApiResponse<{ message: string }>,
+    Error,
+    { email: string }
+  >({
+    mutationFn: (data) => sendForgotPasswordOTPEmail(data.email),
+    onError: (error) => {
+      console.error("Error sending OTP email:", error);
+    },
+  });
+};
+
+export const useVerifyOtpAndResetPassword = () => {
+  return useMutation<
+    ApiResponse<{ message: string }>,
+    Error,
+    { email: string; otp: string; newPassword: string; confirmPassword: string }
+  >({
+    mutationFn: verifyOtpAndResetPassword,
+    onError: (error) => {
+      console.error("Error resetting password:", error);
+    },
   });
 };

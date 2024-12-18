@@ -107,3 +107,27 @@ export const verifyOtp = async (data: {
   );
   return response.data;
 };
+
+// forget password send otp in the mail
+// Forgot Password: Send OTP Email
+export const sendForgotPasswordOTPEmail = async (email: string) => {
+  const response = await axios.post<ApiResponse<{ message: string }>>(
+    `${BASE_URL}/users/forgot-password`,
+    { email }
+  );
+  return response.data;
+};
+
+// Verify OTP and Reset Password
+export const verifyOtpAndResetPassword = async (data: {
+  email: string;
+  otp: string;
+  newPassword: string;
+  confirmPassword: string;
+}) => {
+  const response = await axios.post<ApiResponse<{ message: string }>>(
+    `${BASE_URL}/users/reset-password`,
+    data
+  );
+  return response.data;
+};

@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useProducts } from "@/api/product/queries/useProductQuery";
+import ComingSoonModal from "../CommingSoonModal/ComingSoonModal";
 
 type Product = {
   id: number;
@@ -26,28 +27,42 @@ const Product = () => {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = (product: Product) => {
-    setSelectedProduct(product);
+  
+
+  // const openModal = (product: Product) => {
+  //   setSelectedProduct(product);
+  //   setIsModalOpen(true);
+  // };
+
+  // const closeModal = () => {
+  //   setIsModalOpen(false);
+  //   setSelectedProduct(null);
+  // };
+
+  const handleBuyNow = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsModalOpen(true);
   };
+
+  const closeModal = () => setIsModalOpen(false);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching products</div>;
 
   const router = useRouter();
-  const handleBuyNow = (
-    e: React.MouseEvent<HTMLButtonElement>,
-    productId: number
-  ) => {
-    e.preventDefault();
-    // navigation to checkout page
-    router.push(`/buy-now/${productId}`);
-  };
+  // const handleBuyNow = (
+  //   e: React.MouseEvent<HTMLButtonElement>,
+  //   productId: number
+  // ) => {
+  //   e.preventDefault();
+  //   // navigation to checkout page
+  //   router.push(`/buy-now/${productId}`);
+  // };
 
   return (
     <div className="mx-auto p-4">
@@ -104,15 +119,18 @@ const Product = () => {
                 {product.product_selling_price} Sale
               </div>
             </div>
+            {/* Buttons */}
             <div className="flex items-center justify-between gap-2">
               <button
                 className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                // onClick={(e) => handleBuyNow(e, product._id)}
+                onClick={handleBuyNow}
               >
                 BUY NOW
               </button>
-
-              <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+              <button
+                className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                onClick={handleAddToCart}
+              >
                 Add To Cart
               </button>
             </div>
@@ -127,6 +145,8 @@ const Product = () => {
           product={selectedProduct}
         />
       )}
+
+<ComingSoonModal isOpen={isModalOpen} onRequestClose={closeModal} />
     </div>
   );
 };

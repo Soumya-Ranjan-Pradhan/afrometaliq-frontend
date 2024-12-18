@@ -4,10 +4,14 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
-import { useLoginUser } from "@/api/auth/queries/authQuery";
+import {
+  useLoginUser,
+} from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/auth";
+import ForgotPasswordModal from "@/Components/ForgotPasswordModal/ForgotPasswordModal";
+import { AiOutlineLoading } from "react-icons/ai";
 
 const initialState = {
   email: "",
@@ -16,12 +20,18 @@ const initialState = {
 
 const SignIn = () => {
   const [formData, setFormData] = useState(initialState);
+  const [isForgotPasswordModalOpen, setForgotPasswordModalOpen] =
+    useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { mutate: loginUser } = useLoginUser();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
 
+  const isButtonDisabled = !formData.email || !formData.password || isLoading;
+
   const handleSignIn = () => {
+    setIsLoading(true);
     loginUser(
       {
         email: formData.email,
@@ -40,7 +50,8 @@ const SignIn = () => {
           }
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to login user");
+          setIsLoading(false);
+          toast.error( "Invalid email or password please enter correct details");
         },
       }
     );
@@ -135,17 +146,29 @@ const SignIn = () => {
 
           {/* Forgot Password */}
           <div className="mt-2 text-right">
-            <a href="#" className="text-blue-500 hover:underline">
+            <p
+              className="text-blue-500 hover:underline cursor-pointer"
+              onClick={() => setForgotPasswordModalOpen(true)}
+            >
               Forgot Password
-            </a>
+            </p>
           </div>
 
           {/* Sign In Button */}
           <button
             onClick={handleSignIn}
-            className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold"
+            disabled={isButtonDisabled}
+            className={`w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold flex justify-center items-center ${
+              isButtonDisabled
+                ? "opacity-50 cursor-not-allowed"
+                : "opacity-100 hover:opacity-90"
+            }`}
           >
-            Sign in
+            {isLoading ? (
+              <AiOutlineLoading className="animate-spin text-xl" />
+            ) : (
+              "Sign in"
+            )}
           </button>
 
           {/* Sign Up Link */}
@@ -157,6 +180,12 @@ const SignIn = () => {
           </div>
         </div>
       </div>
+
+      {isForgotPasswordModalOpen && (
+        <ForgotPasswordModal
+          onClose={() => setForgotPasswordModalOpen(false)}
+        />
+      )}
     </div>
   );
 };

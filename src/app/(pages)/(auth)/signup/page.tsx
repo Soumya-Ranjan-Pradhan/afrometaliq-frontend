@@ -10,7 +10,7 @@ import {
   useSendOtp,
   useVerifyOtp,
 } from "@/api/auth/queries/authQuery";
-import { AiFillCheckCircle } from "react-icons/ai";
+import { AiFillCheckCircle, AiOutlineLoading } from "react-icons/ai";
 
 const initialState = {
   username: "",
@@ -25,13 +25,21 @@ const SignUp = () => {
   const [formData, setFormData] = useState(initialState);
   const [isEmailModalOpen, setEmailModalOpen] = useState(false);
   const [isOtpVerified, setOtpVerified] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { mutate: createUser } = useCreateUser();
-  const { mutate: sendOtpEmail } = useSendOtp();
   const { mutate: verifyOtp } = useVerifyOtp();
   const router = useRouter();
 
+  const isButtonDisabled =
+    !formData.email ||
+    !formData.password ||
+    !formData.username ||
+    !formData.phoneNumber ||
+    !formData.confirmPassword ||
+    isLoading;
+
   // Handle sending OTP
- 
+
   const handleVerifyOtp = () => {
     if (!formData.email || !formData.otp) {
       toast.error("Email and OTP are required");
@@ -44,9 +52,10 @@ const SignUp = () => {
         onSuccess: () => {
           toast.success("OTP verified successfully");
           setOtpVerified(true);
+          
         },
         onError: (error: any) => {
-          toast.error(error.message || "Invalid OTP");
+          toast.error("Invalid OTP");
           setOtpVerified(false);
         },
       }
@@ -73,11 +82,13 @@ const SignUp = () => {
       },
       {
         onSuccess: (data) => {
+          setIsLoading(false);
           router.push("/");
           toast.success("User registered and logged in successfully!");
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to register user");
+          setIsLoading(false);
+          toast.error("Failed to register user Try again");
         },
       }
     );
@@ -203,12 +214,21 @@ const SignUp = () => {
               </div>
 
               {/* Sign Up Button */}
-              <div
+              <button
                 onClick={handleSignUp}
-                className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] flex items-center justify-center text-white py-2 rounded-lg text-lg font-semibold cursor-pointer"
+                disabled={isButtonDisabled}
+                className={`w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold flex justify-center items-center ${
+                  isButtonDisabled
+                    ? "opacity-50 cursor-not-allowed"
+                    : "opacity-100 hover:opacity-90"
+                }`}
               >
-                Send OTP and Password
-              </div>
+                {isLoading ? (
+                  <AiOutlineLoading className="animate-spin text-xl" />
+                ) : (
+                  " Send OTP and Password"
+                )}
+              </button>
             </form>
 
             {/* Sign In Link */}
