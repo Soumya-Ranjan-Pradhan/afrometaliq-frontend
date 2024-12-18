@@ -1,13 +1,13 @@
 import ReactQueryProvider from "@/context/ReactQueryProvider";
 import AdminHeader from "@/Components/AdminComponents/AdminHeader";
-import "../globals.css";
+import "../../globals.css";
 import AdminSidebar from "@/Components/AdminComponents/SideBar";
 import { ToastContainer } from "react-toastify";
 
-export const metadata = {
-  title: "Admin Panel",
-  description: "Admin management area for the website.",
-};
+// export const metadata = {
+//   title: "Admin Panel",
+//   description: "Admin management area for the website.",
+// };
 
 export default function AdminLayout({
   children,

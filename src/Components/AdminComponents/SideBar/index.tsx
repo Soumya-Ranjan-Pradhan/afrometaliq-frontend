@@ -70,7 +70,7 @@ const AdminSidebar: React.FC = () => {
           </div>
           <nav className="flex-grow px-4 pb-4 mt-20 overflow-y-auto">
             <Link
-              href="/dashboard"
+              href="/admin/dashboard"
               className="flex items-center p-2 text-black hover:bg-green-300 rounded"
             >
               <FiHome className="mr-3" /> Home
@@ -93,14 +93,14 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/products/add"
+                  href="/admin/products/add"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <FiTag className="mr-3" /> Products
                 </Link>
 
                 <Link
-                  href="/units"
+                  href="/admin/units"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <MdAcUnit className="mr-3" /> Add Units
@@ -114,7 +114,7 @@ const AdminSidebar: React.FC = () => {
                 </Link> */}
 
                 <Link
-                  href="/allproducts"
+                  href="/admin/allproducts"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <MdOutlineProductionQuantityLimits className="mr-3" /> All
@@ -140,13 +140,13 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/categories"
+                  href="/admin/categories"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <BiCategoryAlt className="mr-3" /> Add Categories
                 </Link>
                 <Link
-                  href="/subcategory"
+                  href="/admin/subcategory"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <TbCategoryPlus className="mr-3" />
@@ -172,7 +172,7 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/orderlists"
+                  href="/admin/orderlists"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <LuListOrdered className="mr-3" /> Order List
@@ -197,7 +197,7 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/users"
+                  href="/admin/users"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <FaUserCog className="mr-3" /> Users
@@ -206,7 +206,7 @@ const AdminSidebar: React.FC = () => {
 
               <div className="ml-4">
                 <Link
-                  href="/aboutus"
+                  href="/admin/aboutus"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <FiAlertOctagon className="mr-3" /> About Us
@@ -215,7 +215,7 @@ const AdminSidebar: React.FC = () => {
 
               <div className="ml-4">
                 <Link
-                  href="/userscontact"
+                  href="/admin/userscontact"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <RiContactsBook3Line className="mr-3" /> Contact No
@@ -224,7 +224,7 @@ const AdminSidebar: React.FC = () => {
 
               <div className="ml-4">
                 <Link
-                  href="/customer"
+                  href="/admin/customer"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <TbListDetails className="mr-3" /> Costumer Details
@@ -250,7 +250,7 @@ const AdminSidebar: React.FC = () => {
             >
               <div className="ml-4">
                 <Link
-                  href="/uploadgallery"
+                  href="/admin/uploadgallery"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <IoCloudUploadOutline className="mr-3" /> Gallery
@@ -259,7 +259,7 @@ const AdminSidebar: React.FC = () => {
 
               <div className="ml-4">
                 <Link
-                  href="/banner"
+                  href="/admin/banner"
                   className="flex items-center p-2 text-black hover:bg-green-300 rounded"
                 >
                   <MdOutlineCloudUpload className="mr-3" /> Upload Banner
@@ -268,7 +268,7 @@ const AdminSidebar: React.FC = () => {
             </div>
 
             <Link
-              href="/support"
+              href="/admin/support"
               className="flex items-center p-2 text-black hover:bg-green-300 rounded"
             >
               <FiLifeBuoy className="mr-3" /> Support
