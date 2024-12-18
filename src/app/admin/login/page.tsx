@@ -1,11 +1,26 @@
 "use client";
+import { useAuthStore } from "@/store/auth";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect } from "react";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 const LogInPage = () => {
+  const user = useAuthStore((state) => state.user);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      if (user.isEmailVerified) {
+        router.push("/");
+      } else {
+        router.push("/email/verify");
+      }
+    }
+  }, [router, user]);
+
   return (
     <div
       className="min-h-screen bg-cover bg-center bg-gray-100 flex items-center justify-center"
@@ -66,9 +81,7 @@ const LogInPage = () => {
 
         {/* Sign In Button */}
         <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-200">
-          <Link href="/dashboard">
-          Sign In
-          </Link>
+          <Link href="/dashboard">Sign In</Link>
         </button>
 
         {/* Forgot Password */}

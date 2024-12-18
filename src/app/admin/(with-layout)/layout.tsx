@@ -3,6 +3,9 @@ import AdminHeader from "@/Components/AdminComponents/AdminHeader";
 import "../../globals.css";
 import AdminSidebar from "@/Components/AdminComponents/SideBar";
 import { ToastContainer } from "react-toastify";
+import { useAuthStore } from "@/store/auth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 // export const metadata = {
 //   title: "Admin Panel",
@@ -14,6 +17,18 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const user = useAuthStore((state) => state.user);
+  const router = useRouter();
+
+  // useEffect(() => {
+  //   if (user) {
+  //     if (!user.isEmailVerified) {
+  //       router.push("/email/verify");
+  //     }
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }, [router, user]);
   return (
     <html lang="en">
       <body className="bg-gray-100 h-screen">

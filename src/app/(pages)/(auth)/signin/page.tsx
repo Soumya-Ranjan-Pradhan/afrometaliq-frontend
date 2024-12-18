@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import { useLoginUser } from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { useAuthStore } from "@/store/auth";
 
 const initialState = {
   email: "",
@@ -17,6 +18,8 @@ const SignIn = () => {
   const [formData, setFormData] = useState(initialState);
   const { mutate: loginUser } = useLoginUser();
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
 
   const handleSignIn = () => {
     loginUser(
@@ -26,8 +29,15 @@ const SignIn = () => {
       },
       {
         onSuccess: (data) => {
-          router.push("/email/verify");
-          toast.success("User logged in successfully!");
+          if (data.data?.user) {
+            setUser(data.data.user);
+            if (data.data.user.isEmailVerified) {
+              router.push("/");
+            } else {
+              router.push("/email/verify");
+            }
+            toast.success("User logged in successfully!");
+          }
         },
         onError: (error) => {
           toast.error(error.message || "Failed to login user");
@@ -35,6 +45,16 @@ const SignIn = () => {
       }
     );
   };
+
+  useEffect(() => {
+    if (user) {
+      if (user.isEmailVerified) {
+        router.push("/");
+      } else {
+        router.push("/email/verify");
+      }
+    }
+  }, [router, user]);
 
   return (
     <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8 bg-gradient-to-r from-[#131132] to-[#605AC5] rounded-lg lg:rounded-[15px]">
@@ -88,7 +108,9 @@ const SignIn = () => {
           </label>
           <input
             type="text"
-            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, email: e.target.value })
+            }
             value={formData.email}
             placeholder="Username or email or Mobile number +258 xxx xxx xxx"
             className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -103,7 +125,9 @@ const SignIn = () => {
           </label>
           <input
             type="password"
-            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, password: e.target.value })
+            }
             value={formData.password}
             placeholder="Password"
             className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -117,7 +141,10 @@ const SignIn = () => {
           </div>
 
           {/* Sign In Button */}
-          <button onClick={handleSignIn} className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold">
+          <button
+            onClick={handleSignIn}
+            className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold"
+          >
             Sign in
           </button>
 
