@@ -13,10 +13,13 @@ const Sidebar = () => {
   //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
   const pathname = usePathname();
 
-  const token = window.localStorage.getItem("accessToken");
+  // let token;
+  // if (window) {
+  //   token = window.localStorage.getItem("accessToken");
+  // }
 
   const { data: userData } = useGetLoggedUserDetails({
-    enabled: !!token,
+    // enabled: !!token,
   });
 
   const router = useRouter();
