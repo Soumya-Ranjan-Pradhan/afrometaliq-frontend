@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001/api/v1";
+import { BASE_URL } from "@/contants";
 
 // Define Unit Type
 export type Unit = {
@@ -22,7 +22,7 @@ export const fetchUnits = async (): Promise<ApiResponse<{ units: Unit[] }>> => {
   const response = await axios.get<ApiResponse<{ units: Unit[] }>>(
     `${BASE_URL}/units`
   );
-  return response.data
+  return response.data;
 };
 
 // create units
@@ -57,7 +57,6 @@ export const deleteUnits = async (
   );
   return response.data;
 };
-
 
 // search units
 export const searchUnits = async (

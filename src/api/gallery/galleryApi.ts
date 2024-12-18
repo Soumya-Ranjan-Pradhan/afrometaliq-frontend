@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:3001/api/v1";
+import { BASE_URL } from "@/contants";
 
 export interface Gallery {
   _id: string;
