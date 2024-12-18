@@ -18,7 +18,7 @@ export const useGetAllContact = () => {
 };
 
 // create contact
-export const createContacts = () => {
+export const useCreateContacts = () => {
   const queryClient = useQueryClient();
   return useMutation<
     ApiResponse<{ contact: Contact[] }>,
@@ -37,7 +37,6 @@ export const createContacts = () => {
     },
   });
 };
-
 
 // get contact by id
 export const useGetContactById = (id: string) => {

@@ -1,5 +1,5 @@
 "use client";
-import { createContacts } from "@/api/contact/query/useContactQuery";
+import { useCreateContacts } from "@/api/contact/query/useContactQuery";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -9,17 +9,16 @@ const initialState = {
   email: "",
   mobile_number: "",
   message: "",
-  password:""
+  password: "",
 };
 
 const Contact = () => {
   const [contact, setContact] = useState(initialState);
 
-  const { mutate: createContact } = createContacts();
+  const { mutate: createContact } = useCreateContacts();
 
   const handleCreate = () => {
     if (
-      
       !contact.first_name.trim() ||
       !contact.last_name.trim() ||
       !contact.email.trim() ||
@@ -102,7 +101,10 @@ const Contact = () => {
               <h2 className="text-2xl font-semibold text-gray-700">
                 Send Us a Message
               </h2>
-              <form className="mt-5 space-y-4" onSubmit={(e) => e.preventDefault()} >
+              <form
+                className="mt-5 space-y-4"
+                onSubmit={(e) => e.preventDefault()}
+              >
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -121,8 +123,6 @@ const Contact = () => {
                       placeholder="Enter your first name"
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2 text-sm"
                     />
-
-                    
                   </div>
                   <div>
                     <label
@@ -198,7 +198,7 @@ const Contact = () => {
                   ></textarea>
                 </div>
                 <button
-                 onClick={handleCreate}
+                  onClick={handleCreate}
                   type="submit"
                   className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-md hover:bg-blue-700"
                 >
