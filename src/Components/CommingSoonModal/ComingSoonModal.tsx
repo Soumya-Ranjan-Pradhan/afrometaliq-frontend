@@ -28,7 +28,7 @@ const ComingSoonModal: React.FC<ModalProps> = ({ isOpen, onRequestClose }) => {
           ✖
         </button>
         <h2 className="text-xl font-bold text-gray-800">
-          The page is not here But you aren't lost{" "}
+          The page is not here But you aren&apos;t lost{" "}
         </h2>
         <p className="mt-4 text-gray-600">
           <span className="animate-pulse text-purple-600 font-semibold">

@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import {
-  getAllBanner,
   useCreateBanner,
   useDeleteBanner,
+  useGetAllBanner,
   useUpdateBanner,
 } from "@/api/banner/queries/useBannerQuery";
 import { FaEdit, FaTrash, FaUpload } from "react-icons/fa";
@@ -18,7 +18,7 @@ const BannerUpload = () => {
   const [formData, setFormData] = useState<FormData | null>(null);
 
   // React Query hooks
-  const { data, isLoading, error } = getAllBanner();
+  const { data, isLoading, error } = useGetAllBanner();
   const { mutate: createBanner } = useCreateBanner();
   const { mutate: updateBanner } = useUpdateBanner();
   const { mutate: deleteBanner } = useDeleteBanner();
@@ -31,8 +31,8 @@ const BannerUpload = () => {
     }
   };
 
- // Create Banner
- const handleCreate = () => {
+  // Create Banner
+  const handleCreate = () => {
     if (!uploadedImage) return toast.error("Please upload an image!");
 
     const form = new FormData();
@@ -107,14 +107,13 @@ const BannerUpload = () => {
                 className="hidden"
               />
             </label>
-          
           </div>
           <button
-              onClick={handleCreate}
-              className="bg-blue-500 mt-2 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
-            >
-              Upload Banner
-            </button>
+            onClick={handleCreate}
+            className="bg-blue-500 mt-2 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+          >
+            Upload Banner
+          </button>
         </div>
 
         {/* Banner Table */}

@@ -9,7 +9,7 @@ import {
 } from "../bannerApi";
 
 // get all banners
-export const getAllBanner = () => {
+export const useGetAllBanner = () => {
   return useQuery<ApiResponse<{ banners: Banner[] }>, Error>({
     queryKey: ["banners"],
     queryFn: getAllBanners,

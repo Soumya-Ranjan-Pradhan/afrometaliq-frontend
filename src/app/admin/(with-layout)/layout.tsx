@@ -1,3 +1,4 @@
+"use client";
 import ReactQueryProvider from "@/context/ReactQueryProvider";
 import AdminHeader from "@/Components/AdminComponents/AdminHeader";
 import "../../globals.css";

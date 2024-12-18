@@ -1,11 +1,10 @@
 "use client";
 import React, { useState } from "react";
-import { FaHeart, FaStar, FaRegStar } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "./ModalProduct";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import ComingSoonModal from "../CommingSoonModal/ComingSoonModal";
 
@@ -26,8 +25,6 @@ const Product = () => {
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  
 
   // const openModal = (product: Product) => {
   //   setSelectedProduct(product);
@@ -54,7 +51,6 @@ const Product = () => {
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching products</div>;
 
-  const router = useRouter();
   // const handleBuyNow = (
   //   e: React.MouseEvent<HTMLButtonElement>,
   //   productId: number
@@ -146,7 +142,7 @@ const Product = () => {
         />
       )}
 
-<ComingSoonModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      <ComingSoonModal isOpen={isModalOpen} onRequestClose={closeModal} />
     </div>
   );
 };
