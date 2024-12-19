@@ -31,10 +31,7 @@ export default function AdminLayout({
   //   }
   // }, [router, user]);
   return (
-    <html lang="en">
-      <body className="bg-gray-100 h-screen">
-        <ReactQueryProvider>
-          <ToastContainer position="top-right" autoClose={3000} />
+   
           <div className="flex h-screen bg-gray-50">
             {/* Sidebar */}
             <AdminSidebar />
@@ -46,8 +43,6 @@ export default function AdminLayout({
               <main className="p-4 flex-1 overflow-y-auto">{children}</main>
             </div>
           </div>
-        </ReactQueryProvider>
-      </body>
-    </html>
+       
   );
 }

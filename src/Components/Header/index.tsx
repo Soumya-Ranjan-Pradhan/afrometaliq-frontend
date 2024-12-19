@@ -26,6 +26,11 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
 
+
+  const closeDrawer = () => {
+    setToggleMenu(false);
+  };
+
   const changeLanguage = () => {
     if (i18n.language === "en") {
       i18n.changeLanguage("pt");
@@ -148,14 +153,14 @@ const Header = () => {
           </div>
 
           {/* Wishlist Icon */}
-          <div className="relative hidden lg:block">
+          {/* <div className="relative hidden lg:block">
             <Link href="/wishlist">
               <FaHeart size={20} className="text-white" />
               <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
                 3
               </span>
             </Link>
-          </div>
+          </div> */}
 
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
@@ -204,12 +209,12 @@ const Header = () => {
             {showProfileTooltip && <ProfileTooltip />}
           </div>
           {/* Wishlist Icon */}
-          <div className="relative hidden sm:block">
+          {/* <div className="relative hidden sm:block">
             <FaHeart size={20} className="text-white" />
             <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-              3
+              30
             </span>
-          </div>
+          </div> */}
 
           {/* Cart Icon */}
           <div className="relative hidden sm:block">
@@ -247,7 +252,7 @@ const Header = () => {
             />
           </div>
           <div className="text-white p-3">
-            <Categories />
+            <Categories  closeDrawer={closeDrawer} />
           </div>
         </div>
       </nav>

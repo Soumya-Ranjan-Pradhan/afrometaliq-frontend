@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import ComingSoonModal from "../CommingSoonModal/ComingSoonModal";
+import { useGlobalStore } from "@/store/global";
 
 type Product = {
   id: number;
@@ -22,9 +23,13 @@ type Product = {
 
 const Product = () => {
   const { data, isLoading, error } = useProducts();
-
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = () => {
+    setComingSoon(true);
+  }
 
   // const openModal = (product: Product) => {
   //   setSelectedProduct(product);
@@ -119,13 +124,13 @@ const Product = () => {
             <div className="flex items-center justify-between gap-2">
               <button
                 className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                onClick={handleBuyNow}
+                onClick={handleClick}
               >
                 BUY NOW
               </button>
               <button
                 className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                onClick={handleAddToCart}
+                onClick={handleClick}
               >
                 Add To Cart
               </button>
@@ -142,7 +147,7 @@ const Product = () => {
         />
       )}
 
-      <ComingSoonModal isOpen={isModalOpen} onRequestClose={closeModal} />
+      {/* <ComingSoonModal isOpen={isModalOpen} onRequestClose={closeModal} /> */}
     </div>
   );
 };

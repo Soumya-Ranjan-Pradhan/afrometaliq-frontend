@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 type Subcategory = {
   _id: string;
@@ -143,7 +144,7 @@ const categories: Category[] = [
   },
 ];
 
-const Categories: React.FC = () => {
+const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
 
   const toggleSubcategories = (categoryId: string) => {
@@ -245,7 +246,24 @@ const Categories: React.FC = () => {
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
         <MdOutlineKeyboardArrowRight size={30} className="rotate-0" />
-        <p className="text-[1.2rem] md:text-[1.8rem] font-semibold">Contact</p>
+        <Link href="/contact" onClick={closeDrawer}>
+          <p className="text-[1.2rem] md:text-[1.8rem] font-semibold">
+            Contact
+          </p>
+        </Link>
+      </motion.div>
+
+      <motion.div
+        className="p-1 flex items-center gap-2 cursor-pointer"
+        variants={categoryVariants}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <MdOutlineKeyboardArrowRight size={30} className="rotate-0" />
+        <Link href="/fabrication" onClick={closeDrawer}>
+          <p className="text-[1.2rem] md:text-[1.8rem] font-semibold">
+            Fabrication
+          </p>
+        </Link>
       </motion.div>
     </motion.div>
   );
