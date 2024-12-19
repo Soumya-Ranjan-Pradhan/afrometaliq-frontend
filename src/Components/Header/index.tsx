@@ -58,7 +58,7 @@ const Header = () => {
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
               alt="Arfo Metaliq Logo"
               width={250} // Set responsive width
               height={120} // Default height
@@ -269,7 +269,7 @@ const Header = () => {
         >
           <div className="flex items-center justify-between h-[62px] px-3 border-b text-black bg-white">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
               alt="logo"
               width={200}
               height={140}

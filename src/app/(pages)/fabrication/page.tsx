@@ -39,7 +39,7 @@ const Fabrication = () => {
             <Image
               width={500}
               height={500}
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
               alt="pagedone logo image"
               className="object-cover"
             />

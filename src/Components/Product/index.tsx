@@ -127,7 +127,7 @@ const Product = () => {
                       </span>
                     ) : (
                       <p className="text-sm text-gray-500">
-                        Please login to see the price
+                         login to see the price
                       </p>
                     )
                   }
@@ -145,7 +145,7 @@ const Product = () => {
                   </span>
                 ) : (
                   <p className="text-sm text-gray-500">
-                    Please login to see the price
+                     login to see the price
                   </p>
                 )}
               </div>
