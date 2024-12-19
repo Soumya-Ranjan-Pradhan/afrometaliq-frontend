@@ -19,6 +19,7 @@ import CategoryMenu from "./CategoryMenu";
 import { useTranslation } from "react-i18next";
 import { LanguagesIcon } from "lucide-react";
 import { useGlobalStore } from "@/store/global";
+import { useAuthStore } from "@/store/auth";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -28,6 +29,8 @@ const Header = () => {
   const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+
+  const user = useAuthStore((state) => state.user);
 
   const handleClick = () => {
     setComingSoon(true);
@@ -88,14 +91,18 @@ const Header = () => {
             </button>
           </div>
 
-          <Link href="/signup" className="flex items-center space-x-1">
-            <RiBallPenLine className="text-2xl" />
-            <span className="text-sm">{t("menu.sign_up")}</span>
-          </Link>
-          <Link href="/signin" className="flex items-center space-x-1">
-            <MdLockOutline className="text-2xl" />
-            <span className="text-sm">{t("menu.login")}</span>
-          </Link>
+          {!user?._id && (
+            <>
+              <Link href="/signup" className="flex items-center space-x-1">
+                <RiBallPenLine className="text-2xl" />
+                <span className="text-sm">{t("menu.sign_up")}</span>
+              </Link>
+              <Link href="/signin" className="flex items-center space-x-1">
+                <MdLockOutline className="text-2xl" />
+                <span className="text-sm">{t("menu.login")}</span>
+              </Link>
+            </>
+          )}
 
           <Link
             href="/contact"
@@ -231,7 +238,11 @@ const Header = () => {
 
           {/* Cart Icon */}
           <div className="relative hidden sm:block">
-            <FaShoppingCart size={20} className="text-white" onClick={handleClick} />
+            <FaShoppingCart
+              size={20}
+              className="text-white"
+              onClick={handleClick}
+            />
             <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
               3
             </span>

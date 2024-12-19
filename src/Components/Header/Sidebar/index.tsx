@@ -9,6 +9,7 @@ import { TfiGallery } from "react-icons/tfi";
 import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/global";
+import { useAuthStore } from "@/store/auth";
 
 const Sidebar = () => {
   //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
@@ -29,12 +30,15 @@ const Sidebar = () => {
     // enabled: !!token,
   });
 
+  const user = useAuthStore((state) => state.user);
+
   const router = useRouter();
 
   useEffect(() => {
     if (userData) {
       if (userData?.data.user.isEmailVerified) {
-        router.push("/");
+        console.log("LAYOUT ===========", "User is verified");
+        // router.push("/");
       } else {
         router.replace("/email/verify");
       }

@@ -11,6 +11,7 @@ import {
   useVerifyOtp,
 } from "@/api/auth/queries/authQuery";
 import { AiFillCheckCircle, AiOutlineLoading } from "react-icons/ai";
+import { useAuthStore } from "@/store/auth";
 
 const initialState = {
   username: "",
@@ -29,6 +30,7 @@ const SignUp = () => {
   const { mutate: createUser } = useCreateUser();
   const { mutate: verifyOtp } = useVerifyOtp();
   const router = useRouter();
+  const setUser = useAuthStore((state) => state.setUser);
 
   const isButtonDisabled =
     !formData.email ||
@@ -52,7 +54,6 @@ const SignUp = () => {
         onSuccess: () => {
           toast.success("OTP verified successfully");
           setOtpVerified(true);
-          
         },
         onError: (error: any) => {
           toast.error("Invalid OTP");
@@ -62,7 +63,8 @@ const SignUp = () => {
     );
   };
 
-  const handleSignUp = () => {
+  const handleSignUp = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     if (!formData.username || !formData.email || !formData.phoneNumber) {
       toast.error("All fields are required");
       return;
@@ -83,8 +85,12 @@ const SignUp = () => {
       {
         onSuccess: (data) => {
           setIsLoading(false);
-          router.push("/");
+          if (data.data.user) {
+            setUser(data.data.user);
+          }
+          console.log(data.data.user);
           toast.success("User registered and logged in successfully!");
+          router.push("/email/verify");
         },
         onError: (error) => {
           setIsLoading(false);
@@ -133,7 +139,7 @@ const SignUp = () => {
               Sign up
             </h3>
 
-            <form className="mt-6 space-y-4">
+            <form className="mt-6 space-y-4" onSubmit={handleSignUp}>
               <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
                 {/* Name Field */}
                 <div className="w-full lg:w-1/2">
@@ -215,7 +221,7 @@ const SignUp = () => {
 
               {/* Sign Up Button */}
               <button
-                onClick={handleSignUp}
+                // onClick={handleSignUp}
                 disabled={isButtonDisabled}
                 className={`w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold flex justify-center items-center ${
                   isButtonDisabled
@@ -273,12 +279,12 @@ const SignUp = () => {
               Verify OTP
             </button>
 
-            <button
+            {/* <button
               onClick={handleSignUp}
               className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4 text-white py-2 rounded-lg"
             >
               Register With Verify Email
-            </button>
+            </button> */}
           </div>
         </div>
       )}

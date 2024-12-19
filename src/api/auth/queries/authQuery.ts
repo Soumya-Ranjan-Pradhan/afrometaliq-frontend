@@ -16,6 +16,7 @@ import {
   verifyOtp,
   verifyOtpAndResetPassword,
 } from "../authApi";
+import { useAuthStore } from "@/store/auth";
 
 // get all users
 export const useUsers = () => {
@@ -51,9 +52,19 @@ export const useCreateUser = () => {
 export const useGetLoggedUserDetails = (
   options?: Partial<UseQueryOptions<any>>
 ) => {
+  const setUser = useAuthStore((state) => state.setUser);
+
   return useQuery<ApiResponse<{ user: User }>, Error>({
     queryKey: ["user", "me"],
     queryFn: () => getLoggedInUser(),
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    retry: 1,
+    select: (data) => {
+      if (data?.data?.user) {
+        setUser(data.data.user);
+      }
+      return data;
+    },
     ...options,
   });
 };

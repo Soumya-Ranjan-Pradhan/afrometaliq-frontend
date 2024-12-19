@@ -7,7 +7,7 @@ import {
 } from "@/api/auth/queries/authQuery";
 import React, { useEffect, useState } from "react";
 
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useAuthStore } from "@/store/auth";
@@ -18,7 +18,7 @@ const initialState = {
 };
 
 const Verify = () => {
-  const { data, refetch } = useGetLoggedUserDetails();
+  const { data, refetch, isLoading, error } = useGetLoggedUserDetails();
   const { mutate: sendOtpEmail } = useSendOtp();
   const { mutateAsync: verifyOtp } = useVerifyOtp();
   const [isEmailModalOpen, setEmailModalOpen] = useState(false);
@@ -87,6 +87,18 @@ const Verify = () => {
 
     refetch();
   };
+
+  if (isLoading)
+    return (
+      <div className="h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
+      </div>
+    );
+
+  if (error) {
+    toast.error("Failed to fetch user details");
+    return redirect("/");
+  }
 
   return (
     <div className="h-screen flex items-center justify-center bg-gray-100 px-4 sm:px-6 lg:px-8">
