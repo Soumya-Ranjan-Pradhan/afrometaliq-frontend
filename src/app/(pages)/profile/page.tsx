@@ -1,4 +1,5 @@
 "use client";
+import { useAuthStore } from "@/store/auth";
 import { useGlobalStore } from "@/store/global";
 import {
   FaBox,
@@ -11,6 +12,7 @@ import {
 } from "react-icons/fa";
 
 export default function Profile() {
+  const user = useAuthStore((state) => state.user);
   const menuItems = [
     {
       icon: <FaUserEdit />,
@@ -59,9 +61,16 @@ export default function Profile() {
               {/* Placeholder profile icon */}
               <span className="text-6xl text-gray-200">👤</span>
             </div>
-            <p className="mt-4 text-lg font-medium">
-              soumyapradhan63711@gmail.com
-            </p>
+            {user?._id ? (
+              <>
+                <p className="font-semibold text-lg ">{user?.username}</p>
+                <p className=" text-sm mb-4">{user?.email}</p>
+              </>
+            ) : (
+              <p className="mt-4 text-lg font-medium">
+                Login to See Your Profile
+              </p>
+            )}
           </div>
 
           {/* Divider */}
@@ -76,7 +85,7 @@ export default function Profile() {
                 className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 cursor-pointer"
               >
                 <div className="flex items-center space-x-4">
-                  <div className="text-xl text-gray-600" >{item.icon}</div>
+                  <div className="text-xl text-gray-600">{item.icon}</div>
                   <div>
                     <p className="text-base font-semibold">{item.title}</p>
                     <p className="text-sm text-gray-500">{item.description}</p>

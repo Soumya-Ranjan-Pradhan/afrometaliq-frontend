@@ -3,7 +3,6 @@ import ReactQueryProvider from "@/context/ReactQueryProvider";
 import Header from "@/Components/Header";
 import Sidebar from "@/Components/Header/Sidebar";
 import Footer from "@/Components/Footer";
-import type { Metadata } from "next";
 import "../globals.css";
 import { FaWhatsapp } from "react-icons/fa";
 import "@/i18n";

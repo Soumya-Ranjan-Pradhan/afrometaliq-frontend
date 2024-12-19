@@ -95,7 +95,11 @@ const Header = () => {
             </button>
           </div>
 
-          {!user?._id && (
+          {user?._id ? (
+            <div className="lg:hidden">
+              <UserMobileMenu />
+            </div>
+          ) : (
             <>
               <Link href="/signup" className="flex items-center space-x-1">
                 <RiBallPenLine className="text-2xl" />
@@ -107,6 +111,10 @@ const Header = () => {
               </Link>
             </>
           )}
+
+          {/* {!user?._id && (
+           
+          )} */}
 
           <Link
             href="/contact"
