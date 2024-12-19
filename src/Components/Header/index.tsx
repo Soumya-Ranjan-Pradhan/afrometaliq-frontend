@@ -20,6 +20,7 @@ import { useTranslation } from "react-i18next";
 import { LanguagesIcon } from "lucide-react";
 import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
+import UserMenu from "./Sidebar/UserMenu";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -156,14 +157,15 @@ const Header = () => {
           </Link>
 
           {/* Profile Icon */}
-          <div
+          {/* <div
             className="relative hidden lg:block"
             onMouseEnter={() => setShowProfileTooltip(true)}
             onMouseLeave={() => setShowProfileTooltip(false)}
           >
             <FaUser size={20} className="text-white" />
-            {showProfileTooltip && <ProfileTooltip />} {/* Show Tooltip */}
-          </div>
+            {showProfileTooltip && <ProfileTooltip />} 
+          </div> */}
+          <UserMenu />
 
           {/* Wishlist Icon */}
           {/* <div className="relative hidden lg:block">

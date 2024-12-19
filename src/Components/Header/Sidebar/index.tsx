@@ -10,6 +10,7 @@ import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
+import UserMenu from "./UserMenu";
 
 const Sidebar = () => {
   //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
