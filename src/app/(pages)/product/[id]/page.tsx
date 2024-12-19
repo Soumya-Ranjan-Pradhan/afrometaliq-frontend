@@ -3,6 +3,7 @@
 import { useProductById } from "@/api/product/queries/useProductQuery";
 import ProductTabs from "@/Components/Product/ProductTabs";
 import PageSkeleton from "@/Components/Skeleton/SingleProducts";
+import { useAuthStore } from "@/store/auth";
 import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -13,6 +14,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const [quantity, setQuantity] = useState(1);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+  const user = useAuthStore((state) => state.user);
 
   const handleClick = () => {
     setComingSoon(true);
@@ -57,7 +59,15 @@ const Page = ({ params }: { params: { id: string } }) => {
             </h1>
             <div className="flex items-center gap-4 mt-4">
               <span className="text-red-500 text-2xl font-bold">
-                ₹{productDetails?.product_selling_price}
+                {user?._id ? (
+                  <span className="text-lg font-bold text-purple-600">
+                    ₹{productDetails?.product_selling_price}
+                  </span>
+                ) : (
+                  <p className="text-sm text-gray-500">
+                     login to see the price
+                  </p>
+                )}
               </span>
             </div>
             <p className="mt-6 text-gray-600 text-sm leading-6">

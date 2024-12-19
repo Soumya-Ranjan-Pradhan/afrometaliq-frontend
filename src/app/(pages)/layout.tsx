@@ -6,7 +6,6 @@ import Footer from "@/Components/Footer";
 import type { Metadata } from "next";
 import "../globals.css";
 import { FaWhatsapp } from "react-icons/fa";
-import { ToastContainer } from "react-toastify";
 import "@/i18n";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";

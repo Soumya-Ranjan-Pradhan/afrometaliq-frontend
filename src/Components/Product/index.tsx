@@ -9,6 +9,7 @@ import { useProducts } from "@/api/product/queries/useProductQuery";
 import ComingSoonModal from "../CommingSoonModal/ComingSoonModal";
 import { useGlobalStore } from "@/store/global";
 import ProductSkeletons from "../Skeleton/ProductSkeleton";
+import { useAuthStore } from "@/store/auth";
 
 type Product = {
   id: number;
@@ -27,6 +28,8 @@ const Product = () => {
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const user = useAuthStore((state) => state.user);
 
   const handleClick = () => {
     setComingSoon(true);
@@ -117,7 +120,18 @@ const Product = () => {
               {/* <p className="mt-2 text-green-400">{product.stock}</p> */}
               <div className="flex items-center mt-2">
                 <span className="text-lg font-bold text-purple-600">
-                  ₹{product.product_price.toLocaleString()}
+                  {
+                    user?._id ? (
+                      <span className="text-lg font-bold text-gray-700">
+                       ₹{product.product_price.toLocaleString()}
+                      </span>
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                        Please login to see the price
+                      </p>
+                    )
+                  }
+                 
                 </span>
                 {/* <span className="text-sm line-through text-gray-400 ml-2">
                     ₹{product.originalPrice.toLocaleString()}
@@ -125,7 +139,15 @@ const Product = () => {
               </div>
 
               <div className="text-sm text-gray-500 mt-1">
-                {product.product_selling_price} Sale
+                {user?._id ? (
+                  <span className="text-lg font-bold text-gray-700">
+                    ₹ {product.product_selling_price} Sale
+                  </span>
+                ) : (
+                  <p className="text-sm text-gray-500">
+                    Please login to see the price
+                  </p>
+                )}
               </div>
             </div>
             {/* Buttons */}

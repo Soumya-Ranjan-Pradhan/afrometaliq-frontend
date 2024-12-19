@@ -21,6 +21,7 @@ import { LanguagesIcon } from "lucide-react";
 import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
 import UserMenu from "./Sidebar/UserMenu";
+import UserMobileMenu from "./Sidebar/UserMobileMenu";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -66,6 +67,8 @@ const Header = () => {
               priority
             />
           </Link>
+
+          {/* <UserMobileMenu /> */}
         </div>
 
         {/* Center - Search bar large screen */}
@@ -156,15 +159,6 @@ const Header = () => {
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 
-          {/* Profile Icon */}
-          {/* <div
-            className="relative hidden lg:block"
-            onMouseEnter={() => setShowProfileTooltip(true)}
-            onMouseLeave={() => setShowProfileTooltip(false)}
-          >
-            <FaUser size={20} className="text-white" />
-            {showProfileTooltip && <ProfileTooltip />} 
-          </div> */}
           <UserMenu />
 
           {/* Wishlist Icon */}

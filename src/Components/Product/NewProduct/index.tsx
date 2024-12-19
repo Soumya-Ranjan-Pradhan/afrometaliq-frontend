@@ -12,6 +12,7 @@ import { useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
 import CarouselSkeleton from "@/Components/Skeleton/CarouselSkeleton";
+import { useAuthStore } from "@/store/auth";
 
 type Product = {
   id: number;
@@ -28,6 +29,8 @@ type Product = {
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
   const { data, isLoading, error } = useProducts({ discount: 1 });
+
+  const user = useAuthStore((state) => state.user);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
 
@@ -88,12 +91,28 @@ const NewArrivingProductCarousel: React.FC = () => {
 
                 <div className="flex items-center">
                   <span className="text-lg font-bold text-purple-600">
-                    ₹{product.product_price.toLocaleString()}
+                    {user?._id ? (
+                      <span className="text-lg font-bold text-purple-600">
+                        ₹{product.product_price.toLocaleString()}
+                      </span>
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                         login to see the price
+                      </p>
+                    )}
                   </span>
                 </div>
 
                 <div className="text-sm text-gray-500 mt-1">
-                  {product.product_selling_price} Sale
+                  {user?._id ? (
+                    <span className="text-lg font-bold text-gray-700">
+                      ₹ {product.product_selling_price} Sale
+                    </span>
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      login to see the price
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex items-center justify-between gap-2">

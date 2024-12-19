@@ -8,6 +8,7 @@ import { useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
 import ProductSkeleton from "../Skeleton";
+import { useAuthStore } from "@/store/auth";
 
 type Product = {
   id: number;
@@ -25,6 +26,7 @@ const AllProduct = () => {
   const { data, isLoading, error } = useProducts();
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+  const user = useAuthStore((state) => state.user);
 
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -106,12 +108,26 @@ const AllProduct = () => {
                   </h3>
                   <p className="mt-2 text-green-400">{product.stock}</p>
                   <div className="flex items-center mt-2">
-                    <span className="text-lg font-bold text-purple-600">
-                      ₹{product.product_price.toLocaleString()}
-                    </span>
+                    {user?._id ? (
+                      <span className="text-lg font-bold text-purple-600">
+                        ₹{product.product_price.toLocaleString()}
+                      </span>
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                         login to see the price
+                      </p>
+                    )}
                   </div>
                   <div className="text-sm text-gray-500 mt-1">
-                    {product.product_selling_price} Sale
+                    {user?._id ? (
+                      <span className="text-lg font-bold text-gray-700">
+                        ₹ {product.product_selling_price} Sale
+                      </span>
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                         login to see the price
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center justify-between gap-2">
