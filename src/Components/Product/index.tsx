@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import ComingSoonModal from "../CommingSoonModal/ComingSoonModal";
 import { useGlobalStore } from "@/store/global";
+import ProductSkeletons from "../Skeleton/ProductSkeleton";
 
 type Product = {
   id: number;
@@ -29,7 +30,7 @@ const Product = () => {
 
   const handleClick = () => {
     setComingSoon(true);
-  }
+  };
 
   // const openModal = (product: Product) => {
   //   setSelectedProduct(product);
@@ -52,8 +53,15 @@ const Product = () => {
   };
 
   const closeModal = () => setIsModalOpen(false);
+  if (isLoading)
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <ProductSkeletons key={index} />
+        ))}
+      </div>
+    );
 
-  if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching products</div>;
 
   // const handleBuyNow = (

@@ -4,12 +4,12 @@ import { useState } from "react";
 import { useGalleries } from "@/api/gallery/queries/useGalleryQuery";
 import Image from "next/image";
 import GalleryModal from "@/Components/GalleryModal/GalleryModal";
+import GallerySkeleton from "@/Components/Skeleton/Gallery";
 
 const Gallery = () => {
   const { data, isLoading, error } = useGalleries();
   const [selectedGallery, setSelectedGallery] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
 
   const openModal = (gallery: any) => {
     setSelectedGallery(gallery);
@@ -26,7 +26,9 @@ const Gallery = () => {
       <h2 className="text-center text-2xl font-bold mb-8">Our Gallery</h2>
       <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
         {isLoading ? (
-          <p>Loading...</p>
+          Array.from({ length: 8 }).map((_, index) => (
+            <GallerySkeleton key={index} />
+          ))
         ) : error ? (
           <p>Error loading gallery</p>
         ) : (

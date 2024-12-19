@@ -11,6 +11,7 @@ import { Swiper } from "swiper/types";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
+import CarouselSkeleton from "@/Components/Skeleton/CarouselSkeleton";
 
 type Product = {
   id: number;
@@ -34,7 +35,14 @@ const NewArrivingProductCarousel: React.FC = () => {
     setComingSoon(true);
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {Array.from({ length: 8 }).map((_, index) => (
+          <CarouselSkeleton key={index} />
+        ))}
+      </div>
+    );
   if (error) return <div>Error fetching products</div>;
 
   return (

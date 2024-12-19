@@ -3,9 +3,10 @@ import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
+import CategorySkeleton from "../Skeleton/CategorySkeleton";
 
 const Category: React.FC = () => {
-  const { data } = useCategoriesByLevel({ level: 1 });
+  const { data, isLoading, isError } = useCategoriesByLevel({ level: 1 });
 
   return (
     <div className="py-8">
@@ -15,8 +16,8 @@ const Category: React.FC = () => {
           color="green"
           className=" ml-2 animate-move-left"
         />
-        <div className="text-green-600 font-extrabold  text-center">
-          <h2 className="text-center text-3xl md:text-3xl font-xeroda font-bold ">
+        <div className="text-green-600 font-extrabold text-center">
+          <h2 className="text-center text-3xl md:text-3xl font-xeroda font-bold">
             Category
           </h2>
         </div>
@@ -28,9 +29,14 @@ const Category: React.FC = () => {
       </div>
 
       <div className="overflow-x-auto flex space-x-6 px-6 hide-scrollbar">
-        {/* Category items */}
-        {data?.data.categories &&
-          data.data.categories.map((category) => (
+        {isLoading ? (
+          Array.from({ length: 8 }).map((_, index) => (
+            <CategorySkeleton key={index} />
+          ))
+        ) : isError ? (
+          <p>Error fetching categories</p>
+        ) : (
+          data?.data.categories.map((category) => (
             <div key={category._id} className="flex-shrink-0 text-center">
               <div className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[#5A43AF] flex items-center justify-center mx-auto transition-colors duration-300">
                 <div className="relative w-full h-full overflow-hidden rounded-full">
@@ -52,7 +58,8 @@ const Category: React.FC = () => {
                 {category.category_name}
               </p>
             </div>
-          ))}
+          ))
+        )}
       </div>
     </div>
   );

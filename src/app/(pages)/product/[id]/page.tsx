@@ -2,6 +2,7 @@
 
 import { useProductById } from "@/api/product/queries/useProductQuery";
 import ProductTabs from "@/Components/Product/ProductTabs";
+import PageSkeleton from "@/Components/Skeleton/SingleProducts";
 import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -20,7 +21,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   // Fetch product by ID
   const { data: product, isLoading, error } = useProductById(params.id);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <PageSkeleton />;
   if (error) return <div>Error fetching product details</div>;
 
   const productDetails = product?.data.product;
