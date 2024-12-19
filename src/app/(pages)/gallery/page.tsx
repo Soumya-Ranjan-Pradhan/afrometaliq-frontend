@@ -9,6 +9,7 @@ const Gallery = () => {
   const { data, isLoading, error } = useGalleries();
   const [selectedGallery, setSelectedGallery] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
 
   const openModal = (gallery: any) => {
     setSelectedGallery(gallery);

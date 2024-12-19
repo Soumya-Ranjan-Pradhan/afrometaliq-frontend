@@ -6,6 +6,7 @@ import ProductModal from "../Product/ModalProduct";
 import Image from "next/image";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
+import { useGlobalStore } from "@/store/global";
 
 type Product = {
   id: number;
@@ -22,8 +23,14 @@ type Product = {
 const AllProduct = () => {
   const { data, isLoading, error } = useProducts();
 
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleClick = () => {
+    setComingSoon(true);
+  };
 
   const openModal = (product: Product) => {
     setSelectedProduct(product);
@@ -93,11 +100,17 @@ const AllProduct = () => {
               </div>
             </div>
             <div className="flex items-center justify-between gap-2">
-              <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+              <button
+                onClick={handleClick}
+                className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+              >
                 BUY NOW
               </button>
 
-              <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+              <button
+                onClick={handleClick}
+                className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+              >
                 Add To Cart
               </button>
             </div>

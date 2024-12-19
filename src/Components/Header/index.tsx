@@ -18,6 +18,7 @@ import Categories from "../Categories";
 import CategoryMenu from "./CategoryMenu";
 import { useTranslation } from "react-i18next";
 import { LanguagesIcon } from "lucide-react";
+import { useGlobalStore } from "@/store/global";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -26,6 +27,11 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
 
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+
+  const handleClick = () => {
+    setComingSoon(true);
+  };
 
   const closeDrawer = () => {
     setToggleMenu(false);
@@ -164,9 +170,16 @@ const Header = () => {
 
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
-            <Link href="/cart">
+            {/* <Link href="/cart">
               <FaShoppingCart size={20} className="text-white" />
-            </Link>
+            </Link> */}
+
+            <FaShoppingCart
+              size={20}
+              className="text-white"
+              onClick={handleClick}
+            />
+
             <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
               3
             </span>
@@ -218,7 +231,7 @@ const Header = () => {
 
           {/* Cart Icon */}
           <div className="relative hidden sm:block">
-            <FaShoppingCart size={20} className="text-white" />
+            <FaShoppingCart size={20} className="text-white" onClick={handleClick} />
             <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
               3
             </span>
@@ -252,7 +265,7 @@ const Header = () => {
             />
           </div>
           <div className="text-white p-3">
-            <Categories  closeDrawer={closeDrawer} />
+            <Categories closeDrawer={closeDrawer} />
           </div>
         </div>
       </nav>

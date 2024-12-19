@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Swiper } from "swiper/types";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
+import { useGlobalStore } from "@/store/global";
 
 type Product = {
   id: number;
@@ -26,6 +27,12 @@ type Product = {
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
   const { data, isLoading, error } = useProducts({ discount: 1 });
+
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+
+  const handleClick = () => {
+    setComingSoon(true);
+  };
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error fetching products</div>;
@@ -82,11 +89,17 @@ const NewArrivingProductCarousel: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
-                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                  <button
+                    onClick={handleClick}
+                    className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  >
                     BUY NOW
                   </button>
 
-                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                  <button
+                    onClick={handleClick}
+                    className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  >
                     Add To Cart
                   </button>
                 </div>

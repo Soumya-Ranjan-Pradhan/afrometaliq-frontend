@@ -8,10 +8,17 @@ import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { TfiGallery } from "react-icons/tfi";
 import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
+import { useGlobalStore } from "@/store/global";
 
 const Sidebar = () => {
   //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
   const pathname = usePathname();
+
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+
+  const handleClick = () => {
+    setComingSoon(true);
+  };
 
   // let token;
   // if (window) {
@@ -73,18 +80,10 @@ const Sidebar = () => {
         </Link>
 
         {/* Cart Icon with Quantity */}
-        <Link
-          href="/cart"
-          className="flex flex-col items-center gap-1 cursor-pointer p-1"
-        >
-          <div
-            className={`relative ${
-              pathname === "/cart" ? "text-purple-500" : ""
-            }`}
-          >
-            <Link href="/cart">
-              <FaShoppingCart size={25} />
-            </Link>
+        <div className="flex flex-col items-center gap-1 cursor-pointer p-1">
+          <div className={"relative text-purple-500 "}>
+            <FaShoppingCart size={25} onClick={handleClick} />
+
             {cartQuantity > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 {cartQuantity}
@@ -92,7 +91,7 @@ const Sidebar = () => {
             )}
           </div>
           <span className="text-sm">Cart</span>
-        </Link>
+        </div>
 
         {/* Account Icon */}
         <Link

@@ -2,6 +2,7 @@
 
 import { useProductById } from "@/api/product/queries/useProductQuery";
 import ProductTabs from "@/Components/Product/ProductTabs";
+import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaHeart, FaExchangeAlt } from "react-icons/fa";
@@ -9,6 +10,12 @@ import { FaHeart, FaExchangeAlt } from "react-icons/fa";
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+
+  const handleClick = () => {
+    setComingSoon(true);
+  };
 
   // Fetch product by ID
   const { data: product, isLoading, error } = useProductById(params.id);
@@ -98,17 +105,26 @@ const Page = ({ params }: { params: { id: string } }) => {
                   +
                 </button>
               </div>
-              <button className="flex-1 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition">
+              <button
+                onClick={handleClick}
+                className="flex-1 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
+              >
                 <span className="mr-2 ">🛒</span>Add To Cart
               </button>
             </div>
 
             <div className="mt-6 flex items-center gap-4">
-              <button className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition">
+              <button
+                onClick={handleClick}
+                className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition"
+              >
                 <FaHeart className="text-red-500" />
                 Add to Wishlist
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition">
+              <button
+                onClick={handleClick}
+                className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition"
+              >
                 <FaExchangeAlt />
                 Compare
               </button>
