@@ -20,6 +20,7 @@ import {
   verifyOtpAndResetPassword,
 } from "../authApi";
 import { useAuthStore } from "@/store/auth";
+import { clearLS, getFromLS, storeToLS } from "@/lib/storage";
 
 // get all users
 export const useUsers = () => {
@@ -41,8 +42,10 @@ export const useCreateUser = () => {
     mutationFn: createUser,
     onSuccess: (data) => {
       const { accessToken, refreshToken } = data.data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      // localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("refreshToken", refreshToken);
+      storeToLS("accessToken", accessToken);
+      storeToLS("refreshToken", refreshToken);
       queryClient.invalidateQueries({ queryKey: ["users"] });
       console.log("User created successfully and logged in:", data);
     },
@@ -56,7 +59,8 @@ export const useGetLoggedUserDetails = (
   options?: Partial<UseQueryOptions<any>>
 ) => {
   const setUser = useAuthStore((state) => state.setUser);
-  const accessToken = localStorage.getItem("accessToken");
+  // const accessToken = localStorage.getItem("accessToken");
+  const accessToken = getFromLS("accessToken");
 
   return useQuery<ApiResponse<{ user: User }>, Error>({
     queryKey: ["user", "me", accessToken],
@@ -86,8 +90,10 @@ export const useLoginUser = () => {
     mutationFn: loginUser,
     onSuccess: (data) => {
       const { accessToken, refreshToken } = data.data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      // localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("refreshToken", refreshToken);
+      storeToLS("accessToken", accessToken);
+      storeToLS("refreshToken", refreshToken);
       queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
@@ -152,8 +158,10 @@ export const useAdminLogin = () => {
     mutationFn: adminLogin,
     onSuccess: (data) => {
       const { accessToken, refreshToken } = data?.data;
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("refreshToken", refreshToken);
+      // localStorage.setItem("accessToken", accessToken);
+      // localStorage.setItem("refreshToken", refreshToken);
+      storeToLS("accessToken", accessToken);
+      storeToLS("refreshToken", refreshToken);
     },
   });
 };
@@ -163,8 +171,9 @@ export const useLogout = () => {
   const setUser = useAuthStore((state) => state.setUser);
   return useMutation({
     mutationFn: async () => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      // localStorage.removeItem("accessToken");
+      // localStorage.removeItem("refreshToken");
+      clearLS();
       setUser(null);
       // window.location.reload();
       queryClient.invalidateQueries();

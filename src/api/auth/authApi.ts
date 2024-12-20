@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { BASE_URL } from "@/contants";
+import { clearLS } from "@/lib/storage";
 export interface User {
   _id: string;
   username: string;
@@ -62,8 +63,9 @@ export const getLoggedInUser = async (): Promise<
     return response.data;
   } catch (e: any) {
     if (e.response?.status === 401) {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
+      // localStorage.removeItem("accessToken");
+      // localStorage.removeItem("refreshToken");
+      clearLS();
       window.location.reload();
     }
     throw e;
