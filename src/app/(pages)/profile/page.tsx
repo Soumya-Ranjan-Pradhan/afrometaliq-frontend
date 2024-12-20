@@ -1,4 +1,5 @@
 "use client";
+import { useLogout } from "@/api/auth/queries/authQuery";
 import { useAuthStore } from "@/store/auth";
 import { useGlobalStore } from "@/store/global";
 import {
@@ -10,9 +11,18 @@ import {
   FaFileAlt,
   FaSignOutAlt,
 } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 export default function Profile() {
   const user = useAuthStore((state) => state.user);
+
+  const logoutMutation = useLogout();
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+    toast.success("Logout successful");
+  };
+
   const menuItems = [
     {
       icon: <FaUserEdit />,
@@ -100,7 +110,10 @@ export default function Profile() {
 
           {/* Logout Button */}
           <div className="mt-6">
-            <button className="flex items-center justify-center w-full py-3 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg hover:bg-red-600 transition-colors">
+            <button
+              onClick={handleLogout}
+              className="flex items-center justify-center w-full py-3 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg hover:bg-red-600 transition-colors"
+            >
               <FaSignOutAlt className="text-lg mr-2" />
               Logout
             </button>
