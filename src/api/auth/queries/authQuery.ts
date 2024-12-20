@@ -12,6 +12,7 @@ import {
   fetchUsers,
   getLoggedInUser,
   loginUser,
+  logout,
   sendForgotPasswordOTPEmail,
   sendOtp,
   User,
@@ -168,6 +169,20 @@ export const useLogout = () => {
       // window.location.reload();
       queryClient.invalidateQueries();
       return true;
+    },
+  });
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      queryClient.invalidateQueries({ queryKey: ["user", "me"] });
+      queryClient.clear();
     },
   });
 };

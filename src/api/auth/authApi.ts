@@ -147,3 +147,11 @@ export const adminLogin = async (data: { email: string; password: string }) => {
   );
   return response.data;
 };
+
+// Logout
+export const logout = async () => {
+  const response = await axios.post<ApiResponse<{ message: string }>>(
+    `${BASE_URL}/users/logout`
+  );
+  return response.data;
+};
