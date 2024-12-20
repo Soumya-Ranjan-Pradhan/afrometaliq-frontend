@@ -50,16 +50,24 @@ export const getLoggedInUser = async (): Promise<
   }>
 > => {
   const token = localStorage.getItem("accessToken");
-
-  const response = await axios.get<ApiResponse<{ user: User }>>(
-    `${BASE_URL}/users/me`,
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+  try {
+    const response = await axios.get<ApiResponse<{ user: User }>>(
+      `${BASE_URL}/users/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (e: any) {
+    if (e.response?.status === 401) {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      window.location.reload();
     }
-  );
-  return response.data;
+    throw e;
+  }
 };
 
 export const createUser = async (

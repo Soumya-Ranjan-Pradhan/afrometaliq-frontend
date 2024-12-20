@@ -1,3 +1,4 @@
+"use client";
 import {
   useMutation,
   useQuery,
@@ -54,18 +55,21 @@ export const useGetLoggedUserDetails = (
   options?: Partial<UseQueryOptions<any>>
 ) => {
   const setUser = useAuthStore((state) => state.setUser);
+  const accessToken = localStorage.getItem("accessToken");
 
   return useQuery<ApiResponse<{ user: User }>, Error>({
-    queryKey: ["user", "me"],
+    queryKey: ["user", "me", accessToken],
     queryFn: () => getLoggedInUser(),
     staleTime: 1000 * 60 * 5, // 5 minutes
-    retry: 1,
+    retry: 0,
     select: (data) => {
       if (data?.data?.user) {
         setUser(data.data.user);
       }
       return data;
     },
+    enabled: !!accessToken,
+
     ...options,
   });
 };
@@ -83,7 +87,7 @@ export const useLoginUser = () => {
       const { accessToken, refreshToken } = data.data;
       localStorage.setItem("accessToken", accessToken);
       localStorage.setItem("refreshToken", refreshToken);
-      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
     },
   });
 };
@@ -145,5 +149,25 @@ export const useAdminLogin = () => {
     { email: string; password: string }
   >({
     mutationFn: adminLogin,
+    onSuccess: (data) => {
+      const { accessToken, refreshToken } = data?.data;
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("refreshToken", refreshToken);
+    },
+  });
+};
+
+export const useLogout = () => {
+  const queryClient = useQueryClient();
+  const setUser = useAuthStore((state) => state.setUser);
+  return useMutation({
+    mutationFn: async () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      setUser(null);
+      // window.location.reload();
+      queryClient.invalidateQueries();
+      return true;
+    },
   });
 };

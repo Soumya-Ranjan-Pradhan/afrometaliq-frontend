@@ -7,9 +7,17 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/Components/ui/popover";
+import { useLogout } from "@/api/auth/queries/authQuery";
 
 const UserMenu = () => {
   const user = useAuthStore((state) => state.user);
+
+  const logoutMutation = useLogout();
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+  };
+
   return (
     user?._id && (
       <Popover>
@@ -31,7 +39,10 @@ const UserMenu = () => {
             </p> */}
             <p className="font-semibold text-lg ">{user?.username}</p>
             <p className=" text-sm mb-4">{user?.email}</p>
-            <button className=" border border-blue-950 py-1 px-4 rounded-sm mb-2">
+            <button
+              className=" border border-blue-950 py-1 px-4 rounded-sm mb-2"
+              onClick={handleLogout}
+            >
               Logout
             </button>
             <ul className="text-sm">

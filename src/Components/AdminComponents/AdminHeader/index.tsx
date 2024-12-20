@@ -1,4 +1,5 @@
 "use client";
+import UserMenu from "@/Components/Header/Sidebar/UserMenu";
 import React from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
 
@@ -17,8 +18,9 @@ const AdminHeader = () => {
           <FaSun size={20} />
         </button>
         <div className="flex items-center space-x-2">
-          <div className="bg-gray-300 w-8 h-8 rounded-full"></div>
-          <span className="text-gray-800 font-medium">Soumya</span>
+          {/* <div className="bg-gray-300 w-8 h-8 rounded-full"></div> */}
+          {/* <span className="text-gray-800 font-medium">Soumya</span> */}
+          <UserMenu />
         </div>
       </div>
     </header>

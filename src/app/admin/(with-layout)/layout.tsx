@@ -1,12 +1,11 @@
 "use client";
-import ReactQueryProvider from "@/context/ReactQueryProvider";
 import AdminHeader from "@/Components/AdminComponents/AdminHeader";
 import "../../globals.css";
 import AdminSidebar from "@/Components/AdminComponents/SideBar";
-import { ToastContainer } from "react-toastify";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
 
 // export const metadata = {
 //   title: "Admin Panel",
@@ -21,17 +20,25 @@ export default function AdminLayout({
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (user) {
-  //     if (!user.isEmailVerified) {
-  //       router.push("/email/verify");
-  //     }
-  //   } else {
-  //     router.push("/");
-  //   }
-  // }, [router, user]);
+  const { data: userData, isLoading } = useGetLoggedUserDetails();
+
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!isLoading && !user) {
+      return router.push("/");
+    } else if (user && user.role !== "admin") {
+      return router.push("/");
+    }
+    setLoading(false);
+  }, [isLoading, router, user, userData]);
   return (
     <div className="flex h-screen bg-gray-50">
+      {(isLoading || loading) && (
+        <div className="h-screen w-screen bg-gray-100 z-50 flex items-center justify-center fixed top-0 left-0">
+          Loading...
+        </div>
+      )}
       {/* Sidebar */}
       <AdminSidebar />
 
