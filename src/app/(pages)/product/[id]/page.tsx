@@ -8,6 +8,7 @@ import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
 import React, { useState } from "react";
 import { FaHeart, FaExchangeAlt } from "react-icons/fa";
+import { MdShoppingCartCheckout } from "react-icons/md";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -65,7 +66,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                   </span>
                 ) : (
                   <p className="text-sm text-gray-500">
-                     login to see the price
+                    login to see the price
                   </p>
                 )}
               </span>
@@ -95,7 +96,8 @@ const Page = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
-            <div className="mt-6 flex items-center gap-4">
+            <div className="mt-6 flex flex-col lg:flex-row items-center gap-4">
+              {/* Quantity Selector */}
               <div className="flex items-center border rounded-md">
                 <button
                   onClick={decreaseQuantity}
@@ -116,29 +118,26 @@ const Page = ({ params }: { params: { id: string } }) => {
                   +
                 </button>
               </div>
-              <button
-                onClick={handleClick}
-                className="flex-1 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
-              >
-                <span className="mr-2 ">🛒</span>Add To Cart
-              </button>
-            </div>
 
-            <div className="mt-6 flex items-center gap-4">
-              <button
-                onClick={handleClick}
-                className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition"
-              >
-                <FaHeart className="text-red-500" />
-                Add to Wishlist
-              </button>
-              <button
-                onClick={handleClick}
-                className="flex items-center gap-2 px-4 py-2 border rounded-lg text-gray-700 hover:bg-gray-100 transition"
-              >
-                <FaExchangeAlt />
-                Compare
-              </button>
+              {/* Buttons */}
+              <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
+                <button
+                  onClick={handleClick}
+                  className="w-full lg:w-auto  px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                >
+                  <div className="flex items-center justify-center gap-2">
+                    <MdShoppingCartCheckout size={20} color="white" />
+                    <p>Add To Cart</p>
+                  </div>
+                </button>
+
+                <button
+                  onClick={handleClick}
+                  className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                >
+                  Buy Now
+                </button>
+              </div>
             </div>
           </div>
         </div>

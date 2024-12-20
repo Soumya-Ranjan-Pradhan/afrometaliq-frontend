@@ -4,9 +4,25 @@ import Image from "next/image";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { FaLongArrowAltLeft } from "react-icons/fa";
 import CategorySkeleton from "../Skeleton/CategorySkeleton";
+import { motion } from "framer-motion";
 
 const Category: React.FC = () => {
   const { data, isLoading, isError } = useCategoriesByLevel({ level: 1 });
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, x: -50 },
+    visible: { opacity: 1, x: 0, transition: { duration: 0.5 } },
+  };
 
   return (
     <div className="py-8">
@@ -28,7 +44,12 @@ const Category: React.FC = () => {
         />
       </div>
 
-      <div className="overflow-x-auto flex space-x-6 px-6 hide-scrollbar">
+      <motion.div
+        className="overflow-x-auto flex space-x-6 px-6 hide-scrollbar"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {isLoading ? (
           Array.from({ length: 8 }).map((_, index) => (
             <CategorySkeleton key={index} />
@@ -37,8 +58,14 @@ const Category: React.FC = () => {
           <p>Error fetching categories</p>
         ) : (
           data?.data.categories.map((category) => (
-            <div key={category._id} className="flex-shrink-0 text-center">
-              <div className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[#5A43AF] flex items-center justify-center mx-auto transition-colors duration-300">
+            <motion.div
+              key={category._id}
+              className="flex-shrink-0 text-center"
+              variants={itemVariants}
+            >
+              <div
+                className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[#5A43AF] flex items-center justify-center mx-auto transition-all duration-300 ease-in-out hover:border-[#7F5FE3] hover:scale-105"
+              >
                 <div className="relative w-full h-full overflow-hidden rounded-full">
                   <Image
                     src={
@@ -49,7 +76,7 @@ const Category: React.FC = () => {
                     alt={category.category_name}
                     width={100}
                     height={100}
-                    className="rounded-full object-cover w-full h-full transition-transform duration-300 ease-in-out hover:scale-110"
+                    className="rounded-full object-cover w-full h-full "
                   />
                 </div>
               </div>
@@ -57,10 +84,10 @@ const Category: React.FC = () => {
               <p className="mt-2 text-2xl md:text-md font-medium">
                 {category.category_name}
               </p>
-            </div>
+            </motion.div>
           ))
         )}
-      </div>
+      </motion.div>
     </div>
   );
 };

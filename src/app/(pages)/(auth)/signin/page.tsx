@@ -4,9 +4,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
-import {
-  useLoginUser,
-} from "@/api/auth/queries/authQuery";
+import { useLoginUser } from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import { useAuthStore } from "@/store/auth";
@@ -51,7 +49,7 @@ const SignIn = () => {
         },
         onError: (error) => {
           setIsLoading(false);
-          toast.error( "Invalid email or password please enter correct details");
+          toast.error("Invalid email or password please enter correct details");
         },
       }
     );
@@ -73,17 +71,20 @@ const SignIn = () => {
         {/* Left Side - Logo, Text, and Image */}
         <div className="flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
           <Image
-            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png"
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
             alt="Afro Metaliq Logo"
             width={150}
             height={150}
           />
           <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-center lg:text-left">
-            Sign in to
+            Sign in to Afrometaliq
           </h1>
           <p className="mt-4 text-base lg:text-lg text-center lg:text-left">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry.
+            Join Afrometaliq, your gateway to limitless possibilities! Sign up
+            now to access exclusive features, stay updated with the latest
+            trends, and connect with a thriving community. It’s quick, easy, and
+            opens the door to personalized experiences designed to meet your
+            unique needs. Don’t wait—get started today!
           </p>
           <Image
             src="https://res.cloudinary.com/datf6laqn/image/upload/v1728416890/iswplufn9enslgj7uctn.png"

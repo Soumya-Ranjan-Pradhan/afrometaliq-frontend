@@ -107,18 +107,19 @@ const SignUp = () => {
           {/* Left Side - Logo, Text, and Illustration */}
           <div className="flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1726587467/mbly5bbfcpwdut9kn4be.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
               alt="Afro Metaliq Logo"
               width={150}
               height={150}
             />
             <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-center lg:text-left">
-              Sign up to
+              Sign Up to Afrometaliq
             </h1>
             <p className="mt-4 text-base lg:text-lg text-center lg:text-left">
-              Lorem Ipsum is simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry&apos;s standard dummy
-              text ever since the 1500s.
+              Welcome to Afrometaliq! Join our community to explore a world of
+              possibilities. Sign up today and enjoy exclusive benefits,
+              personalized experiences, and seamless access to everything
+              Afrometaliq has to offer. Your journey starts here!
             </p>
 
             <Image

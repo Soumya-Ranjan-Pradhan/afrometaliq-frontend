@@ -191,9 +191,9 @@ const Header = () => {
               onClick={handleClick}
             />
 
-            <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
+            {/* <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
               3
-            </span>
+            </span> */}
           </div>
         </nav>
 
