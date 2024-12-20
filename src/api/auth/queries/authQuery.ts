@@ -173,16 +173,16 @@ export const useLogout = () => {
   });
 };
 
-export const useLogout = () => {
-  const queryClient = useQueryClient();
+// export const useLogout = () => {
+//   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: logout,
-    onSuccess: () => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      queryClient.invalidateQueries({ queryKey: ["user", "me"] });
-      queryClient.clear();
-    },
-  });
-};
+//   return useMutation({
+//     mutationFn: logout,
+//     onSuccess: () => {
+//       localStorage.removeItem("accessToken");
+//       localStorage.removeItem("refreshToken");
+//       queryClient.invalidateQueries({ queryKey: ["user", "me"] });
+//       queryClient.clear();
+//     },
+//   });
+// };
