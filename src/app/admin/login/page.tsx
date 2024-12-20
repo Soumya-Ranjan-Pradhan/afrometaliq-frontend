@@ -1,4 +1,5 @@
 "use client";
+import { useAdminLogin } from "@/api/auth/queries/authQuery";
 import { useAuthStore } from "@/store/auth";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +11,13 @@ import { FcGoogle } from "react-icons/fc";
 const LogInPage = () => {
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
+
+  // login admin
+  const {mutate: adminLogin} = useAdminLogin();
+
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
 
   useEffect(() => {
     if (user) {

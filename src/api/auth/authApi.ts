@@ -130,3 +130,12 @@ export const verifyOtpAndResetPassword = async (data: {
   );
   return response.data;
 };
+
+// Admin Login
+export const adminLogin = async (data: { email: string; password: string }) => {
+  const response = await axios.post<ApiResponse<LoginResponse>>(
+    `${BASE_URL}/users/admin-login`,
+    data
+  );
+  return response.data;
+};

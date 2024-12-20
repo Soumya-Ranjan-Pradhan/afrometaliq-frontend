@@ -5,6 +5,7 @@ import {
   UseQueryOptions,
 } from "@tanstack/react-query";
 import {
+  adminLogin,
   ApiResponse,
   createUser,
   fetchUsers,
@@ -133,5 +134,16 @@ export const useVerifyOtpAndResetPassword = () => {
     onError: (error) => {
       console.error("Error resetting password:", error);
     },
+  });
+};
+
+// Login Admin
+export const useAdminLogin = () => {
+  return useMutation<
+    ApiResponse<{ user: User; accessToken: string; refreshToken: string }>,
+    Error,
+    { email: string; password: string }
+  >({
+    mutationFn: adminLogin,
   });
 };

@@ -31,18 +31,16 @@ export default function AdminLayout({
   //   }
   // }, [router, user]);
   return (
-   
-          <div className="flex h-screen bg-gray-50">
-            {/* Sidebar */}
-            <AdminSidebar />
+    <div className="flex h-screen bg-gray-50">
+      {/* Sidebar */}
+      <AdminSidebar />
 
-            <div className="flex-1 flex flex-col">
-              {/* Header */}
-              <AdminHeader />
+      <div className="flex-1 flex flex-col">
+        {/* Header */}
+        <AdminHeader />
 
-              <main className="p-4 flex-1 overflow-y-auto">{children}</main>
-            </div>
-          </div>
-       
+        <main className="p-4 flex-1 overflow-y-auto">{children}</main>
+      </div>
+    </div>
   );
 }
