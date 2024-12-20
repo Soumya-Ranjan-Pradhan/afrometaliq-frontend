@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { BASE_URL } from "@/contants";
-import { clearLS } from "@/lib/storage";
+import { clearLS, getFromLS } from "@/lib/storage";
 export interface User {
   _id: string;
   username: string;
@@ -50,13 +50,15 @@ export const getLoggedInUser = async (): Promise<
     user: User;
   }>
 > => {
-  const token = localStorage.getItem("accessToken");
+  // const token = localStorage.getItem("accessToken");
+  const accessToken = getFromLS("accessToken");
+
   try {
     const response = await axios.get<ApiResponse<{ user: User }>>(
       `${BASE_URL}/users/me`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );

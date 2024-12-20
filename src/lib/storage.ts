@@ -4,7 +4,8 @@ export const getFromLS = (key: string) => {
   // check if the key exists
   if (!localStorage.getItem(key)) return null;
   // get the value from localstorage
-  return JSON.parse(localStorage.getItem(key) || "");
+  const data = JSON.parse(localStorage.getItem(key) ?? "");
+  return data;
 };
 
 export const storeToLS = (key: string, value: any) => {
