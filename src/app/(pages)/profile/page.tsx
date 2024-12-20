@@ -12,15 +12,18 @@ import {
   FaSignOutAlt,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 export default function Profile() {
   const user = useAuthStore((state) => state.user);
+  const navigate = useRouter();
 
   const logoutMutation = useLogout();
 
   const handleLogout = () => {
     logoutMutation.mutate();
     toast.success("Logout successful");
+    navigate.push("/");
   };
 
   const menuItems = [
