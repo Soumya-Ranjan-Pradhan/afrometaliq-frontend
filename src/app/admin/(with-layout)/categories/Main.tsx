@@ -244,7 +244,7 @@ const Row = ({
             className="text-red-500 cursor-pointer hover:scale-110 transition"
           />
           <Link
-            href={`/categories?parent=${category._id}`}
+            href={`/admin/categories?parent=${category._id}`}
             className="text-blue-500 cursor-pointer hover:scale-110 transition"
           >
             View

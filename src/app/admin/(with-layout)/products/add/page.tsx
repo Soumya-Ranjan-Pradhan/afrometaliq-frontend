@@ -58,24 +58,31 @@ const AddProduct = () => {
     formData.append("product_theme_size", JSON.stringify(sizes));
 
     // check if all category is selected
-    if (
-      !categories.selectedCategory ||
-      !categories.selectedSubcategory ||
-      !categories.selectedSubcategory2
-    ) {
+    if (!categories.selectedCategory || !categories.selectedSubcategory) {
       toast.error("Please select all categories");
       return;
     }
 
-    // append categories array
-    formData.append(
-      "product_categories",
-      JSON.stringify([
-        categories.selectedCategory.value,
-        categories.selectedSubcategory.value,
-        categories.selectedSubcategory2.value,
-      ])
-    );
+    if (categories.selectedSubcategory2) {
+      // append categories array
+      formData.append(
+        "product_categories",
+        JSON.stringify([
+          categories.selectedCategory.value,
+          categories.selectedSubcategory.value,
+          categories.selectedSubcategory2.value,
+        ])
+      );
+    } else {
+      // append categories array
+      formData.append(
+        "product_categories",
+        JSON.stringify([
+          categories.selectedCategory.value,
+          categories.selectedSubcategory.value,
+        ])
+      );
+    }
 
     for (let i = 0; i < images.length; i++) {
       formData.append("product_images", images[i]);
