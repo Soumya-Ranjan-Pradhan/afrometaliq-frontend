@@ -23,7 +23,7 @@ function CategoryMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="hidden lg:flex items-center gap-3 cursor-pointer w-52 bg-[#141334] pl-3 pr-3 pt-1 pb-1 ml-4  "
+        className="hidden lg:flex items-center gap-3 cursor-pointer w-52 pl-3 pr-3 pt-1 pb-1 ml-4  "
         disabled={isLoading}
       >
         {isLoading ? (

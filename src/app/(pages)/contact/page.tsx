@@ -73,25 +73,35 @@ const Contact = () => {
               <h2 className="text-2xl font-semibold text-gray-700">
                 Points of Contact
               </h2>
+
+              {/* Afro MetaliQ Lda
+Talhao 1481/2, Parcela 803, Foral de Matola
+Machava , Matola , Mozambique
+Email : info@afrometaliq.com | admin@afrometaliq.com */}
+
               <div className="mt-4">
                 <h3 className="font-bold text-lg">Information & Sales</h3>
-                <p className="text-gray-600">Email: sales@example.com</p>
+                <p className="text-gray-600">
+                  Email : info@afrometaliq.com | admin@afrometaliq.com
+                </p>
               </div>
               <div className="mt-4">
                 <h3 className="font-bold text-lg">Support</h3>
-                <p className="text-gray-600">Email: support@example.com</p>
+                <p className="text-gray-600">Email: info@afrometaliq.com</p>
               </div>
               <div className="mt-4">
                 <h3 className="font-bold text-lg">
                   Our Offices Around the World
                 </h3>
                 <p className="text-gray-600">
-                  <span className="block">123 Main Street</span>
-                  <span className="block">New York, NY 10001, USA</span>
+                  <span className="block">Afro MetaliQ Lda</span>
+                  <span className="block">
+                    Talhao 1481/2, Parcela 803, Foral de Matola
+                  </span>
                 </p>
                 <p className="text-gray-600 mt-2">
-                  <span className="block">456 Another Road</span>
-                  <span className="block">London, UK</span>
+                  <span className="block">Machava , Matola , Mozambique</span>
+                  {/* <span className="block">London, UK</span> */}
                 </p>
               </div>
             </div>

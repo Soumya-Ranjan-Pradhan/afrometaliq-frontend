@@ -9,6 +9,8 @@ const WhyChooseUs: React.FC = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
+  const CHARACTER_LIMIT = 50;
+
   const services = [
     {
       id: 1,
@@ -17,34 +19,37 @@ const WhyChooseUs: React.FC = () => {
         "We provide round-the-clock support to ensure all your queries are resolved efficiently.",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728819665/t9r3paiombk6t8p1jxqy.png",
       bgColor: "bg-gradient-to-r from-purple-600 to-indigo-600 text-white",
-      modal: "View More",
+      modalContent:
+        "We provide round-the-clock support to ensure all your queries are resolved efficiently, with a dedicated team always available to assist.",
     },
     {
       id: 2,
       title: "Custom Solutions",
       description:
-        "We provide round-the-clock support to ensure all your queries are resolved efficiently.",
+        "We create and suggest solutions tailored to the unique needs of your business.",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728804140/jpclpgnocfc8d63juowo.png",
       bgColor: "bg-white",
-      modal: "View More",
+      modalContent:
+        "Our custom solutions cater to your unique requirements, enabling better performance and streamlined processes tailored for you.",
     },
     {
       id: 3,
       title: "Cost Effective",
       description:
-        "We provide round-the-clock support to ensure all your queries are resolved efficiently.",
+        "Save time and money with our cost-effective solutions, designed for convenience.",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728805012/xkxfky6okwqrrxebii8b.png",
       bgColor: "bg-white",
-      modal: "View More",
+      modalContent:
+        "Our services are designed to be highly cost-effective, offering great value while ensuring maximum efficiency and convenience.",
     },
     {
       id: 4,
       title: "Regular Updates",
-      description:
-        "We provide round-the-clock support to ensure all your queries are resolved efficiently.",
+      description: "Stay engaged with our regular updates and promotions.",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728805077/nk0agjrobfg98mdgxd64.png",
       bgColor: "bg-white",
-      modal: "View More",
+      modalContent:
+        "We keep you updated with the latest trends, promotions, and insights to keep you ahead in your industry.",
     },
   ];
 
@@ -82,15 +87,23 @@ const WhyChooseUs: React.FC = () => {
             <h3 className="text-xl font-semibold text-center mb-4">
               {service.title}
             </h3>
-            <p className="text-gray-600 text-center">{service.description}</p>
+            <p className="text-gray-600 text-center">
+              {service.description.length > CHARACTER_LIMIT
+                ? `${service.description.slice(0, CHARACTER_LIMIT)}...`
+                : service.description}
+            </p>
             <div className="flex justify-center items-center gap-2 mt-4">
               <button
                 className="text-green-600 hover:underline text-center"
                 onClick={() => handleClick(service.id)}
               >
-                {service.modal}
+                View More
               </button>
-              <FaLongArrowAltRight size={20} color="green" className="mt-1 ml-2 animate-move-left" />
+              <FaLongArrowAltRight
+                size={20}
+                color="green"
+                className="mt-1 ml-2 animate-move-left"
+              />
             </div>
           </div>
         ))}

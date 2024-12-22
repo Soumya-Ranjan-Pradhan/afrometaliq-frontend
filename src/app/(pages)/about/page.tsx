@@ -1,4 +1,5 @@
 "use client";
+
 import { useGetAbout } from "@/api/about/query/useAboutQuery";
 import React, { useState } from "react";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
@@ -6,7 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const FaqPage: React.FC = () => {
-  const { data, isLoading, error, refetch } = useGetAbout();
+  const { data, isLoading, error } = useGetAbout();
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -17,11 +18,10 @@ const FaqPage: React.FC = () => {
         </span>
       </h2>
       <div className="space-y-4">
-        {isLoading && (
+        {isLoading &&
           Array.from({ length: 5 }).map((_, index) => (
             <FaqSkeleton key={index} />
-          ))
-        )}
+          ))}
 
         {data?.data.about.map((faq, index) => (
           <FaqItem
@@ -51,9 +51,12 @@ const FaqItem: React.FC<{ question: string; answer: string }> = ({
   question,
   answer,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Default to open
 
   const toggle = () => setIsOpen(!isOpen);
+
+  // Split the answer into bullet points based on newlines
+  const bulletPoints = answer.split("\n").filter((point) => point.trim() !== "");
 
   return (
     <div className="mb-4 border-b border-gray-300">
@@ -69,7 +72,15 @@ const FaqItem: React.FC<{ question: string; answer: string }> = ({
           isOpen ? "max-h-screen p-4 bg-gray-100" : "max-h-0"
         }`}
       >
-        <p className="text-gray-800">{answer}</p>
+        {isOpen && (
+          <ul className="list-disc pl-8 text-gray-800 marker:text-red-500">
+            {bulletPoints.map((point, index) => (
+              <li key={index} className="text-gray-800">
+                {point}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );

@@ -8,22 +8,22 @@ const TestimonialSlider = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Guy Hawkins",
-      position: "CEO, Founder",
+      name: "Soumya",
+      position: "CEO, Soumya",
       feedback:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eleifend arcu vel faucibus arcu, ultrices. Id in auctor posuere nisl volutpat at laoreet.",
     },
     {
       id: 2,
-      name: "Cameron Williamson",
-      position: "CEO, Founder",
+      name: "Soumya",
+      position: "CEO, Soumya",
       feedback:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eleifend arcu vel faucibus arcu, ultrices. Id in auctor posuere nisl volutpat at laoreet.",
     },
     {
       id: 3,
-      name: "Cody Fisher",
-      position: "CEO, Founder",
+      name: "Soumya",
+      position: "CEO, Soumya",
       feedback:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nibh eleifend arcu vel faucibus arcu, ultrices. Id in auctor posuere nisl volutpat at laoreet.",
     },

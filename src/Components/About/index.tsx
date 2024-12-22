@@ -26,15 +26,15 @@ const AboutUs = () => {
           {t("about_us")}
         </h2>
         <h1 className="text-4xl font-bold mb-4">
-          We are providing the best customer service
+          We are your Procurement team
         </h1>
 
         <div className="bg-[#F9F9F9] mb-4 p-6 rounded-lg ">
           <p className="text-gray-700 ">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry&apos;s standard dummy
-            text ever since the 1500s, when an unknown printer took a galley of
-            type and scrambled it to make a type specimen book.
+            Your success is our goal. Your satisfaction is our motivation, we
+            will try our best to provide the best of us. We are always trying to
+            be up to date and observe market developments, we look forward to
+            hearing from you!
           </p>
           <p className="font-bold mt-6">
             <span className="bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">

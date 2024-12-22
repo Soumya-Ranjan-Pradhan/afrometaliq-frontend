@@ -11,10 +11,10 @@ const Footer = () => {
         <div>
           <h3 className="text-xl font-bold mb-4">About us</h3>
           <p className="text-gray-300 mb-6">
-            Open source is source code that is made freely available for
-            possible modification and redistribution. Products include
-            permission to use the source code, design documents, or content of
-            the product.
+            Your success is our goal. Your satisfaction is our motivation, we
+            will try our best to provide the best of us. We are always trying to
+            be up to date and observe market developments, we look forward to
+            hearing from you!
           </p>
           <div className="flex space-x-4">
             <a href="#" aria-label="Discord">

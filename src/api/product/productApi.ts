@@ -114,7 +114,7 @@ export const deleteProduct = async (
   id: string
 ): Promise<ApiResponse<unknown>> => {
   const response = await axios.delete<ApiResponse<unknown>>(
-    `${BASE_URL}/products/${id}`
+    `${BASE_URL}/product/${id}`
   );
   return response.data;
 };
