@@ -49,6 +49,32 @@ export interface Product {
   createdAt: string;
   updatedAt: string;
 }
+export interface PopulatedProduct {
+  product_name: string;
+  product_code: string;
+  category: {
+    _id: string;
+    category_name: string;
+  }[];
+  product_unit: {
+    _id: string;
+    unit_name: string;
+  };
+  product_price: number;
+  product_discount: number;
+  product_images: { url: string; public_id: string }[]; // Array of image objects
+  product_selling_price: number;
+  product_description: string;
+  product_size: string;
+  product_theme_size: string[];
+  product_grade: string;
+  product_thickness: string;
+  product_uom: string; // Unit of Measurement
+  product_length: string;
+  product_width: string;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export interface ApiResponse<T> {
   success: boolean;
@@ -74,8 +100,8 @@ export const getAllProducts = async (
 // Get product by ID
 export const getProductById = async (
   id: string
-): Promise<ApiResponse<{ product: Product }>> => {
-  const response = await axios.get<ApiResponse<{ product: Product }>>(
+): Promise<ApiResponse<{ product: PopulatedProduct }>> => {
+  const response = await axios.get<ApiResponse<{ product: PopulatedProduct }>>(
     `${BASE_URL}/product/${id}`
   );
   return response.data;
@@ -103,7 +129,7 @@ export const updateProduct = async (
   data: unknown
 ): Promise<ApiResponse<{ product: Product }>> => {
   const response = await axios.put<ApiResponse<{ product: Product }>>(
-    `${BASE_URL}/products/${id}`,
+    `${BASE_URL}/product/${id}`,
     data
   );
   return response.data;

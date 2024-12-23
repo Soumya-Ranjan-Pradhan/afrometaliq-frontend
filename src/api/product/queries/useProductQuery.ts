@@ -1,4 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import {
   getAllProducts,
   createProduct,
@@ -8,6 +13,7 @@ import {
   Product,
   ProductQuery,
   getProductById,
+  PopulatedProduct,
 } from "../productApi";
 
 // Fetch all products
@@ -19,10 +25,9 @@ export const useProducts = (query?: ProductQuery) => {
   });
 };
 
-
 // Get product by id
 export const useProductById = (id: string) => {
-  return useQuery<ApiResponse<{ product: Product }>, Error>({
+  return useQuery<ApiResponse<{ product: PopulatedProduct }>, Error>({
     queryKey: ["product", id],
     queryFn: () => getProductById(id),
   });
@@ -45,7 +50,7 @@ export const useUpdateProduct = () => {
   return useMutation<
     ApiResponse<{ product: Product }>,
     Error,
-    { id: string; data: unknown }
+    { id: string; data: FormData }
   >({
     mutationFn: ({ id, data }) => updateProduct(id, data),
     onSuccess: () => {

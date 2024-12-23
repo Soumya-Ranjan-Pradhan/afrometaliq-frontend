@@ -50,7 +50,10 @@ const AllProducts = () => {
                 className="w-1/2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <Link href={"products/add"} className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">
+            <Link
+              href={"products/add"}
+              className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600"
+            >
               + Add New
             </Link>
           </div>
@@ -114,9 +117,12 @@ const AllProducts = () => {
                     <td className="p-4">{product.product_width}</td>
                     <td className="border px-4 py-2 text-center text-sm">
                       <div className="flex justify-center space-x-2">
-                        <button className="text-yellow-500 hover:scale-110 transition">
+                        <Link
+                          href={`/admin/products/${product._id}/edit`}
+                          className="text-yellow-500 hover:scale-110 transition"
+                        >
                           <FaEdit />
-                        </button>
+                        </Link>
                         <button
                           className="text-red-500 hover:scale-110 transition"
                           onClick={() => handleDelete(product)}
