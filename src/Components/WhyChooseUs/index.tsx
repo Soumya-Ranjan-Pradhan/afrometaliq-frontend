@@ -26,7 +26,7 @@ const WhyChooseUs: React.FC = () => {
       id: 2,
       title: "Custom Solutions",
       description:
-        "We create and suggest solutions tailored to the unique needs of your business.",
+        "We provide by creating and suggesting solutions specifically to meet the unique needs and requirements of a particular organization or business or individual",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728804140/jpclpgnocfc8d63juowo.png",
       bgColor: "bg-white",
       modalContent:
@@ -36,16 +36,17 @@ const WhyChooseUs: React.FC = () => {
       id: 3,
       title: "Cost Effective",
       description:
-        "Save time and money with our cost-effective solutions, designed for convenience.",
+        "Our aim is to provide the best service to help shopper to save time & being able to make purchases at their most convenient time, less headache in logistics, make your tender while at home, save money in transportation & the most important thing is your stock is in our warehouse",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728805012/xkxfky6okwqrrxebii8b.png",
       bgColor: "bg-white",
       modalContent:
-        "Our services are designed to be highly cost-effective, offering great value while ensuring maximum efficiency and convenience.",
+        "Our aim is to provide the best service to help shopper to save time & being able to make purchases at their most convenient time, less headache in logistics, make your tender while at home, save money in transportation & the most important thing is your stock is in our warehouse",
     },
     {
       id: 4,
       title: "Regular Updates",
-      description: "Stay engaged with our regular updates and promotions.",
+      description:
+        "We will try our best to keep in regular updates to increase shopper engagement, Up-to-date content keeps visitors interested and take the benefits in regular promotion and best deals",
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728805077/nk0agjrobfg98mdgxd64.png",
       bgColor: "bg-white",
       modalContent:

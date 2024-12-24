@@ -84,7 +84,7 @@ const Header = () => {
         {/* Right side - Register and Login large screen */}
         <div className=" flex items-center  lg:p-6  md:p-6 md:gap-4 lg:gap-4 gap-2 p-4 text-blue-600 ">
           {/* dropdown to change language */}
-          <div className="hidden lg:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1">
             <button onClick={changeLanguage} className="flex items-center">
               <span>
                 <LanguagesIcon />
@@ -112,13 +112,11 @@ const Header = () => {
             </>
           )}
 
-          <Link
-            href="/contact"
+          <div
             className="hidden md:flex items-center space-x-1"
           >
-            <RiContactsBook3Line className="text-2xl" />
-            <span className="text-sm">{t("menu.contact_us")}</span>
-          </Link>
+              <UserMenu />
+          </div>
         </div>
       </header>
 
@@ -165,7 +163,7 @@ const Header = () => {
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 
-          <UserMenu />
+        
 
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
@@ -193,13 +191,12 @@ const Header = () => {
               setOpenSearch={setOpenSearch}
             />
           )}
-          {/* <p>asfs</p> */}
 
           <div className="text-white  mr-3">
             <SlMenu size={24} onClick={() => setToggleMenu((prev) => !prev)} />
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex md:hidden items-center space-x-3">
             <button onClick={changeLanguage} className="flex items-center">
               <span>
                 <LanguagesIcon />
@@ -211,15 +208,30 @@ const Header = () => {
 
         {/* Hamburger for small and medium screens - Hidden on lg screens */}
         <div className="lg:hidden flex items-center gap-7">
-          {/* Profile Icon */}
-          <div
-            className="relative hidden  sm:block"
+          {/* Products Link */}
+          <Link
+            href="/product"
+            className="hidden md:inline-block relative text-white group hover:text-gray-300"
+          >
+            {t("menu.products")}
+            <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
+          </Link>
+
+          {/* Consultancy Link */}
+          <Link
+            href="/consultancy"
+            className="hidden md:inline-block relative group text-white hover:text-gray-300"
+          >
+            Consultancy
+            <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
+          </Link>
+          {/* <div
+            className="relative hidden sm:block"
             onMouseEnter={() => setShowProfileTooltip(true)}
             onMouseLeave={() => setShowProfileTooltip(false)}
           >
             <UserMenu />
-          </div>
-
+          </div> */}
           {/* Cart Icon */}
           <div className="relative hidden sm:block">
             <FaShoppingCart
@@ -227,11 +239,9 @@ const Header = () => {
               className="text-white"
               onClick={handleClick}
             />
-            {/* <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-              3
-            </span> */}
           </div>
 
+          {/* Search Icon */}
           <CiSearch
             size={30}
             fontWeight={"bold"}

@@ -43,7 +43,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className="container mx-auto px-4 py-8">
+      <div className=" px-4 py-8">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Image Slider */}
           <div className="w-full md:w-1/2">
@@ -174,6 +174,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               </div>
             </div>
 
+            {/* For large Screen and sm screen  */}
             <ProductTabs product={productDetails} />
           </div>
         </div>
