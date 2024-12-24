@@ -269,7 +269,7 @@ const Header = () => {
               onClick={() => setToggleMenu((prev) => !prev)}
             />
           </div>
-          <div className="text-white p-3">
+          <div className="text-white p-3  h-[calc(100vh-70px)] overflow-auto">
             <Categories closeDrawer={closeDrawer} />
           </div>
         </div>

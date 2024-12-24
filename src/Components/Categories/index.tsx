@@ -46,7 +46,7 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
     subcategories.map((subcategory) => (
       <motion.div
         key={subcategory._id}
-        className="flex items-center gap-2 py-2 cursor-pointer"
+        className="flex flex-col gap-2 py-2 ml-4"
         variants={subcategoryVariants}
         transition={{
           type: "spring",
@@ -54,10 +54,43 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
           damping: 25,
         }}
       >
-        <MdOutlineKeyboardArrowRight size={20} />
-        <p className="font-semibold text-[1rem] md:text-[1.3rem]">
-          {subcategory.category_name}
-        </p>
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onClick={() => toggleSubcategories(subcategory._id)}
+        >
+          <MdOutlineKeyboardArrowRight
+            size={20}
+            className={`transition-transform ${
+              expandedCategories.includes(subcategory._id)
+                ? "rotate-90"
+                : "rotate-0"
+            }`}
+          />
+          <p className="font-semibold text-[1rem] md:text-[1.3rem]">
+            {subcategory.category_name}
+          </p>
+        </div>
+
+        <AnimatePresence>
+          {expandedCategories.includes(subcategory._id) &&
+            subcategory.children.length > 0 && (
+              <motion.div
+                className="ml-6"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={{
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.1,
+                    },
+                  },
+                }}
+              >
+                {renderSubcategories(subcategory.children)}
+              </motion.div>
+            )}
+        </AnimatePresence>
       </motion.div>
     ));
 
@@ -99,23 +132,24 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
           </div>
 
           <AnimatePresence>
-            {expandedCategories.includes(category._id) && (
-              <motion.div
-                className="ml-8"
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-                variants={{
-                  visible: {
-                    transition: {
-                      staggerChildren: 0.1,
+            {expandedCategories.includes(category._id) &&
+              category.children.length > 0 && (
+                <motion.div
+                  className="ml-8"
+                  initial="hidden"
+                  animate="visible"
+                  exit="hidden"
+                  variants={{
+                    visible: {
+                      transition: {
+                        staggerChildren: 0.1,
+                      },
                     },
-                  },
-                }}
-              >
-                {renderSubcategories(category.children)}
-              </motion.div>
-            )}
+                  }}
+                >
+                  {renderSubcategories(category.children)}
+                </motion.div>
+              )}
           </AnimatePresence>
         </motion.div>
       ))}
