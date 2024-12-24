@@ -55,7 +55,7 @@ const Header = () => {
       {/* For the Large Screen */}
       <header className="w-full flex items-center justify-between h-[5rem]  bg-white shadow-md">
         {/* Left side - Logo */}
-        <div className="flex mx-6 items-center">
+        <div className="flex lg:p-6 md:p-6 items-center">
           <Link href="/" className="flex items-center">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1735071295/qfoyhx2m9anxpiy0q81l.png"
