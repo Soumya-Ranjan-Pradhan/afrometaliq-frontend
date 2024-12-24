@@ -118,7 +118,7 @@ const Product = () => {
                 {product.product_name}
               </h3>
               {/* <p className="mt-2 text-green-400">{product.stock}</p> */}
-              <div className="flex items-center mt-2">
+              {/* <div className="flex items-center mt-2">
                 <span className="text-lg font-bold text-purple-600">
                   {
                     user?._id ? (
@@ -133,15 +133,12 @@ const Product = () => {
                   }
                  
                 </span>
-                {/* <span className="text-sm line-through text-gray-400 ml-2">
-                    ₹{product.originalPrice.toLocaleString()}
-                  </span> */}
-              </div>
+              </div> */}
 
               <div className="text-sm text-gray-500 mt-1">
                 {user?._id ? (
-                  <span className="text-lg font-bold text-gray-700">
-                    ₹ {product.product_selling_price} Sale
+                  <span className="text-sm font-bold text-gray-700">
+                    MZN {product.product_selling_price} Sale
                   </span>
                 ) : (
                   <p className="text-sm text-gray-500">

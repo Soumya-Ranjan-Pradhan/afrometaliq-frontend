@@ -112,10 +112,6 @@ const Header = () => {
             </>
           )}
 
-          {/* {!user?._id && (
-           
-          )} */}
-
           <Link
             href="/contact"
             className="hidden lg:flex items-center space-x-1"
@@ -131,12 +127,6 @@ const Header = () => {
         className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] lg:h-[4rem] md:h-[4rem] sm:h-[3rem] h-[64px] flex justify-between 
     items-center  sm:gap-5 gap-2 sticky top-0 z-50"
       >
-        {/* Category Section */}
-        {/* <div className="hidden lg:flex items-center gap-3 cursor-pointer bg-[#141334] pl-3 pr-3 pt-1 pb-1 ml-4  ">
-          <IoMenu className="text-white text-4xl" />
-
-          <p className="text-white font-semibold text-md">Shop by Category</p>
-        </div> */}
         <div>
           <CategoryMenu />
         </div>
@@ -167,22 +157,15 @@ const Header = () => {
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 
-          <Link href="/consultancy" className="relative group hover:text-gray-300">
+          <Link
+            href="/consultancy"
+            className="relative group hover:text-gray-300"
+          >
             {/* {t("menu.products")} */} Consultancy
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 
           <UserMenu />
-
-          {/* Wishlist Icon */}
-          {/* <div className="relative hidden lg:block">
-            <Link href="/wishlist">
-              <FaHeart size={20} className="text-white" />
-              <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-                3
-              </span>
-            </Link>
-          </div> */}
 
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
@@ -234,16 +217,8 @@ const Header = () => {
             onMouseEnter={() => setShowProfileTooltip(true)}
             onMouseLeave={() => setShowProfileTooltip(false)}
           >
-            <FaUser size={20} className="text-white" />
-            {showProfileTooltip && <ProfileTooltip />}
+            <UserMenu />
           </div>
-          {/* Wishlist Icon */}
-          {/* <div className="relative hidden sm:block">
-            <FaHeart size={20} className="text-white" />
-            <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-              30
-            </span>
-          </div> */}
 
           {/* Cart Icon */}
           <div className="relative hidden sm:block">
@@ -252,9 +227,9 @@ const Header = () => {
               className="text-white"
               onClick={handleClick}
             />
-            <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
+            {/* <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
               3
-            </span>
+            </span> */}
           </div>
 
           <CiSearch

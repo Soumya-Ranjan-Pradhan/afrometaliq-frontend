@@ -13,7 +13,7 @@ const SpecificationsTab = ({ product }: { product: any }) => {
   ];
 
   return (
-    <div className="block md:hidden lg:block container mx-auto px-4 py-6">
+    <div className="hidden md:block lg:hidden container mx-auto px-4 py-6">
       <div className="bg-purple-50 p-4 rounded-lg shadow-md overflow-x-auto">
         <h2 className="text-xl font-bold text-gray-800 mb-4">Specifications</h2>
         <table className="table-auto w-full border-collapse">

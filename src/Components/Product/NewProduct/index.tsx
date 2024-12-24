@@ -89,11 +89,25 @@ const NewArrivingProductCarousel: React.FC = () => {
                   {product.product_name}
                 </h3>
 
+
+                <div className="text-sm text-gray-500 mt-1">
+                  {user?._id ? (
+                    <span className="text-lg font-bold text-gray-700">
+                      MZN {product.product_selling_price} Sale
+                    </span>
+                  ) : (
+                    <p className="text-sm text-gray-500">
+                      login to see the price
+                    </p>
+                  )}
+                </div>
+
+
                 <div className="flex items-center">
                   <span className="text-lg font-bold text-purple-600">
                     {user?._id ? (
-                      <span className="text-lg font-bold text-purple-600">
-                        ₹{product.product_price.toLocaleString()}
+                      <span className="text-lg line-through text-gray-500 font-bold">
+                        MZN {product.product_price.toLocaleString()}
                       </span>
                     ) : (
                       <p className="text-sm text-gray-500">
@@ -101,18 +115,6 @@ const NewArrivingProductCarousel: React.FC = () => {
                       </p>
                     )}
                   </span>
-                </div>
-
-                <div className="text-sm text-gray-500 mt-1">
-                  {user?._id ? (
-                    <span className="text-lg font-bold text-gray-700">
-                      ₹ {product.product_selling_price} Sale
-                    </span>
-                  ) : (
-                    <p className="text-sm text-gray-500">
-                      login to see the price
-                    </p>
-                  )}
                 </div>
 
                 <div className="flex items-center justify-between gap-2">

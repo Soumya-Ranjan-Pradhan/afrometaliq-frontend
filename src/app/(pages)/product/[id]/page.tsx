@@ -5,16 +5,19 @@ import ProductTabs from "@/Components/Product/ProductTabs";
 import PageSkeleton from "@/Components/Skeleton/SingleProducts";
 import { useAuthStore } from "@/store/auth";
 import { useGlobalStore } from "@/store/global";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { MdShoppingCartCheckout } from "react-icons/md";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 import Image from "next/image";
+import SpecificationsTabMobile from "@/Components/Product/ProductTabs/MobileProductTab";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
+
+  const swiperRef = useRef<any>(null);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const user = useAuthStore((state) => state.user);
@@ -38,38 +41,44 @@ const Page = ({ params }: { params: { id: string } }) => {
   const increaseQuantity = () => setQuantity(quantity + 1);
   const decreaseQuantity = () => quantity > 1 && setQuantity(quantity - 1);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    arrows: true,
-    autoplay: true,
-    autoplaySpeed: 1000,
-  };
-
   return (
     <>
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Image Slider */}
           <div className="w-full md:w-1/2">
-            <div className="border rounded-lg overflow-hidden">
-              <Slider {...sliderSettings}>
+            <div className="border rounded-lg overflow-hidden relative">
+              <Swiper
+                onSwiper={(swiper) => (swiperRef.current = swiper)}
+                className="product-swiper"
+              >
                 {productDetails?.product_images?.map(
                   (image: any, index: number) => (
-                    <div key={index}>
+                    <SwiperSlide key={index}>
                       <Image
                         width={400}
-                        height={300}
+                        height={10}
                         src={image.url}
                         alt={productDetails?.product_name || "Product Image"}
+                        className="object-cover w-full"
                       />
-                    </div>
+                    </SwiperSlide>
                   )
                 )}
-              </Slider>
+              </Swiper>
+              {/* Custom Navigation Buttons */}
+              <button
+                onClick={() => swiperRef.current?.slidePrev()}
+                className="absolute top-1/2 left-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-10 hover:bg-gray-100"
+              >
+                <FaChevronLeft size={20} />
+              </button>
+              <button
+                onClick={() => swiperRef.current?.slideNext()}
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 bg-white p-2 rounded-full shadow-lg z-10 hover:bg-gray-100"
+              >
+                <FaChevronRight size={20} />
+              </button>
             </div>
           </div>
 
@@ -79,20 +88,23 @@ const Page = ({ params }: { params: { id: string } }) => {
               {productDetails?.product_name}
             </h1>
 
-            <p className="mt-6 text-gray-600 text-sm leading-6">
+            <p className=" text-gray-600 text-sm leading-6">
               {productDetails?.product_description}
             </p>
 
-            <div className="flex items-center gap-4 mt-4">
+            <div className="flex items-center gap-4">
               <span className="text-red-500 text-2xl font-bold">
                 {user?._id ? (
                   <span className="text-lg font-bold text-purple-600">
-                    MZN {productDetails?.product_price}{" "}
-                    <span className="text-red-600">
-                      {productDetails?.product_discount}{" "}
-                      <span className="text-red-600">%</span>
+                    <span className="line-through text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
+                      MZN {productDetails?.product_price}
                     </span>{" "}
-                    <span> MZN {productDetails?.product_selling_price}</span>
+                    <span className="text-red-600">
+                      {productDetails?.product_discount}%
+                    </span>{" "}
+                    <span className="bg-gray-100 px-2 py-1 rounded-md">
+                      MZN {productDetails?.product_selling_price}
+                    </span>
                   </span>
                 ) : (
                   <p className="text-sm text-gray-500">
@@ -102,7 +114,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               </span>
             </div>
 
-            <div className="mt-6">
+            <div className="mt-2">
               <h3 className="font-semibold text-gray-800 mb-2">
                 Available Sizes
               </h3>
@@ -125,22 +137,17 @@ const Page = ({ params }: { params: { id: string } }) => {
 
             <div className="mt-6 flex flex-col lg:flex-row items-center gap-4">
               {/* Quantity Selector */}
-              <div className="flex items-center border rounded-md">
+              <div className="flex items-center  gap-3 rounded-md overflow-hidden">
                 <button
                   onClick={decreaseQuantity}
-                  className="px-4 py-2 border-r bg-gray-100 hover:bg-gray-200 transition"
+                  className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition rounded-full"
                 >
                   -
                 </button>
-                <input
-                  type="number"
-                  value={quantity}
-                  readOnly
-                  className="w-12 text-center outline-none bg-white"
-                />
+                <p>{quantity}</p>
                 <button
                   onClick={increaseQuantity}
-                  className="px-4 py-2 border-l bg-gray-100 hover:bg-gray-200 transition"
+                  className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition rounded-full"
                 >
                   +
                 </button>
@@ -160,17 +167,19 @@ const Page = ({ params }: { params: { id: string } }) => {
 
                 <button
                   onClick={handleClick}
-                  className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                  className="w-full lg:w-auto lg:px-14 md:px-6 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
                 >
                   Buy Now
                 </button>
               </div>
             </div>
+
+            <ProductTabs product={productDetails} />
           </div>
         </div>
       </div>
 
-      <ProductTabs product={productDetails} />
+      <SpecificationsTabMobile product={productDetails} />
     </>
   );
 };

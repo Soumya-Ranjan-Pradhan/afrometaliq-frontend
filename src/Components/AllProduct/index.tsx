@@ -107,25 +107,27 @@ const AllProduct = () => {
                     {product.product_name}
                   </h3>
                   <p className="mt-2 text-green-400">{product.stock}</p>
-                  <div className="flex items-center mt-2">
-                    {user?._id ? (
-                      <span className="text-lg font-bold text-purple-600">
-                        ₹{product.product_price.toLocaleString()}
-                      </span>
-                    ) : (
-                      <p className="text-sm text-gray-500">
-                         login to see the price
-                      </p>
-                    )}
-                  </div>
+
                   <div className="text-sm text-gray-500 mt-1">
                     {user?._id ? (
                       <span className="text-lg font-bold text-gray-700">
-                        ₹ {product.product_selling_price} Sale
+                        MZN {product.product_selling_price} Sale
                       </span>
                     ) : (
                       <p className="text-sm text-gray-500">
-                         login to see the price
+                        login to see the price
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="flex items-center mt-2">
+                    {user?._id ? (
+                      <span className="text-lg line-through text-gray-500 font-bold">
+                        MZN {product.product_price.toLocaleString()}
+                      </span>
+                    ) : (
+                      <p className="text-sm text-gray-500">
+                        login to see the price
                       </p>
                     )}
                   </div>
