@@ -50,9 +50,9 @@ const NewArrivingProductCarousel: React.FC = () => {
 
   return (
     <div className="mx-auto px-4">
-      <h2 className="text-2xl font-bold mt-8">Promotional Products</h2>
-      <p className="text-gray-500 mb-4">
-        Do not miss the current offers until the end of March.
+      <h2 className="text-2xl text-center font-bold mt-8">Promotional Products</h2>
+      <p className="text-gray-500 text-center mb-4">
+        Do not miss the current offers until the end of Month.
       </p>
 
       <div className="relative">
@@ -72,8 +72,8 @@ const NewArrivingProductCarousel: React.FC = () => {
           {data?.data.products.map((product) => (
             <SwiperSlide key={product._id} id={product._id}>
               <div className="bg-white rounded-lg shadow-lg p-4 relative">
-                <span className="absolute top-2 left-2 bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
-                  {product.product_discount}%
+                <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
+                  Promotion
                 </span>
                 <Link href={`/product/${product._id}`}>
                   <Image
@@ -89,11 +89,13 @@ const NewArrivingProductCarousel: React.FC = () => {
                   {product.product_name}
                 </h3>
 
-
                 <div className="text-sm text-gray-500 mt-1">
                   {user?._id ? (
                     <span className="text-lg font-bold text-gray-700">
-                      MZN {product.product_selling_price} Sale
+                      MZN {product.product_selling_price}{" "}
+                      <span className="bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
+                        {product.product_discount}%
+                      </span>
                     </span>
                   ) : (
                     <p className="text-sm text-gray-500">
@@ -101,7 +103,6 @@ const NewArrivingProductCarousel: React.FC = () => {
                     </p>
                   )}
                 </div>
-
 
                 <div className="flex items-center">
                   <span className="text-lg font-bold text-purple-600">
@@ -111,7 +112,7 @@ const NewArrivingProductCarousel: React.FC = () => {
                       </span>
                     ) : (
                       <p className="text-sm text-gray-500">
-                         login to see the price
+                        login to see the price
                       </p>
                     )}
                   </span>

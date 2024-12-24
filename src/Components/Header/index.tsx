@@ -55,10 +55,10 @@ const Header = () => {
       {/* For the Large Screen */}
       <header className="w-full flex items-center justify-between h-[5rem]  bg-white shadow-md">
         {/* Left side - Logo */}
-        <div className="flex items-center">
+        <div className="flex mx-6 items-center">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1735071295/qfoyhx2m9anxpiy0q81l.png"
               alt="Arfo Metaliq Logo"
               width={250} // Set responsive width
               height={120} // Default height
@@ -259,7 +259,7 @@ const Header = () => {
         >
           <div className="flex items-center justify-between h-[62px] px-3 border-b text-black bg-white">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1735071295/qfoyhx2m9anxpiy0q81l.png"
               alt="logo"
               width={200}
               height={140}

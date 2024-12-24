@@ -66,90 +66,81 @@ const AllProduct = () => {
       <h1 className="text-center text-3xl font-semibold mb-8">
         Browse Products
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
-        {isLoading
-          ? Array.from({ length: 8 }).map((_, index) => (
-              <ProductSkeleton key={index} />
-            ))
-          : data?.data.products.map((product: any) => (
-              <div
-                key={product.id}
-                className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500"
-              >
-                {/* Product Image */}
-                <div className="relative">
-                  <Link href={`/product/${product._id}`}>
-                    <Image
-                      src={product.product_images[0]?.url}
-                      alt={product.product_name}
-                      width={300}
-                      height={200}
-                      className="w-full h-48 object-cover rounded-md"
-                    />
-                  </Link>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        {data?.data.products.map((product: any) => (
+          <div
+            key={product.id}
+            className="flex flex-col border rounded-lg shadow-lg overflow-hidden group relative transition-transform transform hover:scale-105 duration-500"
+          >
+            {/* Product Image */}
+            <div className="relative aspect-w-4 aspect-h-3">
+              <Link href={`/product/${product._id}`}>
+                <Image
+                  src={product.product_images[0]?.url}
+                  alt={product.product_name}
+                  width={300}
+                  height={200}
+                  className="w-full h-48 object-cover rounded-md"
+                />
+              </Link>
 
-                  {/* Icons to show on hover */}
-                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <button
-                      onClick={() => openModal(product)}
-                      className="absolute top-2 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
-                    >
-                      <TfiFullscreen className="text-black hover:text-white h-6 w-6" />
-                    </button>
-                    <button className="absolute top-14 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
-                      <FaHeart className="text-gray-600 hover:text-white h-6 w-6" />
-                    </button>
-                  </div>
-                </div>
-                {/* Product Info */}
-                <div className="mt-4">
-                  <h3 className="text-lg font-semibold text-gray-800">
-                    {product.product_name}
-                  </h3>
-                  <p className="mt-2 text-green-400">{product.stock}</p>
-
-                  <div className="text-sm text-gray-500 mt-1">
-                    {user?._id ? (
-                      <span className="text-lg font-bold text-gray-700">
-                        MZN {product.product_selling_price} Sale
-                      </span>
-                    ) : (
-                      <p className="text-sm text-gray-500">
-                        login to see the price
-                      </p>
-                    )}
-                  </div>
-
-                  <div className="flex items-center mt-2">
-                    {user?._id ? (
-                      <span className="text-lg line-through text-gray-500 font-bold">
-                        MZN {product.product_price.toLocaleString()}
-                      </span>
-                    ) : (
-                      <p className="text-sm text-gray-500">
-                        login to see the price
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="flex items-center justify-between gap-2">
-                  <button
-                    onClick={handleClick}
-                    className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                  >
-                    BUY NOW
-                  </button>
-
-                  <button
-                    onClick={handleClick}
-                    className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                  >
-                    Add To Cart
-                  </button>
-                </div>
+              {/* Icons to show on hover */}
+              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-2 right-2 space-y-2">
+                <button
+                  onClick={() => openModal(product)}
+                  className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
+                >
+                  <TfiFullscreen className="text-black hover:text-white h-6 w-6" />
+                </button>
+                <button className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
+                  <FaHeart className="text-gray-600 hover:text-white h-6 w-6" />
+                </button>
               </div>
-            ))}
+            </div>
+
+            {/* Product Info */}
+            <div className="flex flex-col p-4 flex-grow">
+              <h3 className="text-lg font-semibold text-gray-800 truncate">
+                {product.product_name}
+              </h3>
+              <p className="text-sm text-green-400 mt-1">{product.stock}</p>
+              <div className="mt-2">
+                {user?._id ? (
+                  <>
+                    <span className="text-lg font-bold text-gray-700">
+                      MZN {product.product_selling_price.toLocaleString()} Sale
+                    </span>
+                    <p className="text-lg line-through text-gray-500">
+                      MZN {product.product_price.toLocaleString()}
+                    </p>
+                  </>
+                ) : (
+                  <p className="text-sm text-gray-500">
+                    Login to see the price
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-2 p-4">
+              <button
+                onClick={handleClick}
+                className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+              >
+                BUY NOW
+              </button>
+              <button
+                onClick={handleClick}
+                className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+              >
+                Add To Cart
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
+
       {/* Render the Product Modal */}
       {selectedProduct && (
         <ProductModal
