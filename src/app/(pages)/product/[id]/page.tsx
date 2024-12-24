@@ -57,10 +57,10 @@ const Page = ({ params }: { params: { id: string } }) => {
                     <SwiperSlide key={index}>
                       <Image
                         width={400}
-                        height={10}
+                        height={100}
                         src={image.url}
                         alt={productDetails?.product_name || "Product Image"}
-                        className="object-cover w-full"
+                        className="object-cover w-full h-auto"
                       />
                     </SwiperSlide>
                   )

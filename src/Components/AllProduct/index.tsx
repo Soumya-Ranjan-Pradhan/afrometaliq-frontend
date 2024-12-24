@@ -46,7 +46,7 @@ const AllProduct = () => {
         <h1 className="text-center text-3xl font-semibold mb-8">
           Browse Products
         </h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
           {Array.from({ length: 8 }).map((_, index) => (
             <ProductSkeleton key={index} />
           ))}
@@ -66,7 +66,7 @@ const AllProduct = () => {
       <h1 className="text-center text-3xl font-semibold mb-8">
         Browse Products
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
         {isLoading
           ? Array.from({ length: 8 }).map((_, index) => (
               <ProductSkeleton key={index} />

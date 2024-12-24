@@ -67,8 +67,6 @@ const Header = () => {
               priority
             />
           </Link>
-
-          {/* <UserMobileMenu /> */}
         </div>
 
         {/* Center - Search bar large screen */}
@@ -96,9 +94,11 @@ const Header = () => {
           </div>
 
           {user?._id ? (
-            <div className="lg:hidden">
-              <UserMobileMenu />
-            </div>
+            <>
+              <div className="block md:hidden">
+                <UserMobileMenu />
+              </div>
+            </>
           ) : (
             <>
               <Link href="/signup" className="flex items-center space-x-1">
@@ -114,7 +114,7 @@ const Header = () => {
 
           <Link
             href="/contact"
-            className="hidden lg:flex items-center space-x-1"
+            className="hidden md:flex items-center space-x-1"
           >
             <RiContactsBook3Line className="text-2xl" />
             <span className="text-sm">{t("menu.contact_us")}</span>
