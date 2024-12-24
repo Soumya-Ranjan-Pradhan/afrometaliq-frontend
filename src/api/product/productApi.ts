@@ -62,7 +62,7 @@ export interface PopulatedProduct {
   };
   product_price: number;
   product_discount: number;
-  product_images: { url: string; public_id: string }[]; // Array of image objects
+  product_images: { _id: string; url: string; public_id: string }[]; // Array of image objects
   product_selling_price: number;
   product_description: string;
   product_size: string;

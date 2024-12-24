@@ -28,6 +28,15 @@ const initialState = {
 
 const AddProduct = () => {
   const [images, setImages] = useState<File[]>([]);
+  const [existingImages, setExistingImages] = useState<
+    {
+      public_id: string;
+      url: string;
+      _id: string;
+    }[]
+  >([]);
+  const [deletedImages, setDeletedImages] = useState<string[]>([]);
+
   const [product, setProduct] = useState(initialState);
   const [selectedUnit, setSelectedUnit] = useState<Option | null>(null);
   const [sizes, setSizes] = useState<string[]>([""]);
@@ -98,14 +107,14 @@ const AddProduct = () => {
         setSizes(product.product_theme_size);
       }
 
-      // if (product.product_images.length > 0) {
-      //   const imgs = product.product_images.map((img) => img.url);
-      //   setImages(imgs);
-      // }
+      if (product.product_images.length > 0) {
+        setExistingImages(product.product_images);
+        setImages([]);
+      }
     }
   }, [productData]);
 
-  // create product
+  // update product
   const handleCreate = () => {
     const formData = new FormData();
     formData.append("product_name", product.product_name);
@@ -153,6 +162,11 @@ const AddProduct = () => {
       formData.append("product_images", images[i]);
     }
 
+    // deleted images
+    if (deletedImages.length > 0) {
+      formData.append("deleted_images", JSON.stringify(deletedImages));
+    }
+
     updateProduct(
       {
         id: productId,
@@ -179,8 +193,15 @@ const AddProduct = () => {
     }
   };
 
-  const handleRemoveImage = (index: number) => {
-    setImages(images.filter((_, i) => i !== index));
+  const handleRemoveImage = (index: number | string) => {
+    // if exists in existing images, add to deleted images
+    if (typeof index === "string") {
+      setDeletedImages([...deletedImages, index]);
+      // remove from existing images
+      setExistingImages(existingImages.filter((image) => image._id !== index));
+    } else {
+      setImages(images.filter((_, i) => i !== index));
+    }
   };
 
   const handleSizesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -324,6 +345,24 @@ const AddProduct = () => {
                 Upload images
               </label>
               <div className="mt-2 flex flex-wrap gap-4">
+                {existingImages.map((image) => (
+                  <div
+                    key={image._id}
+                    className="relative w-24 h-24 border rounded-md overflow-hidden"
+                  >
+                    <img
+                      src={image.url}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                    <button
+                      className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                      onClick={() => handleRemoveImage(image._id)}
+                    >
+                      <FaTrashAlt />
+                    </button>
+                  </div>
+                ))}
                 {images.map((image, index) => (
                   <div
                     key={index}
