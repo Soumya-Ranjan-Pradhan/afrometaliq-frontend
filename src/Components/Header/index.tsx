@@ -257,7 +257,7 @@ const Header = () => {
           toggleMenu ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-500 ease-in-out`}
         >
-          <div className="flex items-center justify-between h-[62px] px-3 border-b text-black bg-white">
+          <div className="flex items-center justify-between h-[5.8rem] px-3 border-b text-black bg-white">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1735071295/qfoyhx2m9anxpiy0q81l.png"
               alt="logo"

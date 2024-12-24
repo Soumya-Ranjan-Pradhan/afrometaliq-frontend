@@ -37,7 +37,7 @@ export default function RootLayout({
         href="https://wa.me/+258848271791"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed lg:bottom-20 md:bottom-20 bottom-[14rem] right-4 z-50 bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300 animate-jump"
+        className="fixed lg:bottom-20 md:bottom-20 bottom-[9rem] right-4 z-50 bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300 animate-jump"
         style={{
           animation: "jump 1.5s infinite",
         }}
@@ -48,7 +48,7 @@ export default function RootLayout({
       {/* Contact Icon */}
       <Link
         href="/contact"
-        className="fixed lg:bottom-4 md:bottom-5 bottom-[10rem] right-4 z-50 bg-blue-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300"
+        className="fixed lg:bottom-4 md:bottom-5 bottom-[5rem] right-4 z-50 bg-blue-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300"
       >
         <FaPhoneAlt size={24} />
       </Link>
