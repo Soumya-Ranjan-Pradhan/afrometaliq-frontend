@@ -1,29 +1,3 @@
-// import axios from "axios";
-
-// export interface Product {
-//   product_name: string;
-//   product_code: string;
-//   product_unit: string;
-//   product_price: number;
-//   product_discount: number;
-//   product_images: { url: string; public_id: string }[];
-//   product_selling_price: number;
-//   product_description: string;
-//   product_size: string[];
-//   product_theme_size: string;
-//   product_grade: string;
-//   product_thickness: string;
-//   product_uom: string;
-//   product_length: string;
-//   product_width: string;
-// }
-
-// export interface ApiResponse<T> {
-//   success: boolean;
-//   message: string;
-//   data: T;
-// }
-
 import axios from "axios";
 
 import { BASE_URL } from "@/contants";
@@ -84,6 +58,7 @@ export interface ApiResponse<T> {
 
 export type ProductQuery = {
   discount?: number;
+  categories?: string;
 };
 
 // Get all products

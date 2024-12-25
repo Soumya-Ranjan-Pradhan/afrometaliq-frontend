@@ -5,11 +5,13 @@ import { FaLongArrowAltRight, FaLongArrowAltLeft } from "react-icons/fa";
 import CategorySkeleton from "../Skeleton/CategorySkeleton";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Category: React.FC = () => {
   const { data, isLoading, isError } = useCategoriesByLevel({ level: 1 });
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isPaused, setIsPaused] = useState(false); // Pause auto-scroll when hovered
+  const [isPaused, setIsPaused] = useState(false);
+  const router = useRouter();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -95,8 +97,9 @@ const Category: React.FC = () => {
           data?.data.categories.map((category) => (
             <motion.div
               key={category._id}
-              className="flex-shrink-0 py-6 text-center w-28 md:w-32 lg:w-48"
+              className="flex-shrink-0 py-6 text-center w-28 md:w-32 lg:w-48 cursor-pointer"
               variants={itemVariants}
+              onClick={() => router.push(`/category/${category._id}`)}
             >
               <div className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[#5A43AF] flex items-center justify-center mx-auto transition-all duration-300 ease-in-out hover:border-[#7F5FE3] hover:scale-125">
                 <div className="relative w-full h-full overflow-hidden rounded-full">

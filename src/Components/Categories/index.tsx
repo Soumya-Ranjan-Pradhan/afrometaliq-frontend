@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { useCategoryMenu } from "@/api/category/queries/useCategoryQuery";
 
 type CategoryMenu = {
@@ -15,6 +16,7 @@ type CategoryMenu = {
 const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
   const { data, isLoading, error } = useCategoryMenu();
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
+  const router = useRouter(); // Initialize router
 
   const toggleSubcategories = (categoryId: string) => {
     setExpandedCategories((prev) =>
@@ -22,6 +24,11 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
         ? prev.filter((id) => id !== categoryId)
         : [...prev, categoryId]
     );
+  };
+
+  const handleCategoryClick = (categoryId: string) => {
+    router.push(`/category/${categoryId}`);
+    closeDrawer(); 
   };
 
   const categoryVariants = {
@@ -56,7 +63,11 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
       >
         <div
           className="flex items-center gap-2 cursor-pointer"
-          onClick={() => toggleSubcategories(subcategory._id)}
+          onClick={() =>
+            subcategory.children.length > 0
+              ? toggleSubcategories(subcategory._id)
+              : handleCategoryClick(subcategory._id) // Navigate if no children
+          }
         >
           <MdOutlineKeyboardArrowRight
             size={20}
@@ -116,7 +127,11 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
         >
           <div
             className="p-1 flex items-center gap-2 cursor-pointer"
-            onClick={() => toggleSubcategories(category._id)}
+            onClick={() =>
+              category.children.length > 0
+                ? toggleSubcategories(category._id)
+                : handleCategoryClick(category._id) // Navigate if no children
+            }
           >
             <MdOutlineKeyboardArrowRight
               size={30}
