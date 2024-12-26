@@ -1,21 +1,71 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import Image from "next/image";
 import ProductSkeleton from "@/Components/Skeleton";
 import { useAuthStore } from "@/store/auth";
 import { FaHeart } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
+import Link from "next/link";
+import {
+  useAddToCartMutation,
+  useCartQuery,
+} from "@/api/cart/query/useCartQuery";
+import { toast } from "react-toastify";
 
 const CategoryProductsPage = () => {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const user = useAuthStore((state) => state.user);
+  const router = useRouter();
 
   const { data, isLoading, isError } = useProducts({
     categories: id,
   });
+
+  const { mutate: addToCart } = useAddToCartMutation();
+
+  // const handleAddToCart = (productId:string) => {
+  //   if (!user?._id) {
+  //     toast.warn("Please login before adding items to the cart.");
+  //     router.push("/signin");
+  //     return;
+  //   }
+
+  //   addToCart(
+  //     { productId, quantity: 1 },
+  //     {
+  //       onSuccess: () => {
+  //         toast.success("Item added to cart successfully!");
+  //       },
+  //       onError: () => {
+  //         toast.error("Failed to add item to cart. Please try again.");
+  //       },
+  //     }
+  //   );
+  // };
+
+  const handleAddToCart = (productId: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.warn("Please login before adding items to the cart.");
+      router.push("/signin");
+      return;
+    }
+
+    addToCart(
+      { productId, quantity: 1 },
+      {
+        onSuccess: () => {
+          toast.success("Item added to cart successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to add item to cart. Please try again.");
+        },
+      }
+    );
+  };
 
   if (isLoading)
     return (
@@ -51,22 +101,24 @@ const CategoryProductsPage = () => {
             >
               {/* Product Image */}
               <div className="relative aspect-w-4 aspect-h-3">
-                <Image
-                  src={product.product_images[0]?.url}
-                  alt={product.product_name}
-                  width={300}
-                  height={200}
-                  className="w-full h-48 object-cover rounded-md"
-                />
+                <Link href={`/product/${product._id}`}>
+                  <Image
+                    src={product.product_images[0]?.url}
+                    alt={product.product_name}
+                    width={300}
+                    height={200}
+                    className="w-full h-48 object-cover rounded-md"
+                  />
+                </Link>
 
                 {/* Icons to show on hover */}
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-2 right-2 space-y-2">
-                  <button
+                  {/* <button
                     // onClick={() => openModal(product)}
                     className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
                   >
                     <TfiFullscreen className="text-black hover:text-white h-6 w-6" />
-                  </button>
+                  </button> */}
                   <button className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
                     <FaHeart className="text-gray-600 hover:text-white h-6 w-6" />
                   </button>
@@ -102,7 +154,10 @@ const CategoryProductsPage = () => {
                 <button className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
                   BUY NOW
                 </button>
-                <button className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                <button
+                  onClick={() => handleAddToCart(product._id)}
+                  className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                >
                   Add To Cart
                 </button>
               </div>

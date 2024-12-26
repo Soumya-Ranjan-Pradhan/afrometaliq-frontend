@@ -26,6 +26,15 @@ export const useProducts = (query?: ProductQuery) => {
   });
 };
 
+
+export const useAllProducts = (query?: ProductQuery) => {
+  return useQuery<ApiResponse<{ products: Product[] }>, Error>({
+    queryKey: ["products"],
+    queryFn: () => getAllProducts(query),
+    enabled: !!query, 
+  });
+};
+
 // Get product by id
 export const useProductById = (id: string) => {
   return useQuery<ApiResponse<{ product: PopulatedProduct }>, Error>({

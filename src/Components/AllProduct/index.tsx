@@ -4,7 +4,7 @@ import { FaHeart } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "../Product/ModalProduct";
 import Image from "next/image";
-import { useProducts } from "@/api/product/queries/useProductQuery";
+import { useAllProducts, useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
 import ProductSkeleton from "../Skeleton";
@@ -23,7 +23,9 @@ type Product = {
 };
 
 const AllProduct = () => {
-  const { data, isLoading, error } = useProducts();
+  const { data, isLoading, error } = useAllProducts();
+
+  console.log("data", data);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const user = useAuthStore((state) => state.user);

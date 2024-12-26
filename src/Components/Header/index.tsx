@@ -112,10 +112,8 @@ const Header = () => {
             </>
           )}
 
-          <div
-            className="hidden md:flex items-center space-x-1"
-          >
-              <UserMenu />
+          <div className="hidden md:flex items-center space-x-1">
+            <UserMenu />
           </div>
         </div>
       </header>
@@ -163,23 +161,22 @@ const Header = () => {
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 
-        
-
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
             {/* <Link href="/cart">
               <FaShoppingCart size={20} className="text-white" />
             </Link> */}
 
-            <FaShoppingCart
-              size={20}
-              className="text-white"
-              onClick={handleClick}
-            />
+            <Link href="/cart">
+              <FaShoppingCart
+                size={20}
+                className="text-white"
+              />
 
-            {/* <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-              3
-            </span> */}
+              <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
+                3
+              </span>
+            </Link>
           </div>
         </nav>
 
