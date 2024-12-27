@@ -91,9 +91,21 @@ export const addToCart = async (data: {
 export const deleteFromCart = async (
   cartItemId: string
 ): Promise<ApiResponse<{ cart: Cart[] }>> => {
+  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+
+  if (!token) {
+    throw new Error("Unauthorized: Token not found");
+  }
+
   const response = await axios.delete<ApiResponse<{ cart: Cart[] }>>(
-    `${BASE_URL}/cart/${cartItemId}`
+    `${BASE_URL}/cart/${cartItemId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
+
   return response.data;
 };
 
@@ -102,9 +114,21 @@ export const updateCartQuantity = async (
   cartItemId: string,
   data: { quantity: number }
 ): Promise<ApiResponse<{ cart: Cart[] }>> => {
+  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+
+  if (!token) {
+    throw new Error("Unauthorized: Token not found");
+  }
+
   const response = await axios.put<ApiResponse<{ cart: Cart[] }>>(
     `${BASE_URL}/cart/${cartItemId}`,
-    data
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
+
   return response.data;
 };

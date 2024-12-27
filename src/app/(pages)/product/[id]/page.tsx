@@ -12,22 +12,46 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
 import SpecificationsTabMobile from "@/Components/Product/ProductTabs/MobileProductTab";
+import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const [quantity, setQuantity] = useState(1);
-
+  const router = useRouter();
   const swiperRef = useRef<any>(null);
-
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const user = useAuthStore((state) => state.user);
+  const { data: product, isLoading, error } = useProductById(params.id);
+  const { mutate: addToCart } = useAddToCartMutation();
+
+  const handleAddToCart = (productId: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.warn("Please login before adding items to the cart.");
+      router.push("/signin");
+      return;
+    }
+
+    addToCart(
+      { productId, quantity: 1 },
+      {
+        onSuccess: () => {
+          toast.success("Item added to cart successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to add item to cart. Please try again.");
+        },
+      }
+    );
+  };
 
   const handleClick = () => {
     setComingSoon(true);
   };
 
   // Fetch product by ID
-  const { data: product, isLoading, error } = useProductById(params.id);
 
   if (isLoading) return <PageSkeleton />;
   if (error) return <div>Error fetching product details</div>;
@@ -137,7 +161,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
             <div className="mt-6 flex flex-col lg:flex-row items-center gap-4">
               {/* Quantity Selector */}
-              <div className="flex items-center  gap-3 rounded-md overflow-hidden">
+              {/* <div className="flex items-center  gap-3 rounded-md overflow-hidden">
                 <button
                   onClick={decreaseQuantity}
                   className="w-12 h-12 flex items-center justify-center bg-gray-100 hover:bg-gray-200 transition rounded-full"
@@ -151,16 +175,20 @@ const Page = ({ params }: { params: { id: string } }) => {
                 >
                   +
                 </button>
-              </div>
+              </div> */}
 
               {/* Buttons */}
               <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
                 <button
-                  onClick={handleClick}
+                  onClick={() => handleAddToCart(productDetails?._id || "")}
                   className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
                 >
                   <div className="flex items-center justify-center gap-2">
-                    <MdShoppingCartCheckout size={20} color="white" />
+                    <MdShoppingCartCheckout
+                      size={20}
+                      color="white"
+                      // onClick={() => handleAddToCart(productDetails?._id || "")}
+                    />
                     <p>Add To Cart</p>
                   </div>
                 </button>

@@ -16,6 +16,7 @@ import {
   PopulatedProduct,
 } from "../productApi";
 
+
 // Fetch all products
 
 export const useProducts = (query?: ProductQuery) => {
@@ -27,13 +28,15 @@ export const useProducts = (query?: ProductQuery) => {
 };
 
 
+// get all products
 export const useAllProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
-    queryKey: ["products"],
+    queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
-    enabled: !!query, 
   });
-};
+}
+
+
 
 // Get product by id
 export const useProductById = (id: string) => {

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { RiHome6Line } from "react-icons/ri";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { TfiGallery } from "react-icons/tfi";
@@ -11,16 +11,15 @@ import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
 import UserMenu from "./UserMenu";
+import { useCartQuery } from "@/api/cart/query/useCartQuery";
 
 const Sidebar = () => {
   //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
   const pathname = usePathname();
+  const { data, isLoading, isError } = useCartQuery();
+  const [cartCount, setCartCount] = useState<number>(0);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
-
-  const handleClick = () => {
-    setComingSoon(true);
-  };
 
   // let token;
   // if (window) {
@@ -32,6 +31,18 @@ const Sidebar = () => {
   });
 
   const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    if (user && data && data.data?.cart) {
+      const count = data.data.cart.reduce(
+        (total, item) => total + item.quantity,
+        0
+      );
+      setCartCount(count);
+    } else {
+      setCartCount(0);
+    }
+  }, [user, data]);
 
   const router = useRouter();
 
@@ -46,8 +57,6 @@ const Sidebar = () => {
     }
   }, [userData]);
 
-  // Cart quantity for the FaShoppingCart icon (example: 3 items in the cart)
-  const cartQuantity = 3;
 
   return (
     <>
@@ -85,18 +94,21 @@ const Sidebar = () => {
         </Link>
 
         {/* Cart Icon with Quantity */}
-        <div className="flex flex-col items-center gap-1 cursor-pointer p-1">
+        <Link
+          href="/cart"
+          className="flex flex-col items-center gap-1 cursor-pointer p-1"
+        >
           <div className={"relative text-purple-500 "}>
-            <FaShoppingCart size={25} onClick={handleClick} />
+            <FaShoppingCart size={25} />
 
-            {/* {cartQuantity > 0 && (
+            {cartCount > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {cartQuantity}
+                {cartCount}
               </span>
-            )} */}
+            )}
           </div>
           <span className="text-sm">Cart</span>
-        </div>
+        </Link>
 
         {/* Account Icon */}
         <Link

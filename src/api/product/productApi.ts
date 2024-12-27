@@ -24,6 +24,7 @@ export interface Product {
   updatedAt: string;
 }
 export interface PopulatedProduct {
+  _id: string;
   product_name: string;
   product_code: string;
   category: {

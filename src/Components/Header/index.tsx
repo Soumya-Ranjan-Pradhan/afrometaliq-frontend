@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
 import { RiContactsBook3Line, RiEnglishInput } from "react-icons/ri";
@@ -22,17 +22,32 @@ import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
 import UserMenu from "./Sidebar/UserMenu";
 import UserMobileMenu from "./Sidebar/UserMobileMenu";
+import { useCartQuery } from "@/api/cart/query/useCartQuery";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
 
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
-  const [showProfileTooltip, setShowProfileTooltip] = useState<boolean>(false);
-
+  const [cartCount, setCartCount] = useState<number>(0);
+  const { data, isLoading, isError, refetch } = useCartQuery();
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
-
   const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    if (user?._id) {
+      refetch();
+    }
+  }, [user, refetch]);
+
+  // check the cart count
+  useEffect(() => {
+    if (user && data && data.data?.cart) {
+      setCartCount(data.data.cart.length);
+    } else {
+      setCartCount(0);
+    }
+  }, [user, data]);
 
   const handleClick = () => {
     setComingSoon(true);
@@ -163,19 +178,13 @@ const Header = () => {
 
           {/* Cart Icon */}
           <div className="relative hidden lg:block">
-            {/* <Link href="/cart">
-              <FaShoppingCart size={20} className="text-white" />
-            </Link> */}
-
             <Link href="/cart">
-              <FaShoppingCart
-                size={20}
-                className="text-white"
-              />
-
-              <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
-                3
-              </span>
+              <FaShoppingCart size={24} className="text-white" />
+              {cartCount > 0 && (
+                <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
             </Link>
           </div>
         </nav>
@@ -231,11 +240,14 @@ const Header = () => {
           </div> */}
           {/* Cart Icon */}
           <div className="relative hidden sm:block">
-            <FaShoppingCart
-              size={20}
-              className="text-white"
-              onClick={handleClick}
-            />
+            <Link href="/cart">
+              <FaShoppingCart size={24} className="text-white" />
+              {cartCount > 0 && (
+                <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
           </div>
 
           {/* Search Icon */}

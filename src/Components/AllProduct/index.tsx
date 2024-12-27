@@ -4,11 +4,17 @@ import { FaHeart } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "../Product/ModalProduct";
 import Image from "next/image";
-import { useAllProducts, useProducts } from "@/api/product/queries/useProductQuery";
+import {
+  useAllProducts,
+  useProducts,
+} from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
 import ProductSkeleton from "../Skeleton";
 import { useAuthStore } from "@/store/auth";
+import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type Product = {
   id: number;
@@ -23,15 +29,34 @@ type Product = {
 };
 
 const AllProduct = () => {
-  const { data, isLoading, error } = useAllProducts();
-
-  console.log("data", data);
-
-  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
-  const user = useAuthStore((state) => state.user);
-
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const router = useRouter();
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+  const user = useAuthStore((state) => state.user);
+  const { data, isLoading, error } = useAllProducts();
+  const { mutate: addToCart } = useAddToCartMutation();
+
+  const handleAddToCart = (productId: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.warn("Please login before adding items to the cart.");
+      router.push("/signin");
+      return;
+    }
+
+    addToCart(
+      { productId, quantity: 1 },
+      {
+        onSuccess: () => {
+          toast.success("Item added to cart successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to add item to cart. Please try again.");
+        },
+      }
+    );
+  };
 
   const handleClick = () => {
     setComingSoon(true);
@@ -133,7 +158,7 @@ const AllProduct = () => {
                 BUY NOW
               </button>
               <button
-                onClick={handleClick}
+                onClick={() => handleAddToCart(product._id)}
                 className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
               >
                 Add To Cart

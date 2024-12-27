@@ -10,7 +10,6 @@ import { TfiFullscreen } from "react-icons/tfi";
 import Link from "next/link";
 import {
   useAddToCartMutation,
-  useCartQuery,
 } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 
