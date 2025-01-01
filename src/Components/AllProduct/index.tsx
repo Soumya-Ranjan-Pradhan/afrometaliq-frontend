@@ -128,9 +128,12 @@ const AllProduct = () => {
             {/* Product Info */}
             <div className="flex flex-col p-4 flex-grow">
               <h3 className="text-lg font-semibold text-gray-800 truncate">
-                {product.product_name}
+                {product?.product_name}
               </h3>
-              <p className="text-sm text-green-400 mt-1">{product.stock}</p>
+              <p className=" text-gray-600 text-sm leading-6">
+                {product?.product_description}
+              </p>
+              <p className="text-sm text-green-400 mt-1">{product?.stock}</p>
               <div className="mt-2">
                 {user?._id ? (
                   <>
@@ -142,7 +145,7 @@ const AllProduct = () => {
                     </p>
                   </>
                 ) : (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-red-600">
                     Login to see the price
                   </p>
                 )}

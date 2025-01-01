@@ -63,7 +63,7 @@ export default function Profile() {
   return (
     <div className="flex justify-center  items-start min-h-screen bg-gray-100 py-8 space-x-[10rem]">
       {/* Left Gradient Vertical Line */}
-      <div className="h-[45rem] w-[2px] bg-gradient-to-b from-[#24246C] to-[#5A43AF]"></div>
+      {/* <div className="h-[45rem] w-[2px] bg-gradient-to-b from-[#24246C] to-[#5A43AF]"></div> */}
 
       {/* Main Content */}
       <div className="flex flex-col items-center mx-4">
@@ -125,7 +125,7 @@ export default function Profile() {
       </div>
 
       {/* Right Gradient Vertical Line */}
-      <div className="h-[45rem] w-[2px] bg-gradient-to-b from-[#24246C] to-[#5A43AF]"></div>
+      {/* <div className="h-[45rem] w-[2px] bg-gradient-to-b from-[#24246C] to-[#5A43AF]"></div> */}
     </div>
   );
 }
