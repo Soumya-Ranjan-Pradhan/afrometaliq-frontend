@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import {
+  useAllProducts,
   useDeleteProduct,
   useProducts,
   useUpdateProduct,
@@ -10,7 +11,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 
 const AllProducts = () => {
-  const { data, isLoading, error } = useProducts();
+  const { data, isLoading, error } = useAllProducts();
   const { mutate: updateProduct } = useUpdateProduct();
   const { mutate: deleteProduct } = useDeleteProduct();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);

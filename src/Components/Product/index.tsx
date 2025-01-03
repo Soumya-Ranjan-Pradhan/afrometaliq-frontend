@@ -5,8 +5,7 @@ import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "./ModalProduct";
 import Image from "next/image";
 import Link from "next/link";
-import { useProducts } from "@/api/product/queries/useProductQuery";
-import ComingSoonModal from "../CommingSoonModal/ComingSoonModal";
+import { useAllProducts, useProducts } from "@/api/product/queries/useProductQuery";
 import { useGlobalStore } from "@/store/global";
 import ProductSkeletons from "../Skeleton/ProductSkeleton";
 import { useAuthStore } from "@/store/auth";
@@ -24,7 +23,7 @@ type Product = {
 };
 
 const Product = () => {
-  const { data, isLoading, error } = useProducts();
+  const { data, isLoading, error } = useAllProducts();
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
