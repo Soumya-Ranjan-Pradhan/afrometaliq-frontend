@@ -17,8 +17,8 @@ export interface Order {
   totalAmount: number;
   status: string;
   paymentStatus: string;
-  shippingAddress: string | null;
-  billingAddress: string | null;
+  shippingAddress: Address | null;
+  billingAddress: Address | null;
   createdAt: string;
   updatedAt: string;
   paymentIntentId?: string;
@@ -53,6 +53,15 @@ export interface Product {
   product_images: { url: string; public_id: string }[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface Address {
+  address_line_1: string;
+  address_line_2: string;
+  city: string;
+  state: string;
+  country: string;
+  phone_number: number;
 }
 
 // Helper function to get Authorization header
@@ -106,12 +115,15 @@ export const fetchAllOrders = async (): Promise<
 export const fetchOrderById = async (
   orderId: string
 ): Promise<ApiResponse<{ order: Order }>> => {
+  console.log("Fetching order by ID:", orderId);
+
   const response = await axios.get<ApiResponse<{ order: Order }>>(
     `${BASE_URL}/order/${orderId}`,
     {
       headers: getAuthHeader(),
     }
   );
+
   return response.data;
 };
 

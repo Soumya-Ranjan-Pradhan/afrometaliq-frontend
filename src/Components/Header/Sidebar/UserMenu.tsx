@@ -8,6 +8,7 @@ import {
   PopoverTrigger,
 } from "@/Components/ui/popover";
 import { useLogout } from "@/api/auth/queries/authQuery";
+import Link from "next/link";
 
 const UserMenu = () => {
   const user = useAuthStore((state) => state.user);
@@ -46,9 +47,9 @@ const UserMenu = () => {
               Logout
             </button>
             <ul className="text-sm">
-              <li className="py-1 border-b">
-                <a href="#">Orders</a>
-              </li>
+              <Link href="/orders" className="py-1 border-b cursor-pointer">
+                <p>Orders</p>
+              </Link>
               <li className="py-1 border-b">
                 <a href="#">Wishlist</a>
               </li>

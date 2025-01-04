@@ -3,11 +3,12 @@
 import { Order } from "@/api/orders/ordersApi";
 import { useOrdersQuery } from "@/api/orders/queries/useOrdersQuery";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 import { FaFileExport } from "react-icons/fa";
 import { TbEyeSearch } from "react-icons/tb";
 
-const ProductOrdersTable: React.FC = () => {
+const ProductOrdersTable = () => {
   const { data, isLoading, isError, refetch } = useOrdersQuery();
 
   if (isLoading) {
@@ -103,7 +104,9 @@ const ProductOrdersTable: React.FC = () => {
                       ${order.totalAmount}
                     </td>
                     <td className="border px-4 py-2 text-gray-700 text-sm cursor-pointer">
-                      <TbEyeSearch className="text-blue-500" size={25} />
+                      <Link href={`/admin/orderlists/${order._id}`}>
+                        <TbEyeSearch className="text-blue-500" size={25} />
+                      </Link>
                     </td>
                   </tr>
                 ))

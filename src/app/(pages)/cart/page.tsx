@@ -20,8 +20,7 @@ const CartPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { mutate: removeFromCart } = useDeleteFromCartMutation();
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
-
-  // Check if the user is logged in
+  
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token);
