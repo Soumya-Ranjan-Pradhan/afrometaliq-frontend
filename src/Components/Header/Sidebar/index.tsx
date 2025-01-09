@@ -6,31 +6,25 @@ import React, { useEffect, useState } from "react";
 import { RiHome6Line } from "react-icons/ri";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { TfiGallery } from "react-icons/tfi";
+import { MdShoppingBag } from "react-icons/md";
 import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
 import { useRouter } from "next/navigation";
 import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
-import UserMenu from "./UserMenu";
 import { useCartQuery } from "@/api/cart/query/useCartQuery";
+import { MdPhotoLibrary } from "react-icons/md";
 
-const Sidebar = () => {
-  //! Usage: You can use this information to change the appearance of components, such as highlighting a menu item in a navigation bar based on the current page.
+const Sidebar: React.FC = () => {
   const pathname = usePathname();
   const { data, isLoading, isError } = useCartQuery();
   const [cartCount, setCartCount] = useState<number>(0);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
 
-  // let token;
-  // if (window) {
-  //   token = window.localStorage.getItem("accessToken");
-  // }
-
-  const { data: userData } = useGetLoggedUserDetails({
-    // enabled: !!token,
-  });
-
+  const { data: userData } = useGetLoggedUserDetails({});
   const user = useAuthStore((state) => state.user);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (user && data && data.data?.cart) {
@@ -44,38 +38,51 @@ const Sidebar = () => {
     }
   }, [user, data]);
 
-  const router = useRouter();
-
   useEffect(() => {
     if (userData) {
       if (userData?.data.user.isEmailVerified) {
         console.log("LAYOUT ===========", "User is verified");
-        // router.push("/");
       } else {
         router.replace("/email/verify");
       }
     }
   }, [userData]);
 
-
   return (
     <>
       {/* Bottom navigation for mobile screens */}
       <div
         className="border-t-2 text-white h-16 sm:hidden z-20 p-1 w-full flex 
-      justify-around fixed bottom-0 bg-gradient-to-r from-[#24246C] to-[#5A43AF]"
+        justify-around fixed bottom-0 bg-gradient-to-r from-[#24246C] to-[#5A43AF]"
       >
-        {/* Home Icon */}
+        {/* Home Icon (Always Active) */}
         <Link
           href="/"
           className="flex flex-col items-center gap-1 cursor-pointer p-1"
         >
           <div
-            className={`relative ${pathname === "/" ? "text-purple-500" : ""}`}
+            className={`relative ${
+              pathname === "/" ? "text-purple-500" : "text-white"
+            }`}
           >
             <RiHome6Line size={25} />
           </div>
           <span className="text-sm">Home</span>
+        </Link>
+
+        {/* Product Icon */}
+        <Link
+          href="/product"
+          className="flex flex-col items-center gap-1 cursor-pointer p-1"
+        >
+          <div
+            className={`relative ${
+              pathname === "/product" ? "text-purple-500" : "text-white"
+            }`}
+          >
+            <MdShoppingBag size={25} />
+          </div>
+          <span className="text-sm">Product</span>
         </Link>
 
         {/* Gallery Icon */}
@@ -85,10 +92,10 @@ const Sidebar = () => {
         >
           <div
             className={`relative ${
-              pathname === "/gallery" ? "text-purple-500" : ""
+              pathname === "/gallery" ? "text-purple-500" : "text-white"
             }`}
           >
-            <TfiGallery size={25} />
+            <MdPhotoLibrary size={25} />
           </div>
           <span className="text-sm">Gallery</span>
         </Link>
@@ -98,9 +105,12 @@ const Sidebar = () => {
           href="/cart"
           className="flex flex-col items-center gap-1 cursor-pointer p-1"
         >
-          <div className={"relative text-purple-500 "}>
+          <div
+            className={`relative ${
+              pathname === "/cart" ? "text-purple-500" : "text-white"
+            }`}
+          >
             <FaShoppingCart size={25} />
-
             {cartCount > 0 && (
               <span className="absolute -top-1 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 {cartCount}
@@ -117,7 +127,7 @@ const Sidebar = () => {
         >
           <div
             className={`relative ${
-              pathname === "/profile" ? "text-purple-500" : ""
+              pathname === "/profile" ? "text-purple-500" : "text-white"
             }`}
           >
             <FaUser size={25} />

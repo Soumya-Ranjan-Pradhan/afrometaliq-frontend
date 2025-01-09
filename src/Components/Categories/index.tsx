@@ -6,6 +6,10 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation"; // Import useRouter for navigation
 import { useCategoryMenu } from "@/api/category/queries/useCategoryQuery";
+import { MdOutlinePhone } from "react-icons/md";
+import { FaCogs } from "react-icons/fa";
+import { FaInfoCircle } from "react-icons/fa";
+import { FaHandshake } from "react-icons/fa";
 
 type CategoryMenu = {
   _id: string;
@@ -28,7 +32,7 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
 
   const handleCategoryClick = (categoryId: string) => {
     router.push(`/category/${categoryId}`);
-    closeDrawer(); 
+    closeDrawer();
   };
 
   const categoryVariants = {
@@ -63,10 +67,11 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
       >
         <div
           className="flex items-center gap-2 cursor-pointer"
-          onClick={() =>
-            subcategory.children.length > 0
-              ? toggleSubcategories(subcategory._id)
-              : handleCategoryClick(subcategory._id) // Navigate if no children
+          onClick={
+            () =>
+              subcategory.children.length > 0
+                ? toggleSubcategories(subcategory._id)
+                : handleCategoryClick(subcategory._id) // Navigate if no children
           }
         >
           <MdOutlineKeyboardArrowRight
@@ -127,10 +132,11 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
         >
           <div
             className="p-1 flex items-center gap-2 cursor-pointer"
-            onClick={() =>
-              category.children.length > 0
-                ? toggleSubcategories(category._id)
-                : handleCategoryClick(category._id) // Navigate if no children
+            onClick={
+              () =>
+                category.children.length > 0
+                  ? toggleSubcategories(category._id)
+                  : handleCategoryClick(category._id) // Navigate if no children
             }
           >
             <MdOutlineKeyboardArrowRight
@@ -170,28 +176,50 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
       ))}
 
       <motion.div
-        className="p-1 flex items-center gap-2 cursor-pointer"
+        className="p-1 flex items-center gap-2 bg-orange-400 w-[50%] rounded-lg  cursor-pointer"
         variants={categoryVariants}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
-        <MdOutlineKeyboardArrowRight size={30} className="rotate-0" />
-        <Link href="/contact" onClick={closeDrawer}>
-          <p className="text-[1.2rem] md:text-[1.8rem] font-semibold">
-            Contact
+        <FaInfoCircle size={15} className="rotate-0" />
+        <Link href="/about" onClick={closeDrawer}>
+          <p className="text-[1rem] md:text-[1.8rem] font-semibold">About</p>
+        </Link>
+      </motion.div>
+
+      <motion.div
+        className="p-1 flex items-center gap-2 bg-orange-400 w-[50%] rounded-lg  cursor-pointer mt-4"
+        variants={categoryVariants}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <FaCogs size={20} className="rotate-0" />
+        <Link href="/fabrication" onClick={closeDrawer}>
+          <p className="text-[1rem] md:text-[1.8rem] font-semibold">
+            Fabrication
           </p>
         </Link>
       </motion.div>
 
       <motion.div
-        className="p-1 flex items-center gap-2 cursor-pointer"
+        className="p-1 flex items-center gap-2 bg-orange-400 w-[50%] rounded-lg  mt-4 cursor-pointer"
         variants={categoryVariants}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
-        <MdOutlineKeyboardArrowRight size={30} className="rotate-0" />
-        <Link href="/fabrication" onClick={closeDrawer}>
-          <p className="text-[1.2rem] md:text-[1.8rem] font-semibold">
-            Fabrication
+        <FaHandshake size={20} className="rotate-0" />
+        <Link href="/consultancy" onClick={closeDrawer}>
+          <p className="text-[1rem] md:text-[1.8rem] font-semibold">
+            Consultancy
           </p>
+        </Link>
+      </motion.div>
+
+      <motion.div
+        className="p-1 flex items-center gap-2 bg-orange-400 w-[50%] rounded-lg mt-4 cursor-pointer"
+        variants={categoryVariants}
+        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      >
+        <MdOutlinePhone size={20} className="rotate-0" />
+        <Link href="/contact" onClick={closeDrawer}>
+          <p className="text-[1rem] md:text-[1.8rem] font-semibold">Contact</p>
         </Link>
       </motion.div>
     </motion.div>
