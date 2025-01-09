@@ -10,6 +10,8 @@ import {
 } from "@/api/address/queries/useAddressQuery";
 import { toast } from "react-toastify";
 import type { Address as AddressType } from "@/api/address/addressApi";
+import { useAuthStore } from "@/store/auth";
+import Link from "next/link";
 
 const Address = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +22,32 @@ const Address = () => {
 
   const { data, isLoading, isError, refetch } = useCartQuery();
   const { mutate: deleteAddress } = useDeleteAddress();
-  const { mutate: updateAddress } = useUpdateAddress(editAddress?._id || "");
+
+  const user = useAuthStore((state) => state.user);
+
+  useEffect(() => {
+    if (user?._id) {
+      refetch();
+    }
+  }, [user, refetch]);
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center mt-6">
+        <div className="text-center">
+          <p className="text-xl font-semibold text-red-800 mb-4">
+            Please log in to view your addresses.
+          </p>
+          <Link
+            href="/signin"
+            className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 px-6 rounded-md"
+          >
+            Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   const openModal = (isEdit = false, address: AddressType | null = null) => {
     setIsEditMode(isEdit);

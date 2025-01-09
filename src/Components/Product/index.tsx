@@ -140,7 +140,7 @@ const Product = () => {
                     MZN {product.product_selling_price} Sale
                   </span>
                 ) : (
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-red-500">
                      login to see the price
                   </p>
                 )}
@@ -148,12 +148,11 @@ const Product = () => {
             </div>
             {/* Buttons */}
             <div className="flex items-center justify-between gap-2">
-              <button
-                className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                onClick={handleClick}
+              <Link href={`/buynow/${product._id}`}
+                className="w-full mt-4 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
               >
                 BUY NOW
-              </button>
+              </Link>
               <button
                 className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                 onClick={handleClick}

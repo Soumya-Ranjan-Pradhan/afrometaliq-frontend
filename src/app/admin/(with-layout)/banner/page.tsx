@@ -16,6 +16,7 @@ const BannerUpload = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [formData, setFormData] = useState<FormData | null>(null);
+  const [title, setTitle] = useState<string>("");
 
   // React Query hooks
   const { data, isLoading, error } = useGetAllBanner();
@@ -37,6 +38,7 @@ const BannerUpload = () => {
 
     const form = new FormData();
     form.append("banner_images", uploadedImage);
+    form.append("banner_title", title);
     createBanner(form, {
       onSuccess: () => {
         toast.success("Banner created successfully!");
@@ -93,10 +95,17 @@ const BannerUpload = () => {
 
         {/* Upload Section */}
         <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Banner Title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            className="border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none w-full md:w-1/3"
+          />
           <div className="flex gap-4">
             <label
               htmlFor="banner-upload"
-              className="w-32 h-32 flex items-center justify-center rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition"
+              className="w-32 h-32 mt-3 flex items-center justify-center rounded-lg border border-dashed border-gray-300 cursor-pointer hover:bg-gray-50 transition"
             >
               <FaUpload className="text-gray-500" size={24} />
               <input
@@ -123,6 +132,7 @@ const BannerUpload = () => {
               <tr className="bg-gray-100">
                 <th className="border px-4 py-2 text-left">No</th>
                 <th className="border px-4 py-2 text-left">Image</th>
+                <th className="border px-4 py-2 text-left">Title</th>
                 <th className="border px-4 py-2 text-center">Actions</th>
               </tr>
             </thead>
@@ -137,6 +147,7 @@ const BannerUpload = () => {
                       className="w-20 h-12 object-cover rounded-md"
                     />
                   </td>
+                  <td className="border px-4 py-2">{banner.banner_title}</td>
                   <td className="border px-4 py-2 text-center">
                     <div className="flex justify-center gap-4">
                       <button

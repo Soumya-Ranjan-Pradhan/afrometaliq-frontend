@@ -1,5 +1,8 @@
 import axios from "axios";
-import { BASE_URL } from "@/contants";
+// import { BASE_URL } from "@/contants";
+
+
+const BASE_URL = "http://localhost:3001/api/v1";
 
 // Define Banner Type
 export interface Banner {
@@ -7,6 +10,7 @@ export interface Banner {
     url: string;
     public_id: string;
   }[];
+  banner_title: string;
 }
 
 // response type

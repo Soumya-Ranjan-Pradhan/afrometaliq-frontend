@@ -15,6 +15,7 @@ import SpecificationsTabMobile from "@/Components/Product/ProductTabs/MobileProd
 import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -193,12 +194,12 @@ const Page = ({ params }: { params: { id: string } }) => {
                   </div>
                 </button>
 
-                <button
-                  onClick={handleClick}
+                <Link
+                  href={`/buynow/${productDetails?._id}`}
                   className="w-full lg:w-auto lg:px-14 md:px-6 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
                 >
                   Buy Now
-                </button>
+                </Link>
               </div>
             </div>
 

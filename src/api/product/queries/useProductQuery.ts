@@ -2,7 +2,6 @@ import {
   useMutation,
   useQuery,
   useQueryClient,
-  UseQueryOptions,
 } from "@tanstack/react-query";
 import {
   getAllProducts,
@@ -43,6 +42,7 @@ export const useProductById = (id: string) => {
   return useQuery<ApiResponse<{ product: PopulatedProduct }>, Error>({
     queryKey: ["product", id],
     queryFn: () => getProductById(id),
+    enabled: !!id,
   });
 };
 

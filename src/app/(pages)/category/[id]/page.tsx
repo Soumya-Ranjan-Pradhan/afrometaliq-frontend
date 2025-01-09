@@ -8,9 +8,7 @@ import { useAuthStore } from "@/store/auth";
 import { FaHeart } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import Link from "next/link";
-import {
-  useAddToCartMutation,
-} from "@/api/cart/query/useCartQuery";
+import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 
 const CategoryProductsPage = () => {
@@ -141,7 +139,7 @@ const CategoryProductsPage = () => {
                       </p>
                     </>
                   ) : (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-red-500">
                       Login to see the price
                     </p>
                   )}
@@ -150,9 +148,12 @@ const CategoryProductsPage = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-2 p-4">
-                <button className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                <Link
+                  href={`/buynow/${product?._id}`}
+                  className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                >
                   BUY NOW
-                </button>
+                </Link>
                 <button
                   onClick={() => handleAddToCart(product._id)}
                   className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"

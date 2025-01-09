@@ -154,12 +154,13 @@ const AllProduct = () => {
 
             {/* Action Buttons */}
             <div className="flex gap-2 p-4">
-              <button
-                onClick={handleClick}
-                className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+              <Link 
+                href={`/buynow/${product._id}`}
+               
+                className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
               >
                 BUY NOW
-              </button>
+              </Link>
               <button
                 onClick={() => handleAddToCart(product._id)}
                 className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"

@@ -84,8 +84,8 @@ const Category: React.FC = () => {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        onMouseEnter={() => setIsPaused(true)} // Pause auto-scroll on hover
-        onMouseLeave={() => setIsPaused(false)} // Resume auto-scroll on leave
+        onMouseEnter={() => setIsPaused(true)} 
+        onMouseLeave={() => setIsPaused(false)} 
       >
         {isLoading ? (
           Array.from({ length: 8 }).map((_, index) => (

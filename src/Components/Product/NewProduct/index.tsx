@@ -50,7 +50,9 @@ const NewArrivingProductCarousel: React.FC = () => {
 
   return (
     <div className="mx-auto px-4">
-      <h2 className="text-2xl text-center font-bold mt-8">Promotional Products</h2>
+      <h2 className="text-2xl text-center font-bold mt-8">
+        Promotional Products
+      </h2>
       <p className="text-gray-500 text-center mb-4">
         Do not miss the current offers until the end of Month.
       </p>
@@ -98,7 +100,7 @@ const NewArrivingProductCarousel: React.FC = () => {
                       </span>
                     </span>
                   ) : (
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-red-500">
                       login to see the price
                     </p>
                   )}
@@ -111,7 +113,7 @@ const NewArrivingProductCarousel: React.FC = () => {
                         MZN {product.product_price.toLocaleString()}
                       </span>
                     ) : (
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-red-500">
                         login to see the price
                       </p>
                     )}
@@ -119,12 +121,12 @@ const NewArrivingProductCarousel: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
-                  <button
-                    onClick={handleClick}
-                    className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  <Link
+                    href={`/buynow/${product._id}`}
+                    className="w-full mt-4 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                   >
                     BUY NOW
-                  </button>
+                  </Link>
 
                   <button
                     onClick={handleClick}
