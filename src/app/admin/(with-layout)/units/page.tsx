@@ -7,6 +7,7 @@ import {
   useUpdateUnits,
 } from "@/api/units/queries/useUnitsQuery";
 import React, { use, useState } from "react";
+import { AiOutlineLoading } from "react-icons/ai";
 import { FaEye, FaEdit, FaTrash } from "react-icons/fa";
 import { toast, ToastContainer } from "react-toastify";
 
@@ -16,6 +17,7 @@ const Units = () => {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [updatedName, setUpdatedName] = useState("");
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [loading, setIsLoading] = useState(false);
 
   // React Query hooks
   const { data, isLoading, error, refetch } = useUnits();
@@ -26,8 +28,10 @@ const Units = () => {
 
   // Handle create category
   const handleCreate = () => {
+    setIsLoading(true);
     if (!units.trim()) {
       toast.error("Units name is required");
+      setIsLoading(false); 
       return;
     }
     createUnits(
@@ -37,8 +41,10 @@ const Units = () => {
           setUnits("");
           refetch();
           toast.success("Units created successfully!");
+          setIsLoading(false); // Stop loading on success
         },
         onError: () => {
+          setIsLoading(false); // Stop loading on error
           toast.error("Failed to create Units");
         },
       }
@@ -47,8 +53,10 @@ const Units = () => {
 
   // Handle save update
   const handleSaveUpdate = () => {
+    setIsLoading(true);
     if (!editingId || !updatedName.trim()) {
       toast.error("Units name is required");
+      setIsLoading(false); // Stop loading if validation fails
       return;
     }
     updateUnits(
@@ -59,8 +67,10 @@ const Units = () => {
           setUpdatedName("");
           refetch();
           toast.success("Units updated successfully!");
+          setIsLoading(false); // Stop loading on success
         },
         onError: () => {
+          setIsLoading(false); // Stop loading on error
           toast.error("Failed to update Units");
         },
       }
@@ -69,14 +79,20 @@ const Units = () => {
 
   // Handle delete category
   const confirmDelete = () => {
-    if (!deleteId) return;
+    setIsLoading(true);
+    if (!deleteId) {
+      setIsLoading(false);
+      return;
+    }
     deleteUnits(deleteId, {
       onSuccess: () => {
         setDeleteId(null);
         refetch();
         toast.success("Units deleted successfully!");
+        setIsLoading(false); // Stop loading on success
       },
       onError: () => {
+        setIsLoading(false); // Stop loading on error
         toast.error("Failed to delete units");
       },
     });
@@ -117,12 +133,19 @@ const Units = () => {
           </div>
 
           {/* Save Button */}
-          <button
-            onClick={handleCreate}
-            className="w-full bg-blue-500 text-white text-lg font-medium py-2 rounded-lg hover:bg-blue-600 transition"
-          >
-            Save
-          </button>
+
+          {loading ? (
+            <button className="w-full flex items-center justify-center bg-blue-500 text-white text-lg font-medium py-2 rounded-lg hover:bg-blue-600 transition">
+              <AiOutlineLoading className="animate-spin" />
+            </button>
+          ) : (
+            <button
+              onClick={handleCreate}
+              className="w-full bg-blue-500 text-white text-lg font-medium py-2 rounded-lg hover:bg-blue-600 transition"
+            >
+              Save
+            </button>
+          )}
         </div>
       </div>
 
@@ -223,12 +246,21 @@ const Units = () => {
               <div className="bg-white p-4 rounded shadow-lg">
                 <p>Are you sure you want to delete this units?</p>
                 <div className="flex justify-end space-x-4 mt-4">
-                  <button
-                    onClick={confirmDelete}
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                  >
-                    Delete
-                  </button>
+                  {loading ? (
+                    <button
+                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    >
+                      <AiOutlineLoading className="animate-spin text-xl" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={confirmDelete}
+                      className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  )}
+
                   <button
                     onClick={() => setDeleteId(null)}
                     className="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400"

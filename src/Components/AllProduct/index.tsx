@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaShareAlt } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "../Product/ModalProduct";
 import Image from "next/image";
@@ -113,14 +113,8 @@ const AllProduct = () => {
 
               {/* Icons to show on hover */}
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-2 right-2 space-y-2">
-                <button
-                  onClick={() => openModal(product)}
-                  className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
-                >
-                  <TfiFullscreen className="text-black hover:text-white h-6 w-6" />
-                </button>
                 <button className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
-                  <FaHeart className="text-gray-600 hover:text-white h-6 w-6" />
+                  <FaShareAlt className="text-black hover:text-white h-6 w-6" />
                 </button>
               </div>
             </div>
@@ -145,18 +139,15 @@ const AllProduct = () => {
                     </p>
                   </>
                 ) : (
-                  <p className="text-sm text-red-600">
-                    Login to see the price
-                  </p>
+                  <p className="text-sm text-red-600">Login to see the price</p>
                 )}
               </div>
             </div>
 
             {/* Action Buttons */}
             <div className="flex gap-2 p-4">
-              <Link 
+              <Link
                 href={`/buynow/${product._id}`}
-               
                 className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
               >
                 BUY NOW

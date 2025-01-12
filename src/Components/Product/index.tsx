@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaShareAlt } from "react-icons/fa";
 import { TfiFullscreen } from "react-icons/tfi";
 import ProductModal from "./ModalProduct";
 import Image from "next/image";
@@ -104,11 +104,9 @@ const Product = () => {
                   // onClick={() => openModal(product)}
                   className="absolute top-2 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
                 >
-                  <TfiFullscreen className="text-black hover:text-white h-6 w-6" />
+                  <FaShareAlt className="text-black hover:text-white h-6 w-6" />
                 </button>
-                <button className="absolute top-14 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
-                  <FaHeart className="text-gray-600 hover:text-white h-6 w-6" />
-                </button>
+               
               </div>
             </div>
             {/* Product Info */}

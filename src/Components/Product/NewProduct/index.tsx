@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
 import CarouselSkeleton from "@/Components/Skeleton/CarouselSkeleton";
 import { useAuthStore } from "@/store/auth";
+import { FaShareAlt } from "react-icons/fa";
 
 type Product = {
   id: number;
@@ -73,7 +74,7 @@ const NewArrivingProductCarousel: React.FC = () => {
         >
           {data?.data.products.map((product) => (
             <SwiperSlide key={product._id} id={product._id}>
-              <div className="bg-white rounded-lg shadow-lg p-4 relative">
+              <div className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500">
                 <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
                   Promotion
                 </span>
@@ -86,6 +87,16 @@ const NewArrivingProductCarousel: React.FC = () => {
                     className="w-full h-48 object-cover rounded-md mb-4"
                   />
                 </Link>
+
+                {/* Icons to show on hover */}
+                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button
+                    // onClick={() => openModal(product)}
+                    className="absolute top-6 right-6 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
+                  >
+                    <FaShareAlt className="text-black hover:text-white h-6 w-6" />
+                  </button>
+                </div>
 
                 <h3 className="text-lg font-semibold truncate">
                   {product.product_name}

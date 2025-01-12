@@ -6,6 +6,7 @@ import CategoriesInput, { Option } from "./CategoryInput";
 import { useCreateProduct } from "@/api/product/queries/useProductQuery";
 import { toast } from "react-toastify";
 import UnitInput from "./UnitInput";
+import { AiOutlineLoading } from "react-icons/ai";
 
 const initialState = {
   product_name: "",
@@ -28,6 +29,7 @@ const AddProduct = () => {
   const [product, setProduct] = useState(initialState);
   const [selectedUnit, setSelectedUnit] = useState<Option | null>(null);
   const [sizes, setSizes] = useState<string[]>([""]);
+  const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<{
     selectedCategory: Option | null;
     selectedSubcategory: Option | null;
@@ -42,7 +44,10 @@ const AddProduct = () => {
 
   // create product
   const handleCreate = () => {
+    setIsLoading(true);
+
     const formData = new FormData();
+
     formData.append("product_name", product.product_name);
     formData.append("product_code", product.product_code);
     formData.append("product_unit", selectedUnit?.value || "");
@@ -60,6 +65,7 @@ const AddProduct = () => {
     // check if all category is selected
     if (!categories.selectedCategory || !categories.selectedSubcategory) {
       toast.error("Please select all categories");
+      setIsLoading(false);
       return;
     }
 
@@ -92,10 +98,12 @@ const AddProduct = () => {
       onSuccess: () => {
         setProduct(initialState);
         setImages([]);
+        setIsLoading(false);
         setSelectedUnit(null);
         toast.success("Product created successfully!");
       },
       onError: () => {
+        setIsLoading(false);
         toast.error("Failed to create product");
       },
     });
@@ -233,12 +241,25 @@ const AddProduct = () => {
             </div>
 
             <div className="mt-6 flex gap-4">
-              <button
+              {isLoading ? (
+                <button className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition">
+                  <AiOutlineLoading className="animate-spin" />
+                </button>
+              ) : (
+                <button
+                  onClick={handleCreate}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+                >
+                  Add product
+                </button>
+              )}
+
+              {/* <button
                 onClick={handleCreate}
                 className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
               >
                 Add product
-              </button>
+              </button> */}
             </div>
           </div>
 
