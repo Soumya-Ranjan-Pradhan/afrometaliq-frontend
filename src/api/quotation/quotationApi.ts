@@ -1,21 +1,12 @@
 import axios from "axios";
-import { BASE_URL } from "@/contants";
+
+const BASE_URL = "http://localhost:3001/api/v1";
 
 // Define the product interface
 export interface Product {
   _id: string;
   product_name: string;
   product_code: string;
-  category?: {
-    _id: string;
-    category_name: string;
-  }[];
-  product_unit?: {
-    _id: string;
-    unit_name: string;
-    createdAt: string;
-    updatedAt: string;
-  };
   product_price: number;
   product_discount?: number;
   product_images: {
@@ -47,9 +38,11 @@ export interface User {
 // Define the quotation interface
 export interface Quotation {
   _id: string;
-  product: Product;
+  products: {
+    product: Product;
+    quantity: number;
+  }[];
   user: User;
-  quantity: number;
   message: string;
   createdAt: string;
   updatedAt: string;
@@ -62,11 +55,12 @@ export type ApiResponse<T> = {
   data: T;
 };
 
+// API Calls
+
 // Create a new quotation
 export const createQuotation = async (data: {
-  product: string;
-  quantity: number;
-  message: string;
+  products: { product: string; quantity: number }[];
+  message?: string;
 }): Promise<ApiResponse<Quotation>> => {
   const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
 
@@ -80,38 +74,30 @@ export const createQuotation = async (data: {
     {
       headers: {
         Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     }
   );
+
   return response.data;
 };
 
-// Fetch all quotations
-export const fetchQuotations = async (): Promise<ApiResponse<Quotation[]>> => {
-    const response = await axios.get<ApiResponse<Quotation[]>>(
-      `${BASE_URL}/quotation`
-    );
-    return response.data;
-};
-  
-
-// Delete a quotation
-export const deleteQuotation = async (
-  id: string
-): Promise<ApiResponse<null>> => {
+// Get all quotations
+export const getQuotations = async (): Promise<ApiResponse<Quotation[]>> => {
   const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");
   }
 
-  const response = await axios.delete<ApiResponse<null>>(
-    `${BASE_URL}/quotation/${id}`,
+  const response = await axios.get<ApiResponse<Quotation[]>>(
+    `${BASE_URL}/quotation`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     }
   );
+
   return response.data;
 };

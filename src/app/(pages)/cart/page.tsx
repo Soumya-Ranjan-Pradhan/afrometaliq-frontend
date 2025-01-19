@@ -13,14 +13,17 @@ import {
 import { toast } from "react-toastify";
 import Link from "next/link";
 import QuotationModal from "@/Components/QuotationModal";
+import { useCreateQuotation } from "@/api/quotation/queries/useQuotationQuery";
 
 const CartPage = () => {
   const { data, isLoading, isError } = useCartQuery();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { mutate: sendQuotation } = useCreateQuotation();
   const { mutate: removeFromCart } = useDeleteFromCartMutation();
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
-  
+
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     setIsLoggedIn(!!token);
@@ -48,6 +51,32 @@ const CartPage = () => {
         },
         onError: () => {
           toast.error("Failed to update item quantity. Please try again.");
+        },
+      }
+    );
+  };
+
+  const handleSendQuotation = () => {
+    setLoading(true);
+    const products =
+      data?.data?.cart.map((item) => ({
+        product: item.product?._id,
+        quantity: item.quantity,
+      })) || [];
+
+    sendQuotation(
+      { products, message: "Please process this quotation." },
+      {
+        onSuccess: () => {
+          toast.success("Quotation sent successfully!");
+          setIsModalOpen(false);
+        },
+        onError: (error) => {
+          console.error(error);
+          toast.error("Failed to send the quotation. Please try again.");
+        },
+        onSettled: () => {
+          setLoading(false);
         },
       }
     );
@@ -116,7 +145,7 @@ const CartPage = () => {
       <div className="container mx-auto bg-white shadow-md lg:h-[5em]">
         <div className="lg:flex hidden items-center justify-between mx-[10rem]">
           <Image
-            src="https://res.cloudinary.com/dndq25au1/image/upload/v1729361117/d6zwh0crdjjhmrtzfzkj.jpg"
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1736681131/u75korslf5ye6lxs4tj8.png"
             alt="Arfo Metaliq Logo"
             width={190}
             height={190}
@@ -277,6 +306,8 @@ const CartPage = () => {
       <QuotationModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+        onConfirm={handleSendQuotation}
+        isLoading={loading}
       />
     </>
   );

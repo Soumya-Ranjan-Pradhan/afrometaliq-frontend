@@ -1,14 +1,15 @@
 "use client";
 import React, { useState } from "react";
-import { FaHeart, FaShareAlt } from "react-icons/fa";
-import { TfiFullscreen } from "react-icons/tfi";
-import ProductModal from "./ModalProduct";
+import { FaShareAlt } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { useAllProducts, useProducts } from "@/api/product/queries/useProductQuery";
+import { useAllProducts } from "@/api/product/queries/useProductQuery";
 import { useGlobalStore } from "@/store/global";
 import ProductSkeletons from "../Skeleton/ProductSkeleton";
 import { useAuthStore } from "@/store/auth";
+import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 type Product = {
   id: number;
@@ -23,41 +24,35 @@ type Product = {
 };
 
 const Product = () => {
+  const router = useRouter();
   const { data, isLoading, error } = useAllProducts();
-  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const { mutate: addToCart } = useAddToCartMutation();
   const user = useAuthStore((state) => state.user);
 
-  const handleClick = () => {
-    setComingSoon(true);
+  const handleAddToCart = (productId: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.warn("Please login before adding items to the cart.");
+      router.push("/signin");
+      return;
+    }
+
+    addToCart(
+      { productId, quantity: 1 },
+      {
+        onSuccess: () => {
+          toast.success("Item added to cart successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to add item to cart. Please try again.");
+        },
+      }
+    );
   };
 
-  // const openModal = (product: Product) => {
-  //   setSelectedProduct(product);
-  //   setIsModalOpen(true);
-  // };
-
-  // const closeModal = () => {
-  //   setIsModalOpen(false);
-  //   setSelectedProduct(null);
-  // };
-
-  const handleBuyNow = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsModalOpen(true);
-  };
-
-  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => setIsModalOpen(false);
   if (isLoading)
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {Array.from({ length: 8 }).map((_, index) => (
           <ProductSkeletons key={index} />
         ))}
@@ -66,14 +61,10 @@ const Product = () => {
 
   if (error) return <div>Error fetching products</div>;
 
-  // const handleBuyNow = (
-  //   e: React.MouseEvent<HTMLButtonElement>,
-  //   productId: number
-  // ) => {
-  //   e.preventDefault();
-  //   // navigation to checkout page
-  //   router.push(`/buy-now/${productId}`);
-  // };
+  // Filter products without a discount and limit to 8
+  const filteredProducts = data?.data.products
+    .filter((product) => product.product_discount === 0)
+    .slice(0, 8);
 
   return (
     <div className="mx-auto p-4">
@@ -81,7 +72,7 @@ const Product = () => {
         Browse Products
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {data?.data.products.map((product) => (
+        {filteredProducts?.map((product) => (
           <div
             key={product._id}
             className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500"
@@ -100,13 +91,9 @@ const Product = () => {
 
               {/* Icons to show on hover */}
               <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <button
-                  // onClick={() => openModal(product)}
-                  className="absolute top-2 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
-                >
+                <button className="absolute top-2 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
                   <FaShareAlt className="text-black hover:text-white h-6 w-6" />
                 </button>
-               
               </div>
             </div>
             {/* Product Info */}
@@ -114,23 +101,6 @@ const Product = () => {
               <h3 className="text-lg font-semibold text-gray-800">
                 {product.product_name}
               </h3>
-              {/* <p className="mt-2 text-green-400">{product.stock}</p> */}
-              {/* <div className="flex items-center mt-2">
-                <span className="text-lg font-bold text-purple-600">
-                  {
-                    user?._id ? (
-                      <span className="text-lg font-bold text-gray-700">
-                       ₹{product.product_price.toLocaleString()}
-                      </span>
-                    ) : (
-                      <p className="text-sm text-gray-500">
-                         login to see the price
-                      </p>
-                    )
-                  }
-                 
-                </span>
-              </div> */}
 
               <div className="text-sm text-gray-500 mt-1">
                 {user?._id ? (
@@ -138,22 +108,21 @@ const Product = () => {
                     MZN {product.product_selling_price} Sale
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500">
-                     login to see the price
-                  </p>
+                  <p className="text-sm text-red-500">login to see the price</p>
                 )}
               </div>
             </div>
             {/* Buttons */}
             <div className="flex items-center justify-between gap-2">
-              <Link href={`/buynow/${product._id}`}
+              <Link
+                href={`/buynow/${product._id}`}
                 className="w-full mt-4 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
               >
                 BUY NOW
               </Link>
               <button
                 className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-                onClick={handleClick}
+                onClick={() => handleAddToCart(product._id)}
               >
                 Add To Cart
               </button>
@@ -161,16 +130,6 @@ const Product = () => {
           </div>
         ))}
       </div>
-      {/* Render the Product Modal */}
-      {selectedProduct && (
-        <ProductModal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          product={selectedProduct}
-        />
-      )}
-
-      {/* <ComingSoonModal isOpen={isModalOpen} onRequestClose={closeModal} /> */}
     </div>
   );
 };

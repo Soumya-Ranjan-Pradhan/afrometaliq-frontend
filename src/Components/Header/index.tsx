@@ -31,7 +31,6 @@ const Header = () => {
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [cartCount, setCartCount] = useState<number>(0);
   const { data, isLoading, isError, refetch } = useCartQuery();
-  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
@@ -49,9 +48,6 @@ const Header = () => {
     }
   }, [user, data]);
 
-  const handleClick = () => {
-    setComingSoon(true);
-  };
 
   const closeDrawer = () => {
     setToggleMenu(false);

@@ -1,41 +1,46 @@
 "use client";
+
 import React, { useState } from "react";
-import { FaHeart, FaShareAlt } from "react-icons/fa";
-import { TfiFullscreen } from "react-icons/tfi";
-import ProductModal from "../Product/ModalProduct";
+import { FaShareAlt } from "react-icons/fa";
 import Image from "next/image";
-import {
-  useAllProducts,
-  useProducts,
-} from "@/api/product/queries/useProductQuery";
+import { useAllProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
-import { useGlobalStore } from "@/store/global";
 import ProductSkeleton from "../Skeleton";
 import { useAuthStore } from "@/store/auth";
 import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import FilterProduct from "./FilterProduct";
+import FilterMobileScreen from "./FilterMobileScreen/FilterMobileScreen";
 
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice: number;
-  salesCount: number;
-  imageUrl: string;
-  stock: string;
-  rating: number;
-  description: string;
-};
+interface Product {
+  _id: string;
+  product_name: string;
+  product_description: string;
+  product_price: number;
+  product_selling_price: number;
+  product_discount: number;
+  product_images: { url: string }[];
+  category: { category_name: string }[];
+}
 
 const AllProduct = () => {
-  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
-  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const user = useAuthStore((state) => state.user);
   const { data, isLoading, error } = useAllProducts();
   const { mutate: addToCart } = useAddToCartMutation();
+
+  // const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  // const [selectedDiscount, setSelectedDiscount] = useState<
+  //   number | undefined
+  // >();
+  // const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>(
+  //   []
+  // );
+
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
+  const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleAddToCart = (productId: string) => {
     const token = localStorage.getItem("accessToken");
@@ -58,13 +63,32 @@ const AllProduct = () => {
     );
   };
 
-  const handleClick = () => {
-    setComingSoon(true);
+  const applyFilters = () => {
+    if (data?.data?.products) {
+      const filtered = data.data.products.filter((product: Product) => {
+        const meetsFilter =
+          selectedFilter === "PromotionalProduct"
+            ? product.product_discount > 0
+            : selectedFilter === "BrowserProduct"
+            ? product.product_discount === 0
+            : true;
+
+        const meetsCategory = selectedCategories.length
+          ? product.category.some((cat) =>
+              selectedCategories.includes(cat.category_name)
+            )
+          : true;
+
+        return meetsFilter && meetsCategory;
+      });
+      setFilteredProducts(filtered);
+    }
   };
 
-  const openModal = (product: Product) => {
-    setSelectedProduct(product);
-    setIsModalOpen(true);
+  const clearFilters = () => {
+    setFilteredProducts([]);
+    setSelectedFilter(null);
+    setSelectedCategories([]);
   };
 
   if (isLoading)
@@ -83,95 +107,119 @@ const AllProduct = () => {
 
   if (error) return <div>Error fetching products</div>;
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedProduct(null);
-  };
+  const displayedProducts = filteredProducts.length
+    ? filteredProducts
+    : data?.data.products || [];
 
   return (
-    <div className="mx-auto p-4">
-      <h1 className="text-center text-3xl font-semibold mb-8">
-        Browse Products
-      </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        {data?.data.products.map((product: any) => (
-          <div
-            key={product.id}
-            className="flex flex-col border rounded-lg shadow-lg overflow-hidden group relative transition-transform transform hover:scale-105 duration-500"
-          >
-            {/* Product Image */}
-            <div className="relative aspect-w-4 aspect-h-3">
-              <Link href={`/product/${product._id}`}>
-                <Image
-                  src={product.product_images[0]?.url}
-                  alt={product.product_name}
-                  width={300}
-                  height={200}
-                  className="w-full h-48 object-cover rounded-md"
-                />
-              </Link>
+    <>
+      {/* for large screen and medium screen */}
+      <div className="mx-auto">
+        <h1 className="text-center text-3xl font-semibold">Browse Products</h1>
 
-              {/* Icons to show on hover */}
-              <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute top-2 right-2 space-y-2">
-                <button className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
-                  <FaShareAlt className="text-black hover:text-white h-6 w-6" />
-                </button>
-              </div>
-            </div>
-
-            {/* Product Info */}
-            <div className="flex flex-col p-4 flex-grow">
-              <h3 className="text-lg font-semibold text-gray-800 truncate">
-                {product?.product_name}
-              </h3>
-              <p className=" text-gray-600 text-sm leading-6">
-                {product?.product_description}
-              </p>
-              <p className="text-sm text-green-400 mt-1">{product?.stock}</p>
-              <div className="mt-2">
-                {user?._id ? (
-                  <>
-                    <span className="text-lg font-bold text-gray-700">
-                      MZN {product.product_selling_price.toLocaleString()} Sale
-                    </span>
-                    <p className="text-lg line-through text-gray-500">
-                      MZN {product.product_price.toLocaleString()}
-                    </p>
-                  </>
-                ) : (
-                  <p className="text-sm text-red-600">Login to see the price</p>
-                )}
-              </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-2 p-4">
-              <Link
-                href={`/buynow/${product._id}`}
-                className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-              >
-                BUY NOW
-              </Link>
-              <button
-                onClick={() => handleAddToCart(product._id)}
-                className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-              >
-                Add To Cart
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Render the Product Modal */}
-      {selectedProduct && (
-        <ProductModal
-          isOpen={isModalOpen}
-          onRequestClose={closeModal}
-          product={selectedProduct}
+        {/* filter for mobile screen */}
+        <FilterMobileScreen
+          applyFilters={applyFilters}
+          clearFilters={clearFilters}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
+          selectedCategories={selectedCategories}
+          setSelectedCategories={setSelectedCategories}
         />
-      )}
-    </div>
+
+        {/* Category and Discount Filter */}
+        <div className="">
+          {/* <div className="hidden md:block lg:block"> */}
+          {/* <FilterProduct
+            applyFilters={applyFilters}
+            clearFilters={clearFilters}
+            selectedFilter={selectedFilter}
+            setSelectedFilter={setSelectedFilter}
+            selectedCategories={selectedCategories}
+            setSelectedCategories={setSelectedCategories}
+          /> */}
+          {/* </div> */}
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-6">
+            <>
+              <FilterProduct
+                applyFilters={applyFilters}
+                clearFilters={clearFilters}
+                selectedFilter={selectedFilter}
+                setSelectedFilter={setSelectedFilter}
+                selectedCategories={selectedCategories}
+                setSelectedCategories={setSelectedCategories}
+              />
+              {displayedProducts.map((product) => (
+                <div
+                  key={product._id}
+                  className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500"
+                >
+                  {/* Product Image */}
+                  <div className="relative">
+                    {product.product_discount > 0 && (
+                      <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
+                        Promotion
+                      </span>
+                    )}
+                    <Link key={product._id} href={`/product/${product._id}`}>
+                      <Image
+                        src={product.product_images[0]?.url}
+                        alt={product.product_name}
+                        width={300}
+                        height={200}
+                        className="w-full h-48 object-cover rounded-md"
+                      />
+                    </Link>
+
+                    {/* Icons to show on hover */}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <button className="absolute top-2 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
+                        <FaShareAlt className="text-black hover:text-white h-6 w-6" />
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Product Info */}
+                  <div className="mt-4 pb-16 relative">
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {product.product_name}
+                    </h3>
+                    <div className="text-sm text-gray-500 mt-1">
+                      {user?._id ? (
+                        <span className="text-sm font-bold text-gray-700">
+                          MZN {product.product_selling_price} Sale
+                        </span>
+                      ) : (
+                        <p className="text-sm text-red-500">
+                          login to see the price
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2">
+                    <Link
+                      href={`/buynow/${product._id}`}
+                      className="w-1/2 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                    >
+                      BUY NOW
+                    </Link>
+                    <button
+                      onClick={() => handleAddToCart(product._id)}
+                      className="w-1/2 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                    >
+                      Add To Cart
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </>
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
