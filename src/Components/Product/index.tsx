@@ -10,6 +10,7 @@ import { useAuthStore } from "@/store/auth";
 import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 type Product = {
   id: number;
@@ -28,6 +29,7 @@ const Product = () => {
   const { data, isLoading, error } = useAllProducts();
   const { mutate: addToCart } = useAddToCartMutation();
   const user = useAuthStore((state) => state.user);
+  const { t } = useTranslation();
 
   const handleAddToCart = (productId: string) => {
     const token = localStorage.getItem("accessToken");
@@ -69,7 +71,7 @@ const Product = () => {
   return (
     <div className="mx-auto p-4">
       <h1 className="text-center text-3xl font-semibold mb-8">
-        Browse Products
+        {t("product_browser")}
       </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredProducts?.map((product) => (
@@ -105,26 +107,30 @@ const Product = () => {
               <div className="text-sm text-gray-500 mt-1">
                 {user?._id ? (
                   <span className="text-sm font-bold text-gray-700">
-                    MZN {product.product_selling_price} Sale
+                    MZN {product.product_selling_price} {t("sale")}
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500">login to see the price</p>
+                  <p className="text-sm text-red-500">{t("login_to_price")}</p>
                 )}
               </div>
             </div>
             {/* Buttons */}
-            <div className="flex items-center justify-between gap-2">
+
+            <div className="flex items-center justify-between gap-2 mt-4">
               <Link
                 href={`/buynow/${product._id}`}
-                className="w-full mt-4 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                style={{ lineHeight: "1.5", fontSize: "14px" }}
               >
-                BUY NOW
+                {t("buy_now")}
               </Link>
+
               <button
-                className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                 onClick={() => handleAddToCart(product._id)}
+                className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                style={{ lineHeight: "1.5", fontSize: "14px" }}
               >
-                Add To Cart
+                {t("add_to_cart")}
               </button>
             </div>
           </div>

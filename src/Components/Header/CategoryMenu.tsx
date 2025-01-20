@@ -1,4 +1,3 @@
-
 "use client";
 
 import { type CategoryMenu } from "@/api/category/categoryApi";
@@ -15,11 +14,14 @@ import {
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 import { IoMenu } from "react-icons/io5";
 
 function CategoryMenu() {
   const { data, isLoading } = useCategoryMenu();
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   return (
     <DropdownMenu>
@@ -30,11 +32,14 @@ function CategoryMenu() {
         {isLoading ? (
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
         ) : (
-          <IoMenu className="text-white text-4xl" />
+          <IoMenu className="text-white text-4xl flex-shrink-0" />
         )}
 
-        <p className="text-white font-semibold text-md">Shop by Category</p>
+        <p className="text-white font-semibold text-md whitespace-nowrap flex-grow">
+          {t("shop_by_category")}
+        </p>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent className="bg-[#24246C] text-white mt-2 w-52 z-50">
         {data?.data?.menu &&
           data?.data?.menu.length > 0 &&
@@ -81,26 +86,6 @@ const MenuItems = ({
     </DropdownMenuItem>
   );
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 // import { type CategoryMenu } from "@/api/category/categoryApi";

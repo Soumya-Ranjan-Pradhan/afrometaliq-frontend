@@ -3,8 +3,10 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { useTranslation } from "react-i18next";
 
 const TestimonialSlider = () => {
+  const { t } = useTranslation();
   const testimonials = [
     {
       id: 1,
@@ -62,7 +64,7 @@ const TestimonialSlider = () => {
   return (
     <section className="my-16 px-6">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold">What Our Clients Say</h2>
+        <h2 className="text-3xl font-bold">{t("our_client_say")}</h2>
       </div>
 
       <Slider {...settings}>

@@ -4,53 +4,47 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ServiceModal from "./ServiceModal";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 const WhyChooseUs: React.FC = () => {
   const [selectedService, setSelectedService] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   const CHARACTER_LIMIT = 50;
 
   const services = [
     {
       id: 1,
-      title: "24/7 SERVICES",
-      description:
-        "We provide round-the-clock support to ensure all your queries are resolved efficiently.",
+      title: t("24_7_services"),
+      description: t("24_7_services_description"),
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728819665/t9r3paiombk6t8p1jxqy.png",
       bgColor: "bg-gradient-to-r from-purple-600 to-indigo-600 text-white",
-      modalContent:
-        "We provide round-the-clock support to ensure all your queries are resolved efficiently, with a dedicated team always available to assist.",
+      modalContent: t("24_7_services_modal"),
     },
     {
       id: 2,
-      title: "Custom Solutions",
-      description:
-        "We provide by creating and suggesting solutions specifically to meet the unique needs and requirements of a particular organization or business or individual",
+      title: t("custom_solutions"),
+      description: t("custom_solutions_description"),
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728804140/jpclpgnocfc8d63juowo.png",
       bgColor: "bg-white",
-      modalContent:
-        "Our custom solutions cater to your unique requirements, enabling better performance and streamlined processes tailored for you.",
+      modalContent: t("custom_solutions_modal"),
     },
     {
       id: 3,
-      title: "Cost Effective",
-      description:
-        "Our aim is to provide the best service to help shopper to save time & being able to make purchases at their most convenient time, less headache in logistics, make your tender while at home, save money in transportation & the most important thing is your stock is in our warehouse",
+      title: t("cost_effective"),
+      description: t("cost_effective_description"),
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728805012/xkxfky6okwqrrxebii8b.png",
       bgColor: "bg-white",
-      modalContent:
-        "Our aim is to provide the best service to help shopper to save time & being able to make purchases at their most convenient time, less headache in logistics, make your tender while at home, save money in transportation & the most important thing is your stock is in our warehouse",
+      modalContent: t("cost_effective_modal"),
     },
     {
       id: 4,
-      title: "Regular Updates",
-      description:
-        "We will try our best to keep in regular updates to increase shopper engagement, Up-to-date content keeps visitors interested and take the benefits in regular promotion and best deals",
+      title: t("regular_updates"),
+      description: t("regular_updates_description"),
       icon: "https://res.cloudinary.com/datf6laqn/image/upload/v1728805077/nk0agjrobfg98mdgxd64.png",
       bgColor: "bg-white",
-      modalContent:
-        "We keep you updated with the latest trends, promotions, and insights to keep you ahead in your industry.",
+      modalContent: t("regular_updates_modal"),
     },
   ];
 
@@ -67,7 +61,7 @@ const WhyChooseUs: React.FC = () => {
   return (
     <section className="my-16 px-6">
       <div className="text-center mb-10">
-        <h2 className="text-3xl font-bold">Why Choose Us</h2>
+        <h2 className="text-3xl font-bold">{t("why_choose_us")}</h2>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
@@ -98,7 +92,7 @@ const WhyChooseUs: React.FC = () => {
                 className="text-green-600 hover:underline text-center"
                 onClick={() => handleClick(service.id)}
               >
-                View More
+                {t("view_more")}
               </button>
               <FaLongArrowAltRight
                 size={20}

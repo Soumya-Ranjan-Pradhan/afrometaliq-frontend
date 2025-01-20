@@ -1,13 +1,12 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { FaShoppingCart, FaHeart, FaUser } from "react-icons/fa";
+import { FaShoppingCart } from "react-icons/fa";
 import { CiSearch } from "react-icons/ci";
-import { RiContactsBook3Line, RiEnglishInput } from "react-icons/ri";
+import { RiEnglishInput } from "react-icons/ri";
 import SearchForSmallScreen from "./SearchForSmallScreen";
 import { SlMenu } from "react-icons/sl";
 import { IoCloseCircleOutline } from "react-icons/io5";
-import ProfileTooltip from "./ProfileTooltip/index";
 import Link from "next/link";
 
 // import { IoMenu } from "react-icons/io5";
@@ -18,7 +17,6 @@ import Categories from "../Categories";
 import CategoryMenu from "./CategoryMenu";
 import { useTranslation } from "react-i18next";
 import { LanguagesIcon } from "lucide-react";
-import { useGlobalStore } from "@/store/global";
 import { useAuthStore } from "@/store/auth";
 import UserMenu from "./Sidebar/UserMenu";
 import UserMobileMenu from "./Sidebar/UserMobileMenu";
@@ -30,7 +28,7 @@ const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [cartCount, setCartCount] = useState<number>(0);
-  const { data, isLoading, isError, refetch } = useCartQuery();
+  const { data,  refetch } = useCartQuery();
   const user = useAuthStore((state) => state.user);
 
   useEffect(() => {

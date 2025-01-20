@@ -14,11 +14,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/Components/ui/carousel";
+import { useTranslation } from "react-i18next";
 
 const Category: React.FC = () => {
   const { data, isLoading, isError } = useCategoriesByLevel({ level: 1 });
   const [isPaused, setIsPaused] = useState(false);
   const router = useRouter();
+  const { t } = useTranslation();
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -45,7 +47,7 @@ const Category: React.FC = () => {
         />
         <div className="text-green-600 font-extrabold text-center">
           <h2 className="text-center text-3xl md:text-3xl font-xeroda font-bold">
-            Category
+            {t("category")}
           </h2>
         </div>
         <FaLongArrowAltRight

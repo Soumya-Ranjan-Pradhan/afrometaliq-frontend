@@ -14,6 +14,7 @@ import { useGlobalStore } from "@/store/global";
 import CarouselSkeleton from "@/Components/Skeleton/CarouselSkeleton";
 import { useAuthStore } from "@/store/auth";
 import { FaShareAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
 type Product = {
   id: number;
@@ -30,6 +31,7 @@ type Product = {
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
   const { data, isLoading, error } = useProducts({ discount: 1 });
+  const { t } = useTranslation();
 
   const user = useAuthStore((state) => state.user);
 
@@ -51,12 +53,8 @@ const NewArrivingProductCarousel: React.FC = () => {
 
   return (
     <div className="mx-auto px-4">
-      <h2 className="text-2xl text-center font-bold mt-8">
-        Promotional Products
-      </h2>
-      <p className="text-gray-500 text-center mb-4">
-        Do not miss the current offers until the end of Month.
-      </p>
+      <h2 className="text-2xl text-center font-bold mt-8">{t("products")}</h2>
+      <p className="text-gray-500 text-center mb-4">{t("product_title")}</p>
 
       <div className="relative">
         <SwiperClass
@@ -76,7 +74,7 @@ const NewArrivingProductCarousel: React.FC = () => {
             <SwiperSlide key={product._id} id={product._id}>
               <div className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500">
                 <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
-                  Promotion
+                  {t("promotions")}
                 </span>
                 <Link href={`/product/${product._id}`}>
                   <Image
@@ -112,7 +110,7 @@ const NewArrivingProductCarousel: React.FC = () => {
                     </span>
                   ) : (
                     <p className="text-sm text-red-500">
-                      login to see the price
+                      {t("login_to_price")}
                     </p>
                   )}
                 </div>
@@ -125,25 +123,27 @@ const NewArrivingProductCarousel: React.FC = () => {
                       </span>
                     ) : (
                       <p className="text-sm text-red-500">
-                        login to see the price
+                        {t("login_to_price")}
                       </p>
                     )}
                   </span>
                 </div>
 
-                <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center justify-between gap-2 mt-4">
                   <Link
                     href={`/buynow/${product._id}`}
-                    className="w-full mt-4 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                    className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                    style={{ lineHeight: "1.5", fontSize: "14px" }}
                   >
-                    BUY NOW
+                    {t("buy_now")}
                   </Link>
 
                   <button
                     onClick={handleClick}
-                    className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                    className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                    style={{ lineHeight: "1.5", fontSize: "14px" }}
                   >
-                    Add To Cart
+                    {t("add_to_cart")}
                   </button>
                 </div>
               </div>
