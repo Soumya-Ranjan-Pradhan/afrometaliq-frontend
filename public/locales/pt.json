@@ -38,5 +38,16 @@
   "regular_updates_description": "Nos esforçamos para manter atualizações regulares para aumentar o engajamento do comprador e oferecer promoções e ofertas imperdíveis.",
   "regular_updates_modal": "Mantemos você atualizado com as últimas tendências, promoções e insights para mantê-lo à frente no mercado.",
   "view_more": "Ver Mais",
-  "our_client_say": "O Que Nossos Clientes Dizem"
+  "our_client_say": "O Que Nossos Clientes Dizem",
+  "available_size": "Tamanho Disponível",
+
+  "size": "Tamanho",
+  "grade": "Grau",
+  "thickness": "Espessura",
+  "unit_of_measurement": "Unidade de Medida (UOM)",
+  "length": "Comprimento",
+  "width": "Largura",
+  "specification": "Especificação",
+  "feature": "Característica",
+  "details": "Detalhes"
 }

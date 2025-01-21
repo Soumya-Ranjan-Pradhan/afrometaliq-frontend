@@ -38,5 +38,16 @@
   "regular_updates_description": "We will try our best to keep in regular updates to increase shopper engagement, Up-to-date content keeps visitors interested and take the benefits in regular promotion and best deals.",
   "regular_updates_modal": "We keep you updated with the latest trends, promotions, and insights to keep you ahead in your industry.",
   "view_more": "View More",
-  "our_client_say":"What Our Clients Say"
+  "our_client_say": "What Our Clients Say",
+  "available_size": "Available Sizes",
+
+  "size": "Size",
+  "grade": "Grade",
+  "thickness": "Thickness",
+  "unit_of_measurement": "Unit of Measurement (UOM)",
+  "length": "Length",
+  "width": "Width",
+  "specification": "Specification",
+  "feature": "Feature",
+  "details": "Details"
 }

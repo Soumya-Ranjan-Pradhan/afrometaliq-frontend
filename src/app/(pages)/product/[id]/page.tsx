@@ -16,6 +16,7 @@ import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -26,6 +27,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const user = useAuthStore((state) => state.user);
   const { data: product, isLoading, error } = useProductById(params.id);
   const { mutate: addToCart } = useAddToCartMutation();
+  const { t } = useTranslation();
 
   const handleAddToCart = (productId: string) => {
     const token = localStorage.getItem("accessToken");
@@ -132,16 +134,14 @@ const Page = ({ params }: { params: { id: string } }) => {
                     </span>
                   </span>
                 ) : (
-                  <p className="text-sm text-gray-500">
-                    login to see the price
-                  </p>
+                  <p className="text-sm text-red-500">{t("login_to_price")}</p>
                 )}
               </span>
             </div>
 
             <div className="mt-2">
               <h3 className="font-semibold text-gray-800 mb-2">
-                Available Sizes
+                {t("available_size")}
               </h3>
               <div className="flex gap-4">
                 {productDetails?.product_theme_size?.map((size: string) => (
@@ -190,15 +190,16 @@ const Page = ({ params }: { params: { id: string } }) => {
                       color="white"
                       // onClick={() => handleAddToCart(productDetails?._id || "")}
                     />
-                    <p>Add To Cart</p>
+                    <p> {t("add_to_cart")}</p>
                   </div>
                 </button>
 
                 <Link
                   href={`/buynow/${productDetails?._id}`}
-                  className="w-full lg:w-auto lg:px-14 md:px-6 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                  className="lg:flex-1 md:w-full w-full h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                  style={{ lineHeight: "1.5", fontSize: "14px" }}
                 >
-                  Buy Now
+                  {t("buy_now")}
                 </Link>
               </div>
             </div>

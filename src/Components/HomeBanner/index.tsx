@@ -7,31 +7,33 @@ import Image from "next/image";
 import { FaCheck } from "react-icons/fa6";
 import { motion } from "framer-motion";
 import { useGetAllBanner } from "@/api/banner/queries/useBannerQuery";
+import BannerSkeleton from "@/Components/Skeleton/BannerSkeleton";
 
 const HomeBanner = () => {
-  // Static image data with text
-  const staticImages = [
-    {
-      url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1728206574/v0kc4hdlkv8kg64clt2i.jpg",
-      alt: "Banner 1",
-      text: "Welcome to Our Store",
-    },
-    {
-      url: "https://res.cloudinary.com/dppfr1gjx/image/upload/v1728206574/v0kc4hdlkv8kg64clt2i.jpg",
-      alt: "Banner 2",
-      text: "Exclusive Offers",
-      subText: "Don't miss out!",
-    },
-    {
-      url: "https://res.cloudinary.com/datf6laqn/image/upload/v1728109843/deimh6vqhatwyjehc9nh.jpg",
-      alt: "Banner 3",
-      text: "Shop the Latest Trends",
-    },
-  ];
-
   const { data, isLoading, error } = useGetAllBanner();
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="mx-auto">
+        <div className="homeBannerSection">
+          <Slider
+            dots={false}
+            infinite={true}
+            speed={500}
+            slidesToShow={1}
+            slidesToScroll={1}
+            autoplay={true}
+            autoplaySpeed={3500}
+            arrows={false}
+          >
+            {[...Array(3)].map((_, index) => (
+              <BannerSkeleton key={index} />
+            ))}
+          </Slider>
+        </div>
+      </div>
+    );
+
   if (error) return <div>Error fetching banners</div>;
 
   const settings = {
@@ -51,20 +53,16 @@ const HomeBanner = () => {
         <Slider {...settings}>
           {data?.data.banners.map((banner: any, index) => (
             <div key={index}>
-              {/* Ensure this div is relative */}
               <div className="relative w-full lg:h-[85vh] md:h-[40vh] sm:h-[70vh] h-[30vh]">
-                {/* Image */}
                 <Image
                   src={banner.banner_images[0]?.url}
-                  alt={banner.banner_images[0]?.alt}
+                  alt={banner.banner_images[0]?.alt || "Banner Image"}
                   width="0"
                   height="0"
                   sizes="100vw"
                   style={{ width: "100%", height: "100%" }}
                   priority={index === 0}
                 />
-                {/* Content for Steels */}
-                {/* Animated Content */}
                 <motion.div
                   className="absolute bottom-5 right-5 flex items-center gap-3 z-10"
                   initial={{ opacity: 0, x: -50 }}

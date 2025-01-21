@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import FilterProduct from "./FilterProduct";
 import FilterMobileScreen from "./FilterMobileScreen/FilterMobileScreen";
+import { useTranslation } from "react-i18next";
 
 interface Product {
   _id: string;
@@ -25,6 +26,7 @@ interface Product {
 }
 
 const AllProduct = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const user = useAuthStore((state) => state.user);
   const { data, isLoading, error } = useAllProducts();
@@ -115,7 +117,9 @@ const AllProduct = () => {
     <>
       {/* for large screen and medium screen */}
       <div className="mx-auto">
-        <h1 className="text-center text-3xl font-semibold">Browse Products</h1>
+        <h1 className="text-center text-3xl font-semibold">
+          {t("product_browser")}
+        </h1>
 
         {/* filter for mobile screen */}
         <FilterMobileScreen
@@ -129,17 +133,6 @@ const AllProduct = () => {
 
         {/* Category and Discount Filter */}
         <div className="">
-          {/* <div className="hidden md:block lg:block"> */}
-          {/* <FilterProduct
-            applyFilters={applyFilters}
-            clearFilters={clearFilters}
-            selectedFilter={selectedFilter}
-            setSelectedFilter={setSelectedFilter}
-            selectedCategories={selectedCategories}
-            setSelectedCategories={setSelectedCategories}
-          /> */}
-          {/* </div> */}
-
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-6">
             <>
               <FilterProduct
@@ -159,7 +152,7 @@ const AllProduct = () => {
                   <div className="relative">
                     {product.product_discount > 0 && (
                       <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
-                        Promotion
+                        {t("promotions")}
                       </span>
                     )}
                     <Link key={product._id} href={`/product/${product._id}`}>
@@ -181,36 +174,35 @@ const AllProduct = () => {
                   </div>
 
                   {/* Product Info */}
-                  <div className="mt-4 pb-16 relative">
+                  <div className="mt-4 pb-[6rem] relative">
                     <h3 className="text-lg font-semibold text-gray-800">
                       {product.product_name}
                     </h3>
-                    <div className="text-sm text-gray-500 mt-1">
+                    <div className="text-sm text-gray-500">
                       {user?._id ? (
                         <span className="text-sm font-bold text-gray-700">
                           MZN {product.product_selling_price} Sale
                         </span>
                       ) : (
-                        <p className="text-sm text-red-500">
-                          login to see the price
+                        <p className="text-sm text-red-500 md:mb-4">
+                          {t("login_to_price")}
                         </p>
                       )}
                     </div>
                   </div>
-
                   {/* Buttons */}
-                  <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between gap-2">
+                  <div className="absolute bottom-4 left-4 right-4 space-y-1">
                     <Link
                       href={`/buynow/${product._id}`}
-                      className="w-1/2 py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                      className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                     >
-                      BUY NOW
+                      {t("buy_now")}
                     </Link>
                     <button
                       onClick={() => handleAddToCart(product._id)}
-                      className="w-1/2 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                      className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                     >
-                      Add To Cart
+                      {t("add_to_cart")}
                     </button>
                   </div>
                 </div>

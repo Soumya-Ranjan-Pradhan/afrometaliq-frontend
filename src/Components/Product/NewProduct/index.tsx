@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { Swiper as SwiperClass, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -10,41 +10,68 @@ import Image from "next/image";
 import { Swiper } from "swiper/types";
 import { useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
-import { useGlobalStore } from "@/store/global";
 import CarouselSkeleton from "@/Components/Skeleton/CarouselSkeleton";
 import { useAuthStore } from "@/store/auth";
-import { FaShareAlt } from "react-icons/fa";
+import { FaShareAlt, FaSpinner } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
-
-type Product = {
-  id: number;
-  name: string;
-  price: number;
-  originalPrice: number;
-  salesCount: number;
-  imageUrl: string;
-  stock: string;
-  rating: number;
-  description: string;
-};
+import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  TelegramShareButton,
+  LinkedinShareButton,
+  FacebookIcon,
+  TwitterIcon,
+  WhatsappIcon,
+  TelegramIcon,
+  LinkedinIcon,
+} from "react-share";
 
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
   const { data, isLoading, error } = useProducts({ discount: 1 });
   const { t } = useTranslation();
-
   const user = useAuthStore((state) => state.user);
+  const { mutate: addToCart } = useAddToCartMutation();
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
+  const [shareProduct, setShareProduct] = useState<string | null>(null);
+  const router = useRouter();
 
-  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
+  const handleAddToCart = (productId: string) => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      toast.warn("Please login before adding items to the cart.");
+      router.push("/signin");
+      return;
+    }
 
-  const handleClick = () => {
-    setComingSoon(true);
+    // Show loading indicator for this product
+    setLoadingIds((prev) => [...prev, productId]);
+
+    addToCart(
+      { productId, quantity: 1 },
+      {
+        onSuccess: () => {
+          toast.success("Item added to cart successfully!");
+        },
+        onError: () => {
+          toast.error("Failed to add item to cart. Please try again.");
+        },
+        onSettled: () => {
+          // Hide loading indicator for this product
+          setLoadingIds((prev) => prev.filter((id) => id !== productId));
+        },
+      }
+    );
   };
 
   if (isLoading)
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-        {Array.from({ length: 8 }).map((_, index) => (
+        {Array.from({ length: 10 }).map((_, index) => (
           <CarouselSkeleton key={index} />
         ))}
       </div>
@@ -70,85 +97,119 @@ const NewArrivingProductCarousel: React.FC = () => {
           }}
           className="my-8"
         >
-          {data?.data.products.map((product) => (
-            <SwiperSlide key={product._id} id={product._id}>
-              <div className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500">
-                <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
-                  {t("promotions")}
-                </span>
-                <Link href={`/product/${product._id}`}>
-                  <Image
-                    src={product.product_images[0]?.url}
-                    alt={product.product_name}
-                    width={500}
-                    height={500}
-                    className="w-full h-48 object-cover rounded-md mb-4"
-                  />
-                </Link>
+          {data?.data.products.map((product) => {
+            const productUrl = `https://www.afrometaliq.com/product/${product._id}`;
+            return (
+              <SwiperSlide key={product._id} id={product._id}>
+                <div className="border rounded-lg p-4 shadow-lg group relative transition-transform transform hover:scale-105 duration-500">
+                  <span className="absolute top-2 left-2 bg-red-600 text-white text-sm font-bold px-2 py-1 rounded-full">
+                    {t("promotions")}
+                  </span>
+                  <Link href={`/product/${product._id}`}>
+                    <Image
+                      src={product.product_images[0]?.url}
+                      alt={product.product_name}
+                      width={500}
+                      height={500}
+                      className="w-full h-48 object-cover rounded-md mb-4"
+                    />
+                  </Link>
 
-                {/* Icons to show on hover */}
-                <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <button
-                    // onClick={() => openModal(product)}
-                    className="absolute top-6 right-6 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
-                  >
-                    <FaShareAlt className="text-black hover:text-white h-6 w-6" />
-                  </button>
-                </div>
+                  {/* Icons to show on hover */}
+                  <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      onClick={() =>
+                        setShareProduct(
+                          shareProduct === productUrl ? null : productUrl
+                        )
+                      }
+                      className="absolute top-6 right-6 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300"
+                    >
+                      <FaShareAlt className="text-black hover:text-white h-6 w-6" />
+                    </button>
+                  </div>
 
-                <h3 className="text-lg font-semibold truncate">
-                  {product.product_name}
-                </h3>
+                  <h3 className="text-lg font-semibold truncate">
+                    {product.product_name}
+                  </h3>
 
-                <div className="text-sm text-gray-500 mt-1">
-                  {user?._id ? (
-                    <span className="text-lg font-bold text-gray-700">
-                      MZN {product.product_selling_price}{" "}
-                      <span className="bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
-                        {product.product_discount}%
-                      </span>
-                    </span>
-                  ) : (
-                    <p className="text-sm text-red-500">
-                      {t("login_to_price")}
-                    </p>
-                  )}
-                </div>
-
-                <div className="flex items-center">
-                  <span className="text-lg font-bold text-purple-600">
+                  <div className="text-sm text-gray-500 mt-1">
                     {user?._id ? (
-                      <span className="text-lg line-through text-gray-500 font-bold">
-                        MZN {product.product_price.toLocaleString()}
+                      <span className="text-lg font-bold text-gray-700">
+                        MZN {product.product_selling_price}{" "}
+                        <span className="bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
+                          {product.product_discount}%
+                        </span>
                       </span>
                     ) : (
                       <p className="text-sm text-red-500">
                         {t("login_to_price")}
                       </p>
                     )}
-                  </span>
-                </div>
+                  </div>
 
-                <div className="flex items-center justify-between gap-2 mt-4">
-                  <Link
-                    href={`/buynow/${product._id}`}
-                    className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
-                    style={{ lineHeight: "1.5", fontSize: "14px" }}
-                  >
-                    {t("buy_now")}
-                  </Link>
+                  <div className="flex items-center">
+                    <span className="text-lg font-bold text-purple-600">
+                      {user?._id ? (
+                        <span className="text-lg line-through text-gray-500 font-bold">
+                          MZN {product.product_price.toLocaleString()}
+                        </span>
+                      ) : (
+                        <p className="text-sm text-red-500">
+                          {t("login_to_price")}
+                        </p>
+                      )}
+                    </span>
+                  </div>
 
-                  <button
-                    onClick={handleClick}
-                    className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
-                    style={{ lineHeight: "1.5", fontSize: "14px" }}
-                  >
-                    {t("add_to_cart")}
-                  </button>
+                  <div className="flex items-center justify-between gap-2 mt-4">
+                    <Link
+                      href={`/buynow/${product._id}`}
+                      className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                      style={{ lineHeight: "1.5", fontSize: "14px" }}
+                    >
+                      {t("buy_now")}
+                    </Link>
+
+                    {/* Example Button */}
+                    <button
+                      onClick={() => handleAddToCart(product._id)}
+                      className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                      style={{ lineHeight: "1.5", fontSize: "14px" }}
+                      disabled={loadingIds.includes(product._id)}
+                    >
+                      {loadingIds.includes(product._id) ? (
+                        <FaSpinner className="animate-spin text-white" />
+                      ) : (
+                        t("add_to_cart")
+                      )}
+                    </button>
+                  </div>
+                  {shareProduct === productUrl && (
+                    <div className="absolute top-16 right-6 bg-white shadow-lg rounded-lg p-4 z-50">
+                      <div className="flex space-x-4">
+                        <FacebookShareButton url={productUrl}>
+                          <FacebookIcon size={32} round />
+                        </FacebookShareButton>
+                        <TwitterShareButton url={productUrl}>
+                          <TwitterIcon size={32} round />
+                        </TwitterShareButton>
+                        <WhatsappShareButton url={productUrl}>
+                          <WhatsappIcon size={32} round />
+                        </WhatsappShareButton>
+                        <TelegramShareButton url={productUrl}>
+                          <TelegramIcon size={32} round />
+                        </TelegramShareButton>
+                        <LinkedinShareButton url={productUrl}>
+                          <LinkedinIcon size={32} round />
+                        </LinkedinShareButton>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
+              </SwiperSlide>
+            );
+          })}
         </SwiperClass>
 
         {/* Custom Rounded Navigation Buttons */}
