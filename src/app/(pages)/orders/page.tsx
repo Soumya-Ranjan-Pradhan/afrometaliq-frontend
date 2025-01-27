@@ -5,12 +5,13 @@ import Image from "next/image";
 import { useOrdersQuery } from "@/api/orders/queries/useOrdersQuery";
 import { Order } from "@/api/orders/ordersApi";
 import Link from "next/link";
+import OrderSkeleton from "@/Components/Skeleton/OrderSkeleton";
 
 const OrdersPage = () => {
   const { data, isLoading, isError } = useOrdersQuery();
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <OrderSkeleton />;
   }
 
   if (isError) {

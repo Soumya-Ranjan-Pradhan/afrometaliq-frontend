@@ -2,18 +2,20 @@
 
 import { useGetAbout } from "@/api/about/query/useAboutQuery";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const FaqPage: React.FC = () => {
   const { data, isLoading, error } = useGetAbout();
+  const { t } = useTranslation();
 
   return (
     <div className="container mx-auto p-4 md:p-8">
       <h2 className="text-2xl font-semibold mb-6">
-        ABOUT{" "}
-        <span className="text-2xl font-semibold mb-6 bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
+        {t("about")}{""}
+        <span className="text-2xl ml-2 font-semibold mb-6 bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
           AFROMETALIQ
         </span>
       </h2>
@@ -56,7 +58,9 @@ const FaqItem: React.FC<{ question: string; answer: string }> = ({
   const toggle = () => setIsOpen(!isOpen);
 
   // Split the answer into bullet points based on newlines
-  const bulletPoints = answer.split("\n").filter((point) => point.trim() !== "");
+  const bulletPoints = answer
+    .split("\n")
+    .filter((point) => point.trim() !== "");
 
   return (
     <div className="mb-4 border-b border-gray-300">

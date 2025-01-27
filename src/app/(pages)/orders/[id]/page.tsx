@@ -4,6 +4,7 @@ import { FaRegCheckCircle, FaRegTimesCircle } from "react-icons/fa";
 import Image from "next/image";
 import { useParams } from "next/navigation";
 import { useOrderIdQuery } from "@/api/orders/queries/useOrdersQuery";
+import SingleOrderSkeleton from "@/Components/Skeleton/OrderSkeleton/SingleOrderSkeleton";
 
 const SingleOrder = () => {
   const { id } = useParams();
@@ -11,9 +12,7 @@ const SingleOrder = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        Loading...
-      </div>
+      <SingleOrderSkeleton />
     );
   }
 
@@ -31,23 +30,11 @@ const SingleOrder = () => {
 
   const order = data?.data.order;
 
-  // Sample statuses; replace with dynamic data as needed
-  const orderStatuses = [
-    { label: "Order Confirmed", date: order.createdAt, isCompleted: true },
-    { label: "Shipped", date: "2025-01-05T10:00:00Z", isCompleted: true }, // Example dynamic date
-    {
-      label: "Out for Delivery",
-      date: "2025-01-07T10:00:00Z",
-      isCompleted: false,
-    }, // Example
-    { label: "Delivered", date: order.updatedAt, isCompleted: false }, // Example dynamic completion
-  ];
-
   return (
     <div className="container mx-auto p-4 space-y-6">
       {/* Order Status Section */}
       <div className="bg-white p-6 rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold mb-4">Order Status</h2>
+        {/* <h2 className="text-lg font-semibold mb-4">Order Status</h2> */}
         <div className="bg-white p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-semibold mb-4">Order Status</h2>
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">

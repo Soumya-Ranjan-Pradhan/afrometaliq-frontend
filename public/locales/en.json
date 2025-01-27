@@ -49,5 +49,16 @@
   "width": "Width",
   "specification": "Specification",
   "feature": "Feature",
-  "details": "Details"
+  "details": "Details",
+
+  "applyFilter": "Apply Filter",
+  "clearFilter": "Clear Filter",
+  "filterByType": "Filter by Type",
+  "promotionalProducts": "Promotional Products",
+  "filterByCategory": "Filter by Category",
+  "more": "More",
+  "all_categories": "All Categories",
+  "browser_products": "Browse Products",
+  "about":"ABOUT",
+  "our_gallery":"Our Gallery"
 }

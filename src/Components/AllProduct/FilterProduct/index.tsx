@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { useTranslation } from "react-i18next";
 
 interface FilterProductProps {
   applyFilters: () => void;
@@ -24,6 +25,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
 }) => {
   const [showCategory, setShowCategory] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
 
   // Fetch categories by level
   const { data, isLoading, error } = useCategoriesByLevel({ level: 1 });
@@ -53,20 +55,20 @@ const FilterProduct: React.FC<FilterProductProps> = ({
 
   return (
     <div className="p-4 bg-white border rounded-md hidden md:block lg:block">
-      <h3 className="text-lg font-semibold mb-4">Filter by Type</h3>
+      <h3 className="text-lg font-semibold mb-4">{t("filterByType")}</h3>
       {/* Apply and Clear Buttons */}
       <div className="mt-4 flex items-center justify-center gap-2">
         <button
           onClick={applyFilters}
           className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
         >
-          Apply Filter
+          {t("applyFilter")}
         </button>
         <button
           onClick={clearFilters}
           className="w-full py-2 bg-gray-400 text-white font-semibold rounded-md"
         >
-          Clear Filter
+          {t("clearFilter")}
         </button>
       </div>
       <div>
@@ -80,7 +82,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
               onChange={() => setSelectedFilter("PromotionalProduct")}
               className="form-radio"
             />
-            <span>Promotional Products</span>
+            <span>{t("promotionalProducts")}</span>
           </label>
           <label className="flex items-center space-x-2 mb-2">
             <input
@@ -90,7 +92,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
               onChange={() => setSelectedFilter("BrowserProduct")}
               className="form-radio"
             />
-            <span>Browser Products</span>
+            <span>{t("browser_products")}</span>
           </label>
         </div>
 
@@ -100,7 +102,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
             className="flex items-center mt-4 justify-between cursor-pointer"
             onClick={() => setShowCategory(!showCategory)}
           >
-            <h3 className="text-lg font-semibold">Filter by Category</h3>
+            <h3 className="text-lg font-semibold">{t("filterByCategory")}</h3>
             {showCategory ? (
               <FaMinus className="text-gray-600" />
             ) : (
@@ -143,7 +145,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                       onClick={openModal}
                       className="text-blue-500 text-sm mt-2 underline"
                     >
-                      + {categories.length - 4} more
+                      + {categories.length - 4} {t("more")}
                     </button>
                   )}
                 </>
@@ -159,7 +161,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg max-w-3xl w-full p-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">All Categories</h2>
+              <h2 className="text-xl font-semibold">{t("all_categories")}</h2>
               <div className="cursor-pointer" onClick={closeModal}>
                 <IoCloseCircleOutline size={30} />
               </div>
@@ -177,13 +179,13 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                   onClick={handleApplyFilters}
                   className="px-5 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                 >
-                  Apply Filter
+                  {t("applyFilter")}
                 </button>
                 <button
                   onClick={clearFilters}
                   className="py-2 px-5 bg-gray-400 text-white font-semibold rounded-md"
                 >
-                  Clear Filter
+                 {t("clearFilter")}
                 </button>
               </div>
             </div>

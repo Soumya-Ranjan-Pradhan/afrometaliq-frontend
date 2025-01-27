@@ -49,5 +49,16 @@
   "width": "Largura",
   "specification": "Especificação",
   "feature": "Característica",
-  "details": "Detalhes"
+  "details": "Detalhes",
+
+  "applyFilter": "Aplicar Filtro",
+  "clearFilter": "Limpar Filtro",
+  "filterByType": "Filtrar por Tipo",
+  "promotionalProducts": "Produtos Promocionais",
+  "filterByCategory": "Filtrar por Categoria",
+  "more": "Mais",
+  "all_categories": "Todas as Categorias",
+  "browser_products": "Navegar Produtos",
+  "about":"SOBRE",
+  "our_gallery":"Nossa Galeria"
 }

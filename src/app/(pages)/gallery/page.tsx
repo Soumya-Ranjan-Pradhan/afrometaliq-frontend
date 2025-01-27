@@ -5,6 +5,7 @@ import { useGalleries } from "@/api/gallery/queries/useGalleryQuery";
 import Image from "next/image";
 import GalleryModal from "@/Components/GalleryModal/GalleryModal";
 import GallerySkeleton from "@/Components/Skeleton/Gallery";
+import { t } from "i18next";
 
 const Gallery = () => {
   const { data, isLoading, error } = useGalleries();
@@ -23,7 +24,7 @@ const Gallery = () => {
 
   return (
     <div className="py-8 px-4">
-      <h2 className="text-center text-2xl font-bold mb-8">Our Gallery</h2>
+      <h2 className="text-center text-2xl font-bold mb-8">{t("our_gallery")}</h2>
       <div className="grid gap-8 lg:grid-cols-4 md:grid-cols-2 grid-cols-1">
         {isLoading ? (
           Array.from({ length: 8 }).map((_, index) => (
