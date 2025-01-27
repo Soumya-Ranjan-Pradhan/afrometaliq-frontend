@@ -194,11 +194,21 @@ const CartPage = () => {
           <div className="mt-6">
             {cartItems.map((item, index) => (
               <div
-                id={item.cartItemId}
                 key={item.cartItemId}
                 className="flex items-center border p-4 rounded-md mb-4"
               >
-                <div className="w-20 h-20"></div>
+                <div className="w-20 h-20">
+                  <Image
+                    src={
+                      item.product?.product_images[0]?.url ||
+                      "https://via.placeholder.com/100"
+                    }
+                    alt={item.product?.product_name || "Product"}
+                    width={100}
+                    height={100}
+                    className="object-cover rounded-md"
+                  />
+                </div>
                 <div className="flex-1 ml-4">
                   <div className="flex justify-between items-center space-x-2">
                     <h3 className="font-semibold">

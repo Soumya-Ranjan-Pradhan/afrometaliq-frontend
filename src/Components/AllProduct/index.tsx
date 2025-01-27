@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
 import Image from "next/image";
-import { useAllProducts } from "@/api/product/queries/useProductQuery";
+import { useAllProducts, useProducts } from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import ProductSkeleton from "../Skeleton";
 import { useAuthStore } from "@/store/auth";

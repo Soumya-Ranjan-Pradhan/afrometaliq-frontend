@@ -9,20 +9,12 @@ import {
 } from "../cartApi";
 
 
-// export const  useCartQuery = () => {
-//   return useQuery<ApiResponse<{ cart: Cart[] }>, Error>({
-//     queryKey: ["carts"],
-//     queryFn: () => getCart(),
-//   });
-// };
-
-
-export const useCartQuery = () => {
+export const  useCartQuery = () => {
   return useQuery<ApiResponse<{ cart: Cart[] }>, Error>({
-    queryKey: ["cart"],
+    queryKey: ["carts"],
     queryFn: () => getCart(),
   });
-}
+};
 
 
 // Add to cart mutation

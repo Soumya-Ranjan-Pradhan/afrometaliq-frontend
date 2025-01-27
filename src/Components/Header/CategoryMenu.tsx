@@ -1,3 +1,4 @@
+
 "use client";
 
 import { type CategoryMenu } from "@/api/category/categoryApi";
@@ -39,7 +40,6 @@ function CategoryMenu() {
           {t("shop_by_category")}
         </p>
       </DropdownMenuTrigger>
-
       <DropdownMenuContent className="bg-[#24246C] text-white mt-2 w-52 z-50">
         {data?.data?.menu &&
           data?.data?.menu.length > 0 &&

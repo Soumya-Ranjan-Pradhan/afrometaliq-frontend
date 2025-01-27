@@ -6,9 +6,11 @@ import Image from "next/image";
 import ProductSkeleton from "@/Components/Skeleton";
 import { useAuthStore } from "@/store/auth";
 import { FaHeart } from "react-icons/fa";
-import { TfiFullscreen } from "react-icons/tfi";
 import Link from "next/link";
-import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
+import {
+  useAddToCartMutation,
+  useCartQuery,
+} from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 
 const CategoryProductsPage = () => {

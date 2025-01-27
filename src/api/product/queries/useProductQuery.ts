@@ -18,14 +18,14 @@ export const useProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
-    enabled: !!query,
+    enabled: !!query, 
   });
 };
 
-// get all products
+
 export const useAllProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
-    queryKey: ["products", query],
+    queryKey: ["products"],
     queryFn: () => getAllProducts(query),
   });
 };
