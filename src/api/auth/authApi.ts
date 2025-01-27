@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { BASE_URL } from "@/contants";
+const BASE_URL = "localhost:3001/api/v1";
 import { clearLS, getFromLS } from "@/lib/storage";
 export interface User {
   _id: string;

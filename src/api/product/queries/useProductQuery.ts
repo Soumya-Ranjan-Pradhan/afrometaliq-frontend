@@ -1,8 +1,4 @@
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-} from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getAllProducts,
   createProduct,
@@ -13,8 +9,8 @@ import {
   ProductQuery,
   getProductById,
   PopulatedProduct,
+  fetchRelatedProducts,
 } from "../productApi";
-
 
 // Fetch all products
 
@@ -22,10 +18,9 @@ export const useProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
-    enabled: !!query, 
+    enabled: !!query,
   });
 };
-
 
 // get all products
 export const useAllProducts = (query?: ProductQuery) => {
@@ -33,9 +28,7 @@ export const useAllProducts = (query?: ProductQuery) => {
     queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
   });
-}
-
-
+};
 
 // Get product by id
 export const useProductById = (id: string) => {
@@ -80,5 +73,16 @@ export const useDeleteProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+  });
+};
+
+// used the related product
+export const useRelatedProducts = (
+  categories: string[],
+  strict: boolean = true
+) => {
+  return useQuery<ApiResponse<{ products: Product[] }>, Error>({
+    queryKey: ["relatedProducts", categories, strict],
+    queryFn: () => fetchRelatedProducts(categories, strict),
   });
 };

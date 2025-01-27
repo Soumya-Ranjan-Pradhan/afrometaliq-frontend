@@ -2,7 +2,7 @@ import axios from "axios";
 
 // import { BASE_URL } from "@/contants";
 
-import { BASE_URL } from "@/contants";
+const BASE_URL = "http://localhost:3001/api/v1";
 
 export interface Product {
   _id: string;
@@ -119,6 +119,25 @@ export const deleteProduct = async (
 ): Promise<ApiResponse<unknown>> => {
   const response = await axios.delete<ApiResponse<unknown>>(
     `${BASE_URL}/product/${id}`
+  );
+  return response.data;
+};
+
+
+
+// Fetch Related Products
+export const fetchRelatedProducts = async (
+  categories: string[],
+  strict: boolean = true
+): Promise<ApiResponse<{ products: Product[] }>> => {
+  const response = await axios.get<ApiResponse<{ products: Product[] }>>(
+    `${BASE_URL}/product`,
+    {
+      params: {
+        categories: categories.join(","), 
+        category_strict: strict, 
+      },
+    }
   );
   return response.data;
 };

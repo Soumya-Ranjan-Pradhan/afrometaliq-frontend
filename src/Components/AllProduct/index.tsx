@@ -32,14 +32,6 @@ const AllProduct = () => {
   const { data, isLoading, error } = useAllProducts();
   const { mutate: addToCart } = useAddToCartMutation();
 
-  // const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  // const [selectedDiscount, setSelectedDiscount] = useState<
-  //   number | undefined
-  // >();
-  // const [selectedSubCategories, setSelectedSubCategories] = useState<string[]>(
-  //   []
-  // );
-
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
