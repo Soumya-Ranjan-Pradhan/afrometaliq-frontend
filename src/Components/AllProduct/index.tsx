@@ -3,7 +3,10 @@
 import React, { useState } from "react";
 import { FaShareAlt } from "react-icons/fa";
 import Image from "next/image";
-import { useAllProducts, useProducts } from "@/api/product/queries/useProductQuery";
+import {
+  useAllProducts,
+  useProducts,
+} from "@/api/product/queries/useProductQuery";
 import Link from "next/link";
 import ProductSkeleton from "../Skeleton";
 import { useAuthStore } from "@/store/auth";
@@ -13,6 +16,7 @@ import { useRouter } from "next/navigation";
 import FilterProduct from "./FilterProduct";
 import FilterMobileScreen from "./FilterMobileScreen/FilterMobileScreen";
 import { useTranslation } from "react-i18next";
+import { getFromLS } from "@/lib/storage";
 
 interface Product {
   _id: string;
@@ -37,7 +41,7 @@ const AllProduct = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");

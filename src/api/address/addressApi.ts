@@ -1,6 +1,7 @@
 import axios from "axios";
 // import { BASE_URL } from "@/contants";
 import { BASE_URL } from "@/contants";
+import { getFromLS } from "@/lib/storage";
 
 //// Define Address Type interface
 export interface Address {
@@ -25,7 +26,7 @@ export interface ApiResponse<T> {
 // get all address
 
 export const getAddress = async (): Promise<ApiResponse<Address[]>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   const response = await axios.get<ApiResponse<Address[]>>(
     `${BASE_URL}/address`,
@@ -47,7 +48,7 @@ export const createAddress = async (data: {
   country: string;
   phone_number: number;
 }): Promise<ApiResponse<{ address: Address[] }>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   const response = await axios.post<ApiResponse<{ address: Address[] }>>(
     `${BASE_URL}/address`,
@@ -73,7 +74,7 @@ export const updateAddress = async (
     phone_number: number;
   }
 ): Promise<ApiResponse<{ address: Address[] }>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   const response = await axios.put<ApiResponse<{ address: Address[] }>>(
     `${BASE_URL}/address/${id}`,
@@ -87,9 +88,8 @@ export const updateAddress = async (
   return response.data;
 };
 
-
 export const deleteAddress = async (id: string): Promise<ApiResponse<{}>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");

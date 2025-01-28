@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { BASE_URL } from "@/contants";
+import { getFromLS } from "@/lib/storage";
 
 // define cart type
 export interface Cart {
@@ -50,7 +51,7 @@ export type ApiResponse<T> = {
 
 // get cart
 export const getCart = async (): Promise<ApiResponse<{ cart: Cart[] }>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   const response = await axios.get<ApiResponse<{ cart: Cart[] }>>(
     `${BASE_URL}/cart`,
@@ -69,7 +70,7 @@ export const addToCart = async (data: {
   quantity: number;
 }): Promise<ApiResponse<{ cart: Cart[] }>> => {
   // Get the token and remove extra quotes if necessary
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");
@@ -91,7 +92,7 @@ export const addToCart = async (data: {
 export const deleteFromCart = async (
   cartItemId: string
 ): Promise<ApiResponse<{ cart: Cart[] }>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");
@@ -114,7 +115,7 @@ export const updateCartQuantity = async (
   cartItemId: string,
   data: { quantity: number }
 ): Promise<ApiResponse<{ cart: Cart[] }>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");

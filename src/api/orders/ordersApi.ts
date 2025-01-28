@@ -1,6 +1,7 @@
 // import { BASE_URL } from "@/contants";
 import axios from "axios";
 import { BASE_URL } from "@/contants";
+import { getFromLS } from "@/lib/storage";
 
 // API Response Interface
 export interface ApiResponse<T> {
@@ -66,7 +67,7 @@ export interface Address {
 
 // Helper function to get Authorization header
 const getAuthHeader = () => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
   if (!token) {
     throw new Error("Unauthorized: Token not found");
   }

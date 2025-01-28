@@ -8,6 +8,7 @@ import { useRelatedProducts } from "@/api/product/queries/useProductQuery";
 import { toast } from "react-toastify";
 import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { useRouter } from "next/navigation";
+import { getFromLS } from "@/lib/storage";
 
 const RelatedProduct = ({ categories }: { categories: string[] }) => {
   const { t } = useTranslation();
@@ -20,7 +21,7 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
   const { mutate: addToCart } = useAddToCartMutation();
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");

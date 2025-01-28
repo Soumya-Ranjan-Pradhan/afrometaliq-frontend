@@ -14,6 +14,7 @@ import { toast } from "react-toastify";
 import Link from "next/link";
 import QuotationModal from "@/Components/QuotationModal";
 import { useCreateQuotation } from "@/api/quotation/queries/useQuotationQuery";
+import { getFromLS } from "@/lib/storage";
 
 const CartPage = () => {
   const { data, isLoading, isError } = useCartQuery();
@@ -25,7 +26,7 @@ const CartPage = () => {
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     setIsLoggedIn(!!token);
   }, []);
 

@@ -20,6 +20,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import RelatedProduct from "@/Components/AllProduct/RelatedProduct";
+import { getFromLS } from "@/lib/storage";
 
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -33,7 +34,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const categories = product?.data.product.category.map((cat) => cat._id) || [];
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");

@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import { BASE_URL } from "@/contants";
+import { getFromLS } from "@/lib/storage";
 
 // Define the product interface
 export interface Product {
@@ -62,7 +63,7 @@ export const createQuotation = async (data: {
   products: { product: string; quantity: number }[];
   message?: string;
 }): Promise<ApiResponse<Quotation>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");
@@ -84,7 +85,7 @@ export const createQuotation = async (data: {
 
 // Get all quotations
 export const getQuotations = async (): Promise<ApiResponse<Quotation[]>> => {
-  const token = localStorage.getItem("accessToken")?.replace(/"/g, "");
+  const token = getFromLS("accessToken");
 
   if (!token) {
     throw new Error("Unauthorized: Token not found");

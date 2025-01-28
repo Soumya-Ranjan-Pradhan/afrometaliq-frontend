@@ -59,7 +59,7 @@ export const useGetLoggedUserDetails = (
   options?: Partial<UseQueryOptions<any>>
 ) => {
   const setUser = useAuthStore((state) => state.setUser);
-  // const accessToken = localStorage.getItem("accessToken");
+  // const accessToken = getFromLS("accessToken");
   const accessToken = getFromLS("accessToken");
 
   return useQuery<ApiResponse<{ user: User }>, Error>({

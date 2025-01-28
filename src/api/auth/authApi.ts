@@ -50,7 +50,7 @@ export const getLoggedInUser = async (): Promise<
     user: User;
   }>
 > => {
-  // const token = localStorage.getItem("accessToken");
+  // const token = getFromLS("accessToken");
   const accessToken = getFromLS("accessToken");
 
   try {

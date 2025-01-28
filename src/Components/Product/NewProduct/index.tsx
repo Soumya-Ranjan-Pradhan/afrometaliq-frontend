@@ -29,6 +29,7 @@ import {
 } from "react-share";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
+import { getFromLS } from "@/lib/storage";
 
 const NewArrivingProductCarousel: React.FC = () => {
   const swiperRef = useRef<Swiper | null>(null);
@@ -41,7 +42,7 @@ const NewArrivingProductCarousel: React.FC = () => {
   const router = useRouter();
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");
@@ -238,40 +239,6 @@ const NewArrivingProductCarousel: React.FC = () => {
 };
 
 export default NewArrivingProductCarousel;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // "use client";
 

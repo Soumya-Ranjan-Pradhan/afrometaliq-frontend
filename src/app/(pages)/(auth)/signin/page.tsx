@@ -13,6 +13,7 @@ import { AiOutlineLoading } from "react-icons/ai";
 import axios from "axios";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
+import { storeToLS } from "@/lib/storage";
 
 const initialState = {
   email: "",
@@ -66,8 +67,9 @@ const SignIn = () => {
 
       const idToken = credentialResponse.credential;
 
+      // "https://afrometaliq-backend.onrender.com/api/v1/users/google-login",
       const res = await axios.post(
-        "https://afrometaliq-backend.onrender.com/api/v1/users/google-login",
+        "http://localhost:3001/api/v1/users/google-login",
         { idToken }
       );
 
@@ -75,8 +77,8 @@ const SignIn = () => {
         const { user, accessToken, refreshToken } = res.data.data;
 
         // Store tokens and user info
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
+        storeToLS("accessToken", accessToken);
+        storeToLS("refreshToken", refreshToken);
 
         toast.success("Google Sign-In successful!");
         router.push("/");

@@ -12,6 +12,7 @@ import {
   useCartQuery,
 } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
+import { getFromLS } from "@/lib/storage";
 
 const CategoryProductsPage = () => {
   const params = useParams();
@@ -46,7 +47,7 @@ const CategoryProductsPage = () => {
   // };
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");

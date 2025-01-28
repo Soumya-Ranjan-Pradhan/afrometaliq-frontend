@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
+import { getFromLS } from "@/lib/storage";
 
 const ProductDetail = ({ productId }: { productId: string }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -30,7 +31,7 @@ const ProductDetail = ({ productId }: { productId: string }) => {
   const { t } = useTranslation();
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");

@@ -11,6 +11,7 @@ import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { getFromLS } from "@/lib/storage";
 
 type Product = {
   id: number;
@@ -32,7 +33,7 @@ const Product = () => {
   const { t } = useTranslation();
 
   const handleAddToCart = (productId: string) => {
-    const token = localStorage.getItem("accessToken");
+    const token = getFromLS("accessToken");
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");
