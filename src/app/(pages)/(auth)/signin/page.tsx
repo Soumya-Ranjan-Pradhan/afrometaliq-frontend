@@ -14,6 +14,7 @@ import axios from "axios";
 import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { storeToLS } from "@/lib/storage";
+import { BASE_URL } from "@/contants";
 
 const initialState = {
   email: "",
@@ -68,10 +69,9 @@ const SignIn = () => {
       const idToken = credentialResponse.credential;
 
       // "https://afrometaliq-backend.onrender.com/api/v1/users/google-login",
-      const res = await axios.post(
-        "http://localhost:3001/api/v1/users/google-login",
-        { idToken }
-      );
+      const res = await axios.post(`${BASE_URL}/users/google-login`, {
+        idToken,
+      });
 
       if (res.data.success) {
         const { user, accessToken, refreshToken } = res.data.data;
