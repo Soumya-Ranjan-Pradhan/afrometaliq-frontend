@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "@/contants";
 
+// const BASE_URL = "http://localhost:3001/api/v1";
+
 // Define Banner Type
 export interface Banner {
   banner_images: {
