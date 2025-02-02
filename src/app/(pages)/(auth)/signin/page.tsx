@@ -115,7 +115,11 @@ const SignIn = () => {
   }, [router, user]);
 
   return (
-    <GoogleOAuthProvider clientId={"370223363923-ljndt6ipaogo398ronja4riednet1h3b.apps.googleusercontent.com"}>
+    <GoogleOAuthProvider
+      clientId={
+        "370223363923-ljndt6ipaogo398ronja4riednet1h3b.apps.googleusercontent.com"
+      }
+    >
       <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8 bg-gradient-to-r from-[#131132] to-[#605AC5] rounded-lg lg:rounded-[15px]">
         <div className="flex flex-col lg:grid lg:grid-cols-2 ">
           {/* Left Side - Logo, Text, and Image */}
@@ -147,28 +151,31 @@ const SignIn = () => {
 
           {/* Right Side - Login Form */}
           <div className="w-full bg-white rounded-lg p-6 lg:p-10 shadow-md mt-6 lg:mt-0">
-            <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 text-center lg:text-left">
-              Welcome to <span className="text-blue-500">AFRO METALIQ</span>
+            <h2 className="text-[1rem] flex items-center justify-center lg:text-3xl font-bold text-gray-800 text-center lg:text-left">
+              Welcome to{" "}
+              <span className="text-blue-500 ml-2"> AFRO METALIQ</span>
             </h2>
-            <h3 className="mt-2 text-xl lg:text-2xl font-semibold text-gray-600 text-center lg:text-left">
+            {/* <h3 className="mt-2 text-xl lg:text-2xl font-semibold text-gray-600 text-center lg:text-left">
               Sign in
-            </h3>
+            </h3> */}
 
             {/* Google Sign-In Button */}
 
             {/* <FcGoogle className="m-2" /> */}
-            <GoogleLogin
-              onSuccess={handleGoogleLoginSuccess}
-              onError={() => {
-                console.error("Google Sign-In Failed");
-                toast.error("Google Sign-In failed. Please try again.");
-              }}
-              shape="pill"
-              theme="filled_black"
-              text="continue_with"
-              size="large"
-              useOneTap
-            />
+            <div className="flex items-center justify-center my-2">
+              <GoogleLogin
+                onSuccess={handleGoogleLoginSuccess}
+                onError={() => {
+                  console.error("Google Sign-In Failed");
+                  toast.error("Google Sign-In failed. Please try again.");
+                }}
+                shape="pill"
+                theme="filled_black"
+                text="continue_with"
+                size="large"
+                useOneTap
+              />
+            </div>
 
             {/* Divider */}
             <div className="my-6 text-center text-gray-500">OR</div>
