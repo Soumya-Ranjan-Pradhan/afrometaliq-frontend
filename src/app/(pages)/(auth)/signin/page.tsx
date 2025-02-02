@@ -115,7 +115,7 @@ const SignIn = () => {
   }, [router, user]);
 
   return (
-    <GoogleOAuthProvider clientId={process.env.GOOGLE_CLIENT_ID || ""}>
+    <GoogleOAuthProvider clientId={"370223363923-ljndt6ipaogo398ronja4riednet1h3b.apps.googleusercontent.com"}>
       <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8 bg-gradient-to-r from-[#131132] to-[#605AC5] rounded-lg lg:rounded-[15px]">
         <div className="flex flex-col lg:grid lg:grid-cols-2 ">
           {/* Left Side - Logo, Text, and Image */}
