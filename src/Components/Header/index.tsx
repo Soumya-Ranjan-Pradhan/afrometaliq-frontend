@@ -12,7 +12,6 @@ import Link from "next/link";
 // import { IoMenu } from "react-icons/io5";
 import { RiBallPenLine } from "react-icons/ri";
 import { MdLockOutline } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
 import Categories from "../Categories";
 import CategoryMenu from "./CategoryMenu";
 import { useTranslation } from "react-i18next";
@@ -21,6 +20,8 @@ import { useAuthStore } from "@/store/auth";
 import UserMenu from "./Sidebar/UserMenu";
 import UserMobileMenu from "./Sidebar/UserMobileMenu";
 import { useCartQuery } from "@/api/cart/query/useCartQuery";
+import { useRouter } from "next/navigation";
+import SearchProduct from "./SearchProduct";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -28,8 +29,12 @@ const Header = () => {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
   const [cartCount, setCartCount] = useState<number>(0);
-  const { data,  refetch } = useCartQuery();
+  const { data, refetch } = useCartQuery();
   const user = useAuthStore((state) => state.user);
+  const [showResults, setShowResults] = useState<boolean>(false);
+  const router = useRouter();
+
+  // Handle search submission
 
   useEffect(() => {
     if (user?._id) {
@@ -45,7 +50,6 @@ const Header = () => {
       setCartCount(0);
     }
   }, [user, data]);
-
 
   const closeDrawer = () => {
     setToggleMenu(false);
@@ -79,15 +83,16 @@ const Header = () => {
         </div>
 
         {/* Center - Search bar large screen */}
-        <div className="hidden lg:flex items-center w-full max-w-lg mx-auto">
-          <input
+        <div className="hidden lg:flex items-center w-full max-w-lg mx-auto ">
+          {/* <input
             type="text"
             placeholder={t("menu.search_palceholder")}
             className="w-full px-4 py-2 border border-gray-300 rounded-l-full focus:outline-none"
           />
           <button className="px-4 py-2 bg-[#605AC5] text-white rounded-r-full">
             <IoIosSearch className="text-2xl" />
-          </button>
+          </button> */}
+          <SearchProduct />
         </div>
 
         {/* Right side - Register and Login large screen */}
@@ -130,7 +135,7 @@ const Header = () => {
       {/* For The Large Screen */}
       <nav
         className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] lg:h-[4rem] md:h-[4rem] sm:h-[3rem] h-[64px] flex justify-between 
-    items-center  sm:gap-5 gap-2 sticky top-0 z-50"
+    items-center  sm:gap-5 gap-2 sticky top-0 z-30"
       >
         <div>
           <CategoryMenu />

@@ -11,6 +11,16 @@ import Link from "next/link";
 import ProductSkeleton from "../Skeleton";
 import { useAuthStore } from "@/store/auth";
 import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/Components/ui/pagination";
+
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import FilterProduct from "./FilterProduct";
@@ -32,13 +42,13 @@ interface Product {
 const AllProduct = () => {
   const { t } = useTranslation();
   const router = useRouter();
-  const user = useAuthStore((state) => state.user);
-  const { data, isLoading, error } = useAllProducts();
-  const { mutate: addToCart } = useAddToCartMutation();
-
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [pageNumber, setPageNumber] = useState(0);
+  const user = useAuthStore((state) => state.user);
+  const { data, isLoading, error, refetch } = useAllProducts();
+  const { mutate: addToCart } = useAddToCartMutation();
 
   const handleAddToCart = (productId: string) => {
     const token = getFromLS("accessToken");
@@ -174,11 +184,20 @@ const AllProduct = () => {
                     <h3 className="text-lg font-semibold text-gray-800">
                       {product.product_name}
                     </h3>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-lg font-bold text-purple-600">
                       {user?._id ? (
-                        <span className="text-sm font-bold text-gray-700">
-                          MZN {product.product_selling_price} Sale
-                        </span>
+                        <>
+                          <span className="text-sm font-bold text-gray-700">
+                            MZN {product.product_selling_price} Sale
+                          </span>
+                          {/* <span className="bg-blue-200 mx-2 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
+                          {product.product_discount}%
+                        </span> */}
+
+                          <p className="text-sm font-bold line-through text-gray-500">
+                            MZN {product.product_price} Sale
+                          </p>
+                        </>
                       ) : (
                         <p className="text-sm text-red-500 md:mb-4">
                           {t("login_to_price")}
@@ -206,6 +225,26 @@ const AllProduct = () => {
             </>
           </div>
         </div>
+      </div>
+
+      {/* Added the Pagination here */}
+      <div className="flex justify-center mt-8">
+        <Pagination>
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious href="#" />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#">1</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
       </div>
     </>
   );

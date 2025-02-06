@@ -133,11 +133,7 @@ const NewArrivingProductCarousel: React.FC = () => {
                     </button>
                   </div>
 
-                  <h3 className="text-lg font-semibold truncate">
-                    {product.product_name}
-                  </h3>
-
-                  <div className="text-sm text-gray-500 mt-1">
+                  {/* <div className="text-sm text-gray-500 mt-1">
                     {user?._id ? (
                       <span className="text-lg font-bold text-gray-700">
                         MZN {product.product_selling_price}{" "}
@@ -150,9 +146,9 @@ const NewArrivingProductCarousel: React.FC = () => {
                         {t("login_to_price")}
                       </p>
                     )}
-                  </div>
+                  </div> */}
 
-                  <div className="flex items-center">
+                  {/* <div className="flex items-center">
                     <span className="text-lg font-bold text-purple-600">
                       {user?._id ? (
                         <span className="text-lg line-through text-gray-500 font-bold">
@@ -164,25 +160,51 @@ const NewArrivingProductCarousel: React.FC = () => {
                         </p>
                       )}
                     </span>
+                  </div> */}
+
+                  <div className="mt-4 pb-[6rem] relative">
+                    <h3 className="text-lg font-semibold text-gray-800">
+                      {product.product_name}
+                    </h3>
+                    <div className="text-lg font-bold text-purple-600">
+                      {user?._id ? (
+                        <>
+                          <span className="text-sm font-bold text-gray-700">
+                            MZN {product.product_selling_price} Sale
+                          </span>
+                          <span className="bg-blue-200 mx-2 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
+                            {product.product_discount}%
+                          </span>
+
+                          <p className="text-sm font-bold line-through text-gray-500">
+                            MZN {product.product_price} Sale
+                          </p>
+                        </>
+                      ) : (
+                        <p className="text-sm text-red-500 md:mb-4">
+                          {t("login_to_price")}
+                        </p>
+                      )}
+                    </div>
                   </div>
 
-                  <div className="flex items-center justify-between gap-2 mt-4">
+                  <div className="absolute bottom-4 left-4  right-4 space-y-1">
                     <Link
                       href={`/buynow/${product._id}`}
-                      className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
-                      style={{ lineHeight: "1.5", fontSize: "14px" }}
+                      className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                     >
                       {t("buy_now")}
                     </Link>
 
                     <button
                       onClick={() => handleAddToCart(product._id)}
-                      className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
-                      style={{ lineHeight: "1.5", fontSize: "14px" }}
+                      className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md flex items-center justify-center"
                       disabled={loadingIds.includes(product._id)}
                     >
                       {loadingIds.includes(product._id) ? (
-                        <FaSpinner className="animate-spin text-white" />
+                        <div className="flex items-center justify-center">
+                          <FaSpinner className="animate-spin text-white text-lg" />
+                        </div>
                       ) : (
                         t("add_to_cart")
                       )}

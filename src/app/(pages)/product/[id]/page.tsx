@@ -149,7 +149,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                         : "bg-white text-gray-800"
                     } hover:bg-green-600 hover:text-white transition`}
                   >
-                    {size}
+                    {size || "NA"}
                   </button>
                 ))}
               </div>

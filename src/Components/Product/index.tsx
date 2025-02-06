@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { FaShareAlt } from "react-icons/fa";
+import { FaShareAlt, FaSpinner } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
 import { useAllProducts } from "@/api/product/queries/useProductQuery";
@@ -31,7 +31,7 @@ const Product = () => {
   const { mutate: addToCart } = useAddToCartMutation();
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation();
-
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const handleAddToCart = (productId: string) => {
     const token = getFromLS("accessToken");
     if (!token) {
@@ -39,6 +39,8 @@ const Product = () => {
       router.push("/signin");
       return;
     }
+
+    setLoadingIds((prev) => [...prev, productId]);
 
     addToCart(
       { productId, quantity: 1 },
@@ -48,6 +50,9 @@ const Product = () => {
         },
         onError: () => {
           toast.error("Failed to add item to cart. Please try again.");
+        },
+        onSettled: () => {
+          setLoadingIds((prev) => prev.filter((id) => id !== productId));
         },
       }
     );
@@ -101,37 +106,44 @@ const Product = () => {
             </div>
             {/* Product Info */}
             <div className="mt-4">
+            </div>
+            {/* Buttons */}
+            <div className="mt-4 pb-[6rem] relative">
               <h3 className="text-lg font-semibold text-gray-800">
                 {product.product_name}
               </h3>
-
-              <div className="text-sm text-gray-500 mt-1">
+              <div className="text-lg font-bold text-purple-600">
                 {user?._id ? (
                   <span className="text-sm font-bold text-gray-700">
-                    MZN {product.product_selling_price} {t("sale")}
+                    MZN {product.product_selling_price} Sale
                   </span>
+                  
                 ) : (
-                  <p className="text-sm text-red-500">{t("login_to_price")}</p>
+                  <p className="text-sm text-red-500 md:mb-4">
+                    {t("login_to_price")}
+                  </p>
                 )}
               </div>
             </div>
-            {/* Buttons */}
 
-            <div className="flex items-center justify-between gap-2 mt-4">
+            <div className="absolute bottom-4 left-4  right-4 space-y-1">
               <Link
                 href={`/buynow/${product._id}`}
-                className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
-                style={{ lineHeight: "1.5", fontSize: "14px" }}
+                className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
               >
                 {t("buy_now")}
               </Link>
 
               <button
                 onClick={() => handleAddToCart(product._id)}
-                className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
-                style={{ lineHeight: "1.5", fontSize: "14px" }}
+                className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                disabled={loadingIds.includes(product._id)}
               >
-                {t("add_to_cart")}
+                {loadingIds.includes(product._id) ? (
+                  <FaSpinner className="animate-spin text-white" />
+                ) : (
+                  t("add_to_cart")
+                )}
               </button>
             </div>
           </div>

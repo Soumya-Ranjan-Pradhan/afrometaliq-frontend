@@ -10,6 +10,7 @@ import {
   getProductById,
   PopulatedProduct,
   fetchRelatedProducts,
+  searchProducts,
 } from "../productApi";
 
 // Fetch all products
@@ -18,10 +19,9 @@ export const useProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
-    enabled: !!query, 
+    enabled: !!query,
   });
 };
-
 
 export const useAllProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
@@ -84,5 +84,14 @@ export const useRelatedProducts = (
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["relatedProducts", categories, strict],
     queryFn: () => fetchRelatedProducts(categories, strict),
+  });
+};
+
+// search product product_name
+export const useSearchProducts = (query: string) => {
+  return useQuery<ApiResponse<{ products: Product[] }>, Error>({
+    queryKey: ["searchProducts", query],
+    queryFn: () => searchProducts(query),
+    enabled: !!query, 
   });
 };

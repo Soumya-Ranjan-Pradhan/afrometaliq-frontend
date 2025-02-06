@@ -123,8 +123,6 @@ export const deleteProduct = async (
   return response.data;
 };
 
-
-
 // Fetch Related Products
 export const fetchRelatedProducts = async (
   categories: string[],
@@ -134,10 +132,26 @@ export const fetchRelatedProducts = async (
     `${BASE_URL}/product`,
     {
       params: {
-        categories: categories.join(","), 
-        category_strict: strict, 
+        categories: categories.join(","),
+        category_strict: strict,
       },
     }
+  );
+  return response.data;
+};
+
+// search product
+export const searchProducts = async (
+  query: string
+): Promise<ApiResponse<{ products: Product[] }>> => {
+  if (!query)
+    return {
+      success: false,
+      message: "No search query",
+      data: { products: [] },
+    };
+  const response = await axios.get<ApiResponse<{ products: Product[] }>>(
+    `${BASE_URL}/product/search?search=${query}`
   );
   return response.data;
 };
