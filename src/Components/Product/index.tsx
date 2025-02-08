@@ -32,6 +32,7 @@ const Product = () => {
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation();
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
+
   const handleAddToCart = (productId: string) => {
     const token = getFromLS("accessToken");
     if (!token) {
@@ -105,8 +106,7 @@ const Product = () => {
               </div>
             </div>
             {/* Product Info */}
-            <div className="mt-4">
-            </div>
+            <div className="mt-4"></div>
             {/* Buttons */}
             <div className="mt-4 pb-[6rem] relative">
               <h3 className="text-lg font-semibold text-gray-800">
@@ -117,7 +117,6 @@ const Product = () => {
                   <span className="text-sm font-bold text-gray-700">
                     MZN {product.product_selling_price} Sale
                   </span>
-                  
                 ) : (
                   <p className="text-sm text-red-500 md:mb-4">
                     {t("login_to_price")}
@@ -140,7 +139,9 @@ const Product = () => {
                 disabled={loadingIds.includes(product._id)}
               >
                 {loadingIds.includes(product._id) ? (
-                  <FaSpinner className="animate-spin text-white" />
+                  <div className="flex items-center justify-center">
+                    <FaSpinner className="animate-spin text-white text-lg" />
+                  </div>
                 ) : (
                   t("add_to_cart")
                 )}

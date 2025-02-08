@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaShareAlt } from "react-icons/fa";
+import { FaShareAlt, FaSpinner } from "react-icons/fa";
 import Image from "next/image";
 import {
   useAllProducts,
@@ -47,6 +47,7 @@ const AllProduct = () => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [pageNumber, setPageNumber] = useState(0);
   const user = useAuthStore((state) => state.user);
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const { data, isLoading, error, refetch } = useAllProducts();
   const { mutate: addToCart } = useAddToCartMutation();
 
@@ -58,6 +59,8 @@ const AllProduct = () => {
       return;
     }
 
+    setLoadingIds((prev) => [...prev, productId]);
+
     addToCart(
       { productId, quantity: 1 },
       {
@@ -66,6 +69,9 @@ const AllProduct = () => {
         },
         onError: () => {
           toast.error("Failed to add item to cart. Please try again.");
+        },
+        onSettled: () => {
+          setLoadingIds((prev) => prev.filter((id) => id !== productId));
         },
       }
     );
@@ -217,7 +223,13 @@ const AllProduct = () => {
                       onClick={() => handleAddToCart(product._id)}
                       className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                     >
-                      {t("add_to_cart")}
+                      {loadingIds.includes(product._id) ? (
+                        <div className="flex items-center justify-center">
+                          <FaSpinner className="animate-spin text-white text-lg" />
+                        </div>
+                      ) : (
+                        t("add_to_cart")
+                      )}
                     </button>
                   </div>
                 </div>

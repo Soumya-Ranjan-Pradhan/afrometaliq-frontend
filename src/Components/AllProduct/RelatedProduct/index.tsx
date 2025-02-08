@@ -2,24 +2,26 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { FaShareAlt } from "react-icons/fa";
+import { FaShareAlt, FaSpinner } from "react-icons/fa";
 import { useTranslation } from "react-i18next";
 import { useRelatedProducts } from "@/api/product/queries/useProductQuery";
 import { toast } from "react-toastify";
 import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { useRouter } from "next/navigation";
 import { getFromLS } from "@/lib/storage";
+import { useState } from "react";
+
 
 const RelatedProduct = ({ categories }: { categories: string[] }) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const {
     data: relatedProductsData,
     isLoading,
     error,
   } = useRelatedProducts(categories);
   const { mutate: addToCart } = useAddToCartMutation();
-
   const handleAddToCart = (productId: string) => {
     const token = getFromLS("accessToken");
     if (!token) {
@@ -27,6 +29,9 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
       router.push("/signin");
       return;
     }
+
+    setLoadingIds((prev) => [...prev, productId]);
+
     addToCart(
       { productId, quantity: 1 },
       {
@@ -35,6 +40,9 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
         },
         onError: () => {
           toast.error("Failed to add item to cart. Please try again.");
+        },
+        onSettled: () => {
+          setLoadingIds((prev) => prev.filter((id) => id !== productId));
         },
       }
     );
@@ -113,7 +121,13 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
                   onClick={() => handleAddToCart(relatedProduct._id)}
                   className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                 >
-                  {t("add_to_cart")}
+                  {loadingIds.includes(relatedProduct?._id || "") ? (
+                    <div className="flex items-center justify-center">
+                      <FaSpinner className="animate-spin text-white text-lg" />
+                    </div>
+                  ) : (
+                    t("add_to_cart")
+                  )}
                 </button>
               </div>
             </div>

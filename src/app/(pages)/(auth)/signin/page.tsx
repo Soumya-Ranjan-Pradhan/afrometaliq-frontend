@@ -15,6 +15,7 @@ import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
 import { jwtDecode } from "jwt-decode";
 import { storeToLS } from "@/lib/storage";
 import { BASE_URL } from "@/contants";
+import { FaSpinner } from "react-icons/fa";
 
 const initialState = {
   email: "",
@@ -233,7 +234,7 @@ const SignIn = () => {
               }`}
             >
               {isLoading ? (
-                <AiOutlineLoading className="animate-spin text-xl" />
+                <FaSpinner className="animate-spin text-white text-lg" />
               ) : (
                 "Sign in"
               )}

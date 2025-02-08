@@ -9,7 +9,7 @@ import PageSkeleton from "@/Components/Skeleton/SingleProducts";
 import { useAuthStore } from "@/store/auth";
 import React, { useState, useRef } from "react";
 import { MdShoppingCartCheckout } from "react-icons/md";
-import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaSpinner } from "react-icons/fa";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import Image from "next/image";
@@ -29,6 +29,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   const user = useAuthStore((state) => state.user);
   const { data: product, isLoading, error } = useProductById(params.id);
   const { mutate: addToCart } = useAddToCartMutation();
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const { t } = useTranslation();
   // Extract product categories
   const categories = product?.data.product.category.map((cat) => cat._id) || [];
@@ -41,6 +42,8 @@ const Page = ({ params }: { params: { id: string } }) => {
       return;
     }
 
+    setLoadingIds((prev) => [...prev, productId]);
+
     addToCart(
       { productId, quantity: 1 },
       {
@@ -49,6 +52,9 @@ const Page = ({ params }: { params: { id: string } }) => {
         },
         onError: () => {
           toast.error("Failed to add item to cart. Please try again.");
+        },
+        onSettled: () => {
+          setLoadingIds((prev) => prev.filter((id) => id !== productId));
         },
       }
     );
@@ -168,7 +174,13 @@ const Page = ({ params }: { params: { id: string } }) => {
                       color="white"
                       // onClick={() => handleAddToCart(productDetails?._id || "")}
                     />
-                    <p> {t("add_to_cart")}</p>
+                    {loadingIds.includes(productDetails?._id || "") ? (
+                      <div className="flex items-center justify-center">
+                        <FaSpinner className="animate-spin text-white text-lg" />
+                      </div>
+                    ) : (
+                      t("add_to_cart")
+                    )}
                   </div>
                 </button>
 

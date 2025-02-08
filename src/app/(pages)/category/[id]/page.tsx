@@ -5,7 +5,7 @@ import { useProducts } from "@/api/product/queries/useProductQuery";
 import Image from "next/image";
 import ProductSkeleton from "@/Components/Skeleton";
 import { useAuthStore } from "@/store/auth";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaSpinner } from "react-icons/fa";
 import Link from "next/link";
 import {
   useAddToCartMutation,
@@ -13,12 +13,16 @@ import {
 } from "@/api/cart/query/useCartQuery";
 import { toast } from "react-toastify";
 import { getFromLS } from "@/lib/storage";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const CategoryProductsPage = () => {
   const params = useParams();
   const id = Array.isArray(params.id) ? params.id[0] : params.id;
   const user = useAuthStore((state) => state.user);
   const router = useRouter();
+  const [loadingIds, setLoadingIds] = useState<string[]>([]);
+  const { t } = useTranslation();
 
   const { data, isLoading, isError } = useProducts({
     categories: id,
@@ -54,6 +58,8 @@ const CategoryProductsPage = () => {
       return;
     }
 
+    setLoadingIds((prev) => [...prev, productId]);
+
     addToCart(
       { productId, quantity: 1 },
       {
@@ -62,6 +68,9 @@ const CategoryProductsPage = () => {
         },
         onError: () => {
           toast.error("Failed to add item to cart. Please try again.");
+        },
+        onSettled: () => {
+          setLoadingIds((prev) => prev.filter((id) => id !== productId));
         },
       }
     );
@@ -126,42 +135,44 @@ const CategoryProductsPage = () => {
               </div>
 
               {/* Product Info */}
-              <div className="flex flex-col p-4 flex-grow">
-                <h3 className="text-lg font-semibold text-gray-800 truncate">
-                  {product.product_name}
-                </h3>
-                <div className="mt-2">
-                  {user?._id ? (
-                    <>
-                      <span className="text-lg font-bold text-gray-700">
-                        MZN {product.product_selling_price.toLocaleString()}{" "}
-                        Sale
-                      </span>
-                      <p className="text-lg line-through text-gray-500">
-                        MZN {product.product_price.toLocaleString()}
-                      </p>
-                    </>
-                  ) : (
-                    <p className="text-sm text-red-500">
-                      Login to see the price
-                    </p>
-                  )}
-                </div>
+              <div className="mt-4 pb-[6rem] relative">
+              <h3 className="text-lg font-semibold text-gray-800">
+                {product.product_name}
+              </h3>
+              <div className="text-lg font-bold text-purple-600">
+                {user?._id ? (
+                  <span className="text-sm font-bold text-gray-700">
+                    MZN {product.product_selling_price} Sale
+                  </span>
+                ) : (
+                  <p className="text-sm text-red-500 md:mb-4">
+                    {t("login_to_price")}
+                  </p>
+                )}
               </div>
+            </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-2 p-4">
+              <div className="absolute bottom-4 left-4  right-4 space-y-1">
                 <Link
-                  href={`/buynow/${product?._id}`}
-                  className="w-full flex items-center justify-center py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  href={`/buynow/${product._id}`}
+                  className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                 >
-                  BUY NOW
+                  {t("buy_now")}
                 </Link>
+
                 <button
                   onClick={() => handleAddToCart(product._id)}
                   className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  disabled={loadingIds.includes(product._id)}
                 >
-                  Add To Cart
+                  {loadingIds.includes(product._id) ? (
+                    <div className="flex items-center justify-center">
+                      <FaSpinner className="animate-spin text-white text-lg" />
+                    </div>
+                  ) : (
+                    t("add_to_cart")
+                  )}
                 </button>
               </div>
             </div>

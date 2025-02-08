@@ -12,6 +12,7 @@ import {
 } from "@/api/auth/queries/authQuery";
 import { AiFillCheckCircle, AiOutlineLoading } from "react-icons/ai";
 import { useAuthStore } from "@/store/auth";
+import { FaSpinner } from "react-icons/fa";
 
 const initialState = {
   username: "",
@@ -231,7 +232,7 @@ const SignUp = () => {
                 }`}
               >
                 {isLoading ? (
-                  <AiOutlineLoading className="animate-spin text-xl" />
+                  <FaSpinner className="animate-spin text-white text-lg" />
                 ) : (
                   " Send OTP and Password"
                 )}
