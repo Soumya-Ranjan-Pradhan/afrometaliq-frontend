@@ -45,10 +45,17 @@ const AllProduct = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
   const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [pageNumber, setPageNumber] = useState(0);
+  const [pageNumber, setPageNumber] = useState(1);
   const user = useAuthStore((state) => state.user);
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
-  const { data, isLoading, error, refetch } = useAllProducts();
+  const { data, isLoading, error, refetch } = useAllProducts({
+    discount: selectedFilter === "PromotionalProduct" ? 0 : undefined,
+    categories: selectedCategories.length
+      ? selectedCategories.join(",")
+      : undefined,
+    page: pageNumber,
+    limit: 5,
+  });
   const { mutate: addToCart } = useAddToCartMutation();
 
   const handleAddToCart = (productId: string) => {
@@ -105,6 +112,20 @@ const AllProduct = () => {
     setSelectedCategories([]);
   };
 
+  const handleNextPage = () => {
+    // check if next page is available
+    if (!data?.data) return null;
+    if (data?.data?.pagination?.totalPages > pageNumber) {
+      setPageNumber(pageNumber + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pageNumber > 1) {
+      setPageNumber(pageNumber - 1);
+    }
+  };
+
   if (isLoading)
     return (
       <div className="mx-auto p-4">
@@ -121,9 +142,10 @@ const AllProduct = () => {
 
   if (error) return <div>Error fetching products</div>;
 
-  const displayedProducts = filteredProducts.length
-    ? filteredProducts
-    : data?.data.products || [];
+  // const displayedProducts = filteredProducts.length
+  //   ? filteredProducts
+  //   : data?.data.products || [];
+  const displayedProducts = data?.data.products || [];
 
   return (
     <>
@@ -244,16 +266,10 @@ const AllProduct = () => {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious href="#" />
+              <PaginationPrevious onClick={handlePrevPage} />
             </PaginationItem>
             <PaginationItem>
-              <PaginationLink href="#">1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationEllipsis />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
+              <PaginationNext onClick={handleNextPage} />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

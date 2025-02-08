@@ -122,17 +122,13 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                     >
                       <input
                         type="checkbox"
-                        value={category.category_name}
-                        checked={selectedCategories.includes(
-                          category.category_name
-                        )}
+                        value={category._id}
+                        checked={selectedCategories.includes(category._id)}
                         onChange={() =>
                           setSelectedCategories((prev) =>
-                            prev.includes(category.category_name)
-                              ? prev.filter(
-                                  (item) => item !== category.category_name
-                                )
-                              : [...prev, category.category_name]
+                            prev.includes(category._id)
+                              ? prev.filter((item) => item !== category._id)
+                              : [...prev, category._id]
                           )
                         }
                         className="form-checkbox"
@@ -185,7 +181,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                   onClick={clearFilters}
                   className="py-2 px-5 bg-gray-400 text-white font-semibold rounded-md"
                 >
-                 {t("clearFilter")}
+                  {t("clearFilter")}
                 </button>
               </div>
             </div>
@@ -198,17 +194,13 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                 >
                   <input
                     type="checkbox"
-                    value={category.category_name}
-                    checked={selectedCategories.includes(
-                      category.category_name
-                    )}
+                    value={category._id}
+                    checked={selectedCategories.includes(category._id)}
                     onChange={() =>
                       setSelectedCategories((prev) =>
-                        prev.includes(category.category_name)
-                          ? prev.filter(
-                              (item) => item !== category.category_name
-                            )
-                          : [...prev, category.category_name]
+                        prev.includes(category._id)
+                          ? prev.filter((item) => item !== category._id)
+                          : [...prev, category._id]
                       )
                     }
                     className="form-checkbox"

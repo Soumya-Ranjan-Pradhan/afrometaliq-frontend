@@ -26,7 +26,7 @@ export const useProducts = (query?: ProductQuery) => {
 
 export const useAllProducts = (query?: ProductQuery) => {
   return useQuery<ApiResponse<ProductsResponse>, Error>({
-    queryKey: ["products"],
+    queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
   });
 };
