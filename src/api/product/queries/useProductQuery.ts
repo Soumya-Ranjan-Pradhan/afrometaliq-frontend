@@ -11,12 +11,13 @@ import {
   PopulatedProduct,
   fetchRelatedProducts,
   searchProducts,
+  ProductsResponse,
 } from "../productApi";
 
 // Fetch all products
 
 export const useProducts = (query?: ProductQuery) => {
-  return useQuery<ApiResponse<{ products: Product[] }>, Error>({
+  return useQuery<ApiResponse<ProductsResponse>, Error>({
     queryKey: ["products", query],
     queryFn: () => getAllProducts(query),
     enabled: !!query,
@@ -24,7 +25,7 @@ export const useProducts = (query?: ProductQuery) => {
 };
 
 export const useAllProducts = (query?: ProductQuery) => {
-  return useQuery<ApiResponse<{ products: Product[] }>, Error>({
+  return useQuery<ApiResponse<ProductsResponse>, Error>({
     queryKey: ["products"],
     queryFn: () => getAllProducts(query),
   });
@@ -92,6 +93,6 @@ export const useSearchProducts = (query: string) => {
   return useQuery<ApiResponse<{ products: Product[] }>, Error>({
     queryKey: ["searchProducts", query],
     queryFn: () => searchProducts(query),
-    enabled: !!query, 
+    enabled: !!query,
   });
 };

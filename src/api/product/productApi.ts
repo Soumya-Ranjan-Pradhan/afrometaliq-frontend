@@ -62,13 +62,24 @@ export interface ApiResponse<T> {
 export type ProductQuery = {
   discount?: number;
   categories?: string;
+  page?: number;
+  limit?: number;
+};
+
+export type ProductsResponse = {
+  products: Product[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+  };
 };
 
 // Get all products
 export const getAllProducts = async (
   query?: ProductQuery
-): Promise<ApiResponse<{ products: Product[] }>> => {
-  const response = await axios.get<ApiResponse<{ products: Product[] }>>(
+): Promise<ApiResponse<ProductsResponse>> => {
+  const response = await axios.get<ApiResponse<ProductsResponse>>(
     `${BASE_URL}/product`,
     { params: query }
   );
