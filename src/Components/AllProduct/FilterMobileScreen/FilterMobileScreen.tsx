@@ -106,17 +106,17 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
                     >
                       <input
                         type="checkbox"
-                        value={category.category_name}
+                        value={category._id}
                         checked={selectedCategories.includes(
                           category.category_name
                         )}
                         onChange={() =>
                           setSelectedCategories((prev) =>
-                            prev.includes(category.category_name)
+                            prev.includes(category._id)
                               ? prev.filter(
-                                  (item) => item !== category.category_name
+                                  (item) => item !== category._id
                                 )
-                              : [...prev, category.category_name]
+                              : [...prev, category._id]
                           )
                         }
                         className="form-checkbox"
