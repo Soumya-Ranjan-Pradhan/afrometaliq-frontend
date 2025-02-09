@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { FaFilter } from "react-icons/fa";
-import { IoClose } from "react-icons/io5"; 
+import { IoClose } from "react-icons/io5";
 import {
   Drawer,
   DrawerClose,
@@ -12,7 +12,6 @@ import {
 import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 
 interface FilterProductProps {
- 
   clearFilters: () => void;
   selectedFilter: string | null;
   setSelectedFilter: React.Dispatch<React.SetStateAction<string | null>>;
@@ -107,15 +106,11 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
                       <input
                         type="checkbox"
                         value={category._id}
-                        checked={selectedCategories.includes(
-                          category.category_name
-                        )}
+                        checked={selectedCategories.includes(category._id)}
                         onChange={() =>
                           setSelectedCategories((prev) =>
                             prev.includes(category._id)
-                              ? prev.filter(
-                                  (item) => item !== category._id
-                                )
+                              ? prev.filter((item) => item !== category._id)
                               : [...prev, category._id]
                           )
                         }
@@ -137,18 +132,17 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
                           >
                             <input
                               type="checkbox"
-                              value={category.category_name}
+                              value={category._id}
                               checked={selectedCategories.includes(
-                                category.category_name
+                                category._id
                               )}
                               onChange={() =>
                                 setSelectedCategories((prev) =>
-                                  prev.includes(category.category_name)
+                                  prev.includes(category._id)
                                     ? prev.filter(
-                                        (item) =>
-                                          item !== category.category_name
+                                        (item) => item !== category._id
                                       )
-                                    : [...prev, category.category_name]
+                                    : [...prev, category._id]
                                 )
                               }
                               className="form-checkbox"

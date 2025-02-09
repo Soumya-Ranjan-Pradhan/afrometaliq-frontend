@@ -1,8 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa";
+import { FaPlus, FaMinus, FaSpinner } from "react-icons/fa";
 import Address from "@/Components/CartBilling";
 import { AiOutlineClose } from "react-icons/ai";
 import {
@@ -17,10 +16,11 @@ import { useCreateQuotation } from "@/api/quotation/queries/useQuotationQuery";
 import { getFromLS } from "@/lib/storage";
 
 const CartPage = () => {
-  const { data, isLoading, isError } = useCartQuery();
+  const { data, isLoading, isError, refetch } = useCartQuery();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [updatingItemId, setUpdatingItemId] = useState<string | null>(null);
   const { mutate: sendQuotation } = useCreateQuotation();
   const { mutate: removeFromCart } = useDeleteFromCartMutation();
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
@@ -32,26 +32,37 @@ const CartPage = () => {
 
   // handle delete from cart
   const handleDeleteFromCart = (id: string) => {
+    setUpdatingItemId(id);
     removeFromCart(id, {
       onSuccess: () => {
         toast.success("Item removed from cart successfully!");
+        refetch();
       },
       onError: () => {
         toast.error("Failed to remove item from cart. Please try again.");
+      },
+      onSettled: () => {
+        setUpdatingItemId(null);
       },
     });
   };
 
   // handle update quantity
   const handleUpdateQuantity = (id: string, quantity: number) => {
+    if (quantity <= 0) return;
+    setUpdatingItemId(id);
     updateQuantity(
       { cartItemId: id, quantity },
       {
         onSuccess: () => {
           toast.success("Item quantity updated successfully!");
+          refetch();
         },
         onError: () => {
           toast.error("Failed to update item quantity. Please try again.");
+        },
+        onSettled: () => {
+          setUpdatingItemId(null);
         },
       }
     );
@@ -196,8 +207,13 @@ const CartPage = () => {
             {cartItems.map((item, index) => (
               <div
                 key={item.cartItemId}
-                className="flex items-center border p-4 rounded-md mb-4"
+                className="flex items-center border p-4 rounded-md mb-4 relative"
               >
+                {updatingItemId === item.cartItemId && (
+                  <div className="absolute inset-0 bg-white bg-opacity-50 flex items-center justify-center">
+                    <FaSpinner className="animate-spin text-2xl text-gray-500" />
+                  </div>
+                )}
                 <div className="w-20 h-20">
                   <Image
                     src={

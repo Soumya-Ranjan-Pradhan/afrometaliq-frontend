@@ -40,9 +40,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
     document.body.style.overflow = "auto";
   };
 
-  const handleApplyFilters = () => {
-    closeModal();
-  };
+
 
   useEffect(() => {
     return () => {

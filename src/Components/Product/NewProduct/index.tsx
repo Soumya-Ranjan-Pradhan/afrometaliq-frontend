@@ -40,6 +40,7 @@ const NewArrivingProductCarousel: React.FC = () => {
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const [shareProduct, setShareProduct] = useState<string | null>(null);
   const router = useRouter();
+  
 
   const handleAddToCart = (productId: string) => {
     const token = getFromLS("accessToken");
