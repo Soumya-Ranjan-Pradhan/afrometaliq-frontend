@@ -84,28 +84,6 @@ const AllProduct = () => {
     );
   };
 
-  const applyFilters = () => {
-    if (data?.data?.products) {
-      const filtered = data.data.products.filter((product: Product) => {
-        const meetsFilter =
-          selectedFilter === "PromotionalProduct"
-            ? product.product_discount > 0
-            : selectedFilter === "BrowserProduct"
-            ? product.product_discount === 0
-            : true;
-
-        const meetsCategory = selectedCategories.length
-          ? product.category.some((cat) =>
-              selectedCategories.includes(cat.category_name)
-            )
-          : true;
-
-        return meetsFilter && meetsCategory;
-      });
-      setFilteredProducts(filtered);
-    }
-  };
-
   const clearFilters = () => {
     setFilteredProducts([]);
     setSelectedFilter(null);
@@ -157,7 +135,6 @@ const AllProduct = () => {
 
         {/* filter for mobile screen */}
         <FilterMobileScreen
-          applyFilters={applyFilters}
           clearFilters={clearFilters}
           selectedFilter={selectedFilter}
           setSelectedFilter={setSelectedFilter}
@@ -170,7 +147,6 @@ const AllProduct = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-6">
             <>
               <FilterProduct
-                applyFilters={applyFilters}
                 clearFilters={clearFilters}
                 selectedFilter={selectedFilter}
                 setSelectedFilter={setSelectedFilter}

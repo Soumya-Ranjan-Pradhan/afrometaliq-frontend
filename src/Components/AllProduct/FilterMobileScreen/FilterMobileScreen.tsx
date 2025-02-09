@@ -12,7 +12,7 @@ import {
 import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 
 interface FilterProductProps {
-  applyFilters: () => void;
+ 
   clearFilters: () => void;
   selectedFilter: string | null;
   setSelectedFilter: React.Dispatch<React.SetStateAction<string | null>>;
@@ -20,7 +20,6 @@ interface FilterProductProps {
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }
 const FilterMobileScreen: React.FC<FilterProductProps> = ({
-  applyFilters,
   clearFilters,
   selectedFilter,
   setSelectedFilter,
@@ -168,21 +167,21 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
           {/* Fixed Footer with Buttons */}
           <DrawerFooter className="p-4 border-t">
             <div className="flex items-center gap-2">
-              <button
+              {/* <button
                 onClick={() => {
-                  applyFilters();
+              
                   toggleDrawer();
                 }}
                 className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md px-4 py-2 w-full"
               >
                 Apply Filter
-              </button>
+              </button> */}
               <button
                 onClick={() => {
                   clearFilters();
                   toggleDrawer();
                 }}
-                className="bg-red-500 text-white px-4 py-2 rounded-md w-full"
+                className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white px-4 py-2 rounded-md w-full"
               >
                 Clear Filter
               </button>

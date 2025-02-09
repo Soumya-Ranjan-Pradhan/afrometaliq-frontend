@@ -7,7 +7,6 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 
 interface FilterProductProps {
-  applyFilters: () => void;
   clearFilters: () => void;
   selectedFilter: string | null;
   setSelectedFilter: React.Dispatch<React.SetStateAction<string | null>>;
@@ -16,7 +15,6 @@ interface FilterProductProps {
 }
 
 const FilterProduct: React.FC<FilterProductProps> = ({
-  applyFilters,
   clearFilters,
   selectedFilter,
   setSelectedFilter,
@@ -43,7 +41,6 @@ const FilterProduct: React.FC<FilterProductProps> = ({
   };
 
   const handleApplyFilters = () => {
-    applyFilters();
     closeModal();
   };
 
@@ -59,14 +56,8 @@ const FilterProduct: React.FC<FilterProductProps> = ({
       {/* Apply and Clear Buttons */}
       <div className="mt-4 flex items-center justify-center gap-2">
         <button
-          onClick={applyFilters}
-          className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
-        >
-          {t("applyFilter")}
-        </button>
-        <button
           onClick={clearFilters}
-          className="w-full py-2 bg-gray-400 text-white font-semibold rounded-md"
+          className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
         >
           {t("clearFilter")}
         </button>
@@ -164,22 +155,22 @@ const FilterProduct: React.FC<FilterProductProps> = ({
             </div>
 
             <div className="flex  w-full items-center gap-2">
-              <input
+              {/* <input
                 type="text"
                 placeholder="Search Categories"
                 className=" my-5 border rounded-md p-2"
-              />
+              /> */}
 
               <div className="flex items-center gap-2">
-                <button
+                {/* <button
                   onClick={handleApplyFilters}
                   className="px-5 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
                 >
                   {t("applyFilter")}
-                </button>
+                </button> */}
                 <button
                   onClick={clearFilters}
-                  className="py-2 px-5 bg-gray-400 text-white font-semibold rounded-md"
+                  className="py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] my-3 text-white font-semibold rounded-md"
                 >
                   {t("clearFilter")}
                 </button>
