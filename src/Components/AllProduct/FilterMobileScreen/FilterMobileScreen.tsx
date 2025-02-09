@@ -173,7 +173,7 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
               <button
                 onClick={() => {
                   clearFilters();
-                  toggleDrawer();
+                  // toggleDrawer();
                 }}
                 className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white px-4 py-2 rounded-md w-full"
               >

@@ -124,7 +124,7 @@ const SignIn = () => {
       <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8 bg-gradient-to-r from-[#131132] to-[#605AC5] rounded-lg lg:rounded-[15px]">
         <div className="flex flex-col lg:grid lg:grid-cols-2 ">
           {/* Left Side - Logo, Text, and Image */}
-          <div className="flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
+          <div className="hidden lg:flex md:flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
               alt="Afro Metaliq Logo"
