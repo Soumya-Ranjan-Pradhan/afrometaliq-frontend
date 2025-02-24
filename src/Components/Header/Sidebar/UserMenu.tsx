@@ -25,11 +25,13 @@ const UserMenu = () => {
         <PopoverTrigger>
           <Avatar className="w-10 h-10 bg-blue-950 ">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-            <AvatarFallback>
-              {user?.username
-                ? (user.username as string).charAt(0).toUpperCase()
-                : "U"}
-            </AvatarFallback>
+            <Link href="/profile">
+              <AvatarFallback>
+                {user?.username
+                  ? (user.username as string).charAt(0).toUpperCase()
+                  : "U"}
+              </AvatarFallback>
+            </Link>
           </Avatar>
         </PopoverTrigger>
         <PopoverContent>
@@ -50,15 +52,9 @@ const UserMenu = () => {
               <Link href="/orders" className="py-1 border-b cursor-pointer">
                 <p>Orders</p>
               </Link>
-              <li className="py-1 border-b">
-                <a href="#">Wishlist</a>
-              </li>
-              <li className="py-1 border-b">
-                <a href="#">Contact Us</a>
-              </li>
-              <li className="py-1 border-b">
-                <a href="#">Save Address</a>
-              </li>
+              <Link href="/contact" className="py-1 border-b">
+                <p>Contact Us</p>
+              </Link>
 
               {/* <li className="py-1">
           <a href="#">Myntra Insider</a>

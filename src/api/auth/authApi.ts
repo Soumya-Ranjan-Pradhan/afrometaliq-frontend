@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const BASE_URL = "http://localhost:3001/api/v1";
-import { BASE_URL } from "@/contants";
+const BASE_URL = "http://localhost:3001/api/v1";
+// import { BASE_URL } from "@/contants";
 import { clearLS, getFromLS } from "@/lib/storage";
 export interface User {
   _id: string;
@@ -159,4 +159,33 @@ export const logout = async () => {
     `${BASE_URL}/users/logout`
   );
   return response.data;
+};
+
+// edit profile
+export const editProfile = async (data: Partial<User>) => {
+  let token = getFromLS("accessToken"); // Get token properly
+
+  if (!token) {
+    throw new Error("No access token found. Please log in again.");
+  }
+
+  // Ensure "Bearer" is correctly formatted
+  token = token.replace(/"/g, ""); // Removes extra quotes if present
+
+  try {
+    const response = await axios.put(`${BASE_URL}/users/edit-profile`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Correctly formatted token
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
+  } catch (error: any) {
+    if (error.response?.status === 401) {
+      console.error("Unauthorized: Invalid token, logging out...");
+      clearLS(); // Remove stored tokens
+      window.location.reload(); // Redirect to login
+    }
+    throw error;
+  }
 };

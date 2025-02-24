@@ -9,6 +9,7 @@ import {
   adminLogin,
   ApiResponse,
   createUser,
+  editProfile,
   fetchUsers,
   getLoggedInUser,
   loginUser,
@@ -179,6 +180,13 @@ export const useLogout = () => {
       queryClient.invalidateQueries();
       return true;
     },
+  });
+};
+
+// edit profile
+export const useEditProfile = () => {
+  return useMutation<ApiResponse<{ message: string }>, Error, Partial<User>>({
+    mutationFn: editProfile,
   });
 };
 

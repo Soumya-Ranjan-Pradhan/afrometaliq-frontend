@@ -1,29 +1,78 @@
 "use client";
-import { useLogout } from "@/api/auth/queries/authQuery";
+import { useState, useEffect } from "react";
+import { useEditProfile } from "@/api/auth/queries/authQuery";
 import { useAuthStore } from "@/store/auth";
-import { useGlobalStore } from "@/store/global";
+import { useRouter } from "next/navigation";
 import {
   FaBox,
-  FaListAlt,
-  FaChevronRight,
-  FaUserEdit,
   FaMapMarkerAlt,
-  FaFileAlt,
+  FaUserEdit,
+  FaChevronRight,
   FaSignOutAlt,
+  FaSpinner,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 
 export default function Profile() {
   const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
   const navigate = useRouter();
 
-  const logoutMutation = useLogout();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    username: user?.username || "",
+    phoneNumber: user?.phoneNumber || "",
+  });
+
+  const editProfileMutation = useEditProfile();
+
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      navigate.push("/signin");
+    }
+  }, [navigate]);
+
+  const handleEditProfile = () => {
+    let token = localStorage.getItem("accessToken");
+
+    if (!token) {
+      toast.error("Unauthorized! Please login again.");
+      navigate.push("/signin");
+      return;
+    }
+
+    token = token.replace(/"/g, ""); // Remove extra quotes
+
+    setIsLoading(true);
+    editProfileMutation.mutate(formData, {
+      onSuccess: (data) => {
+        toast.success(data.message);
+        setUser({ ...user, ...formData }); // Update state immediately
+        setIsModalOpen(false);
+        setIsLoading(false);
+      },
+      onError: (error) => {
+        toast.error("Failed to update profile: Unauthorized");
+        console.error(error);
+        setIsLoading(false);
+      },
+    });
+  };
 
   const handleLogout = () => {
-    logoutMutation.mutate();
+    localStorage.removeItem("accessToken");
     toast.success("Logout successful");
-    navigate.push("/");
+    navigate.push("/signin");
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const menuItems = [
@@ -31,6 +80,7 @@ export default function Profile() {
       icon: <FaUserEdit />,
       title: "Edit Profile",
       description: "Update your personal information",
+      onClick: () => setIsModalOpen(true),
     },
     {
       icon: <FaMapMarkerAlt />,
@@ -42,42 +92,21 @@ export default function Profile() {
       title: "Orders",
       description: "Check your order status",
     },
-    {
-      icon: <FaListAlt />,
-      title: "Collections & Wishlist",
-      description: "All your curated product collections",
-    },
-    {
-      icon: <FaFileAlt />,
-      title: "Terms and Conditions",
-      description: "Read our terms and policies",
-    },
   ];
 
-  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
-
-  const handleClick = () => {
-    setComingSoon(true);
-  };
-
   return (
-    <div className="flex justify-center  items-start min-h-screen bg-gray-100 py-8 space-x-[10rem]">
-      {/* Left Gradient Vertical Line */}
-      {/* <div className="h-[45rem] w-[2px] bg-gradient-to-b from-[#24246C] to-[#5A43AF]"></div> */}
-
-      {/* Main Content */}
+    <div className="flex justify-center items-start min-h-screen bg-gray-100 py-8">
       <div className="flex flex-col items-center mx-4">
         <div className="w-full max-w-md bg-white rounded-lg shadow-md p-6">
           {/* Profile Header */}
           <div className="flex flex-col items-center">
             <div className="w-24 h-24 rounded-full bg-gray-400 flex items-center justify-center">
-              {/* Placeholder profile icon */}
               <span className="text-6xl text-gray-200">👤</span>
             </div>
             {user?._id ? (
               <>
-                <p className="font-semibold text-lg ">{user?.username}</p>
-                <p className=" text-sm mb-4">{user?.email}</p>
+                <p className="font-semibold text-lg">{user?.username}</p>
+                <p className="text-sm mb-4">{user?.email}</p>
               </>
             ) : (
               <p className="mt-4 text-lg font-medium">
@@ -86,7 +115,6 @@ export default function Profile() {
             )}
           </div>
 
-          {/* Divider */}
           <hr className="my-6 border-gray-300" />
 
           {/* Menu Options */}
@@ -94,7 +122,7 @@ export default function Profile() {
             {menuItems.map((item, index) => (
               <div
                 key={index}
-                onClick={handleClick}
+                onClick={item.onClick}
                 className="flex items-center justify-between py-3 px-4 rounded-lg hover:bg-gray-100 cursor-pointer"
               >
                 <div className="flex items-center space-x-4">
@@ -124,8 +152,60 @@ export default function Profile() {
         </div>
       </div>
 
-      {/* Right Gradient Vertical Line */}
-      {/* <div className="h-[45rem] w-[2px] bg-gradient-to-b from-[#24246C] to-[#5A43AF]"></div> */}
+      {/* Edit Profile Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-96 relative">
+            <h2 className="text-lg font-semibold mb-4 text-center">
+              Edit Profile
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">
+                  Phone Number
+                </label>
+                <input
+                  type="text"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded-lg"
+                />
+              </div>
+            </div>
+            <div className="flex justify-center mt-6">
+              <button
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg mr-2"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleEditProfile}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center"
+                disabled={isLoading}
+              >
+                {isLoading && (
+                  <FaSpinner className="animate-spin text-white mr-2" />
+                )}
+                {isLoading ? "Saving..." : "Save Changes"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

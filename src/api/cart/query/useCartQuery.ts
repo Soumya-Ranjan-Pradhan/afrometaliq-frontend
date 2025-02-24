@@ -8,14 +8,12 @@ import {
   updateCartQuantity,
 } from "../cartApi";
 
-
-export const  useCartQuery = () => {
+export const useCartQuery = () => {
   return useQuery<ApiResponse<{ cart: Cart[] }>, Error>({
     queryKey: ["carts"],
     queryFn: () => getCart(),
   });
 };
-
 
 // Add to cart mutation
 export const useAddToCartMutation = () => {
@@ -32,7 +30,7 @@ export const useAddToCartMutation = () => {
   });
 };
 
-// Update cart quantity mutation
+// ✅ Update Cart Quantity Mutation
 export const useUpdateCartQuantityMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<
@@ -43,7 +41,7 @@ export const useUpdateCartQuantityMutation = () => {
     mutationFn: ({ cartItemId, quantity }) =>
       updateCartQuantity(cartItemId, { quantity }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({ queryKey: ["cart"] }); // ✅ Refresh cart instantly
     },
   });
 };
