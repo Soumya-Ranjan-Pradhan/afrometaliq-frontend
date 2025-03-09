@@ -191,14 +191,14 @@ const NewArrivingProductCarousel: React.FC = () => {
                   <div className="absolute bottom-4 left-4  right-4 space-y-1">
                     <Link
                       href={`/buynow/${product._id}`}
-                      className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                      className="w-full py-2  flex items-center justify-center bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                     >
                       {t("buy_now")}
                     </Link>
 
                     <button
                       onClick={() => handleAddToCart(product._id)}
-                      className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md flex items-center justify-center"
+                      className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md flex items-center justify-center"
                       disabled={loadingIds.includes(product._id)}
                     >
                       {loadingIds.includes(product._id) ? (
@@ -396,7 +396,7 @@ export default NewArrivingProductCarousel;
 //                 <div className="flex items-center justify-between gap-2 mt-4">
 //                   <Link
 //                     href={`/buynow/${product._id}`}
-//                     className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+//                     className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
 //                     style={{ lineHeight: "1.5", fontSize: "14px" }}
 //                   >
 //                     {t("buy_now")}
@@ -404,7 +404,7 @@ export default NewArrivingProductCarousel;
 
 //                   <button
 //                     onClick={handleClick}
-//                     className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+//                     className="flex-1 h-12 py-2 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
 //                     style={{ lineHeight: "1.5", fontSize: "14px" }}
 //                   >
 //                     {t("add_to_cart")}

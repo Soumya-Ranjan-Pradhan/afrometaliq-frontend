@@ -150,11 +150,11 @@ const PopularProductCarousel: React.FC = () => {
                 </div>
 
                 <div className="flex items-center justify-between gap-2">
-                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md">
                     BUY NOW
                   </button>
 
-                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md">
+                  <button className="w-full mt-4 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md">
                     Add To Cart
                   </button>
                 </div>

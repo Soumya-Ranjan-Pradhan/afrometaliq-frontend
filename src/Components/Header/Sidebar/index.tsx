@@ -53,7 +53,7 @@ const Sidebar: React.FC = () => {
       {/* Bottom navigation for mobile screens */}
       <div
         className="border-t-2 text-white h-16 sm:hidden z-20 p-1 w-full flex 
-        justify-around fixed bottom-0 bg-gradient-to-r from-[#24246C] to-[#5A43AF]"
+        justify-around fixed bottom-0 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)]"
       >
         {/* Home Icon (Always Active) */}
         <Link

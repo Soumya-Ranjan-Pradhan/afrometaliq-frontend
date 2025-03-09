@@ -67,7 +67,7 @@ const LogInPage = () => {
         {/* Logo */}
         <div className="text-center mb-6">
           <Image
-            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
             alt="Arfo Metaliq Logo"
             width={160}
             height={160}

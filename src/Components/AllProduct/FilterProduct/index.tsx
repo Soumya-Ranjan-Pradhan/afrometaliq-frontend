@@ -55,7 +55,7 @@ const FilterProduct: React.FC<FilterProductProps> = ({
       <div className="mt-4 flex items-center justify-center gap-2">
         <button
           onClick={clearFilters}
-          className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+          className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
         >
           {t("clearFilter")}
         </button>
@@ -162,13 +162,13 @@ const FilterProduct: React.FC<FilterProductProps> = ({
               <div className="flex items-center gap-2">
                 {/* <button
                   onClick={handleApplyFilters}
-                  className="px-5 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  className="px-5 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                 >
                   {t("applyFilter")}
                 </button> */}
                 <button
                   onClick={clearFilters}
-                  className="py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] my-3 text-white font-semibold rounded-md"
+                  className="py-2 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] my-3 text-white font-semibold rounded-md"
                 >
                   {t("clearFilter")}
                 </button>

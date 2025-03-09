@@ -23,7 +23,7 @@ const UserMenu = () => {
     user?._id && (
       <Popover>
         <PopoverTrigger>
-          <Avatar className="w-10 h-10 bg-blue-950 ">
+          <Avatar className="w-10 h-10 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)]">
             <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
             <Link href="/profile">
               <AvatarFallback>

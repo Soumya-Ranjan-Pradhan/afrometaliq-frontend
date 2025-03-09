@@ -143,7 +143,7 @@ const page = () => {
                 <p>Total Amount</p>
                 <p>₹1690</p>
               </div>
-              <button className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white w-full py-2 mt-4 rounded-md">
+              <button className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
                 PAY NOW
               </button>
             </div>

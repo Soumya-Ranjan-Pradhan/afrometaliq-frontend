@@ -39,7 +39,7 @@ const ServiceModal: React.FC<ServiceModalProps> = ({
 
       <div className="flex flex-col">
         <div className="flex items-center">
-          <h3 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] bg-clip-text text-transparent">
+          <h3 className="text-2xl font-semibold mb-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] bg-clip-text text-transparent">
             {service.title}
           </h3>
           <FaLongArrowAltRight

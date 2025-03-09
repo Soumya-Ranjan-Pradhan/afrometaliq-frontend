@@ -33,7 +33,7 @@ const QuotationModal: React.FC<QuotationModalProps> = ({
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-md"
+            className="px-4 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-md"
             disabled={isLoading}
           >
             {isLoading ? "Sending..." : "Confirm"}

@@ -103,15 +103,15 @@ const SignUp = () => {
 
   return (
     <>
-      <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8 bg-gradient-to-r from-[#131132] to-[#605AC5] rounded-lg lg:rounded-[15px]">
+      <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8  bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] rounded-lg lg:rounded-[15px]">
         <div className="flex flex-col lg:grid lg:grid-cols-2 ">
           {/* Left Side - Logo, Text, and Illustration */}
           <div  className="hidden lg:flex md:flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
               alt="Afro Metaliq Logo"
-              width={150}
-              height={150}
+              width={200}
+              height={200}
             />
             <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-center lg:text-left">
               Sign Up to Afrometaliq
@@ -225,7 +225,7 @@ const SignUp = () => {
               <button
                 // onClick={handleSignUp}
                 disabled={isButtonDisabled}
-                className={`w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-lg text-lg font-semibold flex justify-center items-center ${
+                className={`w-full bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 rounded-lg text-lg font-semibold flex justify-center items-center ${
                   isButtonDisabled
                     ? "opacity-50 cursor-not-allowed"
                     : "opacity-100 hover:opacity-90"
@@ -276,14 +276,14 @@ const SignUp = () => {
 
             <button
               onClick={handleVerifyOtp}
-              className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4 text-white py-2 rounded-lg"
+              className="w-full bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] mt-4 text-white py-2 rounded-lg"
             >
               Verify OTP
             </button>
 
             {/* <button
               onClick={handleSignUp}
-              className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] mt-4 text-white py-2 rounded-lg"
+              className="w-full bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] mt-4 text-white py-2 rounded-lg"
             >
               Register With Verify Email
             </button> */}

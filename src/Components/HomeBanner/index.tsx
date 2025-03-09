@@ -76,7 +76,7 @@ const HomeBanner = () => {
                   <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg">
                     <FaCheck className="text-2xl text-black" />
                   </div>
-                  <div className="px-5 py-2 bg-[#605AC5BF] rounded-lg">
+                  <div className="px-5 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] rounded-lg">
                     <p className="text-lg font-bold text-white">
                       {banner.banner_title}
                     </p>

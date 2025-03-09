@@ -98,13 +98,19 @@ const CartPage = () => {
   if (!isLoggedIn) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <p className="text-xl font-semibold mb-4">
+        <div className="flex flex-col items-center justify-center text-center space-y-6">
+          <Image
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741003029/hho762f50ln5rqlsbty4.png"
+            alt="Shopping Bag"
+            width={200}
+            height={200}
+          />
+          <p className="text-xl font-semibold">
             Please log in to view your bag.
           </p>
           <Link
             href="/signin"
-            className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 px-6 rounded-md"
+            className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-6 rounded-md"
           >
             Login
           </Link>
@@ -139,11 +145,17 @@ const CartPage = () => {
   if (cartItems.length === 0) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="text-center">
-          <p className="text-xl font-semibold mb-4">Your cart is empty.</p>
+        <div className="flex flex-col items-center justify-center text-center space-y-6">
+          <Image
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741003029/hho762f50ln5rqlsbty4.png"
+            alt="Shopping Bag"
+            width={200}
+            height={200}
+          />
+          <p className="text-xl font-semibold">Your cart is empty.</p>
           <Link
-            href="/product"
-            className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 px-6 rounded-md"
+            href="/signin"
+            className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-6 rounded-md"
           >
             Add Items to Cart
           </Link>
@@ -313,13 +325,13 @@ const CartPage = () => {
                 <p>₹{(totalAmount + 20).toFixed(2)}</p>
               </div>
               <div className="flex gap-3">
-                <button className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white w-full py-2 mt-4 rounded-md">
+                <button className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
                   PAY NOW
                 </button>
 
                 <button
                   onClick={() => setIsModalOpen(true)}
-                  className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white w-full py-2 mt-4 rounded-md"
+                  className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md"
                 >
                   Send Quotation
                 </button>

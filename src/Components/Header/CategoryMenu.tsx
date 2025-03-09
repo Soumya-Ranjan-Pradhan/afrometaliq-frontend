@@ -1,4 +1,3 @@
-
 "use client";
 
 import { type CategoryMenu } from "@/api/category/categoryApi";
@@ -40,7 +39,7 @@ function CategoryMenu() {
           {t("shop_by_category")}
         </p>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-[#24246C] text-white mt-2 w-52 z-50">
+      <DropdownMenuContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white mt-2 w-52 z-50">
         {data?.data?.menu &&
           data?.data?.menu.length > 0 &&
           data.data.menu.map((item) => (
@@ -72,7 +71,7 @@ const MenuItems = ({
         <DropdownMenuLabel>{data.category_name}</DropdownMenuLabel>
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
-        <DropdownMenuSubContent className="ml-1 bg-[#24246C] text-white">
+        <DropdownMenuSubContent className="ml-1 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white">
           {data.children.map((item) => (
             <MenuItems key={item._id} data={item} router={router} />
           ))}

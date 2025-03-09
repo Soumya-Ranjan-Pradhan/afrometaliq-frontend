@@ -213,13 +213,13 @@ const AllProduct = () => {
                   <div className="absolute bottom-4 left-4 right-4 space-y-1">
                     <Link
                       href={`/buynow/${product._id}`}
-                      className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                      className="w-full py-2 flex items-center justify-center bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                     >
                       {t("buy_now")}
                     </Link>
                     <button
                       onClick={() => handleAddToCart(product._id)}
-                      className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                      className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                     >
                       {loadingIds.includes(product._id) ? (
                         <div className="flex items-center justify-center">

@@ -33,7 +33,7 @@ export default function RootLayout({
       <Footer />
 
       {/* WhatsApp Icon */}
-      {/* <Link
+      <Link
         href="https://wa.me/+917777777777"
         target="_blank"
         rel="noopener noreferrer"
@@ -43,15 +43,15 @@ export default function RootLayout({
         }}
       >
         <FaWhatsapp size={24} />
-      </Link> */}
+      </Link>
 
       {/* Contact Icon */}
-      {/* <Link
+      <Link
         href="/contact"
         className="fixed lg:bottom-4 md:bottom-5 bottom-[5rem] right-4 z-50 bg-blue-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300"
       >
         <FaPhoneAlt size={24} />
-      </Link> */}
+      </Link>
 
       <ComingSoonModal isOpen={comingSoon} onRequestClose={handleClose} />
     </>

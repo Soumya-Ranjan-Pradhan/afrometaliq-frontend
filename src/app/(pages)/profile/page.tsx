@@ -143,7 +143,7 @@ export default function Profile() {
           <div className="mt-6">
             <button
               onClick={handleLogout}
-              className="flex items-center justify-center w-full py-3 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg hover:bg-red-600 transition-colors"
+              className="flex items-center justify-center w-full py-3 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-lg hover:bg-red-600 transition-colors"
             >
               <FaSignOutAlt className="text-lg mr-2" />
               Logout

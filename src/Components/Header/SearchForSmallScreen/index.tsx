@@ -74,7 +74,7 @@ const SearchForSmallScreen: React.FC<SearchForSmallScreenProps> = ({
               )}
               <Button
                 type="submit"
-                className="px-4 py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                className="px-4 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
               >
                 {isLoading ? (
                   <FaSpinner className="animate-spin text-2xl" />

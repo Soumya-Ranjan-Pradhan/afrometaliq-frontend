@@ -91,7 +91,7 @@ const Category: React.FC = () => {
                   variants={itemVariants}
                   onClick={() => router.push(`/category/${category._id}`)}
                 >
-                  <div className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[#5A43AF] flex items-center justify-center mx-auto transition-all duration-300 ease-in-out hover:border-[#7F5FE3] hover:scale-125">
+                  <div className="w-24 h-24 md:w-28 md:h-28 lg:w-44 lg:h-44 rounded-full border-4 border-[rgb(20,161,168)] flex items-center justify-center mx-auto transition-all duration-300 ease-in-out hover:border-[rgb(3,105,161)] hover:scale-125">
                     <div className="relative w-full h-full overflow-hidden rounded-full">
                       <Image
                         src={

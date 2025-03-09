@@ -40,7 +40,7 @@ const Address = () => {
           </p>
           <Link
             href="/signin"
-            className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 px-6 rounded-md"
+            className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-6 rounded-md"
           >
             Login
           </Link>
@@ -157,7 +157,7 @@ const Address = () => {
 
             <button
               onClick={() => openModal(false)}
-              className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 px-4 rounded-md"
+              className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-4 rounded-md"
             >
               + Add New Address
             </button>

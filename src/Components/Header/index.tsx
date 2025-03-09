@@ -44,12 +44,12 @@ const Header = () => {
 
   // check the cart count
   useEffect(() => {
-    if (user && data && data.data?.cart) {
+    if (user?._id && data?.data?.cart) {
       setCartCount(data.data.cart.length);
     } else {
       setCartCount(0);
     }
-  }, [user, data]);
+  }, [data, user]);
 
   const closeDrawer = () => {
     setToggleMenu(false);
@@ -71,7 +71,7 @@ const Header = () => {
         <div className="flex lg:p-6 md:p-6 items-center">
           <Link href="/" className="flex items-center">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1735071295/qfoyhx2m9anxpiy0q81l.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
               alt="Arfo Metaliq Logo"
               width={250} // Set responsive width
               height={120} // Default height
@@ -133,8 +133,9 @@ const Header = () => {
       </header>
 
       {/* For The Large Screen */}
+      {/* bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] */}
       <nav
-        className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] lg:h-[4rem] md:h-[4rem] sm:h-[3rem] h-[64px] flex justify-between 
+        className="w-full bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] lg:h-[4rem] md:h-[4rem] sm:h-[3rem] h-[64px] flex justify-between 
     items-center  sm:gap-5 gap-2 sticky top-0 z-30"
       >
         <div>
@@ -179,7 +180,7 @@ const Header = () => {
           <div className="relative hidden lg:block">
             <Link href="/cart">
               <FaShoppingCart size={24} className="text-white" />
-              {cartCount > 0 && (
+              {user?._id && cartCount > 0 && (
                 <span className="absolute top-0 right-0 -mt-1 -mr-2 bg-red-500 text-xs rounded-full text-white h-4 w-4 flex items-center justify-center">
                   {cartCount}
                 </span>
@@ -260,14 +261,14 @@ const Header = () => {
 
         {/* Sidebar for small and medium screens */}
         <div
-          className={`fixed top-0 right-0 h-screen w-[100%] bg-gradient-to-r from-[#24246C] to-[#5A43AF] 
+          className={`fixed top-0 right-0 h-screen w-[100%] bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] 
         z-50 transform ${
           toggleMenu ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-500 ease-in-out`}
         >
           <div className="flex items-center justify-between h-[5.8rem] px-3 border-b text-black bg-white">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1735071295/qfoyhx2m9anxpiy0q81l.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
               alt="logo"
               width={200}
               height={140}

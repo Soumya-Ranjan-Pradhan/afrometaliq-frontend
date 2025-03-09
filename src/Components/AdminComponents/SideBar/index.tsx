@@ -61,10 +61,10 @@ const AdminSidebar: React.FC = () => {
         <div className="w-64 relative bg-gray-100 h-full shadow-md flex flex-col z-50">
           <div className="flex items-center   justify-center p-4">
             <Image
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1732213762/tv99udrhtcywxvly42lx.png"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
               alt="Arfo Metaliq Logo"
-              width={300}
-              height={120}
+              width={180}
+              height={180}
               className="absolute mt-14 object-contain rounded-full mx-auto"
             />
           </div>

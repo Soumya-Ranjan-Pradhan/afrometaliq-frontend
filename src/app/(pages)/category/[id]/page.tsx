@@ -135,35 +135,35 @@ const CategoryProductsPage = () => {
               </div>
 
               {/* Product Info */}
-              <div className="mt-4 pb-[6rem] relative">
-              <h3 className="text-lg font-semibold text-gray-800">
-                {product.product_name}
-              </h3>
-              <div className="text-lg font-bold text-purple-600">
-                {user?._id ? (
-                  <span className="text-sm font-bold text-gray-700">
-                    MZN {product.product_selling_price} Sale
-                  </span>
-                ) : (
-                  <p className="text-sm text-red-500 md:mb-4">
-                    {t("login_to_price")}
-                  </p>
-                )}
+              <div className="mt-4 pb-[6rem] relative px-4">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  {product.product_name}
+                </h3>
+                <div className="text-lg mb-2 font-bold text-purple-600">
+                  {user?._id ? (
+                    <span className="text-sm font-bold text-gray-700">
+                      MZN {product.product_selling_price} Sale
+                    </span>
+                  ) : (
+                    <p className="text-sm text-red-500 md:mb-4">
+                      {t("login_to_price")}
+                    </p>
+                  )}
+                </div>
               </div>
-            </div>
 
               {/* Action Buttons */}
               <div className="absolute bottom-4 left-4  right-4 space-y-1">
                 <Link
                   href={`/buynow/${product._id}`}
-                  className="w-full py-2 bg-gradient-to-r flex items-center justify-center from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  className="w-full py-2 bg-gradient-to-r flex items-center justify-center  from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                 >
                   {t("buy_now")}
                 </Link>
 
                 <button
                   onClick={() => handleAddToCart(product._id)}
-                  className="w-full py-2 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md"
+                  className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                   disabled={loadingIds.includes(product._id)}
                 >
                   {loadingIds.includes(product._id) ? (

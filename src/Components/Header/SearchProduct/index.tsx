@@ -56,7 +56,7 @@ const SearchProduct = () => {
           />
         )}
 
-        <button className="px-4 py-2 bg-[#605AC5] text-white rounded-r-full">
+        <button className="px-4 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-r-full">
           {isLoading ? (
             <FaSpinner className="animate-spin text-2xl" />
           ) : (

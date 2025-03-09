@@ -210,7 +210,7 @@ Email : info@afrometaliq.com | admin@afrometaliq.com */}
                 <button
                   onClick={handleCreate}
                   type="submit"
-                  className="w-full bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 rounded-md hover:bg-blue-700"
+                  className="w-full bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 rounded-md hover:bg-blue-700"
                 >
                   Submit
                 </button>

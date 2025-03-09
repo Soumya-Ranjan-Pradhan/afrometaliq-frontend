@@ -48,7 +48,7 @@ const WishlistCard: FC<WishlistCardProps> = ({ product, onRemove }) => {
 
       {/* Move to Bag Button */}
       <button
-        className="mt-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white py-2 px-4 rounded-md "
+        className="mt-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-4 rounded-md "
       >
         Move to Bag
       </button>

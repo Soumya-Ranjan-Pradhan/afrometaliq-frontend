@@ -166,7 +166,7 @@ const Page = ({ params }: { params: { id: string } }) => {
               <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
                 <button
                   onClick={() => handleAddToCart(productDetails?._id || "")}
-                  className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white rounded-lg font-semibold hover:bg-red-600 transition"
+                  className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-lg font-semibold hover:bg-red-600 transition"
                 >
                   <div className="flex items-center justify-center gap-2">
                     <MdShoppingCartCheckout
@@ -186,7 +186,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
                 <Link
                   href={`/buynow/${productDetails?._id}`}
-                  className="lg:flex-1 md:w-full w-full h-12 py-2 px-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
+                  className="lg:flex-1 md:w-full w-full h-12 py-2 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
                   style={{ lineHeight: "1.5", fontSize: "14px" }}
                 >
                   {t("buy_now")}

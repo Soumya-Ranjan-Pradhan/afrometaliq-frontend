@@ -99,7 +99,7 @@ const ProductModal: React.FC<ProductModalProps> = ({
               />
               <button className="px-3 py-1">+</button>
             </div>
-            <button className="ml-4 px-6 py-3 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-lg hover:opacity-90 transition">
+            <button className="ml-4 px-6 py-3 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-lg hover:opacity-90 transition">
               Add To Cart
             </button>
           </div>

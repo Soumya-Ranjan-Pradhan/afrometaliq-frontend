@@ -66,7 +66,7 @@ const FaqItem: React.FC<{ question: string; answer: string }> = ({
     <div className="mb-4 border-b border-gray-300">
       <button
         onClick={toggle}
-        className="flex justify-between items-center w-full p-4 bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold text-left text-lg focus:outline-none"
+        className="flex justify-between items-center w-full p-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold text-left text-lg focus:outline-none"
       >
         <span>{question}</span>
         <span>{isOpen ? <FiChevronUp /> : <FiChevronDown />}</span>

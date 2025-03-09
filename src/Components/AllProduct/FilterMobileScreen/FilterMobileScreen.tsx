@@ -40,7 +40,7 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
       <div className="flex justify-end">
         <button
           onClick={toggleDrawer}
-          className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] px-2 py-2 rounded-full"
+          className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] px-2 py-2 rounded-full"
         >
           <FaFilter color="white" size={15} />
         </button>
@@ -166,7 +166,7 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
               
                   toggleDrawer();
                 }}
-                className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white font-semibold rounded-md px-4 py-2 w-full"
+                className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md px-4 py-2 w-full"
               >
                 Apply Filter
               </button> */}
@@ -175,7 +175,7 @@ const FilterMobileScreen: React.FC<FilterProductProps> = ({
                   clearFilters();
                   // toggleDrawer();
                 }}
-                className="bg-gradient-to-r from-[#24246C] to-[#5A43AF] text-white px-4 py-2 rounded-md w-full"
+                className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white px-4 py-2 rounded-md w-full"
               >
                 Clear Filter
               </button>
