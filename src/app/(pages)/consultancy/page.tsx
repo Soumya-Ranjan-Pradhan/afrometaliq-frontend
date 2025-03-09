@@ -1,126 +1,87 @@
 "use client";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { FaLaptopCode, FaMobileAlt, FaServer, FaCloud } from "react-icons/fa";
+import { motion } from "framer-motion";
+import Link from "next/link";
 
 const Consultancy = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
-
-  useEffect(() => {
-    const targetDate = new Date("2025-01-01T00:00:00");
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / (1000 * 60)) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
   return (
-    <section className="relative">
-      <div className="w-full mx-auto">
-        <div className="w-full md:px-16 px-10 md:pt-16 pt-10 pb-10 bg-gray-900 flex-col justify-end items-center lg:gap-28 md:gap-16 gap-10 inline-flex">
-          <div className="flex-col justify-end items-center  gap-10 flex">
-            {/* <Image
-              width={500}
-              height={500}
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
-              alt="pagedone logo image"
-              className="object-cover"
-            /> */}
-            <div className="flex-col justify-center items-center gap-10 flex">
-              <div className="flex-col justify-start items-center gap-2.5 flex">
-                <h2 className="text-center text-emerald-400 md:text-6xl text-5xl font-bold font-manrope leading-normal">
-                Colab Services 
-                </h2>
-                <p className="text-center text-emerald-400 md:text-6xl text-5xl font-bold font-manrope leading-normal"> Coming Soon</p>
-                <p className="text-center text-gray-500 text-base font-normal leading-relaxed">
-                  Just 20 days remaining until the big reveal of our new
-                  product!
-                </p>
-              </div>
-              <div className="flex items-start justify-center w-full gap-2 count-down-main">
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element days text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.days}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    DAYS
-                  </p>
-                </div>
-                <h3 className="w-3 text-center text-gray-500 text-2xl font-medium font-manrope leading-9">
-                  :
-                </h3>
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element hours text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.hours}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    HRS
-                  </p>
-                </div>
-                <h3 className="w-3 text-center text-gray-500 text-2xl font-medium font-manrope leading-9">
-                  :
-                </h3>
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element minutes text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.minutes}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    MINS
-                  </p>
-                </div>
-                <h3 className="w-3 text-center text-gray-500 text-2xl font-medium font-manrope leading-9">
-                  :
-                </h3>
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element seconds text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.seconds}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    SECS
-                  </p>
-                </div>
-              </div>
-              <div className="w-full flex-col justify-center items-center gap-5 flex">
-                <h6 className="text-center text-emerald-400 text-base font-semibold leading-relaxed">
-                  Launched Date: 01, 01, 2025
-                </h6>
-              </div>
-            </div>
-          </div>
-          <p className="text-center text-gray-500 text-sm font-normal leading-snug">
-            Get in touch with us:{" "}
-            <p className="hover:text-gray-100 transition-all duration-700 ease-in-out">
-              soumyapradhan63711@gmail.com
-            </p>
+    <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
+      {/* Hero Section */}
+      <motion.div
+        className="text-center max-w-4xl"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+      >
+        <h1 className="text-4xl md:text-6xl font-bold text-blue-500 animate-bounce">
+          Professional Software Consultancy
+        </h1>
+        <p className="mt-4 text-lg text-gray-300">
+          We build scalable and modern web & mobile applications with
+          cutting-edge technology.
+        </p>
+      </motion.div>
+
+      {/* Services Section */}
+      <motion.div
+        className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
+          <FaLaptopCode className="text-blue-500 text-5xl mx-auto" />
+          <h3 className="text-xl font-semibold mt-4">Web Development</h3>
+          <p className="text-gray-400 mt-2">
+            Modern and responsive websites built with Next.js, React, and
+            TypeScript.
           </p>
         </div>
-      </div>
-    </section>
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
+          <FaMobileAlt className="text-blue-500 text-5xl mx-auto" />
+          <h3 className="text-xl font-semibold mt-4">Mobile Development</h3>
+          <p className="text-gray-400 mt-2">
+            Cross-platform mobile apps using React Native and Angular.
+          </p>
+        </div>
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
+          <FaServer className="text-blue-500 text-5xl mx-auto" />
+          <h3 className="text-xl font-semibold mt-4">Backend Development</h3>
+          <p className="text-gray-400 mt-2">
+            Robust and scalable backend with Node.js, Express.js, Nest.js &
+            MongoDB.
+          </p>
+        </div>
+        <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
+          <FaCloud className="text-blue-500 text-5xl mx-auto" />
+          <h3 className="text-xl font-semibold mt-4">Cloud & DevOps</h3>
+          <p className="text-gray-400 mt-2">
+            AWS, Docker, Kubernetes solutions for seamless deployment and
+            scaling.
+          </p>
+        </div>
+      </motion.div>
+
+      {/* Contact Section */}
+      <motion.div
+        className="mt-12 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1, duration: 1 }}
+      >
+        <h2 className="text-3xl font-bold text-blue-500">Get in Touch</h2>
+        <p className="mt-2 text-gray-300">
+          Let’s build your next big project together.
+        </p>
+        <Link
+          href="/contact"
+          className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg text-lg font-semibold transition"
+        >
+          Contact Us
+        </Link>
+      </motion.div>
+    </div>
   );
 };
 
