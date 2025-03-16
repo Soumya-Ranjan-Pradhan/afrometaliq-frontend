@@ -20,8 +20,8 @@ import { useAuthStore } from "@/store/auth";
 import UserMenu from "./Sidebar/UserMenu";
 import UserMobileMenu from "./Sidebar/UserMobileMenu";
 import { useCartQuery } from "@/api/cart/query/useCartQuery";
-import { useRouter } from "next/navigation";
 import SearchProduct from "./SearchProduct";
+import { useGlobalStore } from "@/store/global";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -31,11 +31,9 @@ const Header = () => {
   const [cartCount, setCartCount] = useState<number>(0);
   const { data, refetch } = useCartQuery();
   const user = useAuthStore((state) => state.user);
-  const [showResults, setShowResults] = useState<boolean>(false);
-  const router = useRouter();
+  const { isComingSoon, setIsComingSoon } = useGlobalStore();
 
   // Handle search submission
-
   useEffect(() => {
     if (user?._id) {
       refetch();

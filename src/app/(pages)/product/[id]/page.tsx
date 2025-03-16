@@ -124,12 +124,20 @@ const Page = ({ params }: { params: { id: string } }) => {
               <span className="text-red-500 text-2xl font-bold">
                 {user?._id ? (
                   <span className="text-lg font-bold text-purple-600">
-                    <span className="line-through text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
-                      MZN {productDetails?.product_price}
-                    </span>{" "}
-                    <span className="text-red-600">
-                      {productDetails?.product_discount}%
-                    </span>{" "}
+                    {/* Show Original Price and Discount only if discount > 0 */}
+                    {productDetails?.product_discount &&
+                    productDetails?.product_discount > 0 ? (
+                      <>
+                        <span className="line-through text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
+                          MZN {productDetails?.product_price?.toFixed(2)}
+                        </span>{" "}
+                        <span className="text-red-600">
+                          {productDetails?.product_discount}% OFF
+                        </span>
+                      </>
+                    ) : null}
+
+                    {/* Selling Price Always Shown */}
                     <span className="bg-gray-100 px-2 py-1 rounded-md">
                       MZN {productDetails?.product_selling_price}
                     </span>

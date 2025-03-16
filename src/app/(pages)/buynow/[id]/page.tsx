@@ -2,12 +2,14 @@
 
 import { useProductById } from "@/api/product/queries/useProductQuery";
 import Address from "@/Components/CartBilling";
+import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
 import React from "react";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
   const { data } = useProductById(params.id);
+  const { isComingSoon, setIsComingSoon } = useGlobalStore();
 
   const product = data?.data.product;
   return (
@@ -46,7 +48,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
       <div className="container mx-auto p-4 lg:flex lg:space-x-8">
         {/* Left Section */}
         <div className="lg:w-3/5">
-          <div className="bg-gray-100 p-4 rounded-md flex justify-between items-center">
+          {/* <div className="bg-gray-100 p-4 rounded-md flex justify-between items-center">
             <div>
               <p className="font-semibold">
                 Deliver to:{" "}
@@ -58,7 +60,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                 Saradhapur Petrol Pump, Angul, Angul H.O, Angul
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Product List */}
           <div className="mt-6">
@@ -133,7 +135,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                 <p>₹100</p>
               </div>
               <div className="flex gap-3">
-                <button className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
+                <button onClick={() => setIsComingSoon(true)} className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
                   PAY NOW
                 </button>
 

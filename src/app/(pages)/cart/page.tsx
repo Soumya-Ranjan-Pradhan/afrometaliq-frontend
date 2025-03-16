@@ -14,6 +14,9 @@ import Link from "next/link";
 import QuotationModal from "@/Components/QuotationModal";
 import { useCreateQuotation } from "@/api/quotation/queries/useQuotationQuery";
 import { getFromLS } from "@/lib/storage";
+import { useGlobalStore } from "@/store/global";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const CartPage = () => {
   const { data, isLoading, isError, refetch } = useCartQuery();
@@ -24,6 +27,7 @@ const CartPage = () => {
   const { mutate: sendQuotation } = useCreateQuotation();
   const { mutate: removeFromCart } = useDeleteFromCartMutation();
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
+  const { isComingSoon, setIsComingSoon } = useGlobalStore();
 
   useEffect(() => {
     const token = getFromLS("accessToken");
@@ -120,7 +124,54 @@ const CartPage = () => {
   }
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="container mx-auto p-4 lg:flex lg:space-x-8">
+        {/* Left Section Skeleton */}
+        <div className="lg:w-3/5">
+          <div className="bg-gray-100 p-4 rounded-md">
+            <Skeleton width={200} height={20} />
+            <Skeleton width={300} height={15} />
+          </div>
+
+          <div className="mt-6">
+            {[...Array(3)].map((_, index) => (
+              <div
+                key={index}
+                className="flex items-center border p-4 rounded-md mb-4"
+              >
+                <Skeleton width={100} height={100} />
+                <div className="flex-1 ml-4">
+                  <Skeleton width={200} height={20} />
+                  <Skeleton width={100} height={15} />
+                  <Skeleton width={60} height={20} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Right Section Skeleton */}
+        <div className="lg:w-2/5 mt-8 lg:mt-0">
+          <div className="bg-gray-100 p-4 rounded-md">
+            <Skeleton width={200} height={20} />
+            <div className="mt-4 space-y-2">
+              {[...Array(4)].map((_, index) => (
+                <div key={index} className="flex justify-between">
+                  <Skeleton width={120} height={15} />
+                  <Skeleton width={60} height={15} />
+                </div>
+              ))}
+              <div className="flex justify-between font-semibold text-lg mt-4">
+                <Skeleton width={120} height={20} />
+                <Skeleton width={60} height={20} />
+              </div>
+              <Skeleton width={"100%"} height={40} />
+              <Skeleton width={"100%"} height={40} />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (isError) {
@@ -200,7 +251,7 @@ const CartPage = () => {
       <div className="container mx-auto p-4 lg:flex lg:space-x-8">
         {/* Left Section */}
         <div className="lg:w-3/5">
-          <div className="bg-gray-100 p-4 rounded-md flex justify-between items-center">
+          {/* <div className="bg-gray-100 p-4 rounded-md flex justify-between items-center">
             <div>
               <p className="font-semibold">
                 Deliver to:{" "}
@@ -212,7 +263,7 @@ const CartPage = () => {
                 Saradhapur Petrol Pump, Angul, Angul H.O, Angul
               </p>
             </div>
-          </div>
+          </div> */}
 
           {/* Product List */}
           <div className="mt-6">
@@ -258,10 +309,17 @@ const CartPage = () => {
                       ₹{item.product?.product_selling_price?.toFixed(2) || 0}
                     </p>
                     <div>
-                      <span className="line-through text-gray-400">
-                        ₹{item.product?.product_price?.toFixed(2) || 0}
-                      </span>{" "}
-                      {item.product?.product_discount || 0}% OFF
+                      {item.product?.product_discount &&
+                      item.product?.product_discount > 0 ? (
+                        <>
+                          <span className="line-through text-gray-400">
+                            MZN {item.product?.product_price?.toFixed(2)}
+                          </span>{" "}
+                          <span className="text-red-600">
+                            {item.product?.product_discount}% OFF
+                          </span>
+                        </>
+                      ) : null}
                     </div>
                   </div>
                   <div className="flex items-center lg:mt-5 md:mt-5 space-x-4">
@@ -325,7 +383,10 @@ const CartPage = () => {
                 <p>₹{(totalAmount + 20).toFixed(2)}</p>
               </div>
               <div className="flex gap-3">
-                <button className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
+                <button
+                  onClick={() => setIsComingSoon(true)}
+                  className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md"
+                >
                   PAY NOW
                 </button>
 

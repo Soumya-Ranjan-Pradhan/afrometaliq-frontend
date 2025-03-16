@@ -9,9 +9,11 @@ import {
 } from "@/Components/ui/popover";
 import { useLogout } from "@/api/auth/queries/authQuery";
 import Link from "next/link";
+import { useGlobalStore } from "@/store/global";
 
 const UserMenu = () => {
   const user = useAuthStore((state) => state.user);
+  const { isComingSoon, setIsComingSoon } = useGlobalStore();
 
   const logoutMutation = useLogout();
 
@@ -49,9 +51,9 @@ const UserMenu = () => {
               Logout
             </button>
             <ul className="text-sm">
-              <Link href="/orders" className="py-1 border-b cursor-pointer">
-                <p>Orders</p>
-              </Link>
+              {/* <Link href="/orders" className="py-1 border-b cursor-pointer"> */}
+                <p className="py-1 border-b cursor-pointer" onClick={() => setIsComingSoon(true)}>Orders</p>
+              {/* </Link> */}
               <Link href="/contact" className="py-1 border-b">
                 <p>Contact Us</p>
               </Link>

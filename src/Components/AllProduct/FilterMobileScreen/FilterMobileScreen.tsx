@@ -11,6 +11,14 @@ import {
 } from "@/Components/ui/drawer";
 import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 
+// interface FilterProductProps {
+//   clearFilters: () => void;
+//   selectedFilter: string | null;
+//   setSelectedFilter: React.Dispatch<React.SetStateAction<string | null>>;
+//   selectedCategories: string[];
+//   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
+// }
+
 interface FilterProductProps {
   clearFilters: () => void;
   selectedFilter: string | null;

@@ -14,7 +14,7 @@ const Consultancy = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
       >
-        <h1 className="text-4xl md:text-6xl font-bold text-blue-500 animate-bounce">
+        <h1 className="text-4xl md:text-6xl font-bold text-blue-500 lg:mt-0 md:mt-12 mt-8 animate-bounce">
           Professional Software Consultancy
         </h1>
         <p className="mt-4 text-lg text-gray-300">

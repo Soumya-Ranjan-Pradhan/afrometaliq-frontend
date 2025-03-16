@@ -9,23 +9,24 @@ import {
 } from "../cartApi";
 
 export const useCartQuery = () => {
-  return useQuery<ApiResponse<{ cart: Cart[] }>, Error>({
-    queryKey: ["carts"],
-    queryFn: () => getCart(),
+  return useQuery<ApiResponse<{cart: Cart[]}>, Error>({
+    queryKey: ['cart'], // ✅ Fixed query key (previously 'carts')
+    queryFn: getCart,
   });
 };
 
 // Add to cart mutation
+
 export const useAddToCartMutation = () => {
   const queryClient = useQueryClient();
   return useMutation<
-    ApiResponse<{ cart: Cart[] }>,
+    ApiResponse<{cart: Cart[]}>,
     Error,
-    { productId: string; quantity: number }
+    {productId: string; quantity: number}
   >({
-    mutationFn: ({ productId, quantity }) => addToCart({ productId, quantity }),
+    mutationFn: ({productId, quantity}) => addToCart({productId, quantity}),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart"] });
+      queryClient.invalidateQueries({queryKey: ['cart']}); // ✅ Refresh cart instantly
     },
   });
 };
