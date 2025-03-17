@@ -19,6 +19,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const CartPage = () => {
+  // 120.00 add decimal format 
   const { data, isLoading, isError, refetch } = useCartQuery();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -306,7 +307,7 @@ const CartPage = () => {
                   </p>
                   <div className="lg:float-right md:float-right">
                     <p className="text-red-500 font-semibold text-[1.2rem]">
-                      ₹{item.product?.product_selling_price?.toFixed(2) || 0}
+                      MZN {item.product?.product_selling_price?.toFixed(2) || 0}
                     </p>
                     <div>
                       {item.product?.product_discount &&
@@ -364,11 +365,11 @@ const CartPage = () => {
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
                 <p>Total MRP</p>
-                <p>₹{totalMRP.toFixed(2)}</p>
+                <p>MZN {totalMRP.toFixed(2)}</p> 
               </div>
               <div className="flex justify-between">
                 <p>Discount on MRP</p>
-                <p className="text-green-500">-₹{totalDiscount.toFixed(2)}</p>
+                <p className="text-green-500">-MZN {totalDiscount.toFixed(2)}</p>
               </div>
               <div className="flex justify-between">
                 <p>Shipping Fee</p>
@@ -376,11 +377,11 @@ const CartPage = () => {
               </div>
               <div className="flex justify-between">
                 <p>Platform Fee</p>
-                <p>₹20</p>
+                <p>MZN20</p>
               </div>
               <div className="flex justify-between font-semibold text-lg mt-4">
                 <p>Total Amount</p>
-                <p>₹{(totalAmount + 20).toFixed(2)}</p>
+                <p>MZN {(totalAmount + 20).toFixed(2)}</p>
               </div>
               <div className="flex gap-3">
                 <button

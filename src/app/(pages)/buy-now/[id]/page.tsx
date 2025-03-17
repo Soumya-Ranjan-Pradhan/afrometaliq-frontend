@@ -94,11 +94,11 @@ const page = () => {
                   <p className="text-gray-500 text-sm">{product.seller}</p>
                   <div className="float-right">
                     <p className="text-red-500 font-semibold text-[1.5rem]">
-                    ₹{product.price.toFixed(2)}
+                    MZN{product.price.toFixed(2)}
                     </p>
                     <div className="">
                       <span className="line-through text-gray-400">
-                        ₹{product.originalPrice}
+                        MZN{product.originalPrice}
                       </span>{" "}
                       {product.discount}% OFF
                     </div>
@@ -125,11 +125,11 @@ const page = () => {
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
                 <p>Total MRP</p>
-                <p>₹6298</p>
+                <p>MZN6298</p>
               </div>
               <div className="flex justify-between">
                 <p>Discount on MRP</p>
-                <p className="text-green-500">-₹4628</p>
+                <p className="text-green-500">-MZN4628</p>
               </div>
               <div className="flex justify-between">
                 <p>Shipping Fee</p>
@@ -137,11 +137,11 @@ const page = () => {
               </div>
               <div className="flex justify-between">
                 <p>Platform Fee</p>
-                <p>₹20</p>
+                <p>MZN20</p>
               </div>
               <div className="flex justify-between font-semibold text-lg mt-4">
                 <p>Total Amount</p>
-                <p>₹1690</p>
+                <p>MZN1690</p>
               </div>
               <button className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
                 PAY NOW

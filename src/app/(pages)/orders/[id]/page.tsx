@@ -108,7 +108,7 @@ const SingleOrder = () => {
                   Quantity: {product.quantity}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  Price: ₹
+                  Price: MZN
                   {product.product?.product_selling_price?.toFixed(2) || 0}
                 </p>
               </div>
@@ -139,7 +139,7 @@ const SingleOrder = () => {
       <div className="bg-white p-6 rounded-lg shadow-md flex justify-between items-center">
         <h2 className="text-lg font-semibold">Total Amount</h2>
         <p className="text-xl font-bold text-green-600">
-          ₹{order.totalAmount.toFixed(2)}
+          MZN{order.totalAmount.toFixed(2)}
         </p>
       </div>
     </div>

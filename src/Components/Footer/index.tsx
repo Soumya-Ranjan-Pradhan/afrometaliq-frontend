@@ -1,5 +1,6 @@
 // components/Footer.tsx
 
+import Link from "next/link";
 import React from "react";
 import { FaDiscord, FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 
@@ -34,81 +35,86 @@ const Footer = () => {
 
         {/* Product Section */}
         <div>
-          <h3 className="text-xl font-bold mb-4">Product</h3>
+          <h3 className="text-xl font-bold mb-4">Afro MetaliQ</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#" className="hover:underline">
-                Home
-              </a>
+              <Link href="/about" className="hover:underline">
+                About
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Product
-              </a>
+              <Link href="/gallery" className="hover:underline">
+                Gallery
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Processing
-              </a>
+              <Link href="/contact" className="hover:underline">
+                Contact Us
+              </Link>
             </li>
-            <li>
-              <a href="#" className="hover:underline">
-                Fencing
-              </a>
-            </li>
+            {/* <li>
+              <Link href="/consultancy" className="hover:underline">
+                IT Solution
+              </Link>
+            </li> */}
           </ul>
         </div>
 
         {/* Processing Section */}
         <div>
-          <h3 className="text-xl font-bold mb-4">Processing</h3>
+          <h3 className="text-xl font-bold mb-4">Fabrication</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#" className="hover:underline">
-                Tags
-              </a>
+              <Link href="/fabrication" className="hover:underline">
+                Industrial shed
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                API
-              </a>
+              <Link href="/fabrication" className="hover:underline">
+                Commercial Building
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Places
-              </a>
+              <Link href="/fabrication" className="hover:underline">
+                Residential Building
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Creative Markets
-              </a>
+              <Link href="/fabrication" className="hover:underline">
+                Pre- Fav Structure
+              </Link>
+            </li>
+            <li>
+              <Link href="/fabrication" className="hover:underline">
+                Turnkey Project
+              </Link>
             </li>
           </ul>
         </div>
 
         {/* Fencing Section */}
         <div>
-          <h3 className="text-xl font-bold mb-4">Fencing</h3>
+          <h3 className="text-xl font-bold mb-4">Consultancy</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#" className="hover:underline">
-                Community
-              </a>
+              <Link href="/consultancy" className="hover:underline">
+                IT Solution
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Designers
-              </a>
+              <Link href="/consultancy" className="hover:underline">
+                Legal Documentation
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Support
-              </a>
+              <Link href="/consultancy" className="hover:underline">
+                Expatriate & visa Management
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:underline">
-                Terms of service
-              </a>
+              <Link href="/consultancy" className="hover:underline">
+                Accountancy
+              </Link>
             </li>
           </ul>
         </div>

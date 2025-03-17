@@ -26,7 +26,7 @@ function CategoryMenu() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="hidden lg:flex items-center gap-3 cursor-pointer w-52 pl-3 pr-3 pt-1 pb-1 ml-4"
+        className="hidden lg:flex items-center gap-3 cursor-pointer w-56 pl-3 pr-3 pt-1 pb-1 ml-4"
         disabled={isLoading}
       >
         {isLoading ? (
@@ -39,7 +39,7 @@ function CategoryMenu() {
           {t("shop_by_category")}
         </p>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white mt-2 w-52 z-50">
+      <DropdownMenuContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white mt-2 w-[16rem] z-50">
         {data?.data?.menu &&
           data?.data?.menu.length > 0 &&
           data.data.menu.map((item) => (
@@ -67,11 +67,11 @@ const MenuItems = ({
   return data.children.length > 0 ? (
     // Sub-dropdown menu
     <DropdownMenuSub>
-      <DropdownMenuSubTrigger className="hover:text-black data-[state=open]:text-black">
+      <DropdownMenuSubTrigger className="hover:text-black data-[state=open]:text-black w-60 ml-1">
         <DropdownMenuLabel>{data.category_name}</DropdownMenuLabel>
       </DropdownMenuSubTrigger>
       <DropdownMenuPortal>
-        <DropdownMenuSubContent className="ml-1 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white">
+        <DropdownMenuSubContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white  w-[16rem] z-50">
           {data.children.map((item) => (
             <MenuItems key={item._id} data={item} router={router} />
           ))}

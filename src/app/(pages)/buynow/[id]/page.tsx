@@ -81,13 +81,13 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                 </p>
                 <div className="lg:float-right md:float-right">
                   <p className="text-red-500 font-semibold text-[1.2rem]">
-                    ₹{product?.product_selling_price?.toFixed(2) || 0}
+                    MZN{product?.product_selling_price?.toFixed(2) || 0}
                   </p>
                   <div>
                     <span className="line-through text-gray-400">
                       {" "}
                       <span className="line-through text-gray-400">
-                        ₹{product?.product_price?.toFixed(2) || 0}
+                        MZN{product?.product_price?.toFixed(2) || 0}
                       </span>{" "}
                       {product?.product_discount || 0}% OFF
                     </span>
@@ -116,7 +116,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
                 <p>Total MRP</p>
-                <p>₹120</p>
+                <p>MZN120</p>
               </div>
               <div className="flex justify-between">
                 <p>Discount on MRP</p>
@@ -128,11 +128,11 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
               </div>
               <div className="flex justify-between">
                 <p>Platform Fee</p>
-                <p>₹20</p>
+                <p>MZN20</p>
               </div>
               <div className="flex justify-between font-semibold text-lg mt-4">
                 <p>Total Amount</p>
-                <p>₹100</p>
+                <p>MZN100</p>
               </div>
               <div className="flex gap-3">
                 <button onClick={() => setIsComingSoon(true)} className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">

@@ -81,7 +81,7 @@ const OrdersPage = () => {
                   </span>
                 </p>
                 <p className="text-sm text-gray-500">
-                  Price: ₹
+                  Price: MZN
                   {product.product?.product_selling_price?.toFixed(2) || 0}
                 </p>
               </div>
