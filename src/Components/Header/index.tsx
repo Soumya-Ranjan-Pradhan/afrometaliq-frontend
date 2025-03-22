@@ -170,7 +170,7 @@ const Header = () => {
             href="/consultancy"
             className="relative group hover:text-gray-300"
           >
-            {/* {t("menu.products")} */} Consultancy
+            {/* {t("menu.products")} */} {t("consultancy")}
             <span className="absolute left-0 bottom-0 w-full h-[2px] bg-white scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300 ease-in-out"></span>
           </Link>
 

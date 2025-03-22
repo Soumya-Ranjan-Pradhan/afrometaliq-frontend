@@ -52,7 +52,15 @@ const UserMenu = () => {
             </button>
             <ul className="text-sm">
               {/* <Link href="/orders" className="py-1 border-b cursor-pointer"> */}
-                <p className="py-1 border-b cursor-pointer" onClick={() => setIsComingSoon(true)}>Orders</p>
+              <Link href="/profile">
+                <p className="py-1 border-b cursor-pointer">Account</p>
+              </Link>
+              <p
+                className="py-1 border-b cursor-pointer"
+                onClick={() => setIsComingSoon(true)}
+              >
+                Orders
+              </p>
               {/* </Link> */}
               <Link href="/contact" className="py-1 border-b">
                 <p>Contact Us</p>

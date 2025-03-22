@@ -20,13 +20,12 @@ import { IoMenu } from "react-icons/io5";
 function CategoryMenu() {
   const { data, isLoading } = useCategoryMenu();
   const router = useRouter();
-
   const { t } = useTranslation();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
-        className="hidden lg:flex items-center gap-3 cursor-pointer w-56 pl-3 pr-3 pt-1 pb-1 ml-4"
+        className="hidden lg:flex items-center gap-3 cursor-pointer w-56 pl-3 pr-3 py-2 ml-4 bg-transparent"
         disabled={isLoading}
       >
         {isLoading ? (
@@ -39,12 +38,11 @@ function CategoryMenu() {
           {t("shop_by_category")}
         </p>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white mt-2 w-[16rem] z-50">
-        {data?.data?.menu &&
-          data?.data?.menu.length > 0 &&
-          data.data.menu.map((item) => (
-            <MenuItems key={item._id} data={item} router={router} />
-          ))}
+
+      <DropdownMenuContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white  w-[16rem] p-4  z-50">
+        {data?.data?.menu?.map((item) => (
+          <MenuItems key={item._id} data={item} router={router} />
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );
@@ -60,18 +58,19 @@ const MenuItems = ({
   router: ReturnType<typeof useRouter>;
 }) => {
   const handleClick = () => {
-    // Navigate to the category's dynamic route
     router.push(`/category/${data._id}`);
   };
 
   return data.children.length > 0 ? (
-    // Sub-dropdown menu
     <DropdownMenuSub>
-      <DropdownMenuSubTrigger className="hover:text-black data-[state=open]:text-black w-60 ml-1">
-        <DropdownMenuLabel>{data.category_name}</DropdownMenuLabel>
+      <DropdownMenuSubTrigger className="hover:text-black data-[state=open]:text-black px-3 py-2 w-full flex items-center">
+        <DropdownMenuLabel className="w-full">
+          {data.category_name}
+        </DropdownMenuLabel>
       </DropdownMenuSubTrigger>
+
       <DropdownMenuPortal>
-        <DropdownMenuSubContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white  w-[16rem] z-50">
+        <DropdownMenuSubContent className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-[16rem] min-w-[16rem] z-50">
           {data.children.map((item) => (
             <MenuItems key={item._id} data={item} router={router} />
           ))}
@@ -79,9 +78,13 @@ const MenuItems = ({
       </DropdownMenuPortal>
     </DropdownMenuSub>
   ) : (
-    // Leaf menu item
-    <DropdownMenuItem onClick={handleClick} className="hover:bg-gray-700">
-      <DropdownMenuLabel>{data.category_name}</DropdownMenuLabel>
+    <DropdownMenuItem
+      onClick={handleClick}
+      className="hover:bg-gray-700 px-3 py-2 w-full flex items-center"
+    >
+      <DropdownMenuLabel className="w-full">
+        {data.category_name}
+      </DropdownMenuLabel>
     </DropdownMenuItem>
   );
 };

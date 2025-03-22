@@ -111,7 +111,7 @@ const AllProduct = () => {
           Browse Products
         </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6">
-          {Array.from({ length: 8 }).map((_, index) => (
+          {Array.from({ length: 10 }).map((_, index) => (
             <ProductSkeleton key={index} />
           ))}
         </div>
@@ -144,7 +144,7 @@ const AllProduct = () => {
 
         {/* Category and Discount Filter */}
         <div className="">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mt-5 gap-6">
             <>
               <FilterProduct
                 clearFilters={clearFilters}
@@ -185,7 +185,7 @@ const AllProduct = () => {
 
                   {/* Product Info */}
                   <div className="mt-4 pb-[6rem] relative">
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="lg:text-[0.8rem] md:text-[0.8rem] text-[0.8rem] font-semibold text-gray-800">
                       {product.product_name}
                     </h3>
                     <div className="text-lg font-bold text-purple-600">

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import type { Address as AddressType } from "@/api/address/addressApi";
 import { useAuthStore } from "@/store/auth";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const Address = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +23,7 @@ const Address = () => {
 
   const { data, isLoading, isError, refetch } = useCartQuery();
   const { mutate: deleteAddress } = useDeleteAddress();
+  const { t, i18n } = useTranslation();
 
   const user = useAuthStore((state) => state.user);
 
@@ -99,13 +101,13 @@ const Address = () => {
             checked={selectedOption === "delivery"}
             onChange={() => setSelectedOption("delivery")}
           />
-          <span className="text-gray-600">Choose Delivery Address</span>
+          <span className="text-gray-600">{t("choose_warehouse")}</span>
         </div>
 
         {selectedOption === "delivery" && (
           <>
             <h1 className="text-2xl font-semibold mb-4">
-              Select Delivery Address
+             {t("choose_delivery_address")}
             </h1>
 
             {addresses.map((address) => (
@@ -142,14 +144,14 @@ const Address = () => {
                     className="px-4 py-2 border border-gray-400 rounded-lg"
                     onClick={() => handleDeleteAddress(address._id)}
                   >
-                    Remove
+                    {t("remove")}
                   </button>
 
                   <button
                     onClick={() => openModal(true, address)}
                     className="px-4 py-2 border border-gray-400 rounded-lg"
                   >
-                    Edit
+                    {t("edit")}
                   </button>
                 </div>
               </div>
@@ -159,7 +161,7 @@ const Address = () => {
               onClick={() => openModal(false)}
               className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-4 rounded-md"
             >
-              + Add New Address
+              {t("add_new_address")}
             </button>
           </>
         )}

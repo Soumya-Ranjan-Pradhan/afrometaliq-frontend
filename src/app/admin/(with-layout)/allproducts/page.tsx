@@ -69,18 +69,18 @@ const AllProducts = () => {
                   <th className="p-4 text-sm whitespace-nowrap">
                     Product Code
                   </th>
-                  <th className="p-4 text-sm whitespace-nowrap">Categories</th>
+                  {/* <th className="p-4 text-sm whitespace-nowrap">Categories</th> */}
                   <th className="p-4 text-sm">Unit</th>
                   <th className="p-4 text-sm">Price</th>
                   <th className="p-4 text-sm">Discount</th>
                   <th className="p-4 text-sm whitespace-nowrap">
                     Selling Price
                   </th>
-                  <th className="p-4 text-sm">Description</th>
-                  <th className="p-4 text-sm">Size</th>
-                  <th className="p-4 text-sm">Thickness</th>
-                  <th className="p-4 text-sm">Length</th>
-                  <th className="p-4 text-sm">Width</th>
+                  {/* <th className="p-4 text-sm">Description</th> */}
+                  {/* <th className="p-4 text-sm">Size</th>
+                  <th className="p-4 text-sm">Thickness</th> */}
+                  {/* <th className="p-4 text-sm">Length</th> */}
+                  {/* <th className="p-4 text-sm">Width</th> */}
                   <th className="p-4 text-sm text-center">Actions</th>
                 </tr>
               </thead>
@@ -100,22 +100,22 @@ const AllProducts = () => {
                     </td>
                     <td className="p-4 truncate">{product.product_name}</td>
                     <td className="p-4">{product.product_code}</td>
-                    <td className="p-4">
+                    {/* <td className="p-4">
                       {product.category
                         .map((cat: any) => cat.category_name)
                         .join(", ")}
-                    </td>
+                    </td> */}
                     <td className="p-4">
                       {product.product_unit?.unit_name || "N/A"}
                     </td>
                     <td className="p-4">{product.product_price}</td>
                     <td className="p-4">{product.product_discount}%</td>
                     <td className="p-4">{product.product_selling_price}</td>
-                    <td className="p-4">{product.product_description}</td>
-                    <td className="p-4">{product.product_size}</td>
+                    {/* <td className="p-4">{product.product_description}</td> */}
+                    {/* <td className="p-4">{product.product_size}</td>
                     <td className="p-4">{product.product_thickness}</td>
                     <td className="p-4">{product.product_length}</td>
-                    <td className="p-4">{product.product_width}</td>
+                    <td className="p-4">{product.product_width}</td> */}
                     <td className="border px-4 py-2 text-center text-sm">
                       <div className="flex justify-center space-x-2">
                         <Link

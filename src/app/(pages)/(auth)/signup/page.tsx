@@ -114,13 +114,13 @@ const SignUp = () => {
               height={200}
             />
             <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-center lg:text-left">
-              Sign Up to Afrometaliq
+              Sign Up to AfroMetaliQ
             </h1>
             <p className="mt-4 text-base lg:text-lg text-center lg:text-left">
-              Welcome to Afrometaliq! Join our community to explore a world of
+              Welcome to AfroMetaliQ! Join our community to explore a world of
               possibilities. Sign up today and enjoy exclusive benefits,
               personalized experiences, and seamless access to everything
-              Afrometaliq has to offer. Your journey starts here!
+              AfroMetaliQ has to offer. Your journey starts here!
             </p>
 
             <Image
@@ -135,7 +135,7 @@ const SignUp = () => {
           {/* Right Side - Signup Form */}
           <div className="w-full bg-white rounded-lg p-6 lg:p-10 shadow-md mt-6 lg:mt-0">
             <h2 className="text-2xl lg:text-3xl font-bold text-gray-800 text-center lg:text-left">
-              Welcome to <span className="text-blue-500">AFRO METALIQ</span>
+              Welcome to <span className="text-blue-500">AfroMetaliQ</span>
             </h2>
             <h3 className="mt-2 text-xl lg:text-2xl font-semibold text-gray-600 text-center lg:text-left">
               Sign up
@@ -170,7 +170,7 @@ const SignUp = () => {
                     onChange={(e) =>
                       setFormData({ ...formData, phoneNumber: e.target.value })
                     }
-                    placeholder="Enter mobile number +258 xxx xxx xxx"
+                    placeholder="+258 xxx xxx xxx"
                     className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>

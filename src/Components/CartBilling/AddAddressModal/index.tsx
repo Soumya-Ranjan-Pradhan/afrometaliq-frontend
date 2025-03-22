@@ -6,6 +6,7 @@ import Modal from "react-modal";
 import { FaTimes } from "react-icons/fa";
 import { useCreateAddress, useUpdateAddress } from "@/api/address/queries/useAddressQuery";
 import { toast } from "react-toastify";
+import { t } from "i18next";
 
 interface AddAddressModalProps {
   isOpen: boolean;
@@ -112,7 +113,7 @@ const AddAddressModal: React.FC<AddAddressModalProps> = ({
       </div>
 
       <h3 className="text-sm font-semibold text-gray-600 mb-3">
-        CONTACT DETAILS
+        {t("contact_details")}
       </h3>
       <input
         type="text"

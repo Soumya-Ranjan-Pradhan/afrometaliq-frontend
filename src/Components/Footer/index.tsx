@@ -1,22 +1,19 @@
 // components/Footer.tsx
-
+"use client";
 import Link from "next/link";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaDiscord, FaInstagram, FaFacebook, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <footer className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-10">
-      <div className="max-w-[85rem] mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className=" mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* About Us Section */}
-        <div>
-          <h3 className="text-xl font-bold mb-4">About us</h3>
-          <p className="text-gray-300 mb-6">
-            Your success is our goal. Your satisfaction is our motivation, we
-            will try our best to provide the best of us. We are always trying to
-            be up to date and observe market developments, we look forward to
-            hearing from you!
-          </p>
+        <div className="lg:px-7 border border-gray-300 lg:py-3 md:px-6 md:py-3 px-5 py-2">
+          <h3 className="text-xl font-bold mb-4">{t("menu.about")}</h3>
+          <p className="text-gray-300 mb-6 lg:w-[100%]">{t("about_des")}</p>
           <div className="flex space-x-4">
             <a href="#" aria-label="Discord">
               <FaDiscord size={24} />
@@ -34,22 +31,22 @@ const Footer = () => {
         </div>
 
         {/* Product Section */}
-        <div>
+        <div className=" lg:px-7 border border-gray-300 lg:py-3 md:px-6 md:py-3 px-5 py-2">
           <h3 className="text-xl font-bold mb-4">Afro MetaliQ</h3>
           <ul className="space-y-2">
             <li>
               <Link href="/about" className="hover:underline">
-                About
+                {t("menu.about")}
               </Link>
             </li>
             <li>
               <Link href="/gallery" className="hover:underline">
-                Gallery
+                {t("menu.gallery")}
               </Link>
             </li>
             <li>
               <Link href="/contact" className="hover:underline">
-                Contact Us
+                {t("menu.contact_us")}
               </Link>
             </li>
             {/* <li>
@@ -61,59 +58,59 @@ const Footer = () => {
         </div>
 
         {/* Processing Section */}
-        <div>
-          <h3 className="text-xl font-bold mb-4">Fabrication</h3>
+        <div className="lg:px-7 border border-gray-300 lg:py-3 md:px-6 md:py-3 px-5 py-2">
+          <h3 className="text-xl font-bold mb-4"> {t("construction")}</h3>
           <ul className="space-y-2">
             <li>
               <Link href="/fabrication" className="hover:underline">
-                Industrial shed
+                {t("industrial")}
               </Link>
             </li>
             <li>
               <Link href="/fabrication" className="hover:underline">
-                Commercial Building
+                {t("commercial_building")}
               </Link>
             </li>
             <li>
               <Link href="/fabrication" className="hover:underline">
-                Residential Building
+                {t("residential_building")}
               </Link>
             </li>
             <li>
               <Link href="/fabrication" className="hover:underline">
-                Pre- Fav Structure
+                {t("pre-Fab_structure")}
               </Link>
             </li>
             <li>
               <Link href="/fabrication" className="hover:underline">
-                Turnkey Project
+                {t("turnkey_project")}
               </Link>
             </li>
           </ul>
         </div>
 
         {/* Fencing Section */}
-        <div>
-          <h3 className="text-xl font-bold mb-4">Consultancy</h3>
+        <div className="lg:px-7 border border-gray-300 lg:py-3 md:px-6 md:py-3 px-5 py-2">
+          <h3 className="text-xl font-bold mb-4"> {t("consultancy")}</h3>
           <ul className="space-y-2">
             <li>
               <Link href="/consultancy" className="hover:underline">
-                IT Solution
+                {t("it_solution")}
               </Link>
             </li>
             <li>
               <Link href="/consultancy" className="hover:underline">
-                Legal Documentation
+                {t("it_solution")}
               </Link>
             </li>
             <li>
               <Link href="/consultancy" className="hover:underline">
-                Expatriate & visa Management
+                {t("expatriate_management")}
               </Link>
             </li>
             <li>
               <Link href="/consultancy" className="hover:underline">
-                Accountancy
+                {t("accountancy")}
               </Link>
             </li>
           </ul>

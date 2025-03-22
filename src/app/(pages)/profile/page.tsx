@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useEditProfile } from "@/api/auth/queries/authQuery";
+import { useEditProfile, useLogout } from "@/api/auth/queries/authQuery";
 import { useAuthStore } from "@/store/auth";
 import { useRouter } from "next/navigation";
 import {
@@ -12,12 +12,13 @@ import {
   FaSpinner,
 } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useGlobalStore } from "@/store/global";
 
 export default function Profile() {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
   const navigate = useRouter();
-
+  const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -43,13 +44,13 @@ export default function Profile() {
       return;
     }
 
-    token = token.replace(/"/g, ""); // Remove extra quotes
+    token = token.replace(/"/g, ""); 
 
     setIsLoading(true);
     editProfileMutation.mutate(formData, {
       onSuccess: (data) => {
         toast.success(data.message);
-        setUser({ ...user, ...formData }); // Update state immediately
+        setUser({ ...user, ...formData }); 
         setIsModalOpen(false);
         setIsLoading(false);
       },
@@ -61,10 +62,9 @@ export default function Profile() {
     });
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("accessToken");
-    toast.success("Logout successful");
-    navigate.push("/signin");
+  const logoutMutation = useLogout();
+   const handleLogout = () => {
+    logoutMutation.mutate();
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,17 +80,19 @@ export default function Profile() {
       icon: <FaUserEdit />,
       title: "Edit Profile",
       description: "Update your personal information",
-      onClick: () => setIsModalOpen(true),
+      // onClick: () => setIsModalOpen(true),
     },
     {
       icon: <FaMapMarkerAlt />,
       title: "Address",
       description: "Manage your delivery addresses",
+      onClick: () => setComingSoon(true),
     },
     {
       icon: <FaBox />,
       title: "Orders",
       description: "Check your order status",
+      onClick: () => setComingSoon(true),
     },
   ];
 
@@ -194,7 +196,7 @@ export default function Profile() {
               </button>
               <button
                 onClick={handleEditProfile}
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg flex items-center"
+                className="px-4 py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-lg flex items-center"
                 disabled={isLoading}
               >
                 {isLoading && (

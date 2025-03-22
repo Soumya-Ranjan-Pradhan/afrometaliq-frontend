@@ -17,6 +17,7 @@ import { getFromLS } from "@/lib/storage";
 import { useGlobalStore } from "@/store/global";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useTranslation } from "react-i18next";
 
 const CartPage = () => {
   // 120.00 add decimal format 
@@ -29,6 +30,7 @@ const CartPage = () => {
   const { mutate: removeFromCart } = useDeleteFromCartMutation();
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
   const { isComingSoon, setIsComingSoon } = useGlobalStore();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const token = getFromLS("accessToken");
@@ -105,7 +107,7 @@ const CartPage = () => {
       <div className="flex items-center justify-center h-screen">
         <div className="flex flex-col items-center justify-center text-center space-y-6">
           <Image
-            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741003029/hho762f50ln5rqlsbty4.png"
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
             alt="Shopping Bag"
             width={200}
             height={200}
@@ -228,13 +230,13 @@ const CartPage = () => {
           />
           <div className="flex items-center gap-5">
             <p className="text-blue-700 text-[1.2em] font-bold underline font-ui-sans-serif">
-              BAG
+              {t("bag")}
             </p>
             <p className="text-gray-700 text-[1.2em] font-bold font-ui-sans-serif">
-              Address
+              {t("address")}
             </p>
             <p className="text-gray-700 text-[1.2em] font-bold font-ui-sans-serif">
-              Payment
+              {t("payment")}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -360,27 +362,27 @@ const CartPage = () => {
         <div className="lg:w-2/5 mt-8 lg:mt-0">
           <div className="bg-gray-100 p-4 rounded-md">
             <h3 className="font-semibold text-lg">
-              Price Details ({cartItems.length} Items)
+              {t("price_details")} ({cartItems.length} )
             </h3>
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
-                <p>Total MRP</p>
+                <p>{t("total_amount")}</p>
                 <p>MZN {totalMRP.toFixed(2)}</p> 
               </div>
               <div className="flex justify-between">
-                <p>Discount on MRP</p>
+                <p>{t("discount")}</p>
                 <p className="text-green-500">-MZN {totalDiscount.toFixed(2)}</p>
               </div>
-              <div className="flex justify-between">
+              {/* <div className="flex justify-between">
                 <p>Shipping Fee</p>
                 <p>FREE</p>
               </div>
               <div className="flex justify-between">
                 <p>Platform Fee</p>
                 <p>MZN20</p>
-              </div>
+              </div> */}
               <div className="flex justify-between font-semibold text-lg mt-4">
-                <p>Total Amount</p>
+                <p>{t("total_amount")}</p>
                 <p>MZN {(totalAmount + 20).toFixed(2)}</p>
               </div>
               <div className="flex gap-3">
@@ -388,14 +390,14 @@ const CartPage = () => {
                   onClick={() => setIsComingSoon(true)}
                   className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md"
                 >
-                  PAY NOW
+                 {t("pay_now")}
                 </button>
 
                 <button
                   onClick={() => setIsModalOpen(true)}
                   className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md"
                 >
-                  Send Quotation
+                  {t("send_quotation")}
                 </button>
               </div>
             </div>

@@ -131,11 +131,11 @@ const SignIn = () => {
               width={200}
               height={200}
             />
-            <h1 className="text-[1rem] lg:text-4xl font-bold mt-6 text-center lg:text-left">
+            {/* <h1 className="text-[1rem] lg:text-4xl font-bold mt-6 text-center lg:text-left">
               to Afrometaliq
-            </h1>
+            </h1> */}
             <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-center lg:text-left">
-            Sign in  to Afrometaliq
+            Sign in  to AfroMetaliQ
             </h1>
             <p className="mt-4 text-base lg:text-lg text-center lg:text-left">
               Join Afrometaliq, your gateway to limitless possibilities! Sign up
@@ -157,7 +157,7 @@ const SignIn = () => {
           <div className="w-full bg-white rounded-lg p-6 lg:p-10 shadow-md mt-6 lg:mt-0">
             <h2 className="text-[1rem] flex items-center justify-center lg:text-3xl font-bold text-gray-800 text-center lg:text-left">
               Welcome to{" "}
-              <span className="text-blue-500 ml-2"> AFRO METALIQ</span>
+              <span className="text-blue-500 ml-2"> AfroMetaliQ</span>
             </h2>
             {/* <h3 className="mt-2 text-xl lg:text-2xl font-semibold text-gray-600 text-center lg:text-left">
               Sign in
@@ -195,7 +195,7 @@ const SignIn = () => {
                 setFormData({ ...formData, email: e.target.value })
               }
               value={formData.email}
-              placeholder="Username or email or Mobile number +258 xxx xxx xxx"
+              placeholder="+258 xxx xxx xxx"
               className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
 

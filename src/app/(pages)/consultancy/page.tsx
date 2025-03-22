@@ -3,8 +3,10 @@ import React from "react";
 import { FaLaptopCode, FaMobileAlt, FaServer, FaCloud } from "react-icons/fa";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const Consultancy = () => {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col items-center justify-center p-6">
       {/* Hero Section */}
@@ -15,11 +17,10 @@ const Consultancy = () => {
         transition={{ duration: 1 }}
       >
         <h1 className="text-4xl md:text-6xl font-bold text-blue-500 lg:mt-0 md:mt-12 mt-8 animate-bounce">
-          Professional Software Consultancy
+         {t("professional_software_consultancy")}
         </h1>
         <p className="mt-4 text-lg text-gray-300">
-          We build scalable and modern web & mobile applications with
-          cutting-edge technology.
+          {t("professional_software_consultancy_desc")}
         </p>
       </motion.div>
 
@@ -32,33 +33,30 @@ const Consultancy = () => {
       >
         <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
           <FaLaptopCode className="text-blue-500 text-5xl mx-auto" />
-          <h3 className="text-xl font-semibold mt-4">Web Development</h3>
+          <h3 className="text-xl font-semibold mt-4">{t("web_development")}</h3>
           <p className="text-gray-400 mt-2">
-            Modern and responsive websites built with Next.js, React, and
-            TypeScript.
+           {t("web_development_desc")}
           </p>
         </div>
         <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
           <FaMobileAlt className="text-blue-500 text-5xl mx-auto" />
-          <h3 className="text-xl font-semibold mt-4">Mobile Development</h3>
+          <h3 className="text-xl font-semibold mt-4">{t("mobile_development")}</h3>
           <p className="text-gray-400 mt-2">
-            Cross-platform mobile apps using React Native and Angular.
+            {t("mobile_development_desc")}
           </p>
         </div>
         <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
           <FaServer className="text-blue-500 text-5xl mx-auto" />
-          <h3 className="text-xl font-semibold mt-4">Backend Development</h3>
+          <h3 className="text-xl font-semibold mt-4">{t("backend_development")}</h3>
           <p className="text-gray-400 mt-2">
-            Robust and scalable backend with Node.js, Express.js, Nest.js &
-            MongoDB.
+           {t("backend_development_desc")}
           </p>
         </div>
         <div className="p-6 bg-gray-800 rounded-lg shadow-lg hover:scale-105 transition-transform">
           <FaCloud className="text-blue-500 text-5xl mx-auto" />
-          <h3 className="text-xl font-semibold mt-4">Cloud & DevOps</h3>
+          <h3 className="text-xl font-semibold mt-4">{t("cloud_devops")}</h3>
           <p className="text-gray-400 mt-2">
-            AWS, Docker, Kubernetes solutions for seamless deployment and
-            scaling.
+            {t("cloud_devops_desc")}
           </p>
         </div>
       </motion.div>
@@ -70,15 +68,15 @@ const Consultancy = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 1, duration: 1 }}
       >
-        <h2 className="text-3xl font-bold text-blue-500">Get in Touch</h2>
+        <h2 className="text-3xl font-bold text-blue-500">{t("get_in_touch")}</h2>
         <p className="mt-2 text-gray-300">
-          Let’s build your next big project together.
+          {t("get_in_touch_desc")}
         </p>
         <Link
           href="/contact"
           className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg text-lg font-semibold transition"
         >
-          Contact Us
+          {t("contact_us")}
         </Link>
       </motion.div>
     </div>
