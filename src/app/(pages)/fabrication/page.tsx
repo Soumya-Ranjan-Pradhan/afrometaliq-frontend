@@ -1,125 +1,124 @@
 "use client";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
 
-const Fabrication = () => {
-  const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+const services = [
+  {
+    id: 1,
+    title: "Fabrication/ Fabricação",
+    image:
+      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742813186/n6okduselzcne2rmjozf.png",
+  },
+  {
+    id: 2,
+    title: "Industrial Shed/ Armazém",
+    image:
+      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742809148/p3fln6uervru5nffg9l4.png",
+  },
+  {
+    id: 3,
+    title: "Commercial Building",
+    image:
+      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742813244/gdci2owsgd2d4hulwcxp.png",
+  },
+  {
+    id: 4,
+    title: "Erection / Montagem",
+    image:
+      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742813281/md4ct6mn6du8seqr1kst.png",
+  },
+];
 
-  useEffect(() => {
-    const targetDate = new Date("2025-01-01T00:00:00");
-    const timer = setInterval(() => {
-      const now = new Date();
-      const difference = targetDate.getTime() - now.getTime();
-
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-          minutes: Math.floor((difference / (1000 * 60)) % 60),
-          seconds: Math.floor((difference / 1000) % 60),
-        });
-      } else {
-        clearInterval(timer);
-      }
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, []);
-
+export default function ServicesSection() {
   return (
-    <section className="relative">
-      <div className="w-full mx-auto">
-        <div className="w-full md:px-16 px-10 md:pt-16 pt-10 pb-10 bg-gray-900 flex-col justify-end items-center lg:gap-28 md:gap-16 gap-10 inline-flex">
-          <div className="flex-col justify-end items-center  gap-10 flex">
+    <section
+      style={{
+        backgroundImage:
+          "url('https://res.cloudinary.com/dppfr1gjx/image/upload/v1742813864/d75gvvdov3hpyvthpxgv.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      }}
+      className="relative min-h-screen bg-gray-900 mx-auto py-20 px-4 md:px-8"
+    >
+      {/* Background Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+
+      {/* Content Wrapper */}
+      <div className="relative z-10 flex flex-col items-center text-white">
+        {/* Services Section */}
+        <div className="mt-16 flex flex-wrap justify-center gap-6">
+          {services.map((service) => (
+            <div
+              key={service.id}
+              className="flex flex-col items-center w-[250px]"
+            >
+              <div className="relative w-56 h-56">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  width={224}
+                  height={224}
+                  className="object-cover rounded-lg"
+                />
+              </div>
+              {/* <p className="mt-4 text-lg font-semibold text-white">
+                {service.title}
+              </p> */}
+            </div>
+          ))}
+        </div>
+
+        {/* Branding Section */}
+        <div className="w-full flex flex-col md:flex-row items-center justify-between mt-16">
+          {/* Logo and Branding */}
+          <div className="text-center md:text-left flex flex-col items-center md:items-start">
             <Image
-              width={500}
-              height={500}
-              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1734635400/uvjxigxjnrkylhrl6chh.png"
-              alt="pagedone logo image"
-              className="object-cover"
+              src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
+              alt="Afro MetaliQ Logo"
+              width={250}
+              height={250}
+              className="object-contain"
             />
-            <div className="flex-col justify-center items-center gap-10 flex">
-              <div className="flex-col justify-start items-center gap-2.5 flex">
-                <h2 className="text-center text-emerald-400 md:text-6xl text-5xl font-bold font-manrope leading-normal">
-                  Coming Soon
-                </h2>
-                <p className="text-center text-gray-500 text-base font-normal leading-relaxed">
-                  Just 20 days remaining until the big reveal of our new product!
-                </p>
-              </div>
-              <div className="flex items-start justify-center w-full gap-2 count-down-main">
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element days text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.days}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    DAYS
-                  </p>
-                </div>
-                <h3 className="w-3 text-center text-gray-500 text-2xl font-medium font-manrope leading-9">
-                  :
-                </h3>
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element hours text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.hours}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    HRS
-                  </p>
-                </div>
-                <h3 className="w-3 text-center text-gray-500 text-2xl font-medium font-manrope leading-9">
-                  :
-                </h3>
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element minutes text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.minutes}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    MINS
-                  </p>
-                </div>
-                <h3 className="w-3 text-center text-gray-500 text-2xl font-medium font-manrope leading-9">
-                  :
-                </h3>
-                <div className="timer flex flex-col gap-0.5">
-                  <div className="">
-                    <h3 className="countdown-element seconds text-center text-white text-2xl font-bold font-manrope leading-9">
-                      {timeLeft.seconds}
-                    </h3>
-                  </div>
-                  <p className="text-center text-gray-500 text-xs font-normal leading-normal w-full">
-                    SECS
-                  </p>
-                </div>
-              </div>
-              <div className="w-full flex-col justify-center items-center gap-5 flex">
-                <h6 className="text-center text-emerald-400 text-base font-semibold leading-relaxed">
-                  Launched Date: 01, 01, 2025
-                </h6>
-              </div>
+            <h1 className="text-3xl font-bold text-blue-500 mt-4">
+              AFRO METALiQ
+            </h1>
+            <p className="text-lg text-orange-400 font-semibold">
+              THINK BETTER & BUILD BETTER
+            </p>
+            <p className="text-sm text-gray-300 italic mt-1">
+              www.afrometaliq.com
+            </p>
+            <div className="bg-teal-600 px-4 py-2 mt-3 rounded-lg">
+              <span className="text-white font-bold">
+                EMC-Estruturas Metálicas Cumbane, S.U
+              </span>
             </div>
           </div>
-          <p className="text-center text-gray-500 text-sm font-normal leading-snug">
-            Get in touch with us:{" "}
-            <p className="hover:text-gray-100 transition-all duration-700 ease-in-out">
-              soumyapradhan63711@gmail.com
-            </p>
-          </p>
+
+          {/* Key Features Section */}
+          <div className="bg-gray-800 p-6 rounded-lg shadow-lg w-full md:w-[50%] max-w-md mt-16 md:mt-0">
+            <div className="bg-blue-700 text-white px-4 py-2 rounded-t-lg">
+              <h2 className="text-xl font-semibold text-center">
+                KEY FEATURES
+              </h2>
+            </div>
+            <ul className="mt-4 space-y-2">
+              {["1 Year Leakage Proof Warranty",
+                "Best Quality Material",
+                "Civil work (Turnkey Project)",
+                "On-time Project handover ©",
+                "Architectural drawing & Project"].map((feature, index) => (
+                <li
+                  key={index}
+                  className="flex items-center text-yellow-400 font-semibold text-sm"
+                >
+                  <span className="mr-2">🔹</span> {feature}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </section>
   );
-};
-
-export default Fabrication;
+}

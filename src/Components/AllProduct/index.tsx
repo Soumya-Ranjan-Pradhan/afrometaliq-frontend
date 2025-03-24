@@ -144,7 +144,7 @@ const AllProduct = () => {
 
         {/* Category and Discount Filter */}
         <div className="">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 mt-5 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 mt-5 gap-6">
             <>
               <FilterProduct
                 clearFilters={clearFilters}
@@ -185,8 +185,12 @@ const AllProduct = () => {
 
                   {/* Product Info */}
                   <div className="mt-4 pb-[6rem] relative">
-                    <h3 className="lg:text-[0.8rem] md:text-[0.8rem] text-[0.8rem] font-semibold text-gray-800">
+                    <Link key={product._id} href={`/product/${product._id}`} className="lg:text-[0.65rem] md:text-[0.8rem] text-[0.8rem] font-semibold text-gray-800">
                       {product.product_name}
+                    </Link>
+
+                    <h3 className="lg:text-[0.65rem] md:text-[0.8rem] text-[0.8rem] font-semibold text-gray-600">
+                      {product.product_description}
                     </h3>
                     <div className="text-lg font-bold text-purple-600">
                       {user?._id ? (
