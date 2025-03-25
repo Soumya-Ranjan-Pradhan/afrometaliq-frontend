@@ -177,11 +177,6 @@ const Page = ({ params }: { params: { id: string } }) => {
                   className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-lg font-semibold hover:bg-red-600 transition"
                 >
                   <div className="flex items-center justify-center gap-2">
-                    <MdShoppingCartCheckout
-                      size={20}
-                      color="white"
-                      // onClick={() => handleAddToCart(productDetails?._id || "")}
-                    />
                     {loadingIds.includes(productDetails?._id || "") ? (
                       <div className="flex items-center justify-center">
                         <FaSpinner className="animate-spin text-white text-lg" />
@@ -189,6 +184,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                     ) : (
                       t("add_to_cart")
                     )}
+                    <MdShoppingCartCheckout size={25} color="white" />
                   </div>
                 </button>
 

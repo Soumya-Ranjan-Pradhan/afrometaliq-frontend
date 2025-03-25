@@ -27,6 +27,7 @@ import FilterProduct from "./FilterProduct";
 import FilterMobileScreen from "./FilterMobileScreen/FilterMobileScreen";
 import { useTranslation } from "react-i18next";
 import { getFromLS } from "@/lib/storage";
+import { MdShoppingCartCheckout } from "react-icons/md";
 
 interface Product {
   _id: string;
@@ -185,11 +186,15 @@ const AllProduct = () => {
 
                   {/* Product Info */}
                   <div className="mt-4 pb-[6rem] relative">
-                    <Link key={product._id} href={`/product/${product._id}`} className="text-[12px] font-semibold text-gray-800">
+                    <Link
+                      key={product._id}
+                      href={`/product/${product._id}`}
+                      className="text-[12px] font-semibold text-gray-800"
+                    >
                       {product.product_name}
                     </Link>
 
-                    <h3 className="lg:text-[0.65rem] md:text-[0.8rem] text-[0.8rem] font-semibold text-gray-600">
+                    <h3 className="lg:text-[0.65rem] md:text-[11px] text-[11px] font-semibold text-gray-600">
                       {product.product_description}
                     </h3>
                     <div className="text-lg font-bold text-purple-600">
@@ -225,13 +230,23 @@ const AllProduct = () => {
                       onClick={() => handleAddToCart(product._id)}
                       className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                     >
-                      {loadingIds.includes(product._id) ? (
+                      {/* {loadingIds.includes(product._id) ? (
                         <div className="flex items-center justify-center">
                           <FaSpinner className="animate-spin text-white text-lg" />
                         </div>
                       ) : (
                         t("add_to_cart")
-                      )}
+                      )} */}
+                      <div className="flex items-center justify-center gap-2">
+                        {loadingIds.includes(product?._id || "") ? (
+                          <div className="flex items-center justify-center">
+                            <FaSpinner className="animate-spin text-white text-lg" />
+                          </div>
+                        ) : (
+                          t("add_to_cart")
+                        )}
+                        <MdShoppingCartCheckout size={25} color="white" />
+                      </div>
                     </button>
                   </div>
                 </div>
