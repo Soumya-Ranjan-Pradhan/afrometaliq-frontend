@@ -2,35 +2,40 @@
 
 import { useProductById } from "@/api/product/queries/useProductQuery";
 import Address from "@/Components/CartBilling";
+import { useAuthStore } from "@/store/auth";
 import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
 const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
   const { data } = useProductById(params.id);
   const { isComingSoon, setIsComingSoon } = useGlobalStore();
+  const { t, i18n } = useTranslation();
+  const user = useAuthStore((state) => state.user);
 
   const product = data?.data.product;
+
   return (
     <>
       <div className="container mx-auto bg-white shadow-md lg:h-[5em]">
         <div className="lg:flex hidden items-center justify-between mx-[10rem]">
           <Image
-            src="https://res.cloudinary.com/dndq25au1/image/upload/v1729361117/d6zwh0crdjjhmrtzfzkj.jpg"
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1736681131/u75korslf5ye6lxs4tj8.png"
             alt="Arfo Metaliq Logo"
             width={190}
             height={190}
           />
           <div className="flex items-center gap-5">
             <p className="text-blue-700 text-[1.2em] font-bold underline font-ui-sans-serif">
-              BAG
+              {t("bag")}
             </p>
             <p className="text-gray-700 text-[1.2em] font-bold font-ui-sans-serif">
-              Address
+              {t("address")}
             </p>
             <p className="text-gray-700 text-[1.2em] font-bold font-ui-sans-serif">
-              Payment
+              {t("payment")}
             </p>
           </div>
           <div className="flex items-center gap-2">
@@ -48,20 +53,6 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
       <div className="container mx-auto p-4 lg:flex lg:space-x-8">
         {/* Left Section */}
         <div className="lg:w-3/5">
-          {/* <div className="bg-gray-100 p-4 rounded-md flex justify-between items-center">
-            <div>
-              <p className="font-semibold">
-                Deliver to:{" "}
-                <span className="text-[#24246C]">
-                  Soumya Ranjan Pradhan, 759122
-                </span>
-              </p>
-              <p className="text-sm text-gray-600">
-                Saradhapur Petrol Pump, Angul, Angul H.O, Angul
-              </p>
-            </div>
-          </div> */}
-
           {/* Product List */}
           <div className="mt-6">
             <div
@@ -80,17 +71,30 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                   {product?.product_code || "Unknown code"}
                 </p>
                 <div className="lg:float-right md:float-right">
-                  <p className="text-red-500 font-semibold text-[1.2rem]">
-                    MZN{product?.product_selling_price?.toFixed(2) || 0}
-                  </p>
+                  {user?._id ? (
+                    <p className="text-red-500 font-semibold text-[1.2rem]">
+                      MZN{product?.product_selling_price?.toFixed(2) || 0}
+                    </p>
+                  ) : (
+                    <p className="text-sm text-red-500 md:mb-4">
+                      {t("login_to_price")}
+                    </p>
+                  )}
+
                   <div>
-                    <span className="line-through text-gray-400">
-                      {" "}
+                    {user?._id ? (
                       <span className="line-through text-gray-400">
-                        MZN{product?.product_price?.toFixed(2) || 0}
-                      </span>{" "}
-                      {product?.product_discount || 0}% OFF
-                    </span>
+                        {" "}
+                        <span className="line-through text-gray-400">
+                          MZN{product?.product_price?.toFixed(2) || 0}
+                        </span>{" "}
+                        {product?.product_discount || 0}% OFF
+                      </span>
+                    ) : (
+                      <p className="text-sm text-red-500 md:mb-4">
+                        {t("login_to_price")}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="flex items-center lg:mt-5 md:mt-5 space-x-4">
@@ -112,35 +116,66 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
         {/* Right Section */}
         <div className="lg:w-2/5 mt-8 lg:mt-0">
           <div className="bg-gray-100 p-4 rounded-md">
-            <h3 className="font-semibold text-lg">Price Details (1 Items)</h3>
+            <h3 className="font-semibold text-lg"> {t("price_details")}</h3>
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
-                <p>Total MRP</p>
-                <p>MZN120</p>
+                <p>
+                  <p>{t("total_amount")}</p>
+                </p>
+                {user?._id ? (
+                  <span className="text-sm font-bold text-gray-700">
+                    MZN {product?.product_selling_price}
+                  </span>
+                ) : (
+                  <p className="text-sm text-red-500 md:mb-4">
+                    {t("login_to_price")}
+                  </p>
+                )}
               </div>
               <div className="flex justify-between">
-                <p>Discount on MRP</p>
-                <p className="text-green-500">-120</p>
-              </div>
-              <div className="flex justify-between">
-                <p>Shipping Fee</p>
-                <p>FREE</p>
-              </div>
-              <div className="flex justify-between">
-                <p>Platform Fee</p>
-                <p>MZN20</p>
+                <p>{t("discount")}</p>
+                {user?._id ? (
+                  <span className="text-sm font-bold text-gray-700">
+                    MZN{" "}
+                    <span className="text-green-500">
+                      -{product?.product_discount}
+                    </span>
+                  </span>
+                ) : (
+                  <p className="text-sm text-red-500 md:mb-4">
+                    {t("login_to_price")}
+                  </p>
+                )}
               </div>
               <div className="flex justify-between font-semibold text-lg mt-4">
-                <p>Total Amount</p>
-                <p>MZN100</p>
+                <p>{t("total_amount")}</p>
+                {user?._id ? (
+                  <span className="text-sm font-bold text-gray-700">
+                    MZN{" "}
+                    {(
+                      (product?.product_selling_price || 0) - // Use selling price here
+                      ((product?.product_selling_price || 0) *
+                        (product?.product_discount || 0)) /
+                        100
+                    ).toFixed(2)}
+                  </span>
+                ) : (
+                  <p className="text-sm text-red-500 md:mb-4">
+                    {t("login_to_price")}
+                  </p>
+                )}
               </div>
+
               <div className="flex gap-3">
-                <button onClick={() => setIsComingSoon(true)} className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
-                  PAY NOW
+                <button
+                  onClick={() => setIsComingSoon(true)}
+                  className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md"
+                >
+                  {t("pay_now")}
                 </button>
 
                 <button className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md">
-                  Send Quotation
+                  {t("send_quotation")}
                 </button>
               </div>
             </div>

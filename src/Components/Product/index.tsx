@@ -61,7 +61,7 @@ const Product = () => {
 
   if (isLoading)
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {Array.from({ length: 8 }).map((_, index) => (
           <ProductSkeletons key={index} />
         ))}
@@ -80,7 +80,7 @@ const Product = () => {
       <h1 className="text-center text-3xl font-semibold mb-8">
         {t("product_browser")}
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
         {filteredProducts?.map((product) => (
           <div
             key={product._id}

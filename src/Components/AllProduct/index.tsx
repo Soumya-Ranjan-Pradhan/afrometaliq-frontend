@@ -54,7 +54,7 @@ const AllProduct = () => {
       ? selectedCategories.join(",")
       : undefined,
     page: pageNumber,
-    limit: 7,
+    limit: 17,
   });
   const { mutate: addToCart } = useAddToCartMutation();
 

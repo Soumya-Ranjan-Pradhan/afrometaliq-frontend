@@ -10,6 +10,7 @@ import { MdOutlinePhone } from "react-icons/md";
 import { FaCogs } from "react-icons/fa";
 import { FaInfoCircle } from "react-icons/fa";
 import { FaHandshake } from "react-icons/fa";
+import { t } from "i18next";
 
 type CategoryMenu = {
   _id: string;
@@ -182,7 +183,7 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
       >
         <FaInfoCircle size={15} className="rotate-0" />
         <Link href="/about" onClick={closeDrawer}>
-          <p className="text-[1rem] md:text-[1.8rem] font-semibold">About</p>
+          <p className="text-[1rem] md:text-[1.8rem] font-semibold">{t("menu.about")}</p>
         </Link>
       </motion.div>
 
@@ -194,7 +195,7 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
         <FaCogs size={20} className="rotate-0" />
         <Link href="/fabrication" onClick={closeDrawer}>
           <p className="text-[1rem] md:text-[1.8rem] font-semibold">
-            Fabrication
+          {t("menu.fabrication")}
           </p>
         </Link>
       </motion.div>
@@ -207,7 +208,7 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
         <FaHandshake size={20} className="rotate-0" />
         <Link href="/consultancy" onClick={closeDrawer}>
           <p className="text-[1rem] md:text-[1.8rem] font-semibold">
-            Consultancy
+          {t("consultancy")}
           </p>
         </Link>
       </motion.div>
@@ -219,7 +220,7 @@ const Categories: React.FC<{ closeDrawer: () => void }> = ({ closeDrawer }) => {
       >
         <MdOutlinePhone size={20} className="rotate-0" />
         <Link href="/contact" onClick={closeDrawer}>
-          <p className="text-[1rem] md:text-[1.8rem] font-semibold">Contact</p>
+          <p className="text-[1rem] md:text-[1.8rem] font-semibold">{t("menu.contact_us")}</p>
         </Link>
       </motion.div>
     </motion.div>

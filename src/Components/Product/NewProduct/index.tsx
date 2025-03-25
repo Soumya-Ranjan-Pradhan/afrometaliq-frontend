@@ -74,7 +74,7 @@ const NewArrivingProductCarousel: React.FC = () => {
 
   if (isLoading)
     return (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
         {Array.from({ length: 10 }).map((_, index) => (
           <CarouselSkeleton key={index} />
         ))}
@@ -98,7 +98,7 @@ const NewArrivingProductCarousel: React.FC = () => {
           breakpoints={{
             640: { slidesPerView: 2 },
             768: { slidesPerView: 3 },
-            1024: { slidesPerView: 4 },
+            1024: { slidesPerView: 5 },
           }}
           className="my-8"
         >
@@ -132,35 +132,6 @@ const NewArrivingProductCarousel: React.FC = () => {
                       <FaShareAlt className="text-black hover:text-white h-6 w-6" />
                     </button>
                   </div>
-
-                  {/* <div className="text-sm text-gray-500 mt-1">
-                    {user?._id ? (
-                      <span className="text-lg font-bold text-gray-700">
-                        MZN {product.product_selling_price}{" "}
-                        <span className="bg-blue-200 text-blue-600 text-sm font-bold px-2 py-1 rounded-full">
-                          {product.product_discount}%
-                        </span>
-                      </span>
-                    ) : (
-                      <p className="text-sm text-red-500">
-                        {t("login_to_price")}
-                      </p>
-                    )}
-                  </div> */}
-
-                  {/* <div className="flex items-center">
-                    <span className="text-lg font-bold text-purple-600">
-                      {user?._id ? (
-                        <span className="text-lg line-through text-gray-500 font-bold">
-                          MZN {product.product_price.toLocaleString()}
-                        </span>
-                      ) : (
-                        <p className="text-sm text-red-500">
-                          {t("login_to_price")}
-                        </p>
-                      )}
-                    </span>
-                  </div> */}
 
                   <div className="mt-4 pb-[6rem] relative">
                     <h3 className="text-lg font-semibold text-gray-800">

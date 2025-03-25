@@ -11,11 +11,29 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import Link from "next/link";
 
 const AllProducts = () => {
-  const { data, isLoading, error } = useAllProducts();
+  const [pageNumber, setPageNumber] = useState(1);
+  const { data, isLoading, error } = useAllProducts({
+    page: pageNumber,
+    limit: 10,
+  });
   const { mutate: updateProduct } = useUpdateProduct();
   const { mutate: deleteProduct } = useDeleteProduct();
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+
+  const handleNextPage = () => {
+    // check if next page is available
+    if (!data?.data) return null;
+    if (data?.data?.pagination?.totalPages > pageNumber) {
+      setPageNumber(pageNumber + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pageNumber > 1) {
+      setPageNumber(pageNumber - 1);
+    }
+  };
 
   // Handle Delete Confirmation
   const handleDelete = (product: any) => {
@@ -141,14 +159,17 @@ const AllProducts = () => {
           {/* Pagination */}
           <div className="p-4 bg-gray-50 border-t flex justify-between items-center">
             <p className="text-sm text-gray-600">entries</p>
-            <div className="flex gap-2">
+            <div className="flex gap-2" onClick={handlePrevPage}>
               <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
                 &lt; Prev
               </button>
-              <button className="bg-blue-500 text-white py-1 px-3 rounded-md">
+              {/* <button className="bg-blue-500 text-white py-1 px-3 rounded-md">
                 1
-              </button>
-              <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
+              </button> */}
+              <button
+                className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300"
+                onClick={handleNextPage}
+              >
                 Next &gt;
               </button>
             </div>
