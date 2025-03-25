@@ -134,7 +134,7 @@ const NewArrivingProductCarousel: React.FC = () => {
                   </div>
 
                   <div className="mt-4 pb-[6rem] relative">
-                    <h3 className="text-lg font-semibold text-gray-800">
+                    <h3 className="text-md font-semibold text-gray-800">
                       {product.product_name}
                     </h3>
                     <div className="text-lg font-bold text-purple-600">

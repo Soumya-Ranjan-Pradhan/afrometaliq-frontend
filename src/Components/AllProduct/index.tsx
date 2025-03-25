@@ -185,7 +185,7 @@ const AllProduct = () => {
 
                   {/* Product Info */}
                   <div className="mt-4 pb-[6rem] relative">
-                    <Link key={product._id} href={`/product/${product._id}`} className="lg:text-[0.65rem] md:text-[0.8rem] text-[0.8rem] font-semibold text-gray-800">
+                    <Link key={product._id} href={`/product/${product._id}`} className="text-[12px] font-semibold text-gray-800">
                       {product.product_name}
                     </Link>
 
