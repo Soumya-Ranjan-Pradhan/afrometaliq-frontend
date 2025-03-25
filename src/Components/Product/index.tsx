@@ -119,7 +119,7 @@ const Product = () => {
                     MZN {product.product_selling_price} Sale
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500 md:mb-4">
+                  <p className="text-[10px] text-red-500 md:mb-4">
                     {t("login_to_price")}
                   </p>
                 )}

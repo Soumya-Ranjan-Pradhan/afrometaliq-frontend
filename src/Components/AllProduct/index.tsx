@@ -212,7 +212,7 @@ const AllProduct = () => {
                           </p>
                         </>
                       ) : (
-                        <p className="text-sm text-red-500 md:mb-4">
+                        <p className="text-[10px] text-red-500 md:mb-4">
                           {t("login_to_price")}
                         </p>
                       )}

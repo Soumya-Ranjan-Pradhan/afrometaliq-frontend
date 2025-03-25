@@ -76,7 +76,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                       MZN{product?.product_selling_price?.toFixed(2) || 0}
                     </p>
                   ) : (
-                    <p className="text-sm text-red-500 md:mb-4">
+                    <p className="text-[10px] text-red-500 md:mb-4">
                       {t("login_to_price")}
                     </p>
                   )}
@@ -91,7 +91,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                         {product?.product_discount || 0}% OFF
                       </span>
                     ) : (
-                      <p className="text-sm text-red-500 md:mb-4">
+                      <p className="text-[10px] text-red-500 md:mb-4">
                         {t("login_to_price")}
                       </p>
                     )}
@@ -127,7 +127,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                     MZN {product?.product_selling_price}
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500 md:mb-4">
+                  <p className="text-[10px] text-red-500 md:mb-4">
                     {t("login_to_price")}
                   </p>
                 )}
@@ -142,7 +142,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                     </span>
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500 md:mb-4">
+                  <p className="text-[10px] text-red-500 md:mb-4">
                     {t("login_to_price")}
                   </p>
                 )}
@@ -160,7 +160,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                     ).toFixed(2)}
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500 md:mb-4">
+                  <p className="text-[10px] text-red-500 md:mb-4">
                     {t("login_to_price")}
                   </p>
                 )}

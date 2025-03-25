@@ -134,7 +134,7 @@ const ProductDetail = ({ productId }: { productId: string }) => {
                     </span>
                   </span>
                 ) : (
-                  <p className="text-sm text-red-500">{t("login_to_price")}</p>
+                  <p className="text-[10px] text-red-500">{t("login_to_price")}</p>
                 )}
               </span>
             </div>
