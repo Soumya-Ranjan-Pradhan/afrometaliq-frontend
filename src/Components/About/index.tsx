@@ -11,7 +11,7 @@ const AboutUs = () => {
       <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
         <div className="relative">
           <Image
-            src="https://res.cloudinary.com/datf6laqn/image/upload/v1728803021/lhko7mosdewj51caei25.png"
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1743010598/lg2ep51nzbavfy0guitu.png"
             alt="Experience"
             width={500}
             height={600}

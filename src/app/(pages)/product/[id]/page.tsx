@@ -88,7 +88,7 @@ const Page = ({ params }: { params: { id: string } }) => {
                         height={100}
                         src={image.url}
                         alt={productDetails?.product_name || "Product Image"}
-                        className="object-contain w-full h-[30rem]"
+                        className="object-contain w-full h-[20rem]"
                       />
                     </SwiperSlide>
                   )
@@ -112,7 +112,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
           {/* Product Details */}
           <div className="w-full md:w-1/2">
-            <h1 className="text-2xl font-semibold text-gray-800">
+            <h1 className="text-lg font-semibold text-gray-800">
               {productDetails?.product_name}
             </h1>
 

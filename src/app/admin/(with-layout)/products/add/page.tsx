@@ -394,7 +394,7 @@ const AddProduct = () => {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700">
-                    Product UOM <span className="text-red-500">*</span>
+                    Product Weight <span className="text-red-500">*</span>
                   </label>
                   <input
                     value={product.product_uom}

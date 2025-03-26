@@ -208,7 +208,7 @@ const CartPage = () => {
           />
           <p className="text-xl font-semibold">Your cart is empty.</p>
           <Link
-            href="/signin"
+            href="/product"
             className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white py-2 px-6 rounded-md"
           >
             Add Items to Cart

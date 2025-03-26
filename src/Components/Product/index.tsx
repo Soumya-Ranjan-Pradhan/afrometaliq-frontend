@@ -28,7 +28,10 @@ type Product = {
 
 const Product = () => {
   const router = useRouter();
-  const { data, isLoading, error } = useAllProducts();
+  const { data, isLoading, error } = useAllProducts({
+    // page: 1,
+    limit: 17,
+  });
   const { mutate: addToCart } = useAddToCartMutation();
   const user = useAuthStore((state) => state.user);
   const { t } = useTranslation();
@@ -74,7 +77,7 @@ const Product = () => {
   // Filter products without a discount and limit to 8
   const filteredProducts = data?.data.products
     .filter((product) => product.product_discount === 0)
-    .slice(0, 8);
+    .slice(0, 10);
 
   return (
     <div className="mx-auto p-4">
@@ -162,6 +165,12 @@ const Product = () => {
           </div>
         ))}
       </div>
+
+      <Link href={"/product"}>
+        <button className="mt-7 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold flex items-center  justify-center rounded-md py-2 px-6 mx-auto">
+          View More
+        </button>
+      </Link>
     </div>
   );
 };

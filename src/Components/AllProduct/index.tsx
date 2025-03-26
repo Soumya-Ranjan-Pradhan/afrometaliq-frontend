@@ -124,7 +124,15 @@ const AllProduct = () => {
   // const displayedProducts = filteredProducts.length
   //   ? filteredProducts
   //   : data?.data.products || [];
-  const displayedProducts = data?.data.products || [];
+  // Apply frontend filtering
+  const allProducts = data?.data.products || [];
+
+  const displayedProducts =
+    selectedFilter === "PromotionalProduct"
+      ? allProducts.filter((p) => p.product_discount > 0)
+      : selectedFilter === "BrowserProduct"
+      ? allProducts.filter((p) => p.product_discount === 0)
+      : allProducts;
 
   return (
     <>
@@ -168,7 +176,7 @@ const AllProduct = () => {
                     )}
                     <Link key={product._id} href={`/product/${product._id}`}>
                       <Image
-                        src={product.product_images[0]?.url}
+                        src={product.product_images[0]?.url || ""}
                         alt={product.product_name}
                         width={300}
                         height={200}
@@ -261,10 +269,10 @@ const AllProduct = () => {
         <Pagination>
           <PaginationContent>
             <PaginationItem>
-              <PaginationPrevious onClick={handlePrevPage} />
+              <PaginationPrevious onClick={handlePrevPage} className="cursor-pointer" />
             </PaginationItem>
             <PaginationItem>
-              <PaginationNext onClick={handleNextPage} />
+              <PaginationNext onClick={handleNextPage} className="cursor-pointer" />
             </PaginationItem>
           </PaginationContent>
         </Pagination>

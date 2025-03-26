@@ -10,10 +10,13 @@ import { useAddToCartMutation } from "@/api/cart/query/useCartQuery";
 import { useRouter } from "next/navigation";
 import { getFromLS } from "@/lib/storage";
 import { useState } from "react";
+import { MdShoppingCartCheckout } from "react-icons/md";
+import { useAuthStore } from "@/store/auth";
 
 const RelatedProduct = ({ categories }: { categories: string[] }) => {
   const { t } = useTranslation();
   const router = useRouter();
+  const user = useAuthStore((state) => state.user);
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const {
     data: relatedProductsData,
@@ -62,7 +65,7 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
       {relatedProducts.length === 0 ? (
         <p>No related products available.</p>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4 mt-4">
           {relatedProducts.map((relatedProduct) => (
             <div
               key={relatedProduct._id}
@@ -98,13 +101,21 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
 
               {/* Product Info */}
               <div className="mt-4 pb-[6rem] relative">
-                <h3 className="text-lg font-semibold text-gray-800">
+                <h3 className="text-[12px] font-semibold text-gray-800">
                   {relatedProduct.product_name}
                 </h3>
                 <div className="text-sm text-gray-500">
+                <div className="text-lg font-bold text-purple-600">
+                {user?._id ? (
                   <span className="text-sm font-bold text-gray-700">
-                    MZN {relatedProduct.product_selling_price}
+                    MZN {relatedProduct.product_selling_price} Sale
                   </span>
+                ) : (
+                  <p className="text-[10px] text-red-500 md:mb-4">
+                    {t("login_to_price")}
+                  </p>
+                )}
+              </div>
                 </div>
               </div>
 
@@ -120,13 +131,16 @@ const RelatedProduct = ({ categories }: { categories: string[] }) => {
                   onClick={() => handleAddToCart(relatedProduct._id)}
                   className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                 >
-                  {loadingIds.includes(relatedProduct?._id || "") ? (
-                    <div className="flex items-center justify-center">
-                      <FaSpinner className="animate-spin text-white text-lg" />
-                    </div>
-                  ) : (
-                    t("add_to_cart")
-                  )}
+                   <div className="flex items-center justify-center gap-2">
+                        {loadingIds.includes(relatedProduct?._id || "") ? (
+                          <div className="flex items-center justify-center">
+                            <FaSpinner className="animate-spin text-white text-lg" />
+                          </div>
+                        ) : (
+                          t("add_to_cart")
+                        )}
+                        <MdShoppingCartCheckout size={25} color="white" />
+                      </div>
                 </button>
               </div>
             </div>
