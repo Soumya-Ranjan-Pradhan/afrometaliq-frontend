@@ -15,28 +15,28 @@ const steps = [
     title: "Research",
     description:
       "It is a long established fact that a reader will be distra by the readable content of a page.",
-    icon: <FaSearch className="text-red-500 text-5xl" />,
+    icon: <FaSearch className="text-[rgb(20,161,168)] text-5xl" />,
   },
   {
     id: "02",
     title: "Design",
     description:
       "It is a long established fact that a reader will be distra by the readable content of a page.",
-    icon: <FaPencilRuler className="text-red-500 text-5xl" />,
+    icon: <FaPencilRuler className="text-[rgb(20,161,168)] text-5xl" />,
   },
   {
     id: "03",
     title: "Develop",
     description:
       "It is a long established fact that a reader will be distra by the readable content of a page.",
-    icon: <FaCode className="text-red-500 text-5xl" />,
+    icon: <FaCode className="text-[rgb(20,161,168)] text-5xl" />,
   },
   {
     id: "04",
     title: "Test",
     description:
       "It is a long established fact that a reader will be distra by the readable content of a page.",
-    icon: <FaClipboardCheck className="text-red-500 text-5xl" />,
+    icon: <FaClipboardCheck className="text-[rgb(20,161,168)] text-5xl" />,
   },
 ];
 
@@ -46,7 +46,7 @@ const OurProcess = () => {
       {/* Top Line with Icon */}
       <div className="absolute top-0 flex items-center justify-center w-full">
         <div className="h-[2px] w-3/4 bg-gray-300 relative">
-          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-red-500 w-6 h-6 rounded-full flex items-center justify-center">
+          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-[rgb(20,161,168)] w-6 h-6 rounded-full flex items-center justify-center">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1742981154/wooiewqogm6uhtf4c0qs.png"
               alt="Icon"
@@ -59,7 +59,7 @@ const OurProcess = () => {
       <div className="py-16 px-5 bg-white text-center">
         {/* Section Title */}
         <motion.h3
-          className="text-red-500 text-lg font-semibold"
+          className="text-[rgb(20,161,168)] text-lg font-semibold"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -104,8 +104,8 @@ const OurProcess = () => {
 
               {/* Divider */}
               <div className="mt-2 flex items-center justify-center space-x-2">
-                <span className="w-10 h-1 bg-red-500"></span>
-                <span className="w-4 h-1 bg-red-500"></span>
+                <span className="w-10 h-1 bg-[rgb(20,161,168)] text-"></span>
+                <span className="w-4 h-1 bg-[rgb(20,161,168)]"></span>
               </div>
 
               {/* Description */}

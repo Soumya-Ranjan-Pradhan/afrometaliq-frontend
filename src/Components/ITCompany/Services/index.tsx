@@ -9,43 +9,35 @@ const services = [
     title: "IT Strategy and Planning",
     description:
       "We help organizations develop strategic plans to align their IT capabilities with business objectives. This includes assessing current IT systems, identifying areas for improvement, and creating a roadmap for technology transformation.",
-    icon: <FaLightbulb className="text-red-500 text-5xl" />,
-    bgImage:
-      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742984299/geay644hdfvpb26urxik.png", // Replace with actual image path
+    icon: <FaLightbulb className="text-white text-5xl" />,
   },
   {
     title: "IT Consultation",
     description:
       "Harness the power of technology with strategic insights and tailored recommendations - trust our IT Consultation services to transform business.",
-    icon: <FaComments className="text-red-500 text-5xl" />,
-    bgImage:
-      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742984342/kuihhiqntjbx6sd2c21n.png",
+    icon: <FaComments className="text-white text-5xl" />,
   },
   {
     title: "24/7 Customer Support",
     description:
       "Round-the-clock support, ensuring your business stays on track. Experience peace of mind with our 24/7 customer support, always here to assist you.",
-    icon: <FaHeadset className="text-red-500 text-5xl" />,
-    bgImage:
-      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742984342/kuihhiqntjbx6sd2c21n.png",
+    icon: <FaHeadset className="text-white text-5xl" />,
   },
   {
     title: "Digital Transformation",
     description:
       "We assist businesses in embracing digital technologies to enhance operations, improve customer experiences, and drive innovation. Expertise in cloud computing, data analytics, AI, IoT, and automation.",
-    icon: <FaCogs className="text-red-500 text-5xl" />,
-    bgImage:
-      "https://res.cloudinary.com/dppfr1gjx/image/upload/v1742984342/kuihhiqntjbx6sd2c21n.png",
+    icon: <FaCogs className="text-white text-5xl" />,
   },
 ];
 
 const ITServices = () => {
   return (
-    <section className="relative items-center justify-center  md:flex-row md:justify-between">
-          {/* Top Line with Icon */}
+    <section className="relative items-center justify-center md:flex-row md:justify-between">
+      {/* Top Line with Icon */}
       <div className="absolute top-0 flex items-center justify-center w-full">
         <div className="h-[2px] w-3/4 bg-gray-300 relative">
-          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-red-500 w-6 h-6 rounded-full flex items-center justify-center">
+          <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-[rgb(20,161,168)] w-6 h-6 rounded-full flex items-center justify-center">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1742981154/wooiewqogm6uhtf4c0qs.png"
               alt="Icon"
@@ -58,7 +50,7 @@ const ITServices = () => {
       <div className="py-16 px-5 bg-gray-50 text-center">
         {/* Section Header */}
         <motion.h3
-          className="text-red-500 text-lg font-semibold"
+          className="text-[rgb(20,161,168)] text-lg font-semibold"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -84,14 +76,16 @@ const ITServices = () => {
           {services.map((service, index) => (
             <motion.div
               key={index}
-              className="relative bg-cover bg-center rounded-lg overflow-hidden text-left text-white shadow-lg"
-              style={{ backgroundImage: `url(${service.bgImage})` }}
+              className="relative rounded-lg overflow-hidden text-left text-white shadow-lg"
+              style={{
+                background: "linear-gradient(135deg, rgba(20,161,168,0.9), rgba(3,105,161,0.9))",
+              }}
               variants={{
                 hidden: { opacity: 0, y: 20 },
                 visible: { opacity: 1, y: 0 },
               }}
             >
-              <div className="bg-black bg-opacity-60 p-6 h-full flex flex-col justify-between">
+              <div className="p-6 h-full flex flex-col justify-between">
                 {/* Icon */}
                 <div>{service.icon}</div>
 
@@ -100,8 +94,8 @@ const ITServices = () => {
 
                 {/* Divider */}
                 <div className="mt-2 flex items-center space-x-2">
-                  <span className="w-10 h-1 bg-red-500"></span>
-                  <span className="w-4 h-1 bg-red-500"></span>
+                  <span className="w-10 h-1 bg-white"></span>
+                  <span className="w-4 h-1 bg-white"></span>
                 </div>
 
                 {/* Description */}
