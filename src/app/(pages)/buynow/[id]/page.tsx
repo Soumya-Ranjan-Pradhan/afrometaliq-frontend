@@ -124,7 +124,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                 </p>
                 {user?._id ? (
                   <span className="text-sm font-bold text-gray-700">
-                    MZN {product?.product_selling_price}
+                    MZN {product?.product_selling_price || "no available the product price"}
                   </span>
                 ) : (
                   <p className="text-[10px] text-red-500 md:mb-4">
@@ -138,7 +138,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                   <span className="text-sm font-bold text-gray-700">
                     MZN{" "}
                     <span className="text-green-500">
-                      -{product?.product_discount}
+                      -{product?.product_discount || "not available product dis"}
                     </span>
                   </span>
                 ) : (
