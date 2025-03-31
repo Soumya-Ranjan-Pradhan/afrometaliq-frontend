@@ -22,6 +22,9 @@ import { useTranslation } from "react-i18next";
 import RelatedProduct from "@/Components/AllProduct/RelatedProduct";
 import { getFromLS } from "@/lib/storage";
 
+const DEFAULT_IMAGE_URL =
+  "https://res.cloudinary.com/dppfr1gjx/image/upload/v1743444584/a8166uxtah4aqkcndpvr.jpg";
+
 const Page = ({ params }: { params: { id: string } }) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const router = useRouter();
@@ -80,18 +83,30 @@ const Page = ({ params }: { params: { id: string } }) => {
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
                 className="product-swiper"
               >
-                {productDetails?.product_images?.map(
-                  (image: any, index: number) => (
-                    <SwiperSlide key={index}>
-                      <Image
-                        width={400}
-                        height={100}
-                        src={image.url}
-                        alt={productDetails?.product_name || "Product Image"}
-                        className="object-contain w-full h-[20rem]"
-                      />
-                    </SwiperSlide>
+                {productDetails?.product_images?.length ? (
+                  productDetails.product_images.map(
+                    (image: any, index: number) => (
+                      <SwiperSlide key={index}>
+                        <Image
+                          width={400}
+                          height={100}
+                          src={image.url || DEFAULT_IMAGE_URL}
+                          alt={productDetails?.product_name || "Product image"}
+                          className="object-contain w-full h-[20rem]"
+                        />
+                      </SwiperSlide>
+                    )
                   )
+                ) : (
+                  <SwiperSlide>
+                    <Image
+                      width={400}
+                      height={100}
+                      src={DEFAULT_IMAGE_URL}
+                      alt="Default product image"
+                      className="object-contain w-full h-[20rem]"
+                    />
+                  </SwiperSlide>
                 )}
               </Swiper>
               {/* Custom Navigation Buttons */}
@@ -122,7 +137,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             </h1>
 
             <p className=" text-gray-600 text-sm leading-6">
-              {productDetails?.product_description}
+              {productDetails?.product_add_description}
             </p>
 
             <div className="flex items-center gap-4">

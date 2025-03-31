@@ -22,6 +22,7 @@ const initialState = {
   product_uom: "",
   product_length: "",
   product_width: "",
+  product_add_description: "",
 };
 
 const AddProduct = () => {
@@ -61,6 +62,7 @@ const AddProduct = () => {
     formData.append("product_length", product.product_length);
     formData.append("product_width", product.product_width);
     formData.append("product_theme_size", JSON.stringify(sizes));
+    formData.append("product_add_description", product.product_add_description);
 
     // check if all category is selected
     if (!categories.selectedCategory || !categories.selectedSubcategory) {
@@ -434,6 +436,27 @@ const AddProduct = () => {
                   />
                 </div>
               </div>
+            </div>
+
+            <div className="mt-4">
+              <label className="block text-sm font-medium text-gray-700">
+                Product add. Description <span className="text-red-500">*</span>
+              </label>
+              <textarea
+                placeholder="Description"
+                value={product.product_add_description}
+                onChange={(e) =>
+                  setProduct({
+                    ...product,
+                    product_add_description: e.target.value,
+                  })
+                }
+                className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                rows={4}
+              ></textarea>
+              <p className="text-sm text-gray-500 mt-1">
+                Do not exceed 100 characters when entering the product name.
+              </p>
             </div>
           </div>
         </div>

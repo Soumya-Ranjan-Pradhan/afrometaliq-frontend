@@ -24,6 +24,7 @@ export interface Product {
   product_width: string;
   createdAt: string;
   updatedAt: string;
+  product_add_description: string;
 }
 export interface PopulatedProduct {
   _id: string;
@@ -49,6 +50,7 @@ export interface PopulatedProduct {
   product_uom: string; // Unit of Measurement
   product_length: string;
   product_width: string;
+  product_add_description: string;
   createdAt: Date;
   updatedAt: Date;
 }
