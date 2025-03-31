@@ -108,6 +108,11 @@ const Page = ({ params }: { params: { id: string } }) => {
                 <FaChevronRight size={20} />
               </button>
             </div>
+            <div className="w-full items-center  p-2 overflow-hidden">
+              <div className="border h-[5rem] flex items-center p-2 rounded-lg overflow-hidden relative">
+                <h1>{productDetails?.product_description}</h1>
+              </div>
+            </div>
           </div>
 
           {/* Product Details */}
@@ -143,7 +148,9 @@ const Page = ({ params }: { params: { id: string } }) => {
                     </span>
                   </span>
                 ) : (
-                  <p className="text-[10px] text-red-500">{t("login_to_price")}</p>
+                  <p className="text-[10px] text-red-500">
+                    {t("login_to_price")}
+                  </p>
                 )}
               </span>
             </div>

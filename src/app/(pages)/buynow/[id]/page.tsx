@@ -81,21 +81,13 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                     </p>
                   )}
 
-                  <div>
-                    {user?._id ? (
-                      <span className="line-through text-gray-400">
-                        {" "}
-                        <span className="line-through text-gray-400">
-                          MZN{product?.product_price?.toFixed(2) || 0}
-                        </span>{" "}
-                        {product?.product_discount || 0}% OFF
-                      </span>
-                    ) : (
-                      <p className="text-[10px] text-red-500 md:mb-4">
-                        {t("login_to_price")}
-                      </p>
-                    )}
-                  </div>
+                  {/* Display discount only if it exists and is greater than 0 */}
+                  {user?._id && (product?.product_discount ?? 0) > 0 ? (
+                    <span className="line-through text-gray-400">
+                      MZN{product?.product_price?.toFixed(2) || 0}{" "}
+                      {product?.product_discount ?? 0}% OFF
+                    </span>
+                  ) : null}
                 </div>
                 <div className="flex items-center lg:mt-5 md:mt-5 space-x-4">
                   <button className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center">
@@ -119,12 +111,12 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
             <h3 className="font-semibold text-lg"> {t("price_details")}</h3>
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
-                <p>
-                  <p>{t("total_amount")}</p>
-                </p>
+                <p>{t("total_amount")}</p>
                 {user?._id ? (
                   <span className="text-sm font-bold text-gray-700">
-                    MZN {product?.product_selling_price || "no available the product price"}
+                    MZN{" "}
+                    {product?.product_selling_price ||
+                      "No available product price"}
                   </span>
                 ) : (
                   <p className="text-[10px] text-red-500 md:mb-4">
@@ -134,18 +126,14 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
               </div>
               <div className="flex justify-between">
                 <p>{t("discount")}</p>
-                {user?._id ? (
+                {user?._id && (product?.product_discount ?? 0) > 0 ? (
                   <span className="text-sm font-bold text-gray-700">
                     MZN{" "}
                     <span className="text-green-500">
-                      -{product?.product_discount || "not available product dis"}
+                      -{product?.product_discount ?? 0}%
                     </span>
                   </span>
-                ) : (
-                  <p className="text-[10px] text-red-500 md:mb-4">
-                    {t("login_to_price")}
-                  </p>
-                )}
+                ) : null}
               </div>
               <div className="flex justify-between font-semibold text-lg mt-4">
                 <p>{t("total_amount")}</p>
@@ -155,7 +143,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                     {(
                       (product?.product_selling_price || 0) - // Use selling price here
                       ((product?.product_selling_price || 0) *
-                        (product?.product_discount || 0)) /
+                        (product?.product_discount ?? 0)) /
                         100
                     ).toFixed(2)}
                   </span>
