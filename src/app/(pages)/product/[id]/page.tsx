@@ -125,7 +125,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             </div>
             <div className="w-full items-center  p-2 overflow-hidden">
               <div className="border h-[5rem] flex items-center p-2 rounded-lg overflow-hidden relative">
-                <h1>{productDetails?.product_description}</h1>
+                <h1>{productDetails?.product_add_description || "no description"}</h1>
               </div>
             </div>
           </div>
@@ -137,7 +137,7 @@ const Page = ({ params }: { params: { id: string } }) => {
             </h1>
 
             <p className=" text-gray-600 text-sm leading-6">
-              {productDetails?.product_add_description}
+              {productDetails?.product_description}
             </p>
 
             <div className="flex items-center gap-4">
