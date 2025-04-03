@@ -5,7 +5,7 @@ import Address from "@/Components/CartBilling";
 import { useAuthStore } from "@/store/auth";
 import { useGlobalStore } from "@/store/global";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { FaMinus, FaPlus } from "react-icons/fa";
 
@@ -14,8 +14,12 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
   const { isComingSoon, setIsComingSoon } = useGlobalStore();
   const { t, i18n } = useTranslation();
   const user = useAuthStore((state) => state.user);
-
+  const [quantity, setQuantity] = useState(1);
   const product = data?.data.product;
+
+  const incrementQuantity = () => setQuantity((prev) => prev + 1);
+  const decrementQuantity = () =>
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
 
   return (
     <>
@@ -90,13 +94,19 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                   ) : null}
                 </div>
                 <div className="flex items-center lg:mt-5 md:mt-5 space-x-4">
-                  <button className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center">
+                  <button
+                    onClick={decrementQuantity}
+                    className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center"
+                  >
                     <FaMinus size={12} />
                   </button>
 
-                  <p className="text-sm">1</p>
+                  <p className="text-sm">{quantity}</p>
 
-                  <button className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center">
+                  <button
+                    onClick={incrementQuantity}
+                    className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center"
+                  >
                     <FaPlus size={12} />
                   </button>
                 </div>
