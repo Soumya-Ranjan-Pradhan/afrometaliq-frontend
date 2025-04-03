@@ -308,7 +308,7 @@ const CartPage = () => {
                     {item.product?.product_code || "Unknown code"}
                   </p>
                   <div className="lg:float-right md:float-right">
-                    <p className="text-red-500 font-semibold text-[1.2rem]">
+                    <p className="text-red-500 font-semibold text-right  text-[1.2rem]">
                       MZN {item.product?.product_selling_price?.toFixed(2) || 0}
                     </p>
                     <div>
@@ -371,7 +371,7 @@ const CartPage = () => {
               </div>
               <div className="flex justify-between">
                 <p>{t("discount")}</p>
-                <p className="text-green-500">-MZN {totalDiscount.toFixed(2)}</p>
+                <p className="text-red-600">MZN {totalDiscount.toFixed(2)}</p>
               </div>
               {/* <div className="flex justify-between">
                 <p>Shipping Fee</p>
@@ -381,6 +381,10 @@ const CartPage = () => {
                 <p>Platform Fee</p>
                 <p>MZN20</p>
               </div> */}
+              <div className="flex justify-between">
+                <p>VAT (16%)</p>
+                <p></p>
+              </div>
               <div className="flex justify-between font-semibold text-lg mt-4">
                 <p>{t("total_amount")}</p>
                 <p>MZN {(totalAmount + 20).toFixed(2)}</p>

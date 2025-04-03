@@ -82,32 +82,36 @@ const Address = () => {
   const addresses = data?.data || [];
 
   return (
-    <div className="bg-gray-100 flex flex-col items-center p-4">
+    <div className="bg-gray-100 flex flex-col items-center justify-between p-4">
       <div className="w-full max-w-xl">
-        <div className="flex items-center gap-2 mb-4">
-          <input
-            type="radio"
-            name="deliveryOption"
-            value="warehouse"
-            checked={selectedOption === "warehouse"}
-            onChange={() => setSelectedOption("warehouse")}
-          />
-          <span className="text-gray-600">Choose Warehouse</span>
+        <div className="flex justify-between mx-10">
+          <div className="flex items-center gap-2 mb-4">
+            <input
+              type="radio"
+              name="deliveryOption"
+              value="warehouse"
+              checked={selectedOption === "warehouse"}
+              onChange={() => setSelectedOption("warehouse")}
+            />
+            <span className="text-gray-600">Choose Warehouse</span>
+          </div>
 
-          <input
-            type="radio"
-            name="deliveryOption"
-            value="delivery"
-            checked={selectedOption === "delivery"}
-            onChange={() => setSelectedOption("delivery")}
-          />
-          <span className="text-gray-600">{t("choose_warehouse")}</span>
+          <div className="flex items-center gap-2 mb-4">
+            <input
+              type="radio"
+              name="deliveryOption"
+              value="delivery"
+              checked={selectedOption === "delivery"}
+              onChange={() => setSelectedOption("delivery")}
+            />
+            <span className="text-gray-600">{t("choose_warehouse")}</span>
+          </div>
         </div>
 
         {selectedOption === "delivery" && (
           <>
             <h1 className="text-2xl font-semibold mb-4">
-             {t("choose_delivery_address")}
+              {t("choose_delivery_address")}
             </h1>
 
             {addresses.map((address) => (
@@ -154,6 +158,8 @@ const Address = () => {
                     {t("edit")}
                   </button>
                 </div>
+
+                <p className="text-red-500 mt-2">Additional minimal transport fees will be applicable</p>
               </div>
             ))}
 

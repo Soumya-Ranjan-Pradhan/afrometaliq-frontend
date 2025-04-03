@@ -74,10 +74,10 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                 <p className="text-gray-500 text-sm">
                   {product?.product_code || "Unknown code"}
                 </p>
-                <div className="lg:float-right md:float-right">
+                <div className="lg:float-right md:float-right  ">
                   {user?._id ? (
-                    <p className="text-red-500 font-semibold text-[1.2rem]">
-                      MZN{product?.product_selling_price?.toFixed(2) || 0}
+                    <p className="text-red-500 font-semibold text-center text-[1.2rem]">
+                      MZN {product?.product_selling_price?.toFixed(2) || 0}
                     </p>
                   ) : (
                     <p className="text-[10px] text-red-500 md:mb-4">
@@ -87,9 +87,12 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
 
                   {/* Display discount only if it exists and is greater than 0 */}
                   {user?._id && (product?.product_discount ?? 0) > 0 ? (
-                    <span className="line-through text-gray-400">
-                      MZN{product?.product_price?.toFixed(2) || 0}{" "}
-                      {product?.product_discount ?? 0}% OFF
+                    <span className="flex items-center gap-2">
+                      <span className=""> {product?.product_discount ?? 0}% OFF</span>
+                      <span className="line-through text-gray-400">
+                        {" "}
+                        MZN {product?.product_price?.toFixed(2) || 0}{" "}
+                      </span>
                     </span>
                   ) : null}
                 </div>
@@ -124,9 +127,7 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                 <p>{t("total_amount")}</p>
                 {user?._id ? (
                   <span className="text-sm font-bold text-gray-700">
-                    MZN{" "}
-                    {product?.product_selling_price ||
-                      "No available product price"}
+                    MZN {product?.product_price || "No available product price"}
                   </span>
                 ) : (
                   <p className="text-[10px] text-red-500 md:mb-4">
@@ -151,8 +152,8 @@ const SinglePageBuyNow = ({ params }: { params: { id: string } }) => {
                   <span className="text-sm font-bold text-gray-700">
                     MZN{" "}
                     {(
-                      (product?.product_selling_price || 0) - // Use selling price here
-                      ((product?.product_selling_price || 0) *
+                      (product?.product_price || 0) - // Use selling price here
+                      ((product?.product_price || 0) *
                         (product?.product_discount ?? 0)) /
                         100
                     ).toFixed(2)}
