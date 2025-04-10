@@ -28,6 +28,7 @@ export const useCreateBanner = () => {
 };
 
 // update banner
+// update banner
 export const useUpdateBanner = () => {
   const queryClient = useQueryClient();
   return useMutation<ApiResponse<{}>, Error, { id: string; data: FormData }>({

@@ -6,6 +6,7 @@ import {
   deleteContact,
   getAllContact,
   getContactById,
+  searchContact,
   updateContact,
 } from "../contactApi";
 
@@ -24,6 +25,7 @@ export const useCreateContacts = () => {
     ApiResponse<{ contact: Contact[] }>,
     Error,
     {
+      _id: string; 
       first_name: string;
       last_name: string;
       email: string;
@@ -80,9 +82,11 @@ export const useDeleteContact = () => {
 };
 
 // search contact first_name last_name and email
-export const useSearchContact = () => {
-  return useQuery<ApiResponse<{ contact: Contact[] }>, Error>({
-    queryKey: ["contact"],
-    queryFn: () => getAllContact(),
+export const useSearchContact = (query: string) => {
+  return useQuery({
+    queryKey: ["contact", "search", query],
+    queryFn: () => searchContact(query),
+    enabled: !!query, 
   });
 };
+

@@ -10,19 +10,18 @@ import { FiTrash2 } from "react-icons/fi";
 import { Contact } from "@/api/contact/contactApi";
 
 const Customer = () => {
-  const { data, isLoading, error, refetch } = useGetAllContact();
+  const [searchQuery, setSearchQuery] = useState("");
+  const { data: allContacts, refetch: refetchAll } = useGetAllContact();
   const { mutate: deleteContact } = useDeleteContact();
+  const { data: searchedContacts, refetch: refetchSearch } = useSearchContact(
+    searchQuery
+  );
+
   const [selectedMessage, setSelectedMessage] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [searchType, setSearchType] = useState("first_name");
 
-  const { data: searchData, refetch: searchContacts } = useSearchContact();
-
-  const openMessageModal = (message: string) => {
-    setSelectedMessage(message);
-  };
+  const openMessageModal = (message: string) => setSelectedMessage(message);
 
   const openDeleteModal = (id: string) => {
     setSelectedId(id);
@@ -36,51 +35,47 @@ const Customer = () => {
 
   const confirmDelete = () => {
     if (selectedId) {
-      deleteContact(selectedId);
+      deleteContact(selectedId, {
+        onSuccess: () => {
+          refetchAll();
+        },
+      });
       closeDeleteModal();
-      refetch();
     }
   };
 
-  // const handleSearch = () => {
-  //   const handleSearch = () => {
-  //     // Update the hook or API call with the search functionality
-  //     searchContacts({
-  //       query: searchQuery,
-  //       type: searchType,
-  //     });
-  //   };
-  // };
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      refetchSearch();
+    } else {
+      refetchAll();
+    }
+  };
 
-  const users: Contact[] = searchData?.data.contact || data?.data.contact || [];
+  const users: Contact[] =
+    searchQuery.trim() && searchedContacts
+      ? searchedContacts.data.contact
+      : allContacts?.data.contact || [];
 
   return (
     <div className="bg-gray-50 flex flex-col justify-center px-4 md:px-10">
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
-        {/* Header */}
         <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-          All Customer
+          All Customers
         </h1>
+
+        {/* Search Area */}
         <div className="flex flex-wrap items-center justify-between mb-6 space-y-4 md:space-y-0">
           <div className="flex space-x-4 w-full md:w-auto">
-            <select
-              value={searchType}
-              onChange={(e) => setSearchType(e.target.value)}
-              className="border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              <option value="first_name">First Name</option>
-              <option value="last_name">Last Name</option>
-              <option value="email">Email</option>
-            </select>
             <input
               type="text"
-              placeholder="Search here..."
+              placeholder="Search by name or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
             <button
-              // onClick={handleSearch}
+              onClick={handleSearch}
               className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
             >
               Search
@@ -93,60 +88,36 @@ const Customer = () => {
           <table className="w-full table-auto border-collapse border border-gray-200 rounded-lg">
             <thead>
               <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  FirstName
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  LastName
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Email
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Mobile Number
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Details
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Action
-                </th>
+                <th className="border px-4 py-2 text-left">FirstName</th>
+                <th className="border px-4 py-2 text-left">LastName</th>
+                <th className="border px-4 py-2 text-left">Email</th>
+                <th className="border px-4 py-2 text-left">Mobile</th>
+                <th className="border px-4 py-2 text-left">Details</th>
+                <th className="border px-4 py-2 text-left">Action</th>
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="border px-4 py-2 text-gray-700 text-sm flex items-center space-x-4">
-                    <div>
-                      <p className="font-semibold">{user.first_name}</p>
-                    </div>
-                  </td>
-                  <td className="border px-4 py-2 text-gray-700 text-sm">
-                    {user.last_name}
-                  </td>
-                  <td className="border px-4 py-2 text-gray-700 text-sm">
-                    {user.email}
-                  </td>
-                  <td className="border px-4 py-2 text-gray-700 text-sm">
-                    {user.mobile_number}
-                  </td>
-                  <td className="border px-4 py-2 text-gray-700 text-sm">
+              {users.map((user, idx) => (
+                <tr key={idx} className="hover:bg-gray-50">
+                  <td className="border px-4 py-2">{user.first_name}</td>
+                  <td className="border px-4 py-2">{user.last_name}</td>
+                  <td className="border px-4 py-2">{user.email}</td>
+                  <td className="border px-4 py-2">{user.mobile_number}</td>
+                  <td className="border px-4 py-2">
                     <button
                       onClick={() => openMessageModal(user.message)}
-                      className="text-blue-500 hover:scale-110 transition"
+                      className="text-blue-500 hover:underline"
                     >
                       View
                     </button>
                   </td>
-                  <td className="border px-4 py-2 text-center text-sm">
-                    {/* <div className="flex justify-center space-x-2">
-                      <button
-                        onClick={() => openDeleteModal(user?._id)}
-                        className="text-red-500 hover:scale-110 transition"
-                      >
-                        <FiTrash2 />
-                      </button>
-                    </div> */}
+                  <td className="border px-4 py-2">
+                    <button
+                      onClick={() => openDeleteModal(user._id)}
+                      className="text-red-500 hover:scale-110 transition"
+                    >
+                      <FiTrash2 />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -154,28 +125,9 @@ const Customer = () => {
           </table>
         </div>
 
-        {/* Pagination */}
-        <div className="p-4 bg-gray-50 border-t flex justify-between items-center">
-          <p className="text-sm text-gray-600">
-            Showing 1-10 of {users.length} entries
-          </p>
-          <div className="flex gap-2">
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              &lt; Prev
-            </button>
-            <button className="bg-blue-500 text-white py-1 px-3 rounded-md">
-              1
-            </button>
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              2
-            </button>
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              3
-            </button>
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              Next &gt;
-            </button>
-          </div>
+        {/* Pagination Footer (optional placeholder) */}
+        <div className="p-4 text-sm text-gray-600">
+          Showing {users.length} contact{users.length !== 1 && "s"}
         </div>
       </div>
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "@/contants";
 
 export type Contact = {
+  _id: string; 
   first_name: string;
   last_name: string;
   email: string;
@@ -67,11 +68,13 @@ export const deleteContact = async (id: string): Promise<ApiResponse<{}>> => {
 };
 
 // search contact
+// search contact
 export const searchContact = async (
   query: string
 ): Promise<ApiResponse<{ contact: Contact[] }>> => {
   const response = await axios.get<ApiResponse<{ contact: Contact[] }>>(
-    `${BASE_URL}/contacts/search?search=${query}`
+    `${BASE_URL}/contacts/search?query=${query}` 
   );
   return response.data;
 };
+

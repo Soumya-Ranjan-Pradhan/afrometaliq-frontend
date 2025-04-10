@@ -6,14 +6,16 @@ import {
   fetchUnits,
   searchUnits,
   Unit,
+  UnitFilters,
+  UnitResponse,
   updateUnits,
 } from "../unitsApi";
 
-// Fetch all categories
-export const useUnits = () => {
-  return useQuery<ApiResponse<{ units: Unit[] }>, Error>({
-    queryKey: ["units"],
-    queryFn: () => fetchUnits(),
+
+export const useUnits = (query?: UnitFilters) => {
+  return useQuery<ApiResponse<UnitResponse>, Error>({
+    queryKey: ["products", query],
+    queryFn: () => fetchUnits(query),
   });
 };
 
@@ -65,8 +67,9 @@ export const useDeleteUnits = () => {
 // search units
 export const useSearchUnits = (query: string) => {
   return useQuery<ApiResponse<{ units: Unit[] }>, Error>({
-    queryKey: ["units", query],
+    queryKey: ["search-units", query],
     queryFn: () => searchUnits(query),
-    enabled: !!query,
+    enabled: !!query, // Only run when query is non-empty
   });
 };
+

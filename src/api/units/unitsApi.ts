@@ -17,10 +17,27 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-// Fetch all units
-export const fetchUnits = async (): Promise<ApiResponse<{ units: Unit[] }>> => {
-  const response = await axios.get<ApiResponse<{ units: Unit[] }>>(
-    `${BASE_URL}/units`
+export type UnitFilters = {
+  page?: number;
+  limit?: number;
+  search?: string;
+};
+
+export type UnitResponse = {
+  units: Unit[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+  };
+};
+
+export const fetchUnits = async (
+  query?: UnitFilters
+): Promise<ApiResponse<UnitResponse>> => {
+  const response = await axios.get<ApiResponse<UnitResponse>>(
+    `${BASE_URL}/units`,
+    { params: query }
   );
   return response.data;
 };

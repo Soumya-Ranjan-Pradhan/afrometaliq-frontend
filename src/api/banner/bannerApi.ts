@@ -62,6 +62,7 @@ export const updateBanner = async (
   return response.data;
 };
 
+
 // delete banner
 export const deleteBanner = async (id: string): Promise<ApiResponse<{}>> => {
   const response = await axios.delete<ApiResponse<{}>>(
