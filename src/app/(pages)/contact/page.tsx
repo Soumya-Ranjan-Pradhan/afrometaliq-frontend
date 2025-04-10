@@ -30,6 +30,7 @@ const Contact = () => {
     }
     createContact(
       {
+        // _id: contact._id,
         first_name: contact.first_name,
         last_name: contact.last_name,
         email: contact.email,
@@ -42,7 +43,7 @@ const Contact = () => {
           toast.success("Message Send successfully!");
         },
         onError: () => {
-          toast.error("Failed to create about");
+          toast.error("Failed to create contact");
         },
       }
     );

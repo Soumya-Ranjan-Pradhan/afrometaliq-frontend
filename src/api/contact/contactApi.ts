@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL } from "@/contants";
 
 export type Contact = {
-  _id: string; 
+  // _id: string; 
   first_name: string;
   last_name: string;
   email: string;
