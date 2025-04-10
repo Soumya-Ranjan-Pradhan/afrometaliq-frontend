@@ -97,7 +97,7 @@ const Customer = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, idx) => (
+              {users.map((user:any, idx) => (
                 <tr key={idx} className="hover:bg-gray-50">
                   <td className="border px-4 py-2">{user.first_name}</td>
                   <td className="border px-4 py-2">{user.last_name}</td>
