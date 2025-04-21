@@ -2,63 +2,6 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import {
-  FaHtml5,
-  FaCss3Alt,
-  FaJs,
-  FaReact,
-  FaNodeJs,
-  FaDocker,
-  FaAws,
-  FaJava,
-  FaPython,
-} from "react-icons/fa";
-import {
-  SiTypescript,
-  SiNextdotjs,
-  SiRedux,
-  SiReactquery,
-  SiAngular,
-  SiMongodb,
-  SiPostgresql,
-  SiNestjs,
-  SiKubernetes,
-  SiJenkins,
-  SiJest,
-  SiCypress,
-  SiExpress,
-  SiSpring,
-  SiDjango,
-  SiGooglecloud,
-} from "react-icons/si";
-
-const techIcons = [
-  { icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },
-  { icon: <FaCss3Alt className="text-blue-500" />, name: "CSS" },
-  { icon: <FaJs className="text-yellow-500" />, name: "JavaScript" },
-  { icon: <SiTypescript className="text-blue-600" />, name: "TypeScript" },
-  { icon: <FaReact className="text-blue-400" />, name: "React" },
-  { icon: <SiNextdotjs className="text-black" />, name: "Next.js" },
-  { icon: <SiRedux className="text-purple-600" />, name: "Redux Toolkit" },
-  { icon: <SiReactquery className="text-red-600" />, name: "React Query" },
-  { icon: <SiAngular className="text-red-500" />, name: "Angular" },
-  { icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
-  { icon: <SiExpress className="text-gray-800" />, name: "Express.js" },
-  { icon: <SiNestjs className="text-red-500" />, name: "NestJS" },
-  { icon: <SiMongodb className="text-green-600" />, name: "MongoDB" },
-  { icon: <SiPostgresql className="text-blue-500" />, name: "PostgreSQL" },
-  { icon: <FaDocker className="text-blue-500" />, name: "Docker" },
-  { icon: <SiKubernetes className="text-blue-500" />, name: "Kubernetes" },
-  { icon: <FaAws className="text-orange-500" />, name: "AWS" },
-  { icon: <SiGooglecloud className="text-blue-400" />, name: "Google Cloud" },
-  { icon: <SiJenkins className="text-red-600" />, name: "Jenkins" },
-  { icon: <SiJest className="text-red-500" />, name: "Jest" },
-  { icon: <SiCypress className="text-green-500" />, name: "Cypress" },
-  { icon: <FaJava className="text-blue-700" />, name: "Java" },
-  { icon: <SiSpring className="text-green-700" />, name: "Spring" },
-  { icon: <FaPython className="text-yellow-400" />, name: "Python" },
-  { icon: <SiDjango className="text-green-500" />, name: "Django" },
-];
 
 import { IconCloud } from "@/Components/ui/snappy-icon-cloud";
 
@@ -131,11 +74,81 @@ const Technologies = () => {
           innovative and robust solutions for your business.
         </motion.p>
 
-        <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden px-20 pb-20 pt-8">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.7, duration: 1 }}
+          className="relative flex w-full min-h-[300px] items-center justify-center overflow-hidden px-4 pb-20 pt-8"
+        >
           <IconCloud iconSlugs={slugs} />
-        </div>
+        </motion.div>
+      </div>
+    </section>
+  );
+};
 
-        {/* <motion.div
+export default Technologies;
+
+// import {
+//   FaHtml5,
+//   FaCss3Alt,
+//   FaJs,
+//   FaReact,
+//   FaNodeJs,
+//   FaDocker,
+//   FaAws,
+//   FaJava,
+//   FaPython,
+// } from "react-icons/fa";
+// import {
+//   SiTypescript,
+//   SiNextdotjs,
+//   SiRedux,
+//   SiReactquery,
+//   SiAngular,
+//   SiMongodb,
+//   SiPostgresql,
+//   SiNestjs,
+//   SiKubernetes,
+//   SiJenkins,
+//   SiJest,
+//   SiCypress,
+//   SiExpress,
+//   SiSpring,
+//   SiDjango,
+//   SiGooglecloud,
+// } from "react-icons/si";
+
+// const techIcons = [
+//   { icon: <FaHtml5 className="text-orange-500" />, name: "HTML" },
+//   { icon: <FaCss3Alt className="text-blue-500" />, name: "CSS" },
+//   { icon: <FaJs className="text-yellow-500" />, name: "JavaScript" },
+//   { icon: <SiTypescript className="text-blue-600" />, name: "TypeScript" },
+//   { icon: <FaReact className="text-blue-400" />, name: "React" },
+//   { icon: <SiNextdotjs className="text-black" />, name: "Next.js" },
+//   { icon: <SiRedux className="text-purple-600" />, name: "Redux Toolkit" },
+//   { icon: <SiReactquery className="text-red-600" />, name: "React Query" },
+//   { icon: <SiAngular className="text-red-500" />, name: "Angular" },
+//   { icon: <FaNodeJs className="text-green-500" />, name: "Node.js" },
+//   { icon: <SiExpress className="text-gray-800" />, name: "Express.js" },
+//   { icon: <SiNestjs className="text-red-500" />, name: "NestJS" },
+//   { icon: <SiMongodb className="text-green-600" />, name: "MongoDB" },
+//   { icon: <SiPostgresql className="text-blue-500" />, name: "PostgreSQL" },
+//   { icon: <FaDocker className="text-blue-500" />, name: "Docker" },
+//   { icon: <SiKubernetes className="text-blue-500" />, name: "Kubernetes" },
+//   { icon: <FaAws className="text-orange-500" />, name: "AWS" },
+//   { icon: <SiGooglecloud className="text-blue-400" />, name: "Google Cloud" },
+//   { icon: <SiJenkins className="text-red-600" />, name: "Jenkins" },
+//   { icon: <SiJest className="text-red-500" />, name: "Jest" },
+//   { icon: <SiCypress className="text-green-500" />, name: "Cypress" },
+//   { icon: <FaJava className="text-blue-700" />, name: "Java" },
+//   { icon: <SiSpring className="text-green-700" />, name: "Spring" },
+//   { icon: <FaPython className="text-yellow-400" />, name: "Python" },
+//   { icon: <SiDjango className="text-green-500" />, name: "Django" },
+// ];
+
+{
+  /* <motion.div
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10"
           initial="hidden"
           animate="visible"
@@ -159,10 +172,5 @@ const Technologies = () => {
               </p>
             </motion.div>
           ))}
-        </motion.div> */}
-      </div>
-    </section>
-  );
-};
-
-export default Technologies;
+        </motion.div> */
+}
