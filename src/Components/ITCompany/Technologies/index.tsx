@@ -60,6 +60,41 @@ const techIcons = [
   { icon: <SiDjango className="text-green-500" />, name: "Django" },
 ];
 
+import { IconCloud } from "@/Components/ui/snappy-icon-cloud";
+
+const slugs = [
+  "typescript",
+  "javascript",
+  "dart",
+  "java",
+  "react",
+  "flutter",
+  "android",
+  "html5",
+  "css3",
+  "nodedotjs",
+  "express",
+  "nextdotjs",
+  "prisma",
+  "amazonaws",
+  "postgresql",
+  "firebase",
+  "nginx",
+  "vercel",
+  "testinglibrary",
+  "jest",
+  "cypress",
+  "docker",
+  "git",
+  "jira",
+  "github",
+  "gitlab",
+  "visualstudiocode",
+  "androidstudio",
+  "sonarqube",
+  "figma",
+];
+
 const Technologies = () => {
   return (
     <section className="relative items-center justify-center  md:flex-row md:justify-between">
@@ -96,7 +131,11 @@ const Technologies = () => {
           innovative and robust solutions for your business.
         </motion.p>
 
-        <motion.div
+        <div className="relative flex size-full max-w-lg items-center justify-center overflow-hidden px-20 pb-20 pt-8">
+          <IconCloud iconSlugs={slugs} />
+        </div>
+
+        {/* <motion.div
           className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mt-10"
           initial="hidden"
           animate="visible"
@@ -120,7 +159,7 @@ const Technologies = () => {
               </p>
             </motion.div>
           ))}
-        </motion.div>
+        </motion.div> */}
       </div>
     </section>
   );
