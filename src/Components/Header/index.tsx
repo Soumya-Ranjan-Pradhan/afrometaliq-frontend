@@ -22,6 +22,8 @@ import UserMobileMenu from "./Sidebar/UserMobileMenu";
 import { useCartQuery } from "@/api/cart/query/useCartQuery";
 import SearchProduct from "./SearchProduct";
 import { useGlobalStore } from "@/store/global";
+import { useGetLoggedUserDetails } from "@/api/auth/queries/authQuery";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
@@ -32,6 +34,8 @@ const Header = () => {
   const { data, refetch } = useCartQuery();
   const user = useAuthStore((state) => state.user);
   const { isComingSoon, setIsComingSoon } = useGlobalStore();
+  const { data: userData } = useGetLoggedUserDetails({});
+  const router = useRouter();
 
   // Handle search submission
   useEffect(() => {
@@ -48,6 +52,16 @@ const Header = () => {
       setCartCount(0);
     }
   }, [data, user]);
+
+  useEffect(() => {
+    if (userData) {
+      if (userData?.data.user.isEmailVerified) {
+        console.log("LAYOUT ===========", "User is verified");
+      } else {
+        router.replace("/email/verify");
+      }
+    }
+  }, [userData]);
 
   const closeDrawer = () => {
     setToggleMenu(false);

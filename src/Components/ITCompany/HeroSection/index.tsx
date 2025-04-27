@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const line1 = "MuleSoft API Development";
+const line1 = "Innovative Software Solutions";
 const line2 = "From Idea to Product";
 
 const HeroSection = () => {

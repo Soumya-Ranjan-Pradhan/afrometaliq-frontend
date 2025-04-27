@@ -16,27 +16,28 @@ import { MdPhotoLibrary } from "react-icons/md";
 
 const Sidebar: React.FC = () => {
   const pathname = usePathname();
-  const { data, isLoading, isError } = useCartQuery();
+  const { data, refetch } = useCartQuery();
   const [cartCount, setCartCount] = useState<number>(0);
 
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
 
   const { data: userData } = useGetLoggedUserDetails({});
   const user = useAuthStore((state) => state.user);
-
   const router = useRouter();
 
   useEffect(() => {
-    if (user && data && data.data?.cart) {
-      const count = data.data.cart.reduce(
-        (total, item) => total + item.quantity,
-        0
-      );
-      setCartCount(count);
+    if (user?._id) {
+      refetch();
+    }
+  }, [user, refetch]);
+
+  useEffect(() => {
+    if (user?._id && data?.data?.cart) {
+      setCartCount(data.data.cart.length);
     } else {
       setCartCount(0);
     }
-  }, [user, data]);
+  }, [data, user]);
 
   useEffect(() => {
     if (userData) {
