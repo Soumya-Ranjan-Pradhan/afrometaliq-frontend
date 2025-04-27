@@ -33,7 +33,7 @@ const AboutUs = () => {
             <span className="bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
               Soumya Ranjan Pradhan,
             </span>{" "}
-            CEO
+            Head of Development
           </p>
         </div>
       </div>
