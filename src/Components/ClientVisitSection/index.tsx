@@ -7,13 +7,14 @@ import { useGetAllUsers } from "@/api/auth/queries/authQuery";
 
 export default function ClientVisitSection() {
   const { data, isLoading, error } = useGetAllUsers();
+
   return (
     <section className="w-full bg-gradient-to-br from-white to-gray-100 px-4 py-12 md:py-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
         {/* Left Image */}
         <div className="w-full">
           <Image
-            src={HappyClient} // ✅ Replace with your actual image in public folder
+            src={HappyClient}
             alt="Website Visitors"
             width={600}
             height={400}
@@ -28,7 +29,7 @@ export default function ClientVisitSection() {
             Join Thousands Exploring Our Platform
           </h2>
           <p className="text-lg text-gray-600 mb-6 max-w-lg">
-            We're thrilled to see thousands of users discovering our platform
+            We&rsquo;re thrilled to see thousands of users discovering our platform
             and making the most of our services every single month.
           </p>
 
@@ -40,7 +41,6 @@ export default function ClientVisitSection() {
               <p className="text-2xl font-bold text-gray-900">
                 {data?.data.pagination.totalUsers}
               </p>
-
               <p className="text-sm text-gray-500">
                 Active users engaging with us
               </p>
