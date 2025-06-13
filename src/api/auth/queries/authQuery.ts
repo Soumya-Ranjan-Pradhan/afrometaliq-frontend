@@ -8,12 +8,15 @@ import {
 import {
   adminLogin,
   ApiResponse,
+  AuthQuery,
+  AuthResponse,
   createUser,
   editProfile,
-  fetchUsers,
+  getAllUsers,
   getLoggedInUser,
   loginUser,
   logout,
+  searchUsers,
   sendForgotPasswordOTPEmail,
   sendOtp,
   User,
@@ -24,12 +27,14 @@ import { useAuthStore } from "@/store/auth";
 import { clearLS, getFromLS, storeToLS } from "@/lib/storage";
 
 // get all users
-export const useUsers = () => {
-  return useQuery<ApiResponse<{ users: User[] }>, Error>({
-    queryKey: ["users"],
-    queryFn: () => fetchUsers(),
+export const useGetAllUsers = (query?: AuthQuery) => {
+  return useQuery<ApiResponse<AuthResponse>, Error>({
+    queryKey: ["users", query],
+    queryFn: () => getAllUsers(query),
   });
 };
+
+
 
 // create user
 export const useCreateUser = () => {
@@ -190,16 +195,11 @@ export const useEditProfile = () => {
   });
 };
 
-// export const useLogout = () => {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: logout,
-//     onSuccess: () => {
-//       localStorage.removeItem("accessToken");
-//       localStorage.removeItem("refreshToken");
-//       queryClient.invalidateQueries({ queryKey: ["user", "me"] });
-//       queryClient.clear();
-//     },
-//   });
-// };
+// search users
+export const useSearchUsers = (query: string) => {
+  return useQuery<ApiResponse<{ users: User[] }>, Error>({
+    queryKey: ["search-users", query],
+    queryFn: () => searchUsers(query),
+    enabled: !!query,
+  });
+};

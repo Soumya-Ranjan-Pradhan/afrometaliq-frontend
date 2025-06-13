@@ -56,7 +56,7 @@ const Header = () => {
   useEffect(() => {
     if (userData) {
       if (userData?.data.user.isEmailVerified) {
-        console.log("LAYOUT ===========", "User is verified");
+        // console.log("LAYOUT ===========", "User is verified");
       } else {
         router.replace("/email/verify");
       }
@@ -148,7 +148,7 @@ const Header = () => {
       {/* bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] */}
       <nav
         className="w-full bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] lg:h-[4rem] md:h-[4rem] sm:h-[3rem] h-[64px] flex justify-between 
-    items-center  sm:gap-5 gap-2 sticky top-0 z-30"
+    items-center  sm:gap-5 gap-2 sticky top-0 z-40"
       >
         <div>
           <CategoryMenu />

@@ -102,5 +102,10 @@
   "edit": "Editar",
   "add_new_address": "+ Adicionar Novo Endereço",
   "contact_details": "DETALHES DE CONTATO",
-  "construction": "Construção"
+  "construction": "Construção",
+
+  "login" :"Digite seu nome de usuário, e-mail ou número de celular",
+  "password":"Digite sua senha",
+  "forgot_password":"Esqueceu sua senha?",
+  "No_Account?":"Não tem uma conta?"
 }

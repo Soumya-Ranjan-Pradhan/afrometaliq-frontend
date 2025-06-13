@@ -20,7 +20,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
 
 const CartPage = () => {
-  // 120.00 add decimal format 
+  // 120.00 add decimal format
   const { data, isLoading, isError, refetch } = useCartQuery();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -196,6 +196,9 @@ const CartPage = () => {
   );
   const totalAmount = totalMRP - totalDiscount;
 
+  const vatAmount = totalAmount * 0.16;
+  const grandTotal = totalAmount + vatAmount;
+
   if (cartItems.length === 0) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -254,21 +257,6 @@ const CartPage = () => {
       <div className="container mx-auto p-4 lg:flex lg:space-x-8">
         {/* Left Section */}
         <div className="lg:w-3/5">
-          {/* <div className="bg-gray-100 p-4 rounded-md flex justify-between items-center">
-            <div>
-              <p className="font-semibold">
-                Deliver to:{" "}
-                <span className="text-[#24246C]">
-                  Soumya Ranjan Pradhan, 759122
-                </span>
-              </p>
-              <p className="text-sm text-gray-600">
-                Saradhapur Petrol Pump, Angul, Angul H.O, Angul
-              </p>
-            </div>
-          </div> */}
-
-          {/* Product List */}
           <div className="mt-6">
             {cartItems.map((item, index) => (
               <div
@@ -308,17 +296,21 @@ const CartPage = () => {
                     {item.product?.product_code || "Unknown code"}
                   </p>
                   <div className="lg:float-right md:float-right">
-                    <p className="text-red-500 font-semibold text-right  text-[1.2rem]">
-                      MZN {item.product?.product_selling_price?.toFixed(2) || 0}
+                    <p className="text-red-500 font-semibold text-right text-[0.8rem]">
+                      MZN{" "}
+                      {(
+                        item.product?.product_selling_price * item.quantity
+                      ).toFixed(2)}
                     </p>
-                    <div>
+
+                    <div className="float-right">
                       {item.product?.product_discount &&
                       item.product?.product_discount > 0 ? (
                         <>
                           <span className="line-through text-gray-400">
                             MZN {item.product?.product_price?.toFixed(2)}
                           </span>{" "}
-                          <span className="text-red-600">
+                          <span className="text-red-600 text-[0.7rem]">
                             {item.product?.product_discount}% OFF
                           </span>
                         </>
@@ -367,7 +359,7 @@ const CartPage = () => {
             <div className="mt-4 space-y-2">
               <div className="flex justify-between">
                 <p>{t("total_amount")}</p>
-                <p>MZN {totalMRP.toFixed(2)}</p> 
+                <p>MZN {totalMRP.toFixed(2)}</p>
               </div>
               <div className="flex justify-between">
                 <p>{t("discount")}</p>
@@ -383,18 +375,19 @@ const CartPage = () => {
               </div> */}
               <div className="flex justify-between">
                 <p>VAT (16%)</p>
-                <p></p>
+                <p>MZN {vatAmount.toFixed(2)}</p>
               </div>
+
               <div className="flex justify-between font-semibold text-lg mt-4">
                 <p>{t("total_amount")}</p>
-                <p>MZN {(totalAmount + 20).toFixed(2)}</p>
+                <p>MZN {grandTotal.toFixed(2)}</p>
               </div>
               <div className="flex gap-3">
                 <button
                   onClick={() => setIsComingSoon(true)}
                   className="bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white w-full py-2 mt-4 rounded-md"
                 >
-                 {t("pay_now")}
+                  {t("pay_now")}
                 </button>
 
                 <button

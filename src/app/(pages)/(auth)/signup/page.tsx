@@ -13,6 +13,8 @@ import {
 import { AiFillCheckCircle, AiOutlineLoading } from "react-icons/ai";
 import { useAuthStore } from "@/store/auth";
 import { FaSpinner } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const initialState = {
   username: "",
@@ -20,6 +22,8 @@ const initialState = {
   phoneNumber: "",
   password: "",
   confirmPassword: "",
+  companyName: "",
+  nuit: "",
   otp: "",
 };
 
@@ -32,6 +36,10 @@ const SignUp = () => {
   const { mutate: verifyOtp } = useVerifyOtp();
   const router = useRouter();
   const setUser = useAuthStore((state) => state.setUser);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const { t } = useTranslation();
 
   const isButtonDisabled =
     !formData.email ||
@@ -39,6 +47,8 @@ const SignUp = () => {
     !formData.username ||
     !formData.phoneNumber ||
     !formData.confirmPassword ||
+    !formData.companyName ||
+    !formData.nuit ||
     isLoading;
 
   // Handle sending OTP
@@ -82,6 +92,8 @@ const SignUp = () => {
         email: formData.email,
         phoneNumber: formData.phoneNumber,
         password: formData.password,
+        companyName: formData.companyName,
+        nuit: formData.nuit,
       },
       {
         onSuccess: (data) => {
@@ -106,7 +118,7 @@ const SignUp = () => {
       <div className="min-h-screen flex items-center justify-center m-4 p-4 lg:p-8  bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] rounded-lg lg:rounded-[15px]">
         <div className="flex flex-col lg:grid lg:grid-cols-2 ">
           {/* Left Side - Logo, Text, and Illustration */}
-          <div  className="hidden lg:flex md:flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
+          <div className="hidden lg:flex md:flex flex-col justify-center items-center lg:items-start w-full text-white p-6 lg:p-10 lg:rounded-l-lg">
             <Image
               src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741001860/gg2m37yby4apt0febngh.png"
               alt="Afro Metaliq Logo"
@@ -144,7 +156,7 @@ const SignUp = () => {
             <form className="mt-6 space-y-4" onSubmit={handleSignUp}>
               <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
                 {/* Name Field */}
-                <div className="w-full lg:w-1/2">
+                <div className="w-full lg:w-1/1">
                   <label className="block text-gray-600">
                     User Name <span className="text-red-500">*</span>
                   </label>
@@ -167,10 +179,51 @@ const SignUp = () => {
                   <input
                     type="text"
                     value={formData.phoneNumber}
+                    maxLength={9}
                     onChange={(e) =>
                       setFormData({ ...formData, phoneNumber: e.target.value })
                     }
                     placeholder="+258 xxx xxx xxx"
+                    className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col lg:flex-row lg:space-x-4 space-y-4 lg:space-y-0">
+                {/* Name Field */}
+                <div className="w-full lg:w-1/1">
+                  <label className="block text-gray-600">
+                    Company Name <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.companyName}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        companyName: e.target.value,
+                      })
+                    }
+                    placeholder="Enter Company Name"
+                    className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* Phone Number Field */}
+                <div className="w-full lg:w-1/2">
+                  <label className="block text-gray-600">
+                    NUIT <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.nuit}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        nuit: e.target.value,
+                      })
+                    }
+                    placeholder="Enter NUIT"
                     className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
@@ -192,34 +245,99 @@ const SignUp = () => {
                   className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
-
               <div>
-                <label className="block mt-4 text-gray-600">Password</label>
-                <input
-                  type="password"
-                  value={formData.password}
-                  onChange={(e) =>
-                    setFormData({ ...formData, password: e.target.value })
-                  }
-                  placeholder="Password"
-                  className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                />
+                <label className="block text-gray-600">
+                  Password <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    value={formData.password}
+                    onChange={(e) =>
+                      setFormData({ ...formData, password: e.target.value })
+                    }
+                    placeholder="Password"
+                    className="w-full p-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer text-gray-500"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                  >
+                    {showPassword ? (
+                      <AiFillEyeInvisible size={20} />
+                    ) : (
+                      <AiFillEye size={20} />
+                    )}
+                  </div>
+                </div>
               </div>
+
+              {/* Confirm Password Field */}
               <div>
-                <label className="block text-gray-600">Confirm Password</label>
+                <label className="block text-gray-600">
+                  Confirm Password <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type={showConfirmPassword ? "text" : "password"}
+                    value={formData.confirmPassword}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        confirmPassword: e.target.value,
+                      })
+                    }
+                    placeholder="Confirm password"
+                    className="w-full p-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                  <div
+                    className="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer text-gray-500"
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
+                  >
+                    {showConfirmPassword ? (
+                      <AiFillEyeInvisible size={20} />
+                    ) : (
+                      <AiFillEye size={20} />
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* <div>
+                <label className="block text-gray-600">
+                  Company Name <span className="text-red-500">*</span>
+                </label>
                 <input
-                  type="password"
-                  value={formData.confirmPassword}
+                  type="text"
+                  value={formData.companyName}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      confirmPassword: e.target.value,
+                      companyName: e.target.value,
                     })
                   }
-                  placeholder="Confirm password"
+                  placeholder="Enter Company Name"
                   className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                 />
               </div>
+
+              <div>
+                <label className="block text-gray-600">
+                  NUIT <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={formData.nuit}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      nuit: e.target.value,
+                    })
+                  }
+                  placeholder="Enter NUIT"
+                  className="w-full  p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div> */}
 
               {/* Sign Up Button */}
               <button

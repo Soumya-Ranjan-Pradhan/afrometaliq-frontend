@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// const BASE_URL = "http://localhost:3001/api/v1";
-import { BASE_URL } from "@/contants";
+const BASE_URL = "http://localhost:3001/api/v1";
+// import { BASE_URL } from "@/contants";
 import { clearLS, getFromLS } from "@/lib/storage";
 export interface User {
   _id: string;
@@ -10,6 +10,8 @@ export interface User {
   phoneNumber: string;
   isEmailVerified: boolean;
   password: string;
+  companyName: string;
+  nuit: string;
   role: string;
   createdAt: string;
   updatedAt: string;
@@ -37,10 +39,35 @@ export interface ApiResponse<T> {
   data: T;
 }
 
-// Get all users
-export const fetchUsers = async (): Promise<ApiResponse<UsersResponse>> => {
-  const response = await axios.get<ApiResponse<UsersResponse>>(
-    `${BASE_URL}/users`
+export type AuthQuery = {
+  page?: number;
+  limit?: number;
+};
+
+export type AuthResponse = {
+  users: User[];
+  pagination: {
+    currentPage: number;
+    totalPages: number;
+    totalItems: number;
+    totalUsers: number;
+  };
+};
+
+// get all users
+// export const getAllUsers = async (): Promise<
+//   ApiResponse<{ users: User[] }>
+// > => {
+//   const response = await axios.get(`${BASE_URL}/users`);
+//   return response.data;
+// };
+
+export const getAllUsers = async (
+  query?: AuthQuery
+): Promise<ApiResponse<AuthResponse>> => {
+  const response = await axios.get<ApiResponse<AuthResponse>>(
+    `${BASE_URL}/users`,
+    { params: query }
   );
   return response.data;
 };
@@ -188,4 +215,21 @@ export const editProfile = async (data: Partial<User>) => {
     }
     throw error;
   }
+};
+
+// search users
+
+export const searchUsers = async (
+  query: string
+): Promise<ApiResponse<{ users: User[] }>> => {
+  if (!query)
+    return {
+      success: false,
+      message: "No search query",
+      data: { users: [] },
+    };
+  const response = await axios.get<ApiResponse<{ users: User[] }>>(
+    `${BASE_URL}/users/search?search=${query}`
+  );
+  return response.data;
 };

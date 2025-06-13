@@ -1,34 +1,48 @@
-import React from "react";
+"use client";
+
+import { useGetAllUsers, useSearchUsers } from "@/api/auth/queries/authQuery";
+import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 
 const UserTable: React.FC = () => {
-  const users = [
-    {
-      name: "Kristin Watson",
-      phone: "6371151160",
-      email: "soumyapradhan@gmail.com",
-    },
-    {
-      name: "Kristin Watson",
-      phone: "6371151160",
-      email: "soumyapradhan@gmail.com",
-    },
-    {
-      name: "Kristin Watson",
-      phone: "6371151160",
-      email: "soumyapradhan@gmail.com",
-    },
-    {
-      name: "Kristin Watson",
-      phone: "6371151160",
-      email: "soumyapradhan@gmail.com",
-    },
-    {
-      name: "Kristin Watson",
-      phone: "6371151160",
-      email: "soumyapradhan@gmail.com",
-    },
-  ];
+  const [pageNumber, setPageNumber] = useState<number>(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const limit = 10;
+
+  const { data, isLoading, error } = useGetAllUsers({
+    page: pageNumber,
+    limit,
+  });
+
+  const { data: searchResults } = useSearchUsers(searchQuery);
+
+  const handleNextPage = () => {
+    if (
+      data?.data?.pagination?.totalPages &&
+      pageNumber < data.data.pagination.totalPages
+    ) {
+      setPageNumber((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (pageNumber > 1) {
+      setPageNumber((prev) => prev - 1);
+    }
+  };
+
+  const displayUser =
+    searchQuery && searchResults?.data?.users?.length
+      ? searchResults.data.users
+      : data?.data.users || [];
+
+  if (isLoading) {
+    <div className="flex justify-center items-center h-64">
+      <div className="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
+    </div>;
+  }
+
+  if (error) return <div>Error fetching products</div>;
 
   return (
     <div className="bg-gray-50  flex flex-col  justify-center px-4 md:px-10">
@@ -38,6 +52,8 @@ const UserTable: React.FC = () => {
         <div className="flex flex-wrap items-center justify-between mb-6">
           <input
             type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search here..."
             className="border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none w-full md:w-1/3"
           />
@@ -60,15 +76,15 @@ const UserTable: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {users.map((user, index) => (
+              {displayUser.map((user: any, index: any) => (
                 <tr key={index} className="hover:bg-gray-50">
                   <td className="border px-4 py-2 text-gray-700 text-sm flex items-center space-x-4">
                     <div>
-                      <p className="font-semibold">{user.name}</p>
+                      <p className="font-semibold">{user.username}</p>
                     </div>
                   </td>
                   <td className="border px-4 py-2 text-gray-700 text-sm">
-                    {user.phone}
+                    {user.phoneNumber}
                   </td>
                   <td className="border px-4 py-2 text-gray-700 text-sm">
                     {user.email}
@@ -79,27 +95,31 @@ const UserTable: React.FC = () => {
           </table>
         </div>
 
-        {/* Pagination */}
-        <div className="p-4 bg-gray-50 border-t flex justify-between items-center">
-          <p className="text-sm text-gray-600">Showing 1-10 of 50 entries</p>
-          <div className="flex gap-2">
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              &lt; Prev
-            </button>
-            <button className="bg-blue-500 text-white py-1 px-3 rounded-md">
-              1
-            </button>
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              2
-            </button>
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              3
-            </button>
-            <button className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300">
-              Next &gt;
-            </button>
+        {/* Pagination (hide if searchQuery is active) */}
+        {!searchQuery && (
+          <div className="p-4 bg-gray-50 border-t flex justify-between items-center">
+            <p className="text-sm text-gray-600">entries</p>
+            <div className="flex gap-2">
+              <button
+                className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handlePrevPage}
+                disabled={pageNumber === 1}
+              >
+                &lt; Prev
+              </button>
+              <button
+                className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                onClick={handleNextPage}
+                disabled={
+                  !data?.data?.pagination?.totalPages ||
+                  pageNumber >= data.data.pagination.totalPages
+                }
+              >
+                Next &gt;
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );

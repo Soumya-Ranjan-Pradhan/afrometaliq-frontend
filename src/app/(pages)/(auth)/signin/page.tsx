@@ -16,6 +16,8 @@ import { jwtDecode } from "jwt-decode";
 import { storeToLS } from "@/lib/storage";
 import { BASE_URL } from "@/contants";
 import { FaSpinner } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const initialState = {
   email: "",
@@ -32,6 +34,8 @@ const SignIn = () => {
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
   const [errorMessage, setErrorMessage] = useState("");
+  const { t } = useTranslation();
+  const [showPassword, setShowPassword] = useState(false);
 
   const isButtonDisabled = !formData.email || !formData.password || isLoading;
 
@@ -92,10 +96,10 @@ const SignIn = () => {
       } else {
         setErrorMessage(
           error.response?.data?.message ||
-            "An unexpected error occurred. Please try again."
+          "An unexpected error occurred. Please try again."
         );
       }
-      console.error("Google Login Error:", error);
+      // console.error("Google Login Error:", error);
     } finally {
       setIsLoading(false);
     }
@@ -135,7 +139,7 @@ const SignIn = () => {
               to Afrometaliq
             </h1> */}
             <h1 className="text-3xl lg:text-4xl font-bold mt-6 text-center lg:text-left">
-            Sign in  to AfroMetaliQ
+              Sign in to AfroMetaliQ
             </h1>
             <p className="mt-4 text-base lg:text-lg text-center lg:text-left">
               Join Afrometaliq, your gateway to limitless possibilities! Sign up
@@ -186,7 +190,8 @@ const SignIn = () => {
 
             {/* Username or Email Field */}
             <label className="block text-gray-600">
-              Enter your username or email or mobile number{" "}
+              {t("login")}
+              {""}
               <span className="text-red-500">*</span>
             </label>
             <input
@@ -201,20 +206,30 @@ const SignIn = () => {
 
             {/* Password Field */}
             <label className="block mt-4 text-gray-600">
-              Enter your Password{" "}
-              <span>
-                <span className="text-red-500">*</span>
-              </span>
+              {t("password")}
+              <span className="text-red-500">*</span>
             </label>
-            <input
-              type="password"
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              value={formData.password}
-              placeholder="Password"
-              className="w-full mt-2 p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
+                }
+                value={formData.password}
+                placeholder="Password"
+                className="w-full mt-2 p-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <div
+                className="absolute inset-y-0 right-0 flex items-center px-3 cursor-pointer text-gray-500"
+                onClick={() => setShowPassword((prev) => !prev)}
+              >
+                {showPassword ? (
+                  <AiFillEyeInvisible size={20} />
+                ) : (
+                  <AiFillEye size={20} />
+                )}
+              </div>
+            </div>
 
             {/* Forgot Password */}
             <div className="mt-2 text-right">
@@ -222,7 +237,7 @@ const SignIn = () => {
                 className="text-blue-500 hover:underline cursor-pointer"
                 onClick={() => setForgotPasswordModalOpen(true)}
               >
-                Forgot Password
+                {t("forgot_password")}
               </p>
             </div>
 
@@ -245,7 +260,7 @@ const SignIn = () => {
 
             {/* Sign Up Link */}
             <div className="mt-4 text-center text-gray-600">
-              No Account?{" "}
+              {t("No_Account?")}
               <Link href="/signup" className="text-blue-500 hover:underline">
                 Sign up
               </Link>

@@ -15,6 +15,7 @@ import { toast } from "react-toastify";
 import { getFromLS } from "@/lib/storage";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { MdShoppingCartCheckout } from "react-icons/md";
 
 const CategoryProductsPage = () => {
   const params = useParams();
@@ -128,9 +129,9 @@ const CategoryProductsPage = () => {
                   >
                     <TfiFullscreen className="text-black hover:text-white h-6 w-6" />
                   </button> */}
-                  <button className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
+                  {/* <button className="p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
                     <FaHeart className="text-gray-600 hover:text-white h-6 w-6" />
-                  </button>
+                  </button> */}
                 </div>
               </div>
 
@@ -155,13 +156,14 @@ const CategoryProductsPage = () => {
               {/* Action Buttons */}
               <div className="absolute bottom-4 left-4  right-4 space-y-1">
                 <Link
-                  href={`/buynow/${product._id}`}
+                onClick={() => handleAddToCart(product._id)}
+                  href={`/cart`}
                   className="w-full py-2 bg-gradient-to-r flex items-center justify-center  from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                 >
                   {t("buy_now")}
                 </Link>
 
-                <button
+                {/* <button
                   onClick={() => handleAddToCart(product._id)}
                   className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                   disabled={loadingIds.includes(product._id)}
@@ -173,6 +175,30 @@ const CategoryProductsPage = () => {
                   ) : (
                     t("add_to_cart")
                   )}
+                </button> */}
+                <button
+                  onClick={() => handleAddToCart(product._id)}
+                  className="w-full py-2 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md flex items-center justify-center"
+                  disabled={loadingIds.includes(product._id)}
+                >
+                  {/* {loadingIds.includes(product._id) ? (
+                        <div className="flex items-center justify-center">
+                          <FaSpinner className="animate-spin text-white text-lg" />
+                        </div>
+                      ) : (
+                        t("add_to_cart")
+                      )} */}
+
+                  <div className="flex items-center justify-center gap-2">
+                    {loadingIds.includes(product?._id || "") ? (
+                      <div className="flex items-center justify-center">
+                        <FaSpinner className="animate-spin text-white text-lg" />
+                      </div>
+                    ) : (
+                      t("add_to_cart")
+                    )}
+                    <MdShoppingCartCheckout size={25} color="white" />
+                  </div>
                 </button>
               </div>
             </div>

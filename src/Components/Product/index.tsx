@@ -131,7 +131,8 @@ const Product = () => {
 
             <div className="absolute bottom-4 left-4  right-4 space-y-1">
               <Link
-                href={`/buynow/${product._id}`}
+              onClick={() => handleAddToCart(product._id)}
+                href={`/cart`}
                 className="w-full py-2 bg-gradient-to-r flex items-center justify-center  from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
               >
                 {t("buy_now")}

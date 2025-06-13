@@ -33,7 +33,7 @@ export default function RootLayout({
 
       {/* WhatsApp Icon */}
       <Link
-        href="https://wa.me/+917777777777"
+        href="https://wa.me/+258872526610"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed lg:bottom-20 md:bottom-20 bottom-[9rem] right-4 z-50 bg-green-500 text-white p-3 rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform duration-300 animate-jump"

@@ -27,7 +27,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose }) =>
           toast.success("OTP sent successfully!");
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to send OTP");
+          toast.error("Email not registered.");
         },
       }
     );
@@ -47,7 +47,7 @@ const ForgotPasswordModal: React.FC<ForgotPasswordModalProps> = ({ onClose }) =>
           onClose();
         },
         onError: (error) => {
-          toast.error(error.message || "Failed to reset password");
+          toast.error("Invalid OTP");
         },
       }
     );

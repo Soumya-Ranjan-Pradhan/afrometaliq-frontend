@@ -208,7 +208,8 @@ const categories = product?.category?.map((cat) => cat._id) || [];
                 </button>
 
                 <Link
-                  href={`/buynow/${productDetails?._id}`}
+                 onClick={() => handleAddToCart(productDetails?._id || "")}
+                  href={`/cart`}
                   className="lg:flex-1 md:w-full w-full h-12 py-2 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
                   style={{ lineHeight: "1.5", fontSize: "14px" }}
                 >

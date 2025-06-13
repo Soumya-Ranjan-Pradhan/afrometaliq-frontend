@@ -162,7 +162,9 @@ const NewArrivingProductCarousel: React.FC = () => {
 
                   <div className="absolute bottom-4 left-4  right-4 space-y-1">
                     <Link
-                      href={`/buynow/${product._id}`}
+                      href={"/cart"}
+                      // href={`/buynow/${product._id}`}
+                      onClick={() => handleAddToCart(product._id)}
                       className="w-full py-2  flex items-center justify-center bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                     >
                       {t("buy_now")}
