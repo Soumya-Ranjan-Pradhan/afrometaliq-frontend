@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <>
       <Header />
+      {/* {comingSoon && <ComingSoonModal onClose={handleClose} />} */}
 
       <div>
         <Sidebar />
