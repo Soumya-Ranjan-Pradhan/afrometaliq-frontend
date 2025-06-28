@@ -31,11 +31,20 @@ const CartPage = () => {
   const { mutate: updateQuantity } = useUpdateCartQuantityMutation();
   const { isComingSoon, setIsComingSoon } = useGlobalStore();
   const { t, i18n } = useTranslation();
+  const [quantityMap, setQuantityMap] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const token = getFromLS("accessToken");
     setIsLoggedIn(!!token);
   }, []);
+
+  useEffect(() => {
+    const initialQuantities: { [key: string]: string } = {};
+    data?.data?.cart.forEach((item: any) => {
+      initialQuantities[item.cartItemId] = item.quantity.toString();
+    });
+    setQuantityMap(initialQuantities);
+  }, [data]);
 
   // handle delete from cart
   const handleDeleteFromCart = (id: string) => {
@@ -318,30 +327,66 @@ const CartPage = () => {
                     </div>
                   </div>
                   <div className="flex items-center lg:mt-5 md:mt-5 space-x-4">
-                    <button className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center">
-                      <FaMinus
-                        size={12}
-                        onClick={() =>
-                          handleUpdateQuantity(
-                            item.cartItemId,
-                            item.quantity - 1
-                          )
-                        }
-                      />
+                    {/* Decrement */}
+                    <button
+                      className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center"
+                      onClick={() => {
+                        const newQuantity = item.quantity - 1;
+                        if (newQuantity > 0)
+                          handleUpdateQuantity(item.cartItemId, newQuantity);
+                      }}
+                    >
+                      <FaMinus size={12} />
                     </button>
 
-                    <p className="text-sm">{item.quantity}</p>
-
-                    <button className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center">
-                      <FaPlus
-                        size={12}
-                        onClick={() =>
-                          handleUpdateQuantity(
-                            item.cartItemId,
-                            item.quantity + 1
-                          )
+                    {/* Input Field */}
+                    <input
+                      type="text"
+                      value={quantityMap[item.cartItemId] || ""}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        // Allow only digits
+                        if (/^\d*$/.test(value)) {
+                          setQuantityMap((prev) => ({
+                            ...prev,
+                            [item.cartItemId]: value,
+                          }));
                         }
-                      />
+                      }}
+                      onBlur={() => {
+                        const parsed = parseInt(
+                          quantityMap[item.cartItemId],
+                          10
+                        );
+                        if (
+                          !isNaN(parsed) &&
+                          parsed > 0 &&
+                          parsed !== item.quantity
+                        ) {
+                          handleUpdateQuantity(item.cartItemId, parsed);
+                        } else {
+                          setQuantityMap((prev) => ({
+                            ...prev,
+                            [item.cartItemId]: item.quantity.toString(),
+                          }));
+                        }
+                      }}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          (e.target as HTMLInputElement).blur(); // triggers onBlur
+                        }
+                      }}
+                      className="w-12 text-center border rounded-md text-sm py-1"
+                    />
+
+                    {/* Increment */}
+                    <button
+                      className="w-7 h-7 bg-gray-300 rounded-full text-center flex items-center justify-center"
+                      onClick={() =>
+                        handleUpdateQuantity(item.cartItemId, item.quantity + 1)
+                      }
+                    >
+                      <FaPlus size={12} />
                     </button>
                   </div>
                 </div>
