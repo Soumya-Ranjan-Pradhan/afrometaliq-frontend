@@ -48,12 +48,12 @@ const AboutUs = () => {
 
         <div className="bg-[#F9F9F9] mb-4 p-6 rounded-lg">
           <p className="text-gray-700">{t("about_des")}</p>
-          <p className="font-bold mt-6">
+          {/* <p className="font-bold mt-6">
             <span className="bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
               Soumya Ranjan Pradhan,
             </span>{" "}
             Head of Development
-          </p>
+          </p> */}
         </div>
       </motion.div>
     </section>
