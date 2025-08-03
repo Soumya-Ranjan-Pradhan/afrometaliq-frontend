@@ -49,12 +49,12 @@ const DiscussSection = () => {
         {/* Information Box */}
         <div className="p-6 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] shadow-lg rounded-lg border  mt-6 md:mt-0">
           <p className="text-[#fff] font-semibold">
-            At MuleSoft IT Services, we thrive on challenges and are passionate
-            about delivering exceptional results.
+            At AfroMetaliq, we thrive on challenges and are passionate about
+            delivering exceptional results.
           </p>
           <p className="text-[#fff] mt-2">
             With our experienced team of IT professionals, we have the expertise
-            &amp; knowledge to tackle projects of varying sizes.
+            and knowledge to tackle projects of varying sizes.
           </p>
           <Link href="/contact">
             <button className="mt-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] border border-[#fff] text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition">

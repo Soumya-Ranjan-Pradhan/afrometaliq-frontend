@@ -91,9 +91,31 @@ const CategoryProductsPage = () => {
       </div>
     );
 
-  if (isError) {
-    return <p>Failed to fetch products. Please try again later.</p>;
-  }
+    if (isError || data?.data?.products?.length === 0) {
+      return (
+        <div className="flex flex-col items-center justify-center py-12">
+          <Image
+            src="https://res.cloudinary.com/dppfr1gjx/image/upload/v1741003029/hho762f50ln5rqlsbty4.png"
+            alt="No Products"
+            width={200}
+            height={200}
+          />
+          <p className="text-xl font-bold text-red-600 mt-4">
+            No products found in this category.
+          </p>
+          <p className="text-gray-600 mt-2 text-sm">
+            Please choose a different category from the menu.
+          </p>
+          <button
+            onClick={() => router.push("/")}
+            className="mt-6 px-6 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+          >
+            Go to Home
+          </button>
+        </div>
+      );
+    }
+    
 
   const products = data?.data.products || [];
 
@@ -140,6 +162,20 @@ const CategoryProductsPage = () => {
                 <h3 className="text-lg font-semibold text-gray-800">
                   {product.product_name}
                 </h3>
+
+                {/* Category info or Coming Soon */}
+                {product.category && product.category.length > 0 ? (
+                  <p className="text-sm text-gray-500">
+                    {product.category
+                      .map((cat) => cat.category_name)
+                      .join(", ")}
+                  </p>
+                ) : (
+                  <span className="text-xs bg-yellow-200 text-yellow-800 font-semibold px-2 py-1 rounded-full inline-block mt-1">
+                    Coming Soon
+                  </span>
+                )}
+
                 <div className="text-lg mb-2 font-bold text-purple-600">
                   {user?._id ? (
                     <span className="text-sm font-bold text-gray-700">
@@ -156,7 +192,7 @@ const CategoryProductsPage = () => {
               {/* Action Buttons */}
               <div className="absolute bottom-4 left-4  right-4 space-y-1">
                 <Link
-                onClick={() => handleAddToCart(product._id)}
+                  onClick={() => handleAddToCart(product._id)}
                   href={`/cart`}
                   className="w-full py-2 bg-gradient-to-r flex items-center justify-center  from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md"
                 >

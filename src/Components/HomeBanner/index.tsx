@@ -200,7 +200,7 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
                   className="absolute w-full h-full"
                 >
                   <div
-                    className="w-full h-full bg-cover bg-center"
+                    className="w-full h-full bg-center bg-no-repeat bg-cover md:bg-cover sm:bg-contain"
                     style={{
                       backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${currentSlides[0].image})`,
                     }}

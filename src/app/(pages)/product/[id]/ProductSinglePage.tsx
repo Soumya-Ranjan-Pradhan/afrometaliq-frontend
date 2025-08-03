@@ -21,34 +21,48 @@ import { PopulatedProduct } from "@/api/product/productApi";
 const DEFAULT_IMAGE_URL =
   "https://res.cloudinary.com/dppfr1gjx/image/upload/v1743444584/a8166uxtah4aqkcndpvr.jpg";
 
-const ProductSinglePage = ({id,product}:{id:string,product:PopulatedProduct}) => {
+const ProductSinglePage = ({
+  id,
+  product,
+}: {
+  id: string;
+  product: PopulatedProduct;
+}) => {
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
   const router = useRouter();
   const swiperRef = useRef<any>(null);
   const user = useAuthStore((state) => state.user);
-//   const { data: product, isLoading, error } = useProductById(id);
+  //   const { data: product, isLoading, error } = useProductById(id);
   const { mutate: addToCart } = useAddToCartMutation();
   const [loadingIds, setLoadingIds] = useState<string[]>([]);
   const { t } = useTranslation();
   // Extract product categories
 
-const categories = product?.category?.map((cat) => cat._id) || [];
+  const categories = product?.category?.map((cat) => cat._id) || [];
 
-  const handleAddToCart = (productId: string) => {
+  const handleAddToCart = (productId: string, redirectToCart = false) => {
     const token = getFromLS("accessToken");
+  
     if (!token) {
       toast.warn("Please login before adding items to the cart.");
       router.push("/signin");
       return;
     }
-
+  
     setLoadingIds((prev) => [...prev, productId]);
-
+  
     addToCart(
-      { productId, quantity: 1 },
+      {
+        productId,
+        quantity: 1,
+        ...(selectedSize && { size: selectedSize }), //! size is optional now
+      },
       {
         onSuccess: () => {
           toast.success("Item added to cart successfully!");
+          if (redirectToCart) {
+            router.push("/cart");
+          }
         },
         onError: () => {
           toast.error("Failed to add item to cart. Please try again.");
@@ -59,9 +73,47 @@ const categories = product?.category?.map((cat) => cat._id) || [];
       }
     );
   };
+  
+  //   if (isLoading) return <PageSkeleton />;
+  //   if (error) return <div>Error fetching product details</div>;
 
-//   if (isLoading) return <PageSkeleton />;
-//   if (error) return <div>Error fetching product details</div>;
+  // const handleAddToCart = (
+  //   productId: string,
+  //   redirectToCart: boolean = false
+  // ) => {
+  //   const token = getFromLS("accessToken");
+
+  //   if (!token) {
+  //     toast.warn("Please login before adding items to the cart.");
+  //     router.push("/signin");
+  //     return;
+  //   }
+
+  //   if (!selectedSize) {
+  //     toast.error("Please choose a size before proceeding.");
+  //     return;
+  //   }
+
+  //   setLoadingIds((prev) => [...prev, productId]);
+
+  //   addToCart(
+  //     { productId, quantity: 1, size: selectedSize },
+  //     {
+  //       onSuccess: () => {
+  //         toast.success("Item added to cart successfully!");
+  //         if (redirectToCart) {
+  //           router.push("/cart"); // ✅ Redirect only if it's Buy Now
+  //         }
+  //       },
+  //       onError: () => {
+  //         toast.error("Failed to add item to cart. Please try again.");
+  //       },
+  //       onSettled: () => {
+  //         setLoadingIds((prev) => prev.filter((id) => id !== productId));
+  //       },
+  //     }
+  //   );
+  // };
 
   const productDetails = product;
 
@@ -122,7 +174,9 @@ const categories = product?.category?.map((cat) => cat._id) || [];
             </div>
             <div className="w-full items-center  p-2 overflow-hidden">
               <div className="border h-[5rem] flex items-center p-2 rounded-lg overflow-hidden relative">
-                <h1>{productDetails?.product_add_description || "no description"}</h1>
+                <h1>
+                  {productDetails?.product_add_description || "no description"}
+                </h1>
               </div>
             </div>
           </div>
@@ -192,7 +246,7 @@ const categories = product?.category?.map((cat) => cat._id) || [];
               {/* Buttons */}
               <div className="flex flex-col lg:flex-row items-center gap-4 w-full lg:w-auto">
                 <button
-                  onClick={() => handleAddToCart(productDetails?._id || "")}
+                   onClick={() => handleAddToCart(productDetails?._id || "", true)}
                   className="w-full lg:w-auto px-6 py-3 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white rounded-lg font-semibold hover:bg-red-600 transition"
                 >
                   <div className="flex items-center justify-center gap-2">
@@ -208,7 +262,7 @@ const categories = product?.category?.map((cat) => cat._id) || [];
                 </button>
 
                 <Link
-                 onClick={() => handleAddToCart(productDetails?._id || "")}
+                   onClick={() => handleAddToCart(productDetails?._id || "")}
                   href={`/cart`}
                   className="lg:flex-1 md:w-full w-full h-12 py-2 px-4 bg-gradient-to-r from-[rgb(20,161,168)] to-[rgb(3,105,161)] text-white font-semibold rounded-md text-center flex items-center justify-center whitespace-nowrap"
                   style={{ lineHeight: "1.5", fontSize: "14px" }}

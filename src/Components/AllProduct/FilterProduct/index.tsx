@@ -6,7 +6,7 @@ import { useCategoriesByLevel } from "@/api/category/queries/useCategoryQuery";
 import { IoCloseCircleOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 
-interface FilterProductProps {
+interface FilterMobileScreenProps {
   clearFilters: () => void;
   selectedFilter: string | null;
   setSelectedFilter: React.Dispatch<React.SetStateAction<string | null>>;
@@ -14,7 +14,8 @@ interface FilterProductProps {
   setSelectedCategories: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const FilterProduct: React.FC<FilterProductProps> = ({
+
+const FilterProduct: React.FC<FilterMobileScreenProps> = ({
   clearFilters,
   selectedFilter,
   setSelectedFilter,
@@ -182,14 +183,14 @@ const FilterProduct: React.FC<FilterProductProps> = ({
                   className="flex items-center space-x-2 mb-2"
                 >
                   <input
-                    type="checkbox"
-                    value={category._id}
-                    checked={selectedCategories.includes(category._id)}
-                    onChange={() =>
-                      setSelectedCategories((prev) =>
-                        prev.includes(category._id)
-                          ? prev.filter((item) => item !== category._id)
-                          : [...prev, category._id]
+                  type="checkbox"
+                  value={category._id}
+                  checked={selectedCategories.includes(category._id)}
+                  onChange={() =>
+                    setSelectedCategories((prev) =>
+                      prev.includes(category._id)
+                        ? prev.filter((item) => item !== category._id)
+                        : [...prev, category._id]
                       )
                     }
                     className="form-checkbox"

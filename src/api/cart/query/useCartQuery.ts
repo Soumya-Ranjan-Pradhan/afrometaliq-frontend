@@ -22,9 +22,9 @@ export const useAddToCartMutation = () => {
   return useMutation<
     ApiResponse<{cart: Cart[]}>,
     Error,
-    {productId: string; quantity: number}
+    {productId: string; quantity: number, size?: string}
   >({
-    mutationFn: ({productId, quantity}) => addToCart({productId, quantity}),
+    mutationFn: ({productId, quantity, size}) => addToCart({productId, quantity, size}),
     onSuccess: () => {
       queryClient.invalidateQueries({queryKey: ['cart']}); // ✅ Refresh cart instantly
     },

@@ -40,6 +40,7 @@ export interface Cart {
     updatedAt: string;
   };
   quantity: number;
+  size?: string;
 }
 
 // define response type
@@ -68,6 +69,7 @@ export const getCart = async (): Promise<ApiResponse<{ cart: Cart[] }>> => {
 export const addToCart = async (data: {
   productId: string;
   quantity: number;
+  size?: string;
 }): Promise<ApiResponse<{ cart: Cart[] }>> => {
   // Get the token and remove extra quotes if necessary
   const token = getFromLS("accessToken");
