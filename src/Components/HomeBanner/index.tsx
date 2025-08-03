@@ -5,7 +5,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useGetAllBanner } from "@/api/banner/queries/useBannerQuery";
 
-// Slide interface for UI
 interface Slide {
   id: number;
   image: string;
@@ -83,9 +82,9 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
 
   const goToSlide = (index: number) => {
     if (index === activeIndex) return;
-
     const direction = index > activeIndex ? 1 : -1;
     setDirection(direction);
+
     let currentIndex = activeIndex;
     const newSlides = [...currentSlides];
 
@@ -166,7 +165,7 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
 
   if (isLoading) {
     return (
-      <div className="h-96 flex justify-center items-center">
+      <div className="h-[500px] flex justify-center items-center">
         Loading banners...
       </div>
     );
@@ -175,16 +174,19 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
   return (
     <div
       className={cn(
-        "w-full h-96 lg:h-screen flex items-center justify-center overflow-hidden",
+        "w-full h-[500px] md:h-[600px] lg:h-screen flex items-center justify-center overflow-hidden",
         className
       )}
     >
       <div
-        className={cn("relative w-full h-screen md:h-full", containerClassName)}
+        className={cn(
+          "relative w-full h-[500px] md:h-[600px] lg:h-screen",
+          containerClassName
+        )}
       >
         {currentSlides.length > 0 && (
           <>
-            <div className="w-full h-screen">
+            <div className="relative w-full h-full">
               <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                   key={currentSlides[0].id}
@@ -197,29 +199,29 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
                     x: { type: "spring", stiffness: 300, damping: 30 },
                     opacity: { duration: 0.8 },
                   }}
-                  className="absolute w-full h-full"
+                  className="absolute inset-0 w-full h-full"
                 >
                   <div
-                    className="w-full h-full bg-center bg-no-repeat bg-cover md:bg-cover sm:bg-contain"
+                    className="absolute inset-0 w-full h-full bg-cover bg-center bg-no-repeat"
                     style={{
                       backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${currentSlides[0].image})`,
                     }}
                   >
                     <motion.div
-                      className="absolute top-1/2 left-16 transform -translate-y-1/2 w-72 text-left text-white"
+                      className="absolute top-1/2 left-4 sm:left-8 md:left-16 transform -translate-y-1/2 w-72 text-left text-white"
                       variants={contentVariants}
                       initial="hidden"
                       animate="visible"
                     >
                       <motion.h2
                         variants={itemVariants}
-                        className="text-4xl font-bold uppercase"
+                        className="text-3xl sm:text-4xl font-bold uppercase"
                       >
                         {currentSlides[0].name}
                       </motion.h2>
                       <motion.p
                         variants={itemVariants}
-                        className="mt-3 mb-6 text-gray-100"
+                        className="mt-3 mb-6 text-sm sm:text-base text-gray-100"
                       >
                         {currentSlides[0].description}
                       </motion.p>
@@ -273,24 +275,13 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
             <div className="absolute bottom-6 w-full flex justify-center space-x-4">
               <motion.button
                 className="text-white"
-                // className="px-2 py-1 bg-white text-black rounded-full hover:bg-gray-100 transition-colors font-medium"
                 onClick={() => handleNavigation("prev")}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
                 {prevButtonContent || (
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 19l-7-7 7-7"
-                    />
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
                 )}
               </motion.button>
@@ -301,18 +292,8 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
                 whileTap={{ scale: 0.9 }}
               >
                 {nextButtonContent || (
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
+                  <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 )}
               </motion.button>
@@ -345,6 +326,8 @@ const HomeBanner: React.FC<ImageSliderProps> = ({
 };
 
 export default HomeBanner;
+
+
 
 // "use client";
 // import React from "react";
