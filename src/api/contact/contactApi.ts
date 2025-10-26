@@ -2,7 +2,15 @@ import axios from "axios";
 import { BASE_URL } from "@/contants";
 
 export type Contact = {
-  // _id: string; 
+  _id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  mobile_number: string;
+  message: string;
+};
+
+export type CreateContact = {
   first_name: string;
   last_name: string;
   email: string;
@@ -18,7 +26,7 @@ export interface ApiResponse<T> {
 
 // create contact
 export const createContact = async (
-  data: Contact
+  data: CreateContact
 ): Promise<ApiResponse<{ contact: Contact[] }>> => {
   const response = await axios.post<ApiResponse<{ contact: Contact[] }>>(
     `${BASE_URL}/contacts`,

@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   ApiResponse,
   Contact,
+  CreateContact,
   createContact,
   deleteContact,
   getAllContact,
@@ -24,14 +25,7 @@ export const useCreateContacts = () => {
   return useMutation<
     ApiResponse<{ contact: Contact[] }>,
     Error,
-    {
-  
-      first_name: string;
-      last_name: string;
-      email: string;
-      mobile_number: string;
-      message: string;
-    }
+    CreateContact
   >({
     mutationFn: createContact,
     onSuccess: () => {
