@@ -1,17 +1,35 @@
 "use client";
 
+import React, { useState } from "react";
 import {
   useCreateGallery,
   useDeleteGallery,
   useGalleries,
   useUpdateGallery,
 } from "@/api/gallery/queries/useGalleryQuery";
-import { Modal } from "@/Components/AdminComponents/ConformModal";
-import React, { useState } from "react";
-import { FaTrash, FaUpload, FaEdit } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { FaTrash, FaUpload, FaEdit } from "react-icons/fa";
 
-
+// shadcn/ui imports
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Skeleton } from "@/Components/ui/skeleton";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/Components/ui/dialog";
 
 const AdminGallery: React.FC = () => {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
@@ -19,24 +37,23 @@ const AdminGallery: React.FC = () => {
   const [description, setDescription] = useState<string>("");
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [editGalleryId, setEditGalleryId] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState<boolean>(false);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
 
   // React Query hooks
-  const { data, isLoading, error, refetch } = useGalleries();
-  const { mutate: createGallery } = useCreateGallery();
-  const { mutate: updateGallery } = useUpdateGallery();
-  const { mutate: deleteGallery } = useDeleteGallery();
+  const { data, isLoading, refetch } = useGalleries();
+  const { mutate: createGallery, isPending: isCreating } = useCreateGallery();
+  const { mutate: updateGallery, isPending: isUpdating } = useUpdateGallery();
+  const { mutate: deleteGallery, isPending: isDeleting } = useDeleteGallery();
 
   // Handle image upload
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      setUploadedImage(file);
+      setUploadedImage(event.target.files[0]);
     }
   };
 
-  // Handle create gallery
+  // Create gallery
   const handleCreate = () => {
     if (!title.trim() || !description.trim() || !uploadedImage) {
       toast.error("Title, description, and image are required");
@@ -50,71 +67,46 @@ const AdminGallery: React.FC = () => {
 
     createGallery(formData, {
       onSuccess: () => {
-        setTitle("");
-        setDescription("");
-        setUploadedImage(null);
+        resetForm();
         refetch();
         toast.success("Gallery created successfully!");
       },
-      onError: () => {
-        toast.error("Failed to create gallery");
-      },
+      onError: () => toast.error("Failed to create gallery"),
     });
   };
 
-  // Handle update gallery
+  // Update gallery
   const handleUpdate = () => {
     if (!editGalleryId || !title.trim() || !description.trim()) {
       toast.error("Title and description are required");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", description);
-    if (uploadedImage) {
-      formData.append("image", uploadedImage);
-    }
-
     updateGallery(
       { id: editGalleryId, data: { title, description } },
       {
         onSuccess: () => {
-          setTitle("");
-          setDescription("");
-          setUploadedImage(null);
-          setEditGalleryId(null);
-          setIsEditing(false);
+          resetForm();
           refetch();
           toast.success("Gallery updated successfully!");
         },
-        onError: () => {
-          toast.error("Failed to update gallery");
-        },
+        onError: () => toast.error("Failed to update gallery"),
       }
     );
   };
 
+  // Delete gallery
   const handleDelete = () => {
     if (!deleteId) return;
-
     deleteGallery(deleteId, {
       onSuccess: () => {
         setDeleteId(null);
-        setShowModal(false);
+        setShowDeleteModal(false);
         refetch();
         toast.success("Gallery deleted successfully!");
       },
-      onError: () => {
-        toast.error("Failed to delete gallery");
-      },
+      onError: () => toast.error("Failed to delete gallery"),
     });
-  };
-
-  const handleImageDelete = () => {
-    setUploadedImage(null);
-    setTitle("");
-    setDescription("");
   };
 
   const handleEditClick = (gallery: {
@@ -126,23 +118,47 @@ const AdminGallery: React.FC = () => {
     setEditGalleryId(gallery._id);
     setTitle(gallery.title);
     setDescription(gallery.description);
-    setUploadedImage(null); 
+    setUploadedImage(null);
     setIsEditing(true);
   };
 
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setUploadedImage(null);
+    setIsEditing(false);
+    setEditGalleryId(null);
+  };
+
   return (
-    <div className="bg-gray-50 flex flex-col justify-center px-4 md:px-10">
-      <Modal
-        isVisible={showModal}
-        onClose={() => setShowModal(false)}
-        onConfirm={handleDelete}
-      />
+    <div className="bg-gray-50 flex flex-col mt-12 justify-center px-4 md:px-10">
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this gallery?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setShowDeleteModal(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold">Gallery Management</h2>
-        </div>
+        <h2 className="text-xl font-bold mb-6">Gallery Management</h2>
 
         {/* Upload Section */}
         <div className="mb-6">
@@ -153,18 +169,20 @@ const AdminGallery: React.FC = () => {
             {/* Upload Image */}
             <div className="flex flex-col">
               {uploadedImage ? (
-                <div className="relative w-32 h-32 rounded-lg overflow-hidden border border-gray-200">
+                <div className="relative w-32 h-32 rounded-lg overflow-hidden border">
                   <img
                     src={URL.createObjectURL(uploadedImage)}
                     alt="Uploaded"
                     className="w-full h-full object-cover"
                   />
-                  <button
-                    onClick={handleImageDelete}
-                    className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full shadow hover:bg-red-600 transition"
+                  <Button
+                    size="icon"
+                    variant="destructive"
+                    className="absolute top-2 right-2"
+                    onClick={() => setUploadedImage(null)}
                   >
                     <FaTrash size={14} />
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <label
@@ -183,114 +201,128 @@ const AdminGallery: React.FC = () => {
               )}
             </div>
 
-            {/* Title Input */}
+            {/* Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Title
-              </label>
-              <input
+              <label className="block text-sm font-medium mb-2">Title</label>
+              <Input
                 type="text"
                 placeholder="Enter title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
 
-            {/* Description Input */}
+            {/* Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium mb-2">
                 Description
               </label>
-              <input
+              <Input
                 type="text"
                 placeholder="Enter description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
               />
             </div>
           </div>
-          <button
+
+          <Button
+            className="mt-4"
             onClick={isEditing ? handleUpdate : handleCreate}
-            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition"
+            disabled={isCreating || isUpdating}
           >
-            {isEditing ? "Update Gallery" : "Create Gallery"}
-          </button>
+            {isEditing
+              ? isUpdating
+                ? "Updating..."
+                : "Update Gallery"
+              : isCreating
+              ? "Creating..."
+              : "Create Gallery"}
+          </Button>
         </div>
 
         {/* Gallery Table */}
         <div className="overflow-x-auto">
-          <table className="w-full table-auto border-collapse border border-gray-200 rounded-lg">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  No
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Image
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Title
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Description
-                </th>
-                <th className="border px-4 py-2 text-center text-sm font-medium text-gray-700">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading ? (
-                <tr>
-                  <td colSpan={5} className="text-center py-4">
-                    Loading...
-                  </td>
-                </tr>
-              ) : (
-                data?.data.gallery.map((gallery, index) => (
-                  <tr key={gallery._id} className="hover:bg-gray-50">
-                    <td className="border px-4 py-2 text-gray-700 text-sm">
-                      {index + 1}
-                    </td>
-                    <td className="border px-4 py-2 text-gray-700 text-sm">
-                      <img
-                        src={gallery.image}
-                        alt={gallery.title}
-                        className="w-20 h-12 object-cover rounded-md"
-                      />
-                    </td>
-                    <td className="border px-4 py-2 text-gray-700 text-sm">
-                      {gallery.title}
-                    </td>
-                    <td className="border px-4 py-2 text-gray-700 text-sm">
-                      {gallery.description}
-                    </td>
-                    <td className="border px-4 py-2 text-center text-sm">
-                      <div className="flex justify-center space-x-2">
-                        <button
-                          onClick={() => handleEditClick(gallery)}
-                          className="text-yellow-500 hover:scale-110 transition"
-                        >
-                          <FaEdit />
-                        </button>
-                        <button
-                          onClick={() => {
-                            setDeleteId(gallery._id);
-                            setShowModal(true);
-                          }}
-                          className="text-red-500 hover:scale-110 transition"
-                        >
-                          <FaTrash />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>No</TableHead>
+                <TableHead>Image</TableHead>
+                <TableHead>Title</TableHead>
+                <TableHead>Description</TableHead>
+                <TableHead className="text-center">Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading
+                ? [...Array(5)].map((_, idx) => (
+                    <TableRow key={idx}>
+                      <TableCell>
+                        <Skeleton className="h-4 w-6" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-12 w-20" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-4 w-24" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-4 w-32" />
+                      </TableCell>
+                      <TableCell>
+                        <Skeleton className="h-8 w-16" />
+                      </TableCell>
+                    </TableRow>
+                  ))
+                : data?.data.gallery.map(
+                    (
+                      gallery: {
+                        _id: string;
+                        title: string;
+                        description: string;
+                        image: string;
+                      },
+                      index: number
+                    ) => (
+                      <TableRow key={gallery._id}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>
+                          <img
+                            src={gallery.image}
+                            alt={gallery.title}
+                            className="w-20 h-12 object-cover rounded-md"
+                          />
+                        </TableCell>
+                        <TableCell>{gallery.title}</TableCell>
+                        <TableCell>{gallery.description}</TableCell>
+                        <TableCell className="text-center">
+                          <div className="flex justify-center space-x-2">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-yellow-500"
+                              onClick={() => handleEditClick(gallery)}
+                            >
+                              <FaEdit />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="text-red-500"
+                              onClick={() => {
+                                setDeleteId(gallery._id);
+                                setShowDeleteModal(true);
+                              }}
+                            >
+                              <FaTrash />
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    )
+                  )}
+            </TableBody>
+          </Table>
         </div>
       </div>
     </div>

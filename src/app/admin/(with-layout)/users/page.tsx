@@ -1,8 +1,20 @@
 "use client";
 
-import { useGetAllUsers, useSearchUsers } from "@/api/auth/queries/authQuery";
 import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa";
+import { useGetAllUsers, useSearchUsers } from "@/api/auth/queries/authQuery";
+
+// shadcn imports
+import { Input } from "@/Components/ui/input";
+import { Button } from "@/Components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const UserTable: React.FC = () => {
   const [pageNumber, setPageNumber] = useState<number>(1);
@@ -14,7 +26,8 @@ const UserTable: React.FC = () => {
     limit,
   });
 
-  const { data: searchResults } = useSearchUsers(searchQuery);
+  const { data: searchResults, isLoading: searchLoading } =
+    useSearchUsers(searchQuery);
 
   const handleNextPage = () => {
     if (
@@ -34,89 +47,89 @@ const UserTable: React.FC = () => {
   const displayUser =
     searchQuery && searchResults?.data?.users?.length
       ? searchResults.data.users
-      : data?.data.users || [];
+      : data?.data?.users || [];
 
-  if (isLoading) {
-    <div className="flex justify-center items-center h-64">
-      <div className="w-12 h-12 border-4 border-blue-500 border-dashed rounded-full animate-spin"></div>
-    </div>;
+  const totalItems = data?.data?.pagination?.totalItems || 0;
+  const totalPages = data?.data?.pagination?.totalPages || 1;
+
+  // Centered loader
+  if (isLoading || searchLoading) {
+    return (
+      <div className="flex justify-center items-center h-[60vh]">
+        <div className="space-y-3 w-full max-w-4xl">
+          {[...Array(6)].map((_, i) => (
+            <Skeleton key={i} className="h-10 w-full" />
+          ))}
+        </div>
+      </div>
+    );
   }
 
-  if (error) return <div>Error fetching products</div>;
+  if (error) return <div className="text-red-500">Error fetching users</div>;
 
   return (
-    <div className="bg-gray-50  flex flex-col  justify-center px-4 md:px-10">
-      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
+    <div className="bg-gray-50 flex flex-col justify-center px-4 md:px-10 mt-16">
+      <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6 mx-auto">
         {/* Header */}
         <h1 className="text-2xl font-semibold text-gray-800 mb-6">All Users</h1>
-        <div className="flex flex-wrap items-center justify-between mb-6">
-          <input
+
+        {/* Search */}
+        <div className="flex flex-wrap items-center justify-between mb-6 gap-3">
+          <Input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search here..."
-            className="border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none w-full md:w-1/3"
+            className="w-full md:w-1/3"
           />
         </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full table-auto border-collapse border border-gray-200 rounded-lg">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  User
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Phone
-                </th>
-                <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                  Email
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {displayUser.map((user: any, index: any) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="border px-4 py-2 text-gray-700 text-sm flex items-center space-x-4">
-                    <div>
-                      <p className="font-semibold">{user.username}</p>
-                    </div>
-                  </td>
-                  <td className="border px-4 py-2 text-gray-700 text-sm">
-                    {user.phoneNumber}
-                  </td>
-                  <td className="border px-4 py-2 text-gray-700 text-sm">
-                    {user.email}
-                  </td>
-                </tr>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>User</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Email</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {displayUser.map((user: any, index: number) => (
+                <TableRow key={index} className="hover:bg-gray-50">
+                  <TableCell className="font-medium">{user.username}</TableCell>
+                  <TableCell>{user.phoneNumber}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                </TableRow>
               ))}
-            </tbody>
-          </table>
+            </TableBody>
+          </Table>
         </div>
 
-        {/* Pagination (hide if searchQuery is active) */}
+        {/* Pagination (hide when searching) */}
         {!searchQuery && (
-          <div className="p-4 bg-gray-50 border-t flex justify-between items-center">
-            <p className="text-sm text-gray-600">entries</p>
+          <div className="p-4 bg-gray-50 border-t flex flex-col md:flex-row justify-between items-center gap-3 mt-4">
+            <p className="text-sm text-gray-600">
+              Showing {(pageNumber - 1) * limit + 1} –{" "}
+              {Math.min(pageNumber * limit, totalItems)} of {totalItems} entries
+            </p>
             <div className="flex gap-2">
-              <button
-                className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={handlePrevPage}
                 disabled={pageNumber === 1}
               >
                 &lt; Prev
-              </button>
-              <button
-                className="bg-gray-200 py-1 px-3 rounded-md hover:bg-gray-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
                 onClick={handleNextPage}
-                disabled={
-                  !data?.data?.pagination?.totalPages ||
-                  pageNumber >= data.data.pagination.totalPages
-                }
+                disabled={pageNumber >= totalPages}
               >
                 Next &gt;
-              </button>
+              </Button>
             </div>
           </div>
         )}

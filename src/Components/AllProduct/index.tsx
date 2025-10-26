@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { FaShareAlt, FaSpinner } from "react-icons/fa";
+import { FaSpinner } from "react-icons/fa";
 import Image from "next/image";
 import {
   useAllProducts,
@@ -28,6 +28,7 @@ import FilterMobileScreen from "./FilterMobileScreen/FilterMobileScreen";
 import { useTranslation } from "react-i18next";
 import { getFromLS } from "@/lib/storage";
 import { MdShoppingCartCheckout } from "react-icons/md";
+import ProductShare from "../Product/ProductShare";
 
 interface Product {
   _id: string;
@@ -186,9 +187,15 @@ const AllProduct = () => {
 
                     {/* Icons to show on hover */}
                     <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <button className="absolute top-2 right-2 p-2 bg-white hover:bg-red-600 rounded-full transition-colors duration-300">
-                        <FaShareAlt className="text-black hover:text-white h-6 w-6" />
-                      </button>
+                      <div className="absolute top-2 right-2">
+                        <ProductShare
+                          productId={product._id}
+                          productName={product.product_name}
+                          productImage={product.product_images[0]?.url || ""}
+                          productDescription={product.product_description}
+                          productPrice={product.product_selling_price}
+                        />
+                      </div>
                     </div>
                   </div>
 

@@ -5,10 +5,10 @@ import { BASE_URL } from "@/contants";
 
 // Define Banner Type
 export interface Banner {
-  banner_images: {
+  banner_image: {
     url: string;
-    public_id: string;
-  }[];
+    key: string;
+  } | null;
   banner_title: string;
 }
 

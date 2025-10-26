@@ -6,31 +6,44 @@ import {
   useGetAllContact,
   useSearchContact,
 } from "@/api/contact/query/useContactQuery";
-import { FiTrash2 } from "react-icons/fi";
 import { Contact } from "@/api/contact/contactApi";
+import { FiTrash2 } from "react-icons/fi";
+
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/Components/ui/dialog";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const Customer = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const { data: allContacts, refetch: refetchAll } = useGetAllContact();
-  const { mutate: deleteContact } = useDeleteContact();
-  const { data: searchedContacts, refetch: refetchSearch } = useSearchContact(
-    searchQuery
-  );
+  const { data: allContacts, refetch: refetchAll, isLoading } =
+    useGetAllContact();
+  const { mutate: deleteContact, isPending: isDeleting } = useDeleteContact();
+  const { data: searchedContacts, refetch: refetchSearch } =
+    useSearchContact(searchQuery);
 
   const [selectedMessage, setSelectedMessage] = useState<string | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  const openMessageModal = (message: string) => setSelectedMessage(message);
-
   const openDeleteModal = (id: string) => {
     setSelectedId(id);
     setIsDeleteModalOpen(true);
-  };
-
-  const closeDeleteModal = () => {
-    setIsDeleteModalOpen(false);
-    setSelectedId(null);
   };
 
   const confirmDelete = () => {
@@ -38,9 +51,10 @@ const Customer = () => {
       deleteContact(selectedId, {
         onSuccess: () => {
           refetchAll();
+          setIsDeleteModalOpen(false);
+          setSelectedId(null);
         },
       });
-      closeDeleteModal();
     }
   };
 
@@ -58,120 +72,145 @@ const Customer = () => {
       : allContacts?.data.contact || [];
 
   return (
-    <div className="bg-gray-50 flex flex-col justify-center px-4 md:px-10">
+    <div className="bg-gray-50 flex flex-col justify-center px-4 mt-12 md:px-10">
       <div className="w-full max-w-6xl bg-white rounded-lg shadow-lg p-6">
         <h1 className="text-2xl font-semibold text-gray-800 mb-6">
           All Customers
         </h1>
 
-        {/* Search Area */}
+        {/* Search */}
         <div className="flex flex-wrap items-center justify-between mb-6 space-y-4 md:space-y-0">
-          <div className="flex space-x-4 w-full md:w-auto">
-            <input
-              type="text"
+          <div className="flex w-full md:w-auto space-x-2">
+            <Input
               placeholder="Search by name or email..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="border rounded-lg px-4 py-2 text-gray-700 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             />
-            <button
-              onClick={handleSearch}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            >
-              Search
-            </button>
+            <Button onClick={handleSearch}>Search</Button>
           </div>
         </div>
 
         {/* Table */}
         <div className="overflow-x-auto">
-          <table className="w-full table-auto border-collapse border border-gray-200 rounded-lg">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-left">FirstName</th>
-                <th className="border px-4 py-2 text-left">LastName</th>
-                <th className="border px-4 py-2 text-left">Email</th>
-                <th className="border px-4 py-2 text-left">Mobile</th>
-                <th className="border px-4 py-2 text-left">Details</th>
-                <th className="border px-4 py-2 text-left">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user:any, idx) => (
-                <tr key={idx} className="hover:bg-gray-50">
-                  <td className="border px-4 py-2">{user.first_name}</td>
-                  <td className="border px-4 py-2">{user.last_name}</td>
-                  <td className="border px-4 py-2">{user.email}</td>
-                  <td className="border px-4 py-2">{user.mobile_number}</td>
-                  <td className="border px-4 py-2">
-                    <button
-                      onClick={() => openMessageModal(user.message)}
-                      className="text-blue-500 hover:underline"
-                    >
-                      View
-                    </button>
-                  </td>
-                  <td className="border px-4 py-2">
-                    <button
-                      onClick={() => openDeleteModal(user._id)}
-                      className="text-red-500 hover:scale-110 transition"
-                    >
-                      <FiTrash2 />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>FirstName</TableHead>
+                <TableHead>LastName</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Mobile</TableHead>
+                <TableHead>Details</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {isLoading ? (
+                [...Array(5)].map((_, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell>
+                      <Skeleton className="h-4 w-24" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-24" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-32" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-16" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-8 w-8 rounded-full" />
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : users.length > 0 ? (
+                users.map((user, idx) => (
+                  <TableRow key={idx}>
+                    <TableCell>{user.first_name}</TableCell>
+                    <TableCell>{user.last_name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>{user.mobile_number}</TableCell>
+                    <TableCell>
+                      <Button
+                        variant="link"
+                        className="text-blue-500 p-0"
+                        onClick={() => setSelectedMessage(user.message)}
+                      >
+                        View
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-500"
+                        onClick={() => openDeleteModal(user._id)}
+                      >
+                        <FiTrash2 />
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell
+                    colSpan={6}
+                    className="text-center text-gray-500 py-6"
+                  >
+                    No contacts found
+                  </TableCell>
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
         </div>
 
-        {/* Pagination Footer (optional placeholder) */}
+        {/* Footer */}
         <div className="p-4 text-sm text-gray-600">
           Showing {users.length} contact{users.length !== 1 && "s"}
         </div>
       </div>
 
       {/* Message Modal */}
-      {selectedMessage && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-96">
-            <h2 className="text-lg font-semibold mb-4">Message</h2>
-            <p className="text-gray-700 mb-4">{selectedMessage}</p>
-            <button
-              onClick={() => setSelectedMessage(null)}
-              className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
+      <Dialog open={!!selectedMessage} onOpenChange={() => setSelectedMessage(null)}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Message</DialogTitle>
+            <DialogDescription>{selectedMessage}</DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button onClick={() => setSelectedMessage(null)}>Close</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Delete Confirmation Modal */}
-      {isDeleteModalOpen && (
-        <div className="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white rounded-lg p-6 shadow-lg w-96">
-            <h2 className="text-lg font-semibold mb-4">Confirm Delete</h2>
-            <p className="text-gray-700 mb-4">
+      <Dialog open={isDeleteModalOpen} onOpenChange={setIsDeleteModalOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+            <DialogDescription>
               Are you sure you want to delete this contact?
-            </p>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={closeDeleteModal}
-                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={confirmDelete}
-                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDeleteModalOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={confirmDelete}
+              disabled={isDeleting}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

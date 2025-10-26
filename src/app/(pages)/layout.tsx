@@ -3,11 +3,13 @@ import Header from "@/Components/Header";
 import Sidebar from "@/Components/Header/Sidebar";
 import Footer from "@/Components/Footer";
 import "../globals.css";
-import { FaWhatsapp, FaPhoneAlt } from "react-icons/fa";
+import { FaWhatsapp, FaPhoneAlt, FaRobot } from "react-icons/fa";
 import "@/i18n";
 import Link from "next/link";
 import { useGlobalStore } from "@/store/global";
 import ComingSoonModal from "@/Components/CommingSoonModal/ComingSoonModal";
+import { useState } from "react";
+import Chatbot from "@/Components/Chatbot";
 
 export default function RootLayout({
   children,
@@ -16,6 +18,7 @@ export default function RootLayout({
 }>) {
   const setComingSoon = useGlobalStore((state) => state.setIsComingSoon);
   const comingSoon = useGlobalStore((state) => state.isComingSoon);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   const handleClose = () => {
     setComingSoon(false);
@@ -53,7 +56,11 @@ export default function RootLayout({
         <FaPhoneAlt size={24} />
       </Link>
 
-      <ComingSoonModal isOpen={comingSoon} onRequestClose={handleClose} />
+      {/* Chatbot Icon */}
+    
+    <Chatbot />
+
+      {/* <ComingSoonModal isOpen={comingSoon} onRequestClose={handleClose} /> */}
     </>
   );
 }

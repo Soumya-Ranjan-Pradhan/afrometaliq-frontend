@@ -7,15 +7,37 @@ import {
   useGetAbout,
   useUpdateAbout,
 } from "@/api/about/query/useAboutQuery";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
 import { toast } from "react-toastify";
+import { FiEdit2, FiTrash2 } from "react-icons/fi";
+
+// shadcn imports
+import { Button } from "@/Components/ui/button";
+import { Input } from "@/Components/ui/input";
+import { Textarea } from "@/Components/ui/textarea";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/Components/ui/table";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/Components/ui/dialog";
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const AdminFaqPage: React.FC = () => {
   const [about, setAbout] = useState("");
   const [description, setDescription] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [showModal, setShowModal] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
+  const [openAddModal, setOpenAddModal] = useState(false);
 
   const { data, isLoading, error, refetch } = useGetAbout();
   const { mutate: createAbout } = useAbout();
@@ -33,6 +55,7 @@ const AdminFaqPage: React.FC = () => {
         onSuccess: () => {
           setAbout("");
           setDescription("");
+          setOpenAddModal(false);
           refetch();
           toast.success("About created successfully!");
         },
@@ -72,13 +95,13 @@ const AdminFaqPage: React.FC = () => {
     setEditingId(id);
     setAbout(title);
     setDescription(desc);
+    setOpenAddModal(true);
   };
 
   const confirmDelete = () => {
     if (!deleteId) return;
     deleteAbout(deleteId, {
       onSuccess: () => {
-        setShowModal(false);
         setDeleteId(null);
         refetch();
         toast.success("About deleted successfully!");
@@ -89,134 +112,123 @@ const AdminFaqPage: React.FC = () => {
     });
   };
 
-  const openDeleteModal = (id: string) => {
-    setDeleteId(id);
-    setShowModal(true);
-  };
-
-  const closeDeleteModal = () => {
-    setDeleteId(null);
-    setShowModal(false);
-  };
+  const aboutList = data?.data?.about || [];
 
   return (
-    <div className="container mx-auto p-4 md:p-8">
-      <h2 className="text-2xl font-semibold mb-6">
-        MANAGE{" "}
-        <span className="bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
-          AboutUs
-        </span>
-      </h2>
+    <div className="container mx-auto p-4 lg:mt-28 md:mt-24 mt-8 md:p-8">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row items-center justify-between mb-6 gap-3">
+        <h2 className="text-2xl font-semibold">
+          MANAGE{" "}
+          <span className="bg-gradient-to-r from-blue-500 to-green-500 text-transparent bg-clip-text">
+            AboutUs
+          </span>
+        </h2>
 
-      {/* Form Section */}
-      <div className="mb-6 bg-white rounded-lg shadow p-4">
-        <div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Title
-            </label>
-            <input
-              type="text"
-              placeholder="Enter the title"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-              className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Description
-            </label>
-            <textarea
-              placeholder="Enter the description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="block w-full text-sm text-gray-700 border border-gray-300 rounded-lg shadow-sm px-3 py-2 focus:ring-blue-500 focus:border-blue-500"
-              rows={3}
-            ></textarea>
-          </div>
-        </div>
-        <button
-          onClick={editingId ? handleSaveUpdate : handleCreate}
-          className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition"
-        >
-          {editingId ? "Save Changes" : "Add AboutUs"}
-        </button>
+        <Dialog open={openAddModal} onOpenChange={setOpenAddModal}>
+          <DialogTrigger asChild>
+            <Button>+ Add AboutUs</Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-lg">
+            <DialogHeader>
+              <DialogTitle>
+                {editingId ? "Edit AboutUs" : "Add New AboutUs"}
+              </DialogTitle>
+              <DialogDescription>
+                Provide the title and description for AboutUs section.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 mt-4">
+              <Input
+                type="text"
+                placeholder="Enter title"
+                value={about}
+                onChange={(e) => setAbout(e.target.value)}
+              />
+              <Textarea
+                placeholder="Enter description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={4}
+              />
+              <Button
+                onClick={editingId ? handleSaveUpdate : handleCreate}
+                className="w-full"
+              >
+                {editingId ? "Save Changes" : "Add AboutUs"}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       {/* Table Section */}
-      <div className="overflow-x-auto bg-white rounded-lg shadow p-4">
-        <table className="w-full table-auto border-collapse border border-gray-200">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                #
-              </th>
-              <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Title
-              </th>
-              <th className="border px-4 py-2 text-left text-sm font-medium text-gray-700">
-                Description
-              </th>
-              <th className="border px-4 py-2 text-center text-sm font-medium text-gray-700">
-                Actions
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {data?.data.about.map((item, index) => (
-              <tr key={item._id} className="hover:bg-gray-50">
-                <td className="border px-4 py-2 text-gray-700 text-sm">
-                  {index + 1}
-                </td>
-                <td className="border px-4 py-2 text-gray-700 text-sm">
-                  {item.about_title}
-                </td>
-                <td className="border px-4 py-2 text-gray-700 text-sm">
-                  {item.about_description}
-                </td>
-                <td className="border px-4 py-2 text-center text-sm">
-                  <div className="flex justify-center space-x-2">
+      <div className="overflow-x-auto bg-white rounded-lg shadow p-2 md:p-4">
+        {isLoading ? (
+          <div className="space-y-2">
+            {[...Array(5)].map((_, i) => (
+              <Skeleton key={i} className="h-10 w-full" />
+            ))}
+          </div>
+        ) : error ? (
+          <p className="text-red-500">Error fetching AboutUs data</p>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-12 text-sm md:text-base">#</TableHead>
+                <TableHead className="text-sm md:text-base">Title</TableHead>
+                <TableHead className="text-sm md:text-base">Description</TableHead>
+                <TableHead className="text-center w-24 text-sm md:text-base">
+                  Actions
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {aboutList.map((item: any, index: number) => (
+                <TableRow key={item._id} className="align-top">
+                  <TableCell className="text-sm">{index + 1}</TableCell>
+                  <TableCell className="text-sm">{item.about_title}</TableCell>
+                  <TableCell className="text-sm whitespace-normal break-words max-w-xs md:max-w-md">
+                    {item.about_description}
+                  </TableCell>
+                  <TableCell className="flex items-center justify-center gap-3">
                     <button
-                      onClick={() => handleEdit(item._id, item.about_title, item.about_description)}
+                      onClick={() =>
+                        handleEdit(item._id, item.about_title, item.about_description)
+                      }
                       className="text-yellow-500 hover:scale-110 transition"
                     >
                       <FiEdit2 />
                     </button>
                     <button
-                      onClick={() => openDeleteModal(item._id)}
+                      onClick={() => setDeleteId(item._id)}
                       className="text-red-500 hover:scale-110 transition"
                     >
                       <FiTrash2 />
                     </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
       </div>
 
       {/* Delete Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white rounded-lg shadow-lg p-6 w-96">
-            <h3 className="text-lg font-semibold mb-4">
+      {deleteId && (
+        <div className="fixed inset-0 bg-gray-900/50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-11/12 sm:w-96">
+            <h3 className="text-lg font-semibold mb-4 text-center">
               Are you sure you want to delete this item?
             </h3>
-            <div className="flex justify-end space-x-4">
-              <button
-                onClick={closeDeleteModal}
-                className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg hover:bg-gray-400 transition"
-              >
+            <div className="flex justify-end gap-2">
+              <Button variant="outline" onClick={() => setDeleteId(null)}>
                 Cancel
-              </button>
-              <button
-                onClick={confirmDelete}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
-              >
+              </Button>
+              <Button variant="destructive" onClick={confirmDelete}>
                 Delete
-              </button>
+              </Button>
             </div>
           </div>
         </div>

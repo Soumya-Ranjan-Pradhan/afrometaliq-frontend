@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState } from "react";
@@ -12,6 +11,9 @@ import {
   useUpdateBanner,
 } from "@/api/banner/queries/useBannerQuery";
 import type { Banner } from "@/api/banner/bannerApi";
+
+// ✅ ShadCN Skeleton
+import { Skeleton } from "@/Components/ui/skeleton";
 
 const BannerUpload: React.FC = () => {
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
@@ -105,7 +107,7 @@ const BannerUpload: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-50 flex flex-col justify-center px-4 md:px-10">
+    <div className="bg-gray-50 flex flex-col justify-center px-4 mt-10 md:px-10">
       <Modal
         isVisible={showModal}
         onClose={() => setShowModal(false)}
@@ -188,48 +190,61 @@ const BannerUpload: React.FC = () => {
             </thead>
             <tbody>
               {isLoading ? (
-                <tr>
-                  <td colSpan={4} className="text-center py-4">
-                    Loading...
-                  </td>
-                </tr>
+                // ✅ Skeleton Loader
+                Array.from({ length: 4 }).map((_, index) => (
+                  <tr key={index}>
+                    <td className="border px-4 py-2">
+                      <Skeleton className="h-4 w-6" />
+                    </td>
+                    <td className="border px-4 py-2">
+                      <Skeleton className="h-12 w-20 rounded-md" />
+                    </td>
+                    <td className="border px-4 py-2">
+                      <Skeleton className="h-4 w-32" />
+                    </td>
+                    <td className="border px-4 py-2 text-center">
+                      <div className="flex justify-center gap-2">
+                        <Skeleton className="h-6 w-6 rounded-full" />
+                        <Skeleton className="h-6 w-6 rounded-full" />
+                      </div>
+                    </td>
+                  </tr>
+                ))
               ) : (
                 data?.data?.banners?.map(
                   (banner: any & { _id: string }, index: number) => (
-                    <>
-                      <tr key={banner._id} className="hover:bg-gray-50">
-                        <td className="border px-4 py-2">{index + 1}</td>
-                        <td className="border px-4 py-2">
-                          <img
-                            src={banner.banner_images[0]?.url}
-                            alt={banner.banner_title}
-                            className="w-20 h-12 object-cover rounded-md"
-                          />
-                        </td>
-                        <td className="border px-4 py-2">
-                          {banner.banner_title}
-                        </td>
-                        <td className="border px-4 py-2">
-                          <div className="flex justify-center gap-2">
-                            <button
-                              onClick={() => handleEditClick(banner)}
-                              className="text-yellow-500 hover:scale-110"
-                            >
-                              <FaEdit />
-                            </button>
-                            <button
-                              onClick={() => {
-                                setDeleteId(banner._id);
-                                setShowModal(true);
-                              }}
-                              className="text-red-500 hover:scale-110"
-                            >
-                              <FaTrash />
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </>
+                    <tr key={banner._id} className="hover:bg-gray-50">
+                      <td className="border px-4 py-2">{index + 1}</td>
+                      <td className="border px-4 py-2">
+                        <img
+                          src={banner.banner_image?.url}
+                          alt={banner.banner_title}
+                          className="w-20 h-12 object-cover rounded-md"
+                        />
+                      </td>
+                      <td className="border px-4 py-2">
+                        {banner.banner_title}
+                      </td>
+                      <td className="border px-4 py-2">
+                        <div className="flex justify-center gap-2">
+                          <button
+                            onClick={() => handleEditClick(banner)}
+                            className="text-yellow-500 hover:scale-110"
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            onClick={() => {
+                              setDeleteId(banner._id);
+                              setShowModal(true);
+                            }}
+                            className="text-red-500 hover:scale-110"
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
                   )
                 )
               )}
@@ -242,6 +257,8 @@ const BannerUpload: React.FC = () => {
 };
 
 export default BannerUpload;
+
+
 
 
 

@@ -1,3 +1,4 @@
+import { Category } from "@/api/category/categoryApi";
 import {
   useCreateCategory,
   useUpdateCategory,
@@ -9,14 +10,7 @@ import { toast } from "react-toastify";
 type CategoryFormProps = {
   parentId: string | null;
   mode: "add" | "edit";
-  data?: {
-    _id: string;
-    category_name: string;
-    thumbnail?: {
-      url: string;
-      public_id: string;
-    };
-  };
+  data?: Category;
   handleCancelEdit?: () => void;
 };
 
@@ -52,7 +46,7 @@ const CategoryForm = ({
     if (uploadedImage && typeof uploadedImage !== "string") {
       formData.append("thumbnail", uploadedImage);
     }
-
+    
     if (mode === "add") {
       createCategory.mutate(formData, {
         onSuccess: () => {

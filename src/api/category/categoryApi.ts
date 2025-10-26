@@ -13,7 +13,7 @@ export interface Category {
   thumbnail?: {
     url: string;
     public_id: string;
-  };
+  } | null;
 }
 
 // Define API Response Type

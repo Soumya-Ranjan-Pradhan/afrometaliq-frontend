@@ -1,18 +1,24 @@
-import type { MetadataRoute } from 'next'
- 
+import { MetadataRoute } from 'next'
+
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: [
-      {
-        userAgent: 'Googlebot',
-        allow: "*",
-        disallow: '/admin/*',
-      },
-      {
-        userAgent: ['Applebot', 'Bingbot'],
-        disallow: ['/'],
-      },
-    ],
-    sitemap: 'https://www.afrometaliq.com/sitemap.xml',
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: [
+        '/admin/',
+        '/api/',
+        '/_next/',
+        '/static/',
+        '/private/',
+        '/checkout/',
+        '/orders/',
+        '/profile/',
+        '/wishlist/',
+        '/cart/',
+      ],
+    },
+    sitemap: 'https://afrometaliq.com/sitemap.xml',
+    host: 'https://afrometaliq.com',
   }
 }
